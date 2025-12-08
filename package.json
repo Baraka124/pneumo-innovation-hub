@@ -1,0 +1,12 @@
+{
+  "name": "pneumo-innovation-hub",
+  "version": "1.0.0",
+  "description": "Pneumology Innovation Hub Partnership Platform",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "dependencies": {
+    "serve": "^14.2.1"
+  }
+}

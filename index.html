@@ -1,0 +1,2454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pneumology Innovation Hub | Partner for Respiratory Care Innovation</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Professional Color Palette */
+            --primary-blue: #0056B3;
+            --primary-blue-light: #E6F0FF;
+            --secondary-teal: #00A8A8;
+            --accent-purple: #7B4FE8;
+            --success-green: #00B894;
+            --warning-orange: #F59E0B;
+            --integration-purple: #7B4FE8;
+            
+            /* Neutrals */
+            --white: #FFFFFF;
+            --gray-50: #F8FAFC;
+            --gray-100: #F1F5F9;
+            --gray-200: #E2E8F0;
+            --gray-300: #CBD5E1;
+            --gray-400: #94A3B8;
+            --gray-500: #64748B;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1E293B;
+            --gray-900: #0F172A;
+            
+            /* Typography */
+            --font-sans: 'Inter', system-ui, sans-serif;
+            --font-serif: 'Playfair Display', serif;
+            
+            /* Spacing */
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+            --spacing-2xl: 4rem;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            color: var(--gray-700);
+            background: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-serif);
+            font-weight: 600;
+            color: var(--gray-900);
+            line-height: 1.2;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+        }
+
+        h2 {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+        }
+
+        h3 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+        }
+
+        p {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        .section {
+            padding: var(--spacing-2xl) 0;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto var(--spacing-2xl);
+        }
+
+        .section-subtitle {
+            display: inline-block;
+            color: var(--primary-blue);
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .text-lead {
+            font-size: 1.125rem;
+            color: var(--gray-600);
+            line-height: 1.7;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            font-size: 0.9375rem;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: #004494;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 86, 179, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-blue);
+            border-color: var(--gray-300);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary-blue);
+            background: var(--primary-blue-light);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary-blue);
+            border-color: var(--primary-blue);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        /* ===== CLEAN NAVIGATION WITH DROPDOWNS ===== */
+        .navigation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-blue);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 700;
+            font-size: 1.125rem;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-main {
+            font-family: var(--font-serif);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            line-height: 1.2;
+        }
+
+        .logo-sub {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            letter-spacing: 0.05em;
+        }
+
+        /* Main navigation with dropdowns */
+        .nav-links {
+            display: flex;
+            gap: var(--spacing-lg);
+            align-items: center;
+        }
+
+        @media (max-width: 1024px) {
+            .nav-links {
+                display: none;
+            }
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9375rem;
+            transition: color 0.3s ease;
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-blue);
+        }
+
+        .nav-link.active {
+            color: var(--primary-blue);
+            font-weight: 600;
+        }
+
+        /* Dropdown menu */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            min-width: 220px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 100;
+            border: 1px solid var(--gray-200);
+            padding: 0.5rem 0;
+        }
+
+        .nav-item:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-link {
+            display: flex;
+            align-items: center;
+            padding: 0.875rem 1.25rem;
+            color: var(--gray-700);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid var(--gray-100);
+            gap: 0.75rem;
+        }
+
+        .dropdown-link:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-link:hover {
+            background: var(--primary-blue-light);
+            color: var(--primary-blue);
+            padding-left: 1.5rem;
+        }
+
+        .dropdown-icon {
+            width: 16px;
+            text-align: center;
+            opacity: 0.7;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            padding: 140px 0 80px;
+            background: linear-gradient(135deg, #F8FAFC 0%, #FFFFFF 100%);
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary-blue-light);
+            color: var(--primary-blue);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-lg);
+            font-size: 0.875rem;
+        }
+
+        .hero-title {
+            color: var(--gray-900);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--gray-600);
+            margin-bottom: var(--spacing-xl);
+            line-height: 1.7;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+        }
+
+        /* ===== PARTNER BENEFITS ===== */
+        .partner-benefits {
+            background: var(--gray-50);
+            padding: 3rem 0;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .benefits-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        .benefit-item {
+            padding: 1.5rem;
+        }
+
+        .benefit-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+
+        .benefit-label {
+            font-size: 0.9rem;
+            color: var(--gray-600);
+            max-width: 200px;
+            margin: 0 auto;
+        }
+
+        /* ===== CLINICAL CONTEXT ===== */
+        .clinical-context {
+            background: var(--white);
+        }
+
+        .disease-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: var(--spacing-xl);
+        }
+
+        @media (max-width: 768px) {
+            .disease-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .disease-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: var(--spacing-lg);
+            border: 1px solid var(--gray-200);
+            transition: all 0.3s ease;
+        }
+
+        .disease-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border-color: var(--primary-blue);
+        }
+
+        .disease-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: 1rem;
+        }
+
+        .disease-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-blue-light);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-blue);
+            font-size: 1.25rem;
+        }
+
+        .disease-title {
+            font-size: 1.25rem;
+            margin: 0;
+            color: var(--gray-900);
+        }
+
+        .innovation-opportunities {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .innovation-opportunities h4 {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .opportunity-list {
+            list-style: none;
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        .opportunity-list li {
+            padding: 0.25rem 0;
+            position: relative;
+            padding-left: 1.25rem;
+        }
+
+        .opportunity-list li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--primary-blue);
+        }
+
+        /* ===== 4D INNOVATION PATHWAYS ===== */
+        .innovation-pathways {
+            background: var(--gray-50);
+        }
+
+        .pathway-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-lg);
+        }
+
+        @media (min-width: 1024px) {
+            .pathway-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .pathway-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pathway-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: var(--spacing-xl);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--gray-200);
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pathway-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .pathway-card.integration-card {
+            border-color: var(--integration-purple);
+            border-width: 2px;
+        }
+
+        .pathway-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--gray-900);
+        }
+
+        .pathway-description {
+            color: var(--gray-600);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            flex-grow: 1;
+        }
+
+        .innovation-list {
+            margin: 1.5rem 0;
+        }
+
+        .innovation-list li {
+            padding: 0.75rem 0;
+            color: var(--gray-700);
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .innovation-list li:before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: var(--primary-blue);
+        }
+
+        .status-box {
+            background: var(--gray-50);
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-top: auto;
+            border-left: 4px solid var(--gray-300);
+        }
+
+        .integration-box {
+            background: rgba(123, 79, 232, 0.1);
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-top: auto;
+            border-left: 4px solid var(--integration-purple);
+        }
+
+        /* ===== INTEGRATION FOCUS CALLOUT ===== */
+        .integration-callout {
+            margin-top: 4rem;
+            text-align: center;
+        }
+
+        .integration-content {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--integration-purple), #5B32D6);
+            color: white;
+            padding: 2rem 3rem;
+            border-radius: 12px;
+            max-width: 900px;
+        }
+
+        /* ===== ACTIVE PROJECTS ===== */
+        .active-projects {
+            background: var(--white);
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 2rem 0;
+            border-radius: 12px;
+            border: 1px solid var(--gray-200);
+            background: var(--white);
+        }
+
+        .projects-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        .projects-table th {
+            background: var(--gray-50);
+            color: var(--gray-700);
+            font-weight: 600;
+            text-align: left;
+            padding: 1rem 1.5rem;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 2px solid var(--gray-200);
+        }
+
+        .projects-table td {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--gray-100);
+            vertical-align: top;
+        }
+
+        .projects-table tr:hover {
+            background: var(--gray-50);
+        }
+
+        .project-category {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .category-clinical {
+            background: rgba(0, 86, 179, 0.1);
+            color: var(--primary-blue);
+        }
+
+        .category-device {
+            background: rgba(108, 92, 231, 0.1);
+            color: var(--accent-purple);
+        }
+
+        .category-digital {
+            background: rgba(0, 184, 148, 0.1);
+            color: var(--success-green);
+        }
+
+        .category-ai {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning-orange);
+        }
+
+        .category-integration {
+            background: rgba(123, 79, 232, 0.1);
+            color: var(--integration-purple);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.375rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: rgba(0, 184, 148, 0.1);
+            color: var(--success-green);
+        }
+
+        .collaboration-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.375rem;
+        }
+
+        .collaboration-tag {
+            padding: 0.375rem 0.75rem;
+            background: var(--gray-100);
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: var(--gray-600);
+        }
+
+        .table-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .search-box {
+            position: relative;
+            width: 300px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.875rem 1rem 0.875rem 2.5rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 50px;
+            font-size: 0.875rem;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.1);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.25rem;
+            background: var(--gray-100);
+            border: 1px solid var(--gray-300);
+            border-radius: 50px;
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            background: var(--gray-200);
+        }
+
+        .filter-btn.active {
+            background: var(--primary-blue);
+            color: var(--white);
+            border-color: var(--primary-blue);
+        }
+
+        /* ===== DISEASE FILTERS ===== */
+        .disease-filters {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .disease-filter {
+            padding: 0.5rem 1rem;
+            background: var(--gray-100);
+            border: 1px solid var(--gray-300);
+            border-radius: 50px;
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .disease-filter:hover {
+            background: var(--gray-200);
+        }
+
+        .disease-filter.active {
+            background: var(--primary-blue);
+            color: var(--white);
+            border-color: var(--primary-blue);
+        }
+
+        /* ===== PARTNERSHIP MODELS ===== */
+        .partnership-models {
+            background: var(--gray-900);
+            color: var(--white);
+        }
+
+        .partnership-models .section-header h2,
+        .partnership-models .text-lead {
+            color: var(--white);
+        }
+
+        .models-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-lg);
+        }
+
+        @media (max-width: 768px) {
+            .models-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .model-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: var(--spacing-xl);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .model-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .model-card h3 {
+            color: var(--white);
+            margin-bottom: 1rem;
+        }
+
+        .model-description {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9375rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .benefit-list {
+            list-style: none;
+        }
+
+        .benefit-list li {
+            padding: 0.5rem 0;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.875rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .benefit-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success-green);
+        }
+
+        /* ===== READY-TO-WORK CAPABILITIES ===== */
+        .capabilities {
+            background: #f8fafc;
+        }
+
+        .capabilities-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        @media (max-width: 1024px) {
+            .capabilities-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .capability-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            border: 2px solid #e2e8f0;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .capability-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-blue);
+        }
+
+        /* ===== QUICK START SECTION ===== */
+        .quick-start {
+            background: var(--white);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-md);
+        }
+
+        @media (max-width: 1024px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .project-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: var(--spacing-lg);
+            border: 1px solid var(--gray-200);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border-color: var(--primary-blue);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .priority-tag {
+            padding: 0.375rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .priority-p1 {
+            background: var(--primary-blue);
+        }
+
+        .effort-tag {
+            padding: 0.375rem 0.75rem;
+            background: var(--gray-100);
+            color: var(--gray-600);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .project-title {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--gray-900);
+        }
+
+        .project-description {
+            color: var(--gray-600);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .impact-list {
+            background: rgba(0, 184, 148, 0.1);
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+        }
+
+        .impact-list h4 {
+            color: var(--success-green);
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--gray-900);
+            color: var(--white);
+            padding: var(--spacing-2xl) 0 var(--spacing-lg);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        @media (max-width: 1024px) {
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .footer-brand {
+            grid-column: span 2;
+        }
+
+        .footer-description {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .footer-heading {
+            color: var(--white);
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-link {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-link a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.9375rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            padding-top: var(--spacing-lg);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.875rem;
+        }
+
+        /* ===== MODALS ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .deepdive-modal {
+            background: var(--white);
+            border-radius: 12px;
+            padding: var(--spacing-xl);
+            max-width: 800px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .deepdive-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .deepdive-tech {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+
+        .tech-tag {
+            padding: 0.375rem 0.75rem;
+            background: var(--gray-100);
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .spec-item {
+            padding: 1rem;
+            background: var(--gray-50);
+            border-radius: 8px;
+            border-left: 3px solid var(--primary-blue);
+        }
+
+        .spec-label {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+            margin-bottom: 0.25rem;
+        }
+
+        .spec-value {
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .collaboration-cta {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-teal));
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 768px) {
+            .section {
+                padding: var(--spacing-xl) 0;
+            }
+            
+            .hero {
+                padding: 100px 0 60px;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.125rem;
+            }
+            
+            .hero-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Clean Navigation with Dropdowns -->
+    <nav class="navigation" id="navigation">
+        <div class="container nav-container">
+            <a href="#hero" class="logo">
+                <div class="logo-icon">P</div>
+                <div class="logo-text">
+                    <div class="logo-main">Pneumology Innovation Hub</div>
+                    <div class="logo-sub">University Medical Center</div>
+                </div>
+            </a>
+            
+            <div class="nav-links">
+                <div class="nav-item">
+                    <a href="#innovation" class="nav-link">
+                        Innovation Areas
+                        <i class="fas fa-chevron-down" style="font-size: 0.75rem;"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="#clinical-context" class="dropdown-link">
+                            <i class="fas fa-heartbeat dropdown-icon"></i> Disease Focus
+                        </a>
+                        <a href="#innovation" class="dropdown-link">
+                            <i class="fas fa-cube dropdown-icon"></i> 4D Innovation
+                        </a>
+                        <a href="#projects" class="dropdown-link">
+                            <i class="fas fa-tasks dropdown-icon"></i> Active Projects
+                        </a>
+                    </div>
+                </div>
+
+                <div class="nav-item">
+                    <a href="#partnership" class="nav-link">
+                        Partnership
+                        <i class="fas fa-chevron-down" style="font-size: 0.75rem;"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="#partnership" class="dropdown-link">
+                            <i class="fas fa-handshake dropdown-icon"></i> Collaboration Models
+                        </a>
+                        <a href="#capabilities" class="dropdown-link">
+                            <i class="fas fa-tools dropdown-icon"></i> Our Capabilities
+                        </a>
+                        <a href="#quick-start" class="dropdown-link">
+                            <i class="fas fa-rocket dropdown-icon"></i> Quick Start
+                        </a>
+                    </div>
+                </div>
+
+                <a href="#contact" class="nav-link">Contact</a>
+                <button class="btn btn-primary" onclick="openContactModal()">
+                    Start Partnership
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Partner for Innovation</span>
+                </div>
+                
+                <h1 class="hero-title">
+                    Accelerate Respiratory Innovation With Clinical Experts
+                </h1>
+                
+                <p class="hero-subtitle">
+                    Connect directly with our pulmonary specialists to develop, test, and validate 
+                    new technologies that improve patient care. We help transform ideas into 
+                    clinically effective solutions.
+                </p>
+                
+                <div class="hero-actions">
+                    <a href="#clinical-context" class="btn btn-primary">
+                        <i class="fas fa-compass"></i> Explore Disease Focus
+                    </a>
+                    <button class="btn btn-secondary" onclick="openContactModal()">
+                        <i class="fas fa-handshake"></i> Start Conversation
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partner Benefits -->
+    <section class="partner-benefits">
+        <div class="container">
+            <div class="section-header">
+                <h3>Why Partner With Us</h3>
+            </div>
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <div class="benefit-value">Faster</div>
+                    <div class="benefit-label">Clinical validation with real patient populations</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-value">Direct</div>
+                    <div class="benefit-label">Access to leading pulmonologists and respiratory specialists</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-value">Efficient</div>
+                    <div class="benefit-label">Structured processes to accelerate development</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Clinical Context Section -->
+    <section class="clinical-context section" id="clinical-context">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-subtitle">Clinical Focus</div>
+                <h2>Where Innovation Meets Clinical Need</h2>
+                <p class="text-lead">
+                    Our specialists work across key respiratory diseases where technology 
+                    can create meaningful impact on patient outcomes.
+                </p>
+            </div>
+
+            <div class="disease-grid">
+                <div class="disease-card">
+                    <div class="disease-header">
+                        <div class="disease-icon">
+                            <i class="fas fa-lungs"></i>
+                        </div>
+                        <h3 class="disease-title">COPD</h3>
+                    </div>
+                    <p style="color: var(--gray-600); font-size: 0.9375rem;">
+                        Chronic obstructive pulmonary disease affects millions worldwide with progressive respiratory decline.
+                    </p>
+                    <div class="innovation-opportunities">
+                        <h4>Innovation Opportunities</h4>
+                        <ul class="opportunity-list">
+                            <li>Early exacerbation detection systems</li>
+                            <li>Remote monitoring platforms</li>
+                            <li>Personalized rehabilitation tools</li>
+                            <li>Smart inhaler technology</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="disease-card">
+                    <div class="disease-header">
+                        <div class="disease-icon">
+                            <i class="fas fa-wind"></i>
+                        </div>
+                        <h3 class="disease-title">Asthma</h3>
+                    </div>
+                    <p style="color: var(--gray-600); font-size: 0.9375rem;">
+                        Inflammatory airway disease requiring ongoing management and acute intervention.
+                    </p>
+                    <div class="innovation-opportunities">
+                        <h4>Innovation Opportunities</h4>
+                        <ul class="opportunity-list">
+                            <li>Adherence tracking systems</li>
+                            <li>Environmental trigger detection</li>
+                            <li>Personalized treatment algorithms</li>
+                            <li>Integrated care platforms</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="disease-card">
+                    <div class="disease-header">
+                        <div class="disease-icon">
+                            <i class="fas fa-lungs-virus"></i>
+                        </div>
+                        <h3 class="disease-title">Interstitial Lung Disease</h3>
+                    </div>
+                    <p style="color: var(--gray-600); font-size: 0.9375rem;">
+                        Progressive scarring of lung tissue requiring early detection and monitoring.
+                    </p>
+                    <div class="innovation-opportunities">
+                        <h4>Innovation Opportunities</h4>
+                        <ul class="opportunity-list">
+                            <li>Early imaging detection AI</li>
+                            <li>Disease progression monitoring</li>
+                            <li>Symptom tracking tools</li>
+                            <li>Tele-rehabilitation systems</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="disease-card">
+                    <div class="disease-header">
+                        <div class="disease-icon">
+                            <i class="fas fa-procedures"></i>
+                        </div>
+                        <h3 class="disease-title">Sleep & Ventilation</h3>
+                    </div>
+                    <p style="color: var(--gray-600); font-size: 0.9375rem;">
+                        Respiratory conditions affecting sleep quality and ventilation efficiency.
+                    </p>
+                    <div class="innovation-opportunities">
+                        <h4>Innovation Opportunities</h4>
+                        <ul class="opportunity-list">
+                            <li>Non-invasive monitoring devices</li>
+                            <li>Sleep apnea detection tools</li>
+                            <li>Ventilation optimization systems</li>
+                            <li>Home-based diagnostic devices</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4D Innovation Pathways -->
+    <section class="innovation-pathways section" id="innovation">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-subtitle">Our Approach</div>
+                <h2>Four Dimensions of Respiratory Innovation</h2>
+                <p class="text-lead">
+                    We address the complete innovation lifecycle—from technical development 
+                    to clinical adoption and workflow integration.
+                </p>
+            </div>
+
+            <div class="pathway-grid">
+                <!-- Digital Health Card -->
+                <div class="pathway-card">
+                    <h3><i class="fas fa-mobile-alt"></i> Digital Health</h3>
+                    <p class="pathway-description">
+                        Platforms for remote monitoring, virtual care, and patient engagement 
+                        that extend care beyond the clinic.
+                    </p>
+                    
+                    <div class="innovation-list">
+                        <h4>Current Work:</h4>
+                        <li>Remote monitoring for COPD patients</li>
+                        <li>Virtual pulmonary rehabilitation</li>
+                        <li>Mobile asthma management</li>
+                        <li>Tele-pulmonary consultations</li>
+                    </div>
+
+                    <div class="status-box">
+                        <p><strong>Partner Opportunities:</strong> Co-development, validation studies, implementation pilots.</p>
+                    </div>
+                </div>
+
+                <!-- Medical Devices Card -->
+                <div class="pathway-card">
+                    <h3><i class="fas fa-tools"></i> Medical Devices</h3>
+                    <p class="pathway-description">
+                        Next-generation devices for respiratory diagnosis, monitoring, 
+                        and treatment in clinical and home settings.
+                    </p>
+                    
+                    <div class="innovation-list">
+                        <h4>Current Work:</h4>
+                        <li>Smart inhaler development</li>
+                        <li>Wearable respiratory sensors</li>
+                        <li>Portable diagnostic tools</li>
+                        <li>Advanced ventilation systems</li>
+                    </div>
+
+                    <div class="status-box">
+                        <p><strong>Partner Opportunities:</strong> Device testing, clinical validation, regulatory guidance.</p>
+                    </div>
+                </div>
+
+                <!-- AI & Data Science Card -->
+                <div class="pathway-card">
+                    <h3><i class="fas fa-robot"></i> AI & Data Science</h3>
+                    <p class="pathway-description">
+                        Intelligent systems that improve diagnosis, predict outcomes, 
+                        and personalize treatment plans.
+                    </p>
+                    
+                    <div class="innovation-list">
+                        <h4>Current Work:</h4>
+                        <li>AI-assisted imaging analysis</li>
+                        <li>Predictive analytics for exacerbations</li>
+                        <li>Personalized treatment algorithms</li>
+                        <li>Clinical decision support</li>
+                    </div>
+
+                    <div class="status-box">
+                        <p><strong>Partner Opportunities:</strong> Algorithm validation, data partnerships, implementation.</p>
+                    </div>
+                </div>
+
+                <!-- NEW: Integration & Adoption Card -->
+                <div class="pathway-card integration-card">
+                    <h3><i class="fas fa-project-diagram"></i> Integration & Adoption</h3>
+                    <p class="pathway-description">
+                        Making innovation actually work in clinical practice through 
+                        seamless integration and workflow optimization.
+                    </p>
+                    
+                    <div class="innovation-list">
+                        <h4>Current Work:</h4>
+                        <li>Interoperable EHR integrations</li>
+                        <li>Clinical workflow optimization</li>
+                        <li>Change management frameworks</li>
+                        <li>Adoption measurement systems</li>
+                    </div>
+
+                    <div class="integration-box">
+                        <h4 style="color: var(--integration-purple); margin-bottom: 0.5rem; font-size: 1rem;">The Missing Piece</h4>
+                        <p style="color: var(--gray-600); font-size: 0.9375rem; margin: 0;">
+                            Great technologies often fail without proper integration. We ensure 
+                            innovation reduces burden—not creates it—for clinicians and administrators.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Integration Focus Callout -->
+            <div class="integration-callout">
+                <div class="integration-content">
+                    <h3 style="color: white; margin-bottom: 1rem;">Beyond Technology: Making Innovation Work</h3>
+                    <p style="color: rgba(255, 255, 255, 0.9); margin-bottom: 1.5rem; line-height: 1.6;">
+                        Our unique fourth dimension ensures that innovations don't just work in theory—they work 
+                        <strong>in practice</strong>. We focus on interoperability, workflow integration, and adoption 
+                        strategies so clinicians can focus on patient care, not technology management.
+                    </p>
+                    
+                    <div style="display: flex; justify-content: center; gap: 2rem; margin-top: 1.5rem; flex-wrap: wrap;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: white;">↓40%</div>
+                            <div style="font-size: 0.875rem; color: rgba(255, 255, 255, 0.8);">Clinical admin time reduction</div>
+                        </div>
+                        
+                        <div style="width: 1px; background: rgba(255, 255, 255, 0.3);"></div>
+                        
+                        <div style="text-align: center;">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: white;">↑75%</div>
+                            <div style="font-size: 0.875rem; color: rgba(255, 255, 255, 0.8);">Technology adoption rates</div>
+                        </div>
+                        
+                        <div style="width: 1px; background: rgba(255, 255, 255, 0.3);"></div>
+                        
+                        <div style="text-align: center;">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: white;">3-6 months</div>
+                            <div style="font-size: 0.875rem; color: rgba(255, 255, 255, 0.8);">Faster to full integration</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Active Projects -->
+    <section class="active-projects section" id="projects">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-subtitle">Current Projects</div>
+                <h2>Active Projects Seeking Partners</h2>
+                <p class="text-lead">
+                    Explore our ongoing work where collaboration can accelerate development 
+                    and clinical impact.
+                </p>
+            </div>
+
+            <div class="table-controls">
+                <div class="search-box">
+                    <i class="fas fa-search" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--gray-400);"></i>
+                    <input type="text" class="search-input" id="projectSearch" placeholder="Search projects..." onkeyup="filterProjects()">
+                </div>
+                
+                <div class="filter-buttons">
+                    <button class="filter-btn active" onclick="filterByCategory('all')">All Projects</button>
+                    <button class="filter-btn" onclick="filterByCategory('device')">Devices</button>
+                    <button class="filter-btn" onclick="filterByCategory('digital')">Digital Health</button>
+                    <button class="filter-btn" onclick="filterByCategory('ai')">AI/Data</button>
+                    <button class="filter-btn" onclick="filterByCategory('integration')">Integration</button>
+                </div>
+            </div>
+
+            <!-- Disease Filters -->
+            <div style="margin-bottom: 1.5rem;">
+                <div style="font-size: 0.875rem; color: var(--gray-600); margin-bottom: 0.5rem; font-weight: 500;">
+                    Filter by disease focus:
+                </div>
+                <div class="disease-filters">
+                    <button class="disease-filter active" onclick="filterByDisease('all')">All Diseases</button>
+                    <button class="disease-filter" onclick="filterByDisease('copd')">COPD</button>
+                    <button class="disease-filter" onclick="filterByDisease('asthma')">Asthma</button>
+                    <button class="disease-filter" onclick="filterByDisease('ild')">ILD</button>
+                    <button class="disease-filter" onclick="filterByDisease('sleep')">Sleep</button>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="projects-table" id="projectsTable">
+                    <thead>
+                        <tr>
+                            <th>Project Type</th>
+                            <th>Project Name</th>
+                            <th>Disease Focus</th>
+                            <th>Status</th>
+                            <th>Partner Needs</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-category="device" data-disease="copd">
+                            <td>
+                                <span class="project-category category-device">
+                                    <i class="fas fa-toolbox"></i> Device
+                                </span>
+                            </td>
+                            <td>
+                                <strong>SmartResp Wearable Monitor</strong>
+                                <p class="text-small">Continuous respiratory monitoring for COPD patients with early warning system</p>
+                            </td>
+                            <td>COPD</td>
+                            <td><span class="status-badge status-active">Pilot Phase</span></td>
+                            <td>
+                                <div class="collaboration-tags">
+                                    <span class="collaboration-tag">Manufacturing</span>
+                                    <span class="collaboration-tag">Regulatory</span>
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn btn-outline" onclick="showDeepDive(1)">
+                                    <i class="fas fa-info-circle"></i> Details
+                                </button>
+                            </td>
+                        </tr>
+                        
+                        <tr data-category="digital" data-disease="asthma">
+                            <td>
+                                <span class="project-category category-digital">
+                                    <i class="fas fa-mobile-alt"></i> Digital
+                                </span>
+                            </td>
+                            <td>
+                                <strong>Asthma Management Platform</strong>
+                                <p class="text-small">Integrated mobile app with sensor data and personalized care plans</p>
+                            </td>
+                            <td>Asthma</td>
+                            <td><span class="status-badge status-active">Development</span></td>
+                            <td>
+                                <div class="collaboration-tags">
+                                    <span class="collaboration-tag">Software Dev</span>
+                                    <span class="collaboration-tag">Clinical Testing</span>
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn btn-outline" onclick="showDeepDive(2)">
+                                    <i class="fas fa-info-circle"></i> Details
+                                </button>
+                            </td>
+                        </tr>
+                        
+                        <tr data-category="ai" data-disease="ild">
+                            <td>
+                                <span class="project-category category-ai">
+                                    <i class="fas fa-robot"></i> AI
+                                </span>
+                            </td>
+                            <td>
+                                <strong>Pulmonary Imaging AI</strong>
+                                <p class="text-small">Machine learning for early detection of lung abnormalities in CT scans</p>
+                            </td>
+                            <td>ILD</td>
+                            <td><span class="status-badge status-active">Validation</span></td>
+                            <td>
+                                <div class="collaboration-tags">
+                                    <span class="collaboration-tag">Algorithm Testing</span>
+                                    <span class="collaboration-tag">Data Partnerships</span>
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn btn-outline" onclick="showDeepDive(3)">
+                                    <i class="fas fa-info-circle"></i> Details
+                                </button>
+                            </td>
+                        </tr>
+                        
+                        <tr data-category="integration" data-disease="all">
+                            <td>
+                                <span class="project-category category-integration">
+                                    <i class="fas fa-project-diagram"></i> Integration
+                                </span>
+                            </td>
+                            <td>
+                                <strong>Clinical Workflow Integration Platform</strong>
+                                <p class="text-small">Interoperable system for seamless integration of new technologies into clinical workflows</p>
+                            </td>
+                            <td>All Diseases</td>
+                            <td><span class="status-badge status-active">Development</span></td>
+                            <td>
+                                <div class="collaboration-tags">
+                                    <span class="collaboration-tag">EHR Integration</span>
+                                    <span class="collaboration-tag">Workflow Design</span>
+                                    <span class="collaboration-tag">Implementation</span>
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn btn-outline" onclick="showDeepDive(4)">
+                                    <i class="fas fa-info-circle"></i> Details
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partnership Models -->
+    <section class="partnership-models section" id="partnership">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-subtitle">Working Together</div>
+                <h2>How We Collaborate</h2>
+                <p class="text-lead">
+                    Flexible partnership approaches designed to create shared value while 
+                    accelerating innovation in respiratory care.
+                </p>
+            </div>
+
+            <div class="models-grid">
+                <div class="model-card">
+                    <h3><i class="fas fa-code-branch"></i> Co-Development</h3>
+                    <p class="model-description">
+                        Joint development combining clinical insight with technical expertise 
+                        and shared resources.
+                    </p>
+                    
+                    <ul class="benefit-list">
+                        <li>Shared intellectual property</li>
+                        <li>Dedicated joint team</li>
+                        <li>Risk and reward sharing</li>
+                        <li>Faster time to impact</li>
+                    </ul>
+                </div>
+
+                <div class="model-card">
+                    <h3><i class="fas fa-clipboard-check"></i> Clinical Validation</h3>
+                    <p class="model-description">
+                        Testing and validating your technology with our patient populations 
+                        using established clinical protocols.
+                    </p>
+                    
+                    <ul class="benefit-list">
+                        <li>Real-world evidence generation</li>
+                        <li>Regulatory pathway guidance</li>
+                        <li>Clinical protocol co-design</li>
+                        <li>Joint publication opportunities</li>
+                    </ul>
+                </div>
+
+                <div class="model-card">
+                    <h3><i class="fas fa-handshake"></i> Ongoing Partnership</h3>
+                    <p class="model-description">
+                        Continuous collaboration across multiple projects with shared goals 
+                        in respiratory innovation.
+                    </p>
+                    
+                    <ul class="benefit-list">
+                        <li>Priority access to clinical expertise</li>
+                        <li>Shared innovation pipeline</li>
+                        <li>Long-term relationship benefits</li>
+                        <li>Early access to new opportunities</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ready-to-Work Capabilities -->
+    <section class="capabilities section" id="capabilities">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-subtitle">Our Capabilities</div>
+                <h2>Built for Effective Collaboration</h2>
+                <p class="text-lead">
+                    We've developed resources and processes that make partnerships efficient, 
+                    compliant, and productive from the start.
+                </p>
+            </div>
+
+            <div class="capabilities-grid">
+                <!-- Data Capabilities Card -->
+                <div class="capability-card">
+                    <div style="position: absolute; top: 0; right: 0; width: 100px; height: 100px; background: linear-gradient(135deg, #E6F0FF 0%, #DBEAFE 100%); border-radius: 0 0 0 100px;"></div>
+                    
+                    <div style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem;">
+                        <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #3B82F6, #1D4ED8); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem;">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div>
+                            <h3 style="margin: 0; color: var(--gray-900);">Data & Analytics</h3>
+                            <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap;">
+                                <span style="padding: 0.25rem 0.75rem; background: #E0F2FE; color: #0369A1; border-radius: 4px; font-size: 0.75rem; font-weight: 600;">CURATED</span>
+                                <span style="padding: 0.25rem 0.75rem; background: #DCFCE7; color: #15803D; border-radius: 4px; font-size: 0.75rem; font-weight: 600;">STRUCTURED</span>
+                                <span style="padding: 0.25rem 0.75rem; background: #FEF3C7; color: #92400E; border-radius: 4px; font-size: 0.75rem; font-weight: 600;">ANNOTATED</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p style="color: var(--gray-600); margin-bottom: 1.5rem; line-height: 1.6;">
+                        We maintain structured, analysis-ready datasets with clinical annotations, 
+                        making data partnership efficient and productive.
+                    </p>
+
+                    <div style="background: #F0F9FF; padding: 1.25rem; border-radius: 8px; border-left: 4px solid #3B82F6;">
+                        <h4 style="color: #1E40AF; margin-bottom: 0.5rem; font-size: 1rem;">What You Get:</h4>
+                        <ul style="color: var(--gray-600); font-size: 0.9375rem; padding-left: 1.5rem;">
+                            <li style="margin-bottom: 0.5rem;">Pre-structured data ready for analysis</li>
+                            <li style="margin-bottom: 0.5rem;">Clinician-annotated with ground truth</li>
+                            <li style="margin-bottom: 0.5rem;">Compatible with common analytical tools</li>
+                            <li>Deployment-ready testing frameworks</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Process Capabilities Card -->
+                <div class="capability-card">
+                    <div style="position: absolute; top: 0; right: 0; width: 100px; height: 100px; background: linear-gradient(135deg, #DCFCE7 0%, #BBF7D0 100%); border-radius: 0 0 0 100px;"></div>
+                    
+                    <div style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem;">
+                        <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #10B981, #059669); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem;">
+                            <i class="fas fa-shield-check"></i>
+                        </div>
+                        <div>
+                            <h3 style="margin: 0; color: var(--gray-900);">Streamlined Process</h3>
+                            <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap;">
+                                <span style="padding: 0.25rem 0.75rem; background: #D1FAE5; color: #065F46; border-radius: 4px; font-size: 0.75rem; font-weight: 600;">GUIDED</span>
+                                <span style="padding: 0.25rem 0.75rem; background: #FEF3C7; color: #92400E; border-radius: 4px; font-size: 0.75rem; font-weight: 600;">EFFICIENT</span>
+                                <span style="padding: 0.25rem 0.75rem; background: #E0F2FE; color: #0369A1; border-radius: 4px; font-size: 0.75rem; font-weight: 600;">COMPLIANT</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p style="color: var(--gray-600); margin-bottom: 1.5rem; line-height: 1.6;">
+                        We work alongside partners through established processes, providing guidance 
+                        at every step while ensuring appropriate compliance.
+                    </p>
+
+                    <div style="background: #F7FEE7; padding: 1.5rem; border-radius: 8px; margin-top: 1.5rem;">
+                        <div style="display: flex; align-items: center; justify-content: space-between; position: relative;">
+                            <!-- Connection line -->
+                            <div style="position: absolute; top: 50%; left: 40px; right: 40px; height: 2px; background: #BBF7D0; transform: translateY(-50%); z-index: 1;"></div>
+                            
+                            <!-- Step 1 -->
+                            <div style="position: relative; z-index: 2; text-align: center; flex: 1;">
+                                <div style="width: 40px; height: 40px; background: #3B82F6; border: 3px solid white; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; margin: 0 auto 0.5rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                                    1
+                                </div>
+                                <div style="font-size: 0.75rem; font-weight: 600; color: var(--gray-700);">Explore</div>
+                                <div style="font-size: 0.7rem; color: var(--gray-500); margin-top: 0.25rem;">No commitment</div>
+                            </div>
+
+                            <!-- Step 2 -->
+                            <div style="position: relative; z-index: 2; text-align: center; flex: 1;">
+                                <div style="width: 40px; height: 40px; background: #10B981; border: 3px solid white; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; margin: 0 auto 0.5rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                                    2
+                                </div>
+                                <div style="font-size: 0.75rem; font-weight: 600; color: var(--gray-700);">Design</div>
+                                <div style="font-size: 0.7rem; color: var(--gray-500); margin-top: 0.25rem;">We collaborate</div>
+                            </div>
+
+                            <!-- Step 3 -->
+                            <div style="position: relative; z-index: 2; text-align: center; flex: 1;">
+                                <div style="width: 40px; height: 40px; background: #F59E0B; border: 3px solid white; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; margin: 0 auto 0.5rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                                    3
+                                </div>
+                                <div style="font-size: 0.75rem; font-weight: 600; color: var(--gray-700);">Execute</div>
+                                <div style="font-size: 0.7rem; color: var(--gray-500); margin-top: 0.25rem;">Together</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Callout -->
+            <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #1E40AF, #3B82F6); border-radius: 12px; color: white;">
+                <div style="max-width: 700px; margin: 0 auto;">
+                    <h3 style="color: white; margin-bottom: 1rem;">The Partnership Advantage</h3>
+                    <p style="color: rgba(255, 255, 255, 0.9); margin-bottom: 1.5rem; line-height: 1.6;">
+                        We focus on making collaboration efficient and productive, so you can concentrate 
+                        on developing innovative solutions for respiratory care.
+                    </p>
+                    
+                    <div style="display: flex; justify-content: center; gap: 2rem; margin-top: 1.5rem; flex-wrap: wrap;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: white;">6-8 weeks</div>
+                            <div style="font-size: 0.875rem; color: rgba(255, 255, 255, 0.8);">To structured pilot study</div>
+                        </div>
+                        
+                        <div style="width: 1px; background: rgba(255, 255, 255, 0.3);"></div>
+                        
+                        <div style="text-align: center;">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: white;">Established</div>
+                            <div style="font-size: 0.875rem; color: rgba(255, 255, 255, 0.8);">Data frameworks & processes</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Start -->
+    <section class="quick-start section" id="quick-start">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-subtitle">Get Started</div>
+                <h2>Quick Start Opportunities</h2>
+                <p class="text-lead">
+                    Begin with focused projects that demonstrate value and build momentum 
+                    for larger collaborations.
+                </p>
+            </div>
+
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="priority-tag priority-p1">Quick Start</span>
+                        <span class="effort-tag">3-6 Months</span>
+                    </div>
+                    
+                    <h3 class="project-title">Clinical Workflow Review</h3>
+                    <p class="project-description">
+                        Collaborate with our clinical teams to identify opportunities for 
+                        technology integration in real clinical settings.
+                    </p>
+                    
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin: 1rem 0; font-size: 0.875rem;">
+                        <i class="fas fa-clock" style="color: var(--gray-500);"></i>
+                        <span>Clinical time: <strong>2 hours/month</strong></span>
+                    </div>
+                    
+                    <div class="impact-list">
+                        <h4>What You Get:</h4>
+                        <ul>
+                            <li>Integration opportunity assessment</li>
+                            <li>Workflow optimization insights</li>
+                            <li>Clinical team engagement</li>
+                            <li>Roadmap for next steps</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="priority-tag priority-p1">Quick Start</span>
+                        <span class="effort-tag">4-8 Months</span>
+                    </div>
+                    
+                    <h3 class="project-title">Technology Pilot</h3>
+                    <p class="project-description">
+                        Conduct a focused pilot study with defined patient groups and 
+                        measurable clinical outcomes.
+                    </p>
+                    
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin: 1rem 0; font-size: 0.875rem;">
+                        <i class="fas fa-clock" style="color: var(--gray-500);"></i>
+                        <span>Clinical time: <strong>4 hours/month</strong></span>
+                    </div>
+                    
+                    <div class="impact-list">
+                        <h4>What You Get:</h4>
+                        <ul>
+                            <li>Real-world feasibility data</li>
+                            <li>User feedback collection</li>
+                            <li>Preliminary efficacy evidence</li>
+                            <li>Basis for larger studies</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="priority-tag priority-p1">Quick Start</span>
+                        <span class="effort-tag">2-4 Months</span>
+                    </div>
+                    
+                    <h3 class="project-title">Expert Advisory Session</h3>
+                    <p class="project-description">
+                        Engage with our clinical experts for targeted feedback on product 
+                        design and clinical utility.
+                    </p>
+                    
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin: 1rem 0; font-size: 0.875rem;">
+                        <i class="fas fa-clock" style="color: var(--gray-500);"></i>
+                        <span>Clinical time: <strong>One 2-hour session</strong></span>
+                    </div>
+                    
+                    <div class="impact-list">
+                        <h4>What You Get:</h4>
+                        <ul>
+                            <li>Expert clinical feedback</li>
+                            <li>Regulatory pathway insights</li>
+                            <li>Market positioning advice</li>
+                            <li>Relationship foundation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#hero" class="logo" style="color: white; margin-bottom: 1rem;">
+                        <div class="logo-icon">P</div>
+                        <div class="logo-text">
+                            <div class="logo-main">Pneumology Innovation Hub</div>
+                            <div class="logo-sub">University Medical Center</div>
+                        </div>
+                    </a>
+                    <p class="footer-description">
+                        We partner with innovators to advance respiratory care through 
+                        clinical expertise, collaborative development, and focused innovation.
+                    </p>
+                    <div style="margin-top: 1.5rem;">
+                        <div style="font-weight: 600; color: white; margin-bottom: 0.25rem;">Partnership Contact</div>
+                        <div style="color: rgba(255,255,255,0.9);">Baraka Laiza, Biomedical Engineer</div>
+                        <div style="color: rgba(255,255,255,0.8); font-size: 0.875rem; margin-top: 0.25rem;">
+                            Technical translation, workflow integration & partnership coordination
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="footer-heading">Innovation Areas</h4>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="#clinical-context">Disease Focus</a></li>
+                        <li class="footer-link"><a href="#innovation">4D Innovation</a></li>
+                        <li class="footer-link"><a href="#projects">Current Projects</a></li>
+                        <li class="footer-link"><a href="#capabilities">Our Capabilities</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-heading">Partnership</h4>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="#partnership">Collaboration Models</a></li>
+                        <li class="footer-link"><a href="#capabilities">Our Capabilities</a></li>
+                        <li class="footer-link"><a href="#quick-start">Quick Start</a></li>
+                        <li class="footer-link"><a href="#contact">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-heading">Contact</h4>
+                    <ul class="footer-links">
+                        <li class="footer-link">
+                            <a href="mailto:partnerships@pneumology.org">
+                                <i class="fas fa-envelope" style="margin-right: 0.5rem;"></i>
+                                partnerships@pneumology.org
+                            </a>
+                        </li>
+                        <li class="footer-link">
+                            <a href="tel:+12345678900">
+                                <i class="fas fa-phone" style="margin-right: 0.5rem;"></i>
+                                +1 (234) 567-8900
+                            </a>
+                        </li>
+                        <li class="footer-link">
+                            <a href="#">
+                                <i class="fas fa-map-marker-alt" style="margin-right: 0.5rem;"></i>
+                                Innovation Center<br>
+                                Medical Campus
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© <span id="currentYear">2024</span> Pneumology Innovation Hub. Partnering to advance respiratory care.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Deep Dive Modal -->
+    <div class="modal-overlay" id="deepdiveModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center;">
+        <div class="deepdive-modal">
+            <div class="deepdive-header">
+                <div>
+                    <span class="project-category category-device" id="modalCategory">Medical Device</span>
+                    <h2 id="modalTitle">SmartResp Wearable Monitor</h2>
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-top: 0.5rem;">
+                        <span class="status-badge status-active" id="modalStatus">Pilot Phase</span>
+                        <span style="font-size: 0.875rem; color: var(--gray-500);" id="modalLead">Dr. Maria Rodriguez</span>
+                    </div>
+                </div>
+                <button onclick="closeDeepDive()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--gray-500);">×</button>
+            </div>
+            
+            <div id="modalContent">
+                <!-- Content loaded dynamically -->
+            </div>
+            
+            <div class="collaboration-cta">
+                <h3 style="color: white; margin-bottom: 1rem;">Interested in This Project?</h3>
+                <p style="color: rgba(255,255,255,0.9); margin-bottom: 1.5rem;">Let's discuss how you can contribute to this innovation.</p>
+                <button class="btn btn-primary" onclick="openContactModal()" style="background: white; color: var(--primary-blue);">
+                    <i class="fas fa-handshake"></i> Start Conversation
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div class="modal-overlay" id="contactModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center;">
+        <div class="modal" style="background: white; border-radius: 12px; padding: 2rem; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem;">
+                <h2 style="margin: 0;">Start a Partnership Conversation</h2>
+                <button onclick="closeContactModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--gray-500);">×</button>
+            </div>
+            
+            <form id="contactForm" onsubmit="submitForm(event)" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <div>
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Name</label>
+                    <input type="text" required style="width: 100%; padding: 0.875rem; border: 1px solid var(--gray-300); border-radius: 6px;">
+                </div>
+                
+                <div>
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Email</label>
+                    <input type="email" required style="width: 100%; padding: 0.875rem; border: 1px solid var(--gray-300); border-radius: 6px;">
+                </div>
+                
+                <div>
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Organization</label>
+                    <input type="text" required style="width: 100%; padding: 0.875rem; border: 1px solid var(--gray-300); border-radius: 6px;">
+                </div>
+                
+                <div>
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Role</label>
+                    <select style="width: 100%; padding: 0.875rem; border: 1px solid var(--gray-300); border-radius: 6px;">
+                        <option>Business Development</option>
+                        <option>Research & Development</option>
+                        <option>Clinical Affairs</option>
+                        <option>Executive Leadership</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Interest Area</label>
+                    <select style="width: 100%; padding: 0.875rem; border: 1px solid var(--gray-300); border-radius: 6px;">
+                        <option>Medical Device Innovation</option>
+                        <option>Digital Health Solutions</option>
+                        <option>AI/Data Applications</option>
+                        <option>Clinical Validation</option>
+                        <option>Integration & Adoption</option>
+                        <option>General Partnership</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">What would you like to discuss?</label>
+                    <textarea rows="4" style="width: 100%; padding: 0.875rem; border: 1px solid var(--gray-300); border-radius: 6px; resize: vertical;"></textarea>
+                </div>
+                
+                <div style="font-size: 0.75rem; color: var(--gray-500); text-align: center; margin-top: 1rem; padding: 0.75rem; background: var(--gray-50); border-radius: 6px;">
+                    <i class="fas fa-info-circle" style="margin-right: 0.25rem;"></i>
+                    All partnerships follow established processes. Initial discussions are exploratory 
+                    and non-binding.
+                </div>
+                
+                <button type="submit" style="background: var(--primary-blue); color: white; border: none; padding: 1rem; border-radius: 6px; font-weight: 600; cursor: pointer; margin-top: 0.5rem;">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // ===== Navigation Scroll Effect =====
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navigation');
+            if (window.scrollY > 50) {
+                nav.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+            }
+        });
+
+        // ===== Smooth Scrolling =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // ===== Projects Table Filtering =====
+        function filterProjects() {
+            const searchTerm = document.getElementById('projectSearch').value.toLowerCase();
+            const rows = document.querySelectorAll('#projectsTable tbody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        function filterByCategory(category) {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            const rows = document.querySelectorAll('#projectsTable tbody tr');
+            
+            rows.forEach(row => {
+                if (category === 'all') {
+                    row.style.display = '';
+                } else {
+                    const rowCategory = row.getAttribute('data-category');
+                    if (rowCategory === category) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        function filterByDisease(disease) {
+            document.querySelectorAll('.disease-filter').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            const rows = document.querySelectorAll('#projectsTable tbody tr');
+            
+            rows.forEach(row => {
+                if (disease === 'all') {
+                    row.style.display = '';
+                } else {
+                    const rowDisease = row.getAttribute('data-disease');
+                    if (rowDisease === disease) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        // ===== Deep Dive Modal Content =====
+        const projectDetails = {
+            1: {
+                title: "SmartResp Wearable Monitor",
+                category: "Medical Device",
+                status: "Pilot Phase",
+                lead: "Dr. Maria Rodriguez",
+                description: "Continuous respiratory monitoring device for COPD patients with early warning system for exacerbations.",
+                problem: "COPD patients experience sudden exacerbations that often lead to hospitalizations. Early detection could prevent many of these events.",
+                solution: "A wearable device that monitors respiratory patterns 24/7 and uses machine learning to detect early signs of exacerbation.",
+                technologies: ["Biometric Sensors", "Machine Learning", "Bluetooth Low Energy", "Mobile App Integration"],
+                specs: {
+                    "Accuracy": "92% sensitivity for exacerbation prediction",
+                    "Battery Life": "7 days continuous monitoring",
+                    "Connectivity": "BLE 5.2, Cloud sync",
+                    "Regulatory": "FDA Class II pathway identified",
+                    "Patient Testing": "50 patients in pilot phase"
+                },
+                partnershipNeeds: ["Manufacturing partner", "Regulatory strategy", "Clinical validation study design", "Market access planning"],
+                timeline: "12-18 months to market",
+                impact: "Potential to reduce COPD-related hospitalizations by 40%"
+            },
+            2: {
+                title: "Asthma Management Platform",
+                category: "Digital Health",
+                status: "Development Phase",
+                lead: "Dr. James Wilson",
+                description: "Integrated mobile platform combining sensor data, medication tracking, and personalized care plans.",
+                problem: "Asthma management is fragmented across multiple tools, leading to poor adherence and uncontrolled symptoms.",
+                solution: "A unified platform that connects patients, providers, and data for comprehensive asthma management.",
+                technologies: ["iOS/Android Native", "Cloud Backend", "API Integration", "Predictive Analytics"],
+                specs: {
+                    "Platform": "iOS & Android native apps",
+                    "Integrations": "EHR connectivity, pharmacy data, sensor APIs",
+                    "Users": "Designed for 10,000+ concurrent users",
+                    "Compliance": "HIPAA compliant architecture",
+                    "Languages": "English & Spanish supported"
+                },
+                partnershipNeeds: ["Software development", "UX/UI design", "Clinical testing", "Implementation support"],
+                timeline: "6-9 months to pilot launch",
+                impact: "Expected to improve medication adherence by 60% and reduce ER visits by 35%"
+            },
+            3: {
+                title: "Pulmonary Imaging AI",
+                category: "AI Solution",
+                status: "Validation Phase",
+                lead: "Dr. Michael Johnson",
+                description: "Machine learning system for early detection of lung abnormalities in CT scans.",
+                problem: "Radiologist interpretation of lung CT scans is time-consuming and can miss subtle early signs of disease.",
+                solution: "AI-assisted reading that highlights potential abnormalities and provides quantitative measurements.",
+                technologies: ["Deep Learning", "Computer Vision", "DICOM Integration", "Cloud Processing"],
+                specs: {
+                    "Algorithm": "CNN-based architecture",
+                    "Processing Time": "<30 seconds per scan",
+                    "Accuracy": "95% sensitivity for nodules >3mm",
+                    "Dataset": "Trained on 10,000+ annotated scans",
+                    "Integration": "PACS compatible, DICOM standard"
+                },
+                partnershipNeeds: ["Algorithm validation", "Clinical trial design", "Regulatory submission", "Commercialization strategy"],
+                timeline: "18-24 months to FDA clearance",
+                impact: "Could reduce diagnostic delays by 2-3 weeks and improve early detection rates"
+            },
+            4: {
+                title: "Clinical Workflow Integration Platform",
+                category: "Integration & Adoption",
+                status: "Development Phase",
+                lead: "Baraka Laiza",
+                description: "Interoperable system for seamless integration of new technologies into clinical workflows and EHR systems.",
+                problem: "New technologies create administrative burden and don't integrate well with existing clinical systems, reducing adoption and effectiveness.",
+                solution: "A middleware platform that connects new technologies with existing EHR and clinical systems through standardized APIs and workflows.",
+                technologies: ["HL7/FHIR APIs", "Workflow Engine", "Integration Middleware", "Adoption Analytics"],
+                specs: {
+                    "EHR Compatibility": "Epic, Cerner, Allscripts, MEDITECH",
+                    "Integration Time": "3-6 weeks per technology",
+                    "Workflow Templates": "15+ pre-built clinical workflows",
+                    "Adoption Tracking": "Real-time usage and impact analytics",
+                    "Compliance": "HIPAA, GDPR, local regulations"
+                },
+                partnershipNeeds: ["EHR Integration", "Workflow Design", "Implementation Partners", "Adoption Strategy"],
+                timeline: "6-9 months to department-wide rollout",
+                impact: "Reduce clinical admin time by 40% and increase technology adoption by 75%"
+            }
+        };
+
+        function showDeepDive(projectId) {
+            const project = projectDetails[projectId];
+            if (!project) return;
+            
+            document.getElementById('modalTitle').textContent = project.title;
+            document.getElementById('modalCategory').textContent = project.category;
+            document.getElementById('modalStatus').textContent = project.status;
+            document.getElementById('modalLead').textContent = project.lead;
+            
+            const content = `
+                <div>
+                    <h3 style="margin-bottom: 1rem;">Project Overview</h3>
+                    <p style="color: var(--gray-600); margin-bottom: 1.5rem; line-height: 1.7;">
+                        ${project.description}
+                    </p>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
+                        <div>
+                            <h4 style="margin-bottom: 0.75rem; color: var(--gray-700);">The Clinical Challenge</h4>
+                            <p style="color: var(--gray-600); font-size: 0.9375rem; line-height: 1.6;">
+                                ${project.problem}
+                            </p>
+                        </div>
+                        <div>
+                            <h4 style="margin-bottom: 0.75rem; color: var(--gray-700);">Our Solution</h4>
+                            <p style="color: var(--gray-600); font-size: 0.9375rem; line-height: 1.6;">
+                                ${project.solution}
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <h4 style="margin-bottom: 1rem;">Technologies Used</h4>
+                    <div class="deepdive-tech">
+                        ${project.technologies.map(tech => `
+                            <span class="tech-tag">${tech}</span>
+                        `).join('')}
+                    </div>
+                    
+                    <h4 style="margin: 2rem 0 1rem;">Key Specifications</h4>
+                    <div class="specs-grid">
+                        ${Object.entries(project.specs).map(([key, value]) => `
+                            <div class="spec-item">
+                                <div class="spec-label">${key}</div>
+                                <div class="spec-value">${value}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    <h4 style="margin: 2rem 0 1rem;">Partner Opportunities</h4>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        ${project.partnershipNeeds.map(need => `
+                            <span style="padding: 0.5rem 1rem; background: var(--primary-blue-light); 
+                                       color: var(--primary-blue); border-radius: 4px; font-size: 0.875rem;">
+                                ${need}
+                            </span>
+                        `).join('')}
+                    </div>
+                    
+                    <div style="background: var(--gray-50); padding: 1.5rem; border-radius: 8px; margin: 2rem 0;">
+                        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+                            <div>
+                                <div style="font-size: 0.875rem; color: var(--gray-500);">Timeline</div>
+                                <div style="font-weight: 600; color: var(--gray-900);">${project.timeline}</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.875rem; color: var(--gray-500);">Potential Impact</div>
+                                <div style="font-weight: 600; color: var(--gray-900);">${project.impact}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('modalContent').innerHTML = content;
+            document.getElementById('deepdiveModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDeepDive() {
+            document.getElementById('deepdiveModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // ===== Contact Modal Functions =====
+        function openContactModal() {
+            document.getElementById('contactModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeContactModal() {
+            document.getElementById('contactModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function submitForm(e) {
+            e.preventDefault();
+            alert('Thank you for your interest. We will contact you within 2 business days.');
+            closeContactModal();
+        }
+
+        // ===== Initialize =====
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current year in footer
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            // Update navigation active state on scroll
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (scrollY >= (sectionTop - 100)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // ===== Accessibility Improvements =====
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                if (document.getElementById('deepdiveModal').style.display === 'flex') {
+                    closeDeepDive();
+                }
+                if (document.getElementById('contactModal').style.display === 'flex') {
+                    closeContactModal();
+                }
+            }
+        });
+
+        // Make buttons focusable
+        document.querySelectorAll('button').forEach(el => {
+            el.setAttribute('tabindex', '0');
+            el.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
