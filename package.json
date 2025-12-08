@@ -4,7 +4,7 @@
   "description": "Pneumology Innovation Hub Partnership Platform",
   "main": "index.html",
   "scripts": {
-    "start": "npx serve ."
+    "start": "npx serve . -l tcp://0.0.0.0:$PORT"
   },
   "dependencies": {
     "serve": "^14.2.1"
