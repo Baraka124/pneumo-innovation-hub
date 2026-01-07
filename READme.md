@@ -1,6 +1,3 @@
-SPIROLITE PROFESSIONAL
-Advanced Lung Function Calculator & Post-Transplant Monitor
-
 🎯 PROJECT OVERVIEW
 Spirolite Professional is a medical-grade web application designed for tracking lung function (spirometry) in post-transplant patients. It provides clinicians with tools for quick calculations, long-term monitoring, and professional reporting in an offline-capable Progressive Web App (PWA).
 
