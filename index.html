@@ -2,7 +2,7 @@
 <html lang="en" data-lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Pneumology Research & Innovation | HUAC Hospital Universitario A Coruña</title>
     
     <!-- SEO Meta Tags -->
@@ -1316,7 +1316,9 @@
         <div class="container header-container">
             <a href="index.html" class="logo">
                 <div class="logo-icon">
+                    <!-- Simplified SVG that works on all browsers -->
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" fill="none">
+                        <rect width="96" height="96" fill="none"/>
                         <path d="M20 54 C20 30 36 22 46 28 V66 C46 74 38 82 28 82 C22 82 20 76 20 70 Z" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M76 54 C76 30 60 22 50 28 V66 C50 74 58 82 68 82 C74 82 76 76 76 70 Z" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
                         <line x1="48" y1="18" x2="48" y2="66" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
@@ -1390,7 +1392,9 @@
         <div class="mobile-nav-header">
             <div class="logo">
                 <div class="logo-icon">
+                    <!-- Simplified SVG -->
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" fill="none" width="36" height="36">
+                        <rect width="96" height="96" fill="none"/>
                         <path d="M20 54 C20 30 36 22 46 28 V66 C46 74 38 82 28 82 C22 82 20 76 20 70 Z" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M76 54 C76 30 60 22 50 28 V66 C50 74 58 82 68 82 C74 82 76 76 76 70 Z" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
                         <line x1="48" y1="18" x2="48" y2="66" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
@@ -1972,6 +1976,9 @@
     </footer>
 
     <script>
+        // Initialize switchingLanguage variable
+        let switchingLanguage = false;
+        
         // ===== MOBILE MENU =====
         const mobileMenuToggle = document.getElementById('mobileMenuToggle');
         const mobileNav = document.getElementById('mobileNav');
@@ -1996,9 +2003,17 @@
             mobileMenuToggle.setAttribute('aria-expanded', 'false');
         }
         
-        mobileMenuToggle.addEventListener('click', openMobileMenu);
-        mobileNavClose.addEventListener('click', closeMobileMenu);
-        mobileNavOverlay.addEventListener('click', closeMobileMenu);
+        if (mobileMenuToggle) {
+            mobileMenuToggle.addEventListener('click', openMobileMenu);
+        }
+        
+        if (mobileNavClose) {
+            mobileNavClose.addEventListener('click', closeMobileMenu);
+        }
+        
+        if (mobileNavOverlay) {
+            mobileNavOverlay.addEventListener('click', closeMobileMenu);
+        }
         
         document.querySelectorAll('.mobile-nav-link, .mobile-nav-cta').forEach(link => {
             link.addEventListener('click', closeMobileMenu);
@@ -2008,10 +2023,9 @@
         function switchLanguage(lang) {
             if (document.body.getAttribute('data-lang') === lang) return;
             
-            if (window.switchingLanguage) return;
-            window.switchingLanguage = true;
+            if (switchingLanguage) return;
+            switchingLanguage = true;
             
-            document.body.style.opacity = '0.9';
             const scrollPos = window.scrollY;
             
             document.body.setAttribute('data-lang', lang);
@@ -2023,34 +2037,42 @@
                 }
             });
             
+            // Force reflow
             document.body.offsetHeight;
             
             setTimeout(() => {
                 window.scrollTo(0, scrollPos);
-                document.body.style.opacity = '1';
-                window.switchingLanguage = false;
+                switchingLanguage = false;
             }, 50);
             
-            localStorage.setItem('huac_language', lang);
+            try {
+                localStorage.setItem('huac_language', lang);
+            } catch (e) {
+                console.log('Local storage not available');
+            }
         }
         
         // ===== HEADER SCROLL BEHAVIOR =====
         const header = document.getElementById('mainHeader');
         const scrollIndicator = document.getElementById('scrollIndicator');
         
-        window.addEventListener('scroll', () => {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            
-            const windowHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const scrollPercent = (scrollTop / windowHeight) * 100;
-            scrollIndicator.style.width = scrollPercent + '%';
-            
-            if (scrollTop > 10) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
+        if (header && scrollIndicator) {
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (document.documentElement.scrollHeight - window.innerHeight > 0) {
+                    const windowHeight = document.documentElement.scrollHeight - window.innerHeight;
+                    const scrollPercent = (scrollTop / windowHeight) * 100;
+                    scrollIndicator.style.width = scrollPercent + '%';
+                }
+                
+                if (scrollTop > 10) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+        }
 
         // ===== SMOOTH SCROLLING =====
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -2060,7 +2082,8 @@
                 if (targetId) {
                     const targetElement = document.getElementById(targetId);
                     if (targetElement) {
-                        const headerHeight = document.querySelector('.superior-header').offsetHeight;
+                        const headerElement = document.querySelector('.superior-header');
+                        const headerHeight = headerElement ? headerElement.offsetHeight : 72;
                         const targetPosition = targetElement.offsetTop - headerHeight;
                         
                         window.scrollTo({
@@ -2068,7 +2091,11 @@
                             behavior: 'smooth'
                         });
                         
-                        history.pushState(null, null, `#${targetId}`);
+                        try {
+                            history.pushState(null, null, `#${targetId}`);
+                        } catch (e) {
+                            location.hash = `#${targetId}`;
+                        }
                     }
                 }
             });
@@ -2078,23 +2105,25 @@
         const newsletterForm = document.getElementById('newsletterForm');
         const formSuccess = document.getElementById('formSuccess');
         
-        newsletterForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const emailInput = this.querySelector('input[name="email"]');
-            const email = emailInput.value;
-            
-            if (!email || !email.includes('@') || !email.includes('.')) {
-                alert('Please enter a valid email address.');
-                return;
-            }
-            
-            formSuccess.classList.add('show');
-            emailInput.value = '';
-            
-            setTimeout(() => {
-                formSuccess.classList.remove('show');
-            }, 5000);
-        });
+        if (newsletterForm && formSuccess) {
+            newsletterForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const emailInput = this.querySelector('input[name="email"]');
+                const email = emailInput.value;
+                
+                if (!email || !email.includes('@') || !email.includes('.')) {
+                    alert('Please enter a valid email address.');
+                    return;
+                }
+                
+                formSuccess.classList.add('show');
+                emailInput.value = '';
+                
+                setTimeout(() => {
+                    formSuccess.classList.remove('show');
+                }, 5000);
+            });
+        }
         
         // ===== SCROLL ANIMATIONS =====
         function initScrollAnimations() {
@@ -2118,24 +2147,57 @@
         
         // ===== INITIALIZATION =====
         document.addEventListener('DOMContentLoaded', function() {
-            const savedLang = localStorage.getItem('huac_language');
-            if (savedLang === 'es') {
-                switchLanguage('es');
+            // Load saved language
+            try {
+                const savedLang = localStorage.getItem('huac_language');
+                if (savedLang === 'es') {
+                    switchLanguage('es');
+                }
+            } catch (e) {
+                console.log('Could not load language preference');
             }
             
+            // Initialize animations
             initScrollAnimations();
             
-            if (window.scrollY > 10) {
+            // Initialize header state
+            if (header && window.scrollY > 10) {
                 header.classList.add('scrolled');
+            }
+            
+            // Check for hash in URL and scroll to it
+            if (window.location.hash) {
+                const targetId = window.location.hash.substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    setTimeout(() => {
+                        const headerElement = document.querySelector('.superior-header');
+                        const headerHeight = headerElement ? headerElement.offsetHeight : 72;
+                        const targetPosition = targetElement.offsetTop - headerHeight;
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }, 100);
+                }
             }
         });
         
         // ===== KEYBOARD NAVIGATION =====
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
+            if (e.key === 'Escape' && mobileNav && mobileNav.classList.contains('active')) {
                 closeMobileMenu();
             }
         });
+        
+        // ===== POLYFILL FOR OLDER BROWSERS =====
+        // IntersectionObserver polyfill for very old browsers
+        if (!window.IntersectionObserver) {
+            console.warn('IntersectionObserver not supported, animations may not work');
+            document.querySelectorAll('.fade-in').forEach(el => {
+                el.classList.add('visible');
+            });
+        }
     </script>
 </body>
 </html>
