@@ -176,25 +176,44 @@
         }
 
         /* ===== LANGUAGE FIXES ===== */
-        [lang] {
-            display: none;
-        }
-        
-        body[data-lang="en"] [lang="en"],
-        body[data-lang="es"] [lang="es"] {
-            display: inline;
-        }
-        
-        body[data-lang="en"] [lang="en"].block,
-        body[data-lang="es"] [lang="es"].block {
-            display: block;
-        }
-        
-        body[data-lang="en"] [lang="es"],
-        body[data-lang="es"] [lang="en"] {
-            display: none;
-        }
+/* Show English by default (no-JS fallback) */
+[lang="es"] {
+    display: none !important;
+}
 
+[lang="en"] {
+    display: inline;
+}
+
+[lang="en"].block {
+    display: block;
+}
+
+/* When JavaScript sets data-lang, override defaults */
+body[data-lang="es"] [lang="es"] {
+    display: inline !important;
+}
+
+body[data-lang="es"] [lang="es"].block {
+    display: block !important;
+}
+
+body[data-lang="es"] [lang="en"] {
+    display: none !important;
+}
+
+/* Override for when data-lang is "en" */
+body[data-lang="en"] [lang="en"] {
+    display: inline;
+}
+
+body[data-lang="en"] [lang="en"].block {
+    display: block;
+}
+
+body[data-lang="en"] [lang="es"] {
+    display: none;
+}
         .container {
             width: 100%;
             max-width: 1200px;
