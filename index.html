@@ -1,3 +1,4 @@
+it is for you were able to catch the error!!! can you try to do the same for this...
 <!DOCTYPE html>
 <html lang="en" data-lang="en">
 <head>
@@ -29,15 +30,6 @@
     
     <style>
         /* ===== PROFESSIONAL LANDING PAGE DESIGN ===== */
-        /* TEMPORARY DEBUG */
-body * {
-    display: block !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    color: black !important;
-    background: yellow !important;
-    border: 1px solid red !important;
-}
         :root {
             /* Modern Professional Medical Palette */
             --medical-navy: #2C3E50;
@@ -185,25 +177,44 @@ body * {
         }
 
         /* ===== LANGUAGE FIXES ===== */
-        [lang] {
-            display: none;
-        }
-        
-        body[data-lang="en"] [lang="en"],
-        body[data-lang="es"] [lang="es"] {
-            display: inline;
-        }
-        
-        body[data-lang="en"] [lang="en"].block,
-        body[data-lang="es"] [lang="es"].block {
-            display: block;
-        }
-        
-        body[data-lang="en"] [lang="es"],
-        body[data-lang="es"] [lang="en"] {
-            display: none;
-        }
+/* Show English by default (no-JS fallback) */
+[lang="es"] {
+    display: none !important;
+}
 
+[lang="en"] {
+    display: inline;
+}
+
+[lang="en"].block {
+    display: block;
+}
+
+/* When JavaScript sets data-lang, override defaults */
+body[data-lang="es"] [lang="es"] {
+    display: inline !important;
+}
+
+body[data-lang="es"] [lang="es"].block {
+    display: block !important;
+}
+
+body[data-lang="es"] [lang="en"] {
+    display: none !important;
+}
+
+/* Override for when data-lang is "en" */
+body[data-lang="en"] [lang="en"] {
+    display: inline;
+}
+
+body[data-lang="en"] [lang="en"].block {
+    display: block;
+}
+
+body[data-lang="en"] [lang="es"] {
+    display: none;
+}
         .container {
             width: 100%;
             max-width: 1200px;
@@ -1685,7 +1696,7 @@ body * {
         </div>
     </section>
 
-        <!-- Gateway Section -->
+    <!-- Gateway Section -->
     <section class="section gateway-section" id="gateway">
         <div class="container">
             <div class="text-center mb-4">
@@ -1829,7 +1840,7 @@ body * {
                         <span lang="es">Visitar Investigación Clínica</span>
                     </a>
                 </div>
-            </div> <!-- ← FIXED: Added missing closing div for .gateway-grid -->
+            </div>
         </div>
     </section>
 
@@ -1984,7 +1995,10 @@ body * {
         </div>
     </footer>
 
-       <script>
+    <script>
+        // Initialize switchingLanguage variable
+        let switchingLanguage = false;
+        
         // ===== MOBILE MENU =====
         const mobileMenuToggle = document.getElementById('mobileMenuToggle');
         const mobileNav = document.getElementById('mobileNav');
@@ -2026,8 +2040,6 @@ body * {
         });
 
         // ===== LANGUAGE SWITCHING =====
-        let switchingLanguage = false;
-        
         function switchLanguage(lang) {
             if (document.body.getAttribute('data-lang') === lang) return;
             
@@ -2060,12 +2072,21 @@ body * {
             }
         }
         
-        // ===== SIMPLE SCROLL BEHAVIOR =====
+        // ===== HEADER SCROLL BEHAVIOR =====
         const header = document.getElementById('mainHeader');
+        const scrollIndicator = document.getElementById('scrollIndicator');
         
-        if (header) {
+        if (header && scrollIndicator) {
             window.addEventListener('scroll', () => {
-                if (window.scrollY > 10) {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (document.documentElement.scrollHeight - window.innerHeight > 0) {
+                    const windowHeight = document.documentElement.scrollHeight - window.innerHeight;
+                    const scrollPercent = (scrollTop / windowHeight) * 100;
+                    scrollIndicator.style.width = scrollPercent + '%';
+                }
+                
+                if (scrollTop > 10) {
                     header.classList.add('scrolled');
                 } else {
                     header.classList.remove('scrolled');
@@ -2089,6 +2110,12 @@ body * {
                             top: targetPosition,
                             behavior: 'smooth'
                         });
+                        
+                        try {
+                            history.pushState(null, null, `#${targetId}`);
+                        } catch (e) {
+                            location.hash = `#${targetId}`;
+                        }
                     }
                 }
             });
@@ -2118,6 +2145,26 @@ body * {
             });
         }
         
+        // ===== SCROLL ANIMATIONS =====
+        function initScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+        }
+        
         // ===== INITIALIZATION =====
         document.addEventListener('DOMContentLoaded', function() {
             // Load saved language
@@ -2130,11 +2177,47 @@ body * {
                 console.log('Could not load language preference');
             }
             
+            // Initialize animations
+            initScrollAnimations();
+            
             // Initialize header state
             if (header && window.scrollY > 10) {
                 header.classList.add('scrolled');
             }
+            
+            // Check for hash in URL and scroll to it
+            if (window.location.hash) {
+                const targetId = window.location.hash.substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    setTimeout(() => {
+                        const headerElement = document.querySelector('.superior-header');
+                        const headerHeight = headerElement ? headerElement.offsetHeight : 72;
+                        const targetPosition = targetElement.offsetTop - headerHeight;
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }, 100);
+                }
+            }
         });
+        
+        // ===== KEYBOARD NAVIGATION =====
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileNav && mobileNav.classList.contains('active')) {
+                closeMobileMenu();
+            }
+        });
+        
+        // ===== POLYFILL FOR OLDER BROWSERS =====
+        // IntersectionObserver polyfill for very old browsers
+        if (!window.IntersectionObserver) {
+            console.warn('IntersectionObserver not supported, animations may not work');
+            document.querySelectorAll('.fade-in').forEach(el => {
+                el.classList.add('visible');
+            });
+        }
     </script>
 </body>
 </html>
