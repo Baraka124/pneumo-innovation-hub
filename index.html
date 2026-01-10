@@ -1975,10 +1975,7 @@
         </div>
     </footer>
 
-    <script>
-        // Initialize switchingLanguage variable
-        let switchingLanguage = false;
-        
+       <script>
         // ===== MOBILE MENU =====
         const mobileMenuToggle = document.getElementById('mobileMenuToggle');
         const mobileNav = document.getElementById('mobileNav');
@@ -2020,6 +2017,8 @@
         });
 
         // ===== LANGUAGE SWITCHING =====
+        let switchingLanguage = false;
+        
         function switchLanguage(lang) {
             if (document.body.getAttribute('data-lang') === lang) return;
             
@@ -2052,21 +2051,12 @@
             }
         }
         
-        // ===== HEADER SCROLL BEHAVIOR =====
+        // ===== SIMPLE SCROLL BEHAVIOR =====
         const header = document.getElementById('mainHeader');
-        const scrollIndicator = document.getElementById('scrollIndicator');
         
-        if (header && scrollIndicator) {
+        if (header) {
             window.addEventListener('scroll', () => {
-                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                
-                if (document.documentElement.scrollHeight - window.innerHeight > 0) {
-                    const windowHeight = document.documentElement.scrollHeight - window.innerHeight;
-                    const scrollPercent = (scrollTop / windowHeight) * 100;
-                    scrollIndicator.style.width = scrollPercent + '%';
-                }
-                
-                if (scrollTop > 10) {
+                if (window.scrollY > 10) {
                     header.classList.add('scrolled');
                 } else {
                     header.classList.remove('scrolled');
@@ -2090,12 +2080,6 @@
                             top: targetPosition,
                             behavior: 'smooth'
                         });
-                        
-                        try {
-                            history.pushState(null, null, `#${targetId}`);
-                        } catch (e) {
-                            location.hash = `#${targetId}`;
-                        }
                     }
                 }
             });
@@ -2125,26 +2109,6 @@
             });
         }
         
-        // ===== SCROLL ANIMATIONS =====
-        function initScrollAnimations() {
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -100px 0px'
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, observerOptions);
-
-            document.querySelectorAll('.fade-in').forEach(el => {
-                observer.observe(el);
-            });
-        }
-        
         // ===== INITIALIZATION =====
         document.addEventListener('DOMContentLoaded', function() {
             // Load saved language
@@ -2157,47 +2121,11 @@
                 console.log('Could not load language preference');
             }
             
-            // Initialize animations
-            initScrollAnimations();
-            
             // Initialize header state
             if (header && window.scrollY > 10) {
                 header.classList.add('scrolled');
             }
-            
-            // Check for hash in URL and scroll to it
-            if (window.location.hash) {
-                const targetId = window.location.hash.substring(1);
-                const targetElement = document.getElementById(targetId);
-                if (targetElement) {
-                    setTimeout(() => {
-                        const headerElement = document.querySelector('.superior-header');
-                        const headerHeight = headerElement ? headerElement.offsetHeight : 72;
-                        const targetPosition = targetElement.offsetTop - headerHeight;
-                        window.scrollTo({
-                            top: targetPosition,
-                            behavior: 'smooth'
-                        });
-                    }, 100);
-                }
-            }
         });
-        
-        // ===== KEYBOARD NAVIGATION =====
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && mobileNav && mobileNav.classList.contains('active')) {
-                closeMobileMenu();
-            }
-        });
-        
-        // ===== POLYFILL FOR OLDER BROWSERS =====
-        // IntersectionObserver polyfill for very old browsers
-        if (!window.IntersectionObserver) {
-            console.warn('IntersectionObserver not supported, animations may not work');
-            document.querySelectorAll('.fade-in').forEach(el => {
-                el.classList.add('visible');
-            });
-        }
     </script>
 </body>
 </html>
