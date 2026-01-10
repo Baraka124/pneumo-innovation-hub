@@ -1,5 +1,3 @@
-Which improvements can you spot from this landing page...
-
 <!DOCTYPE html>
 <html lang="en" data-lang="en">
 <head>
@@ -98,6 +96,7 @@ Which improvements can you spot from this landing page...
             line-height: 1.6;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+            transition: opacity 0.3s ease;
         }
 
         h1, h2, h3, h4 {
@@ -150,7 +149,7 @@ Which improvements can you spot from this landing page...
             line-height: 1.6;
         }
 
-        /* ===== SUPERIOR HEADER ===== */
+        /* ===== SUPERIOR HEADER WITH IMPROVED STICKY BEHAVIOR ===== */
         .superior-header {
             position: fixed;
             top: 0;
@@ -160,8 +159,33 @@ Which improvements can you spot from this landing page...
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--slate-200);
             z-index: 1000;
-            box-shadow: var(--shadow-sm);
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(0);
+        }
+
+        .superior-header.hidden {
+            transform: translateY(-100%);
+        }
+
+        .superior-header.scrolled {
+            box-shadow: var(--shadow-md);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(30px);
+        }
+
+        .superior-header.scrolled::after {
+            width: 100%;
+        }
+
+        .superior-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--medical-teal), var(--medical-sage));
+            transition: width 0.3s ease;
         }
 
         .header-container {
@@ -172,6 +196,7 @@ Which improvements can you spot from this landing page...
             position: relative;
         }
 
+        /* ===== IMPROVED LOGO WITH SVG ICON ===== */
         .logo {
             display: flex;
             align-items: center;
@@ -185,16 +210,17 @@ Which improvements can you spot from this landing page...
         }
 
         .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--medical-navy), var(--medical-teal));
-            border-radius: var(--radius-md);
+            width: 44px;
+            height: 44px;
+            color: var(--medical-teal);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--medical-white);
-            font-weight: 700;
-            font-size: 1rem;
+        }
+
+        .logo-icon svg {
+            width: 100%;
+            height: 100%;
         }
 
         .logo-text {
@@ -217,29 +243,34 @@ Which improvements can you spot from this landing page...
             line-height: 1.2;
         }
 
-        /* ===== LANGUAGE SWITCHER ===== */
+        /* ===== IMPROVED LANGUAGE SWITCHER ===== */
         .language-switcher {
+            position: absolute;
+            right: 80px;
+            top: 50%;
+            transform: translateY(-50%);
             display: flex;
-            background: var(--medical-white);
-            border-radius: var(--radius-full);
-            box-shadow: var(--shadow-sm);
+            background: transparent;
+            border-radius: var(--radius-sm);
             overflow: hidden;
-            border: 1px solid var(--slate-200);
-            backdrop-filter: blur(10px);
+            border: 1px solid var(--slate-300);
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .language-switcher:hover {
+            opacity: 1;
         }
 
         .lang-btn {
-            padding: 0.5rem 1rem;
-            background: transparent;
+            padding: 0.35rem 0.75rem;
+            background: var(--medical-white);
             border: none;
             font-weight: 500;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             color: var(--slate-600);
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
         }
 
         .lang-btn.active {
@@ -250,6 +281,13 @@ Which improvements can you spot from this landing page...
         .lang-btn:not(.active):hover {
             background: var(--slate-100);
             color: var(--medical-teal);
+        }
+
+        @media (max-width: 1023px) {
+            .language-switcher {
+                right: 60px;
+                opacity: 0.6;
+            }
         }
 
         /* ===== DESKTOP NAVIGATION ===== */
@@ -303,7 +341,7 @@ Which improvements can you spot from this landing page...
             }
         }
 
-        /* ===== IMPROVED MOBILE MENU ===== */
+        /* ===== IMPROVED MOBILE MENU (No Full Takeover) ===== */
         .mobile-menu-toggle {
             display: flex;
             flex-direction: column;
@@ -347,15 +385,15 @@ Which improvements can you spot from this landing page...
             transform: rotate(-45deg) translate(6px, -6px);
         }
 
-        /* ===== FIXED MOBILE NAVIGATION - NO EMPTY SPACE ===== */
+        /* ===== IMPROVED MOBILE NAVIGATION ===== */
         .mobile-nav-overlay {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(2px);
             z-index: 999;
             opacity: 0;
             visibility: hidden;
@@ -370,20 +408,34 @@ Which improvements can you spot from this landing page...
         .mobile-nav {
             position: fixed;
             top: 0;
-            right: -100%;
-            width: 320px;
+            right: -85%;
+            width: min(300px, 85vw);
             height: 100%;
             background: var(--medical-white);
             box-shadow: var(--shadow-xl);
             z-index: 1000;
-            transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
             overflow-y: auto;
+            transform: translateX(100%);
+            border-left: 1px solid var(--slate-200);
         }
 
         .mobile-nav.active {
-            right: 0;
+            transform: translateX(0);
+        }
+
+        .mobile-nav::before {
+            content: '';
+            position: absolute;
+            top: 16px;
+            left: 8px;
+            width: 40px;
+            height: 4px;
+            background: var(--slate-300);
+            border-radius: 2px;
+            opacity: 0.7;
         }
 
         .mobile-nav-header {
@@ -449,7 +501,7 @@ Which improvements can you spot from this landing page...
             box-shadow: var(--shadow-md);
         }
 
-        /* ===== CLEAN HERO SECTION ===== */
+        /* ===== IMPROVED HERO SECTION WITH VISUAL PLACEHOLDER ===== */
         .hero-section {
             min-height: 100vh;
             display: flex;
@@ -500,7 +552,20 @@ Which improvements can you spot from this landing page...
             margin-right: auto;
         }
 
-        /* ===== CLEAN BUTTONS ===== */
+        /* Hero media placeholder */
+        .hero-media-placeholder {
+            max-width: 600px;
+            margin: var(--spacing-xl) auto;
+            padding: 1rem;
+            background: var(--slate-100);
+            border-radius: var(--radius-lg);
+            border: 2px dashed var(--slate-300);
+            color: var(--slate-500);
+            text-align: center;
+            font-style: italic;
+        }
+
+        /* ===== IMPROVED BUTTONS ===== */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -539,7 +604,7 @@ Which improvements can you spot from this landing page...
             transform: translateY(-2px);
         }
 
-        /* ===== CLEAN CONTENT SECTIONS ===== */
+        /* ===== MISSION SECTION ===== */
         .mission-section {
             background: var(--medical-white);
         }
@@ -557,7 +622,7 @@ Which improvements can you spot from this landing page...
             margin: 0 auto var(--spacing-xl);
         }
 
-        /* ===== CLEAN PILLARS SECTION ===== */
+        /* ===== PILLARS SECTION ===== */
         .pillars-section {
             background: var(--paper-gray);
         }
@@ -608,7 +673,7 @@ Which improvements can you spot from this landing page...
             background: linear-gradient(135deg, var(--medical-navy), var(--medical-teal));
         }
 
-        /* ===== CLEAN VALUES SECTION ===== */
+        /* ===== VALUES SECTION ===== */
         .values-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -647,7 +712,7 @@ Which improvements can you spot from this landing page...
             margin: 0 auto var(--spacing-md);
         }
 
-        /* ===== CLEAN GATEWAY SECTION ===== */
+        /* ===== GATEWAY SECTION ===== */
         .gateway-section {
             background: var(--paper-gray);
         }
@@ -725,7 +790,61 @@ Which improvements can you spot from this landing page...
             font-weight: bold;
         }
 
-        /* ===== NEWSLETTER SECTION ===== */
+        /* ===== NEW COLLABORATION SECTION ===== */
+        .collaboration-section {
+            background: linear-gradient(135deg, var(--medical-navy) 0%, var(--slate-800) 100%);
+            color: var(--medical-white);
+        }
+
+        .collaboration-section h2,
+        .collaboration-section h3 {
+            color: var(--medical-white);
+        }
+
+        .collaboration-section .text-lead {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .contact-methods {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
+        }
+
+        @media (min-width: 768px) {
+            .contact-methods {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .contact-method {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .contact-method:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .contact-icon {
+            width: 56px;
+            height: 56px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--medical-white);
+            font-size: 1.5rem;
+            margin-bottom: var(--spacing-md);
+        }
+
+        /* ===== IMPROVED NEWSLETTER SECTION ===== */
         .newsletter-section {
             background: var(--medical-white);
             border-top: 1px solid var(--slate-200);
@@ -734,20 +853,39 @@ Which improvements can you spot from this landing page...
         .newsletter-form {
             max-width: 500px;
             margin: 0 auto;
+            position: relative;
         }
 
         .newsletter-form input {
             width: 100%;
-            padding: 1rem;
+            padding: 1rem 1.5rem;
             border: 1px solid var(--slate-300);
-            border-radius: var(--radius-lg);
+            border-radius: var(--radius-full);
             font-size: 1rem;
             margin-bottom: var(--spacing-md);
+            font-family: var(--font-sans);
+            transition: all 0.3s ease;
         }
 
         .newsletter-form input:focus {
             outline: none;
             border-color: var(--medical-teal);
+            box-shadow: 0 0 0 3px rgba(45, 125, 125, 0.1);
+        }
+
+        .form-success {
+            display: none;
+            background: var(--medical-teal);
+            color: var(--medical-white);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            margin-top: var(--spacing-md);
+        }
+
+        .form-success.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
         }
 
         /* ===== PROFESSIONAL FOOTER ===== */
@@ -921,14 +1059,25 @@ Which improvements can you spot from this landing page...
     <header class="superior-header">
         <div class="container header-container">
             <a href="index.html" class="logo">
-                <div class="logo-icon">P</div>
+                <div class="logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" fill="none">
+                        <path d="M20 54 C20 30 36 22 46 28 V66 C46 74 38 82 28 82 C22 82 20 76 20 70 Z" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M76 54 C76 30 60 22 50 28 V66 C50 74 58 82 68 82 C74 82 76 76 76 70 Z" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        <line x1="48" y1="18" x2="48" y2="66" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                        <rect x="42" y="22" width="12" height="30" rx="2" fill="currentColor"/>
+                        <rect x="40" y="18" width="16" height="6" rx="2" fill="currentColor"/>
+                        <path d="M40 18 Q48 10 56 18" stroke="currentColor" stroke-width="4" fill="none" stroke-linecap="round"/>
+                        <path d="M48 44 C42 42 38 38 36 34" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M48 44 C54 42 58 38 60 34" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                    </svg>
+                </div>
                 <div class="logo-text">
                     <div class="logo-main">Pneumology R&I</div>
                     <div class="logo-sub">HUAC Hospital</div>
                 </div>
             </a>
 
-            <!-- Language Switcher -->
+            <!-- Improved Language Switcher -->
             <div class="language-switcher">
                 <button class="lang-btn active" onclick="switchLanguage('en')" aria-label="English">
                     EN
@@ -962,7 +1111,7 @@ Which improvements can you spot from this landing page...
                     </a>
                 </div>
                 <div class="nav-item">
-                    <a href="innovation-hub.html" class="nav-cta">
+                    <a href="#collaboration" class="nav-cta">
                         <i class="fas fa-handshake"></i>
                         <span lang="en">Collaborate</span>
                         <span lang="es">Colaborar</span>
@@ -986,7 +1135,18 @@ Which improvements can you spot from this landing page...
     <div class="mobile-nav" id="mobileNav">
         <div class="mobile-nav-header">
             <div class="logo">
-                <div class="logo-icon">P</div>
+                <div class="logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" fill="none" width="36" height="36">
+                        <path d="M20 54 C20 30 36 22 46 28 V66 C46 74 38 82 28 82 C22 82 20 76 20 70 Z" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M76 54 C76 30 60 22 50 28 V66 C50 74 58 82 68 82 C74 82 76 76 76 70 Z" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        <line x1="48" y1="18" x2="48" y2="66" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                        <rect x="42" y="22" width="12" height="30" rx="2" fill="currentColor"/>
+                        <rect x="40" y="18" width="16" height="6" rx="2" fill="currentColor"/>
+                        <path d="M40 18 Q48 10 56 18" stroke="currentColor" stroke-width="4" fill="none" stroke-linecap="round"/>
+                        <path d="M48 44 C42 42 38 38 36 34" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M48 44 C54 42 58 38 60 34" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                    </svg>
+                </div>
                 <div class="logo-text">
                     <div class="logo-main">Pneumology R&I</div>
                 </div>
@@ -1019,6 +1179,13 @@ Which improvements can you spot from this landing page...
                 </a>
             </li>
             <li class="mobile-nav-item">
+                <a href="#collaboration" class="mobile-nav-link" onclick="closeMobileMenu()">
+                    <i class="fas fa-handshake"></i>
+                    <span lang="en">Collaboration</span>
+                    <span lang="es">Colaboración</span>
+                </a>
+            </li>
+            <li class="mobile-nav-item">
                 <a href="innovation-hub.html" class="mobile-nav-link" onclick="closeMobileMenu()">
                     <i class="fas fa-lightbulb"></i>
                     <span lang="en">Innovation Hub</span>
@@ -1032,16 +1199,9 @@ Which improvements can you spot from this landing page...
                     <span lang="es">Investigación Clínica</span>
                 </a>
             </li>
-            <li class="mobile-nav-item">
-                <a href="#contact" class="mobile-nav-link" onclick="closeMobileMenu()">
-                    <i class="fas fa-envelope"></i>
-                    <span lang="en">Contact</span>
-                    <span lang="es">Contacto</span>
-                </a>
-            </li>
         </ul>
         
-        <a href="innovation-hub.html" class="mobile-nav-cta" onclick="closeMobileMenu()">
+        <a href="#collaboration" class="mobile-nav-cta" onclick="closeMobileMenu()">
             <span lang="en">Start Collaboration</span>
             <span lang="es">Iniciar Colaboración</span>
         </a>
@@ -1062,15 +1222,23 @@ Which improvements can you spot from this landing page...
                     <span lang="es">Innovación en Cuidado Respiratorio mediante el Descubrimiento</span>
                 </h1>
                 
+                <!-- Visual placeholder for future hero image -->
+                <div class="hero-media-placeholder">
+                    <!-- [Image: HUAC Pneumology research team at work in laboratory or clinical setting] -->
+                    <i class="fas fa-image" style="font-size: 2rem; margin-bottom: 0.5rem; opacity: 0.5;"></i><br>
+                    <span lang="en">Visual: Research team advancing respiratory medicine</span>
+                    <span lang="es">Visual: Equipo de investigación avanzando la medicina respiratoria</span>
+                </div>
+                
                 <p class="hero-subtitle">
                     <span lang="en">We are at the forefront of pulmonary medicine, combining clinical excellence with scientific innovation to transform patient outcomes through rigorous research and cutting-edge technology.</span>
                     <span lang="es">Estamos a la vanguardia de la medicina pulmonar, combinando excelencia clínica con innovación científica para transformar los resultados de los pacientes mediante investigación rigurosa y tecnología de vanguardia.</span>
                 </p>
                 
                 <a href="#gateway" class="btn btn-primary">
-                    <i class="fas fa-compass"></i>
-                    <span lang="en">Explore Our Work</span>
-                    <span lang="es">Explorar Nuestro Trabajo</span>
+                    <i class="fas fa-microscope"></i>
+                    <span lang="en">View Our Research & Trials</span>
+                    <span lang="es">Ver Investigación y Ensayos</span>
                 </a>
             </div>
         </div>
@@ -1320,6 +1488,62 @@ Which improvements can you spot from this landing page...
         </div>
     </section>
 
+    <!-- NEW: Collaboration Section -->
+    <section class="section collaboration-section" id="collaboration">
+        <div class="container">
+            <div class="section-content">
+                <div class="text-center mb-4">
+                    <h2>
+                        <span lang="en">Collaborate With Us</span>
+                        <span lang="es">Colabore Con Nosotros</span>
+                    </h2>
+                    <p class="text-lead">
+                        <span lang="en">Join us in advancing respiratory medicine. Whether you're a researcher, clinician, industry partner, or potential collaborator, we welcome the opportunity to work together.</span>
+                        <span lang="es">Únase a nosotros para avanzar en medicina respiratoria. Ya sea investigador, clínico, socio industrial o colaborador potencial, damos la bienvenida a la oportunidad de trabajar juntos.</span>
+                    </p>
+                </div>
+                
+                <div class="contact-methods">
+                    <div class="contact-method fade-in">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h3>
+                            <span lang="en">Email Us</span>
+                            <span lang="es">Escríbanos</span>
+                        </h3>
+                        <p class="text-lead">
+                            <span lang="en">For research partnerships and collaboration inquiries:</span>
+                            <span lang="es">Para asociaciones de investigación y consultas de colaboración:</span>
+                        </p>
+                        <a href="mailto:neumologia.innovacion@huac.es" class="btn btn-primary mt-3">
+                            <i class="fas fa-paper-plane"></i>
+                            neumologia.innovacion@huac.es
+                        </a>
+                    </div>
+                    
+                    <div class="contact-method fade-in">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <h3>
+                            <span lang="en">Call Our Department</span>
+                            <span lang="es">Llame a Nuestro Departamento</span>
+                        </h3>
+                        <p class="text-lead">
+                            <span lang="en">Speak directly with our research coordination team:</span>
+                            <span lang="es">Hable directamente con nuestro equipo de coordinación de investigación:</span>
+                        </p>
+                        <a href="tel:+34881111800" class="btn btn-outline mt-3" style="color: white; border-color: white;">
+                            <i class="fas fa-phone"></i>
+                            +34 881 111 800
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Newsletter Section -->
     <section class="section newsletter-section" id="newsletter">
         <div class="container">
@@ -1335,14 +1559,19 @@ Which improvements can you spot from this landing page...
                     </p>
                 </div>
                 
-                <form class="newsletter-form">
-                    <input type="email" placeholder="your.email@example.com" required>
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" name="email" placeholder="your.email@example.com" required>
                     <button type="submit" class="btn btn-primary" style="width: 100%;">
                         <i class="fas fa-envelope"></i>
                         <span lang="en">Subscribe</span>
                         <span lang="es">Suscribirse</span>
                     </button>
                 </form>
+                <div class="form-success" id="formSuccess">
+                    <i class="fas fa-check-circle"></i>
+                    <span lang="en">Thank you for subscribing! You'll receive updates soon.</span>
+                    <span lang="es">¡Gracias por suscribirse! Recibirá actualizaciones pronto.</span>
+                </div>
             </div>
         </div>
     </section>
@@ -1377,9 +1606,9 @@ Which improvements can you spot from this landing page...
                                 <span lang="en">Clinical Research</span>
                                 <span lang="es">Investigación Clínica</span>
                             </a></li>
-                            <li><a href="#values">
-                                <span lang="en">Our Values</span>
-                                <span lang="es">Nuestros Valores</span>
+                            <li><a href="#collaboration">
+                                <span lang="en">Collaborate</span>
+                                <span lang="es">Colaborar</span>
                             </a></li>
                         </ul>
                     </div>
@@ -1413,7 +1642,7 @@ Which improvements can you spot from this landing page...
     </button>
 
     <script>
-        // ===== FIXED MOBILE MENU - NO EMPTY SPACE =====
+        // ===== IMPROVED MOBILE MENU =====
         const mobileMenuToggle = document.getElementById('mobileMenuToggle');
         const mobileNav = document.getElementById('mobileNav');
         const mobileNavOverlay = document.getElementById('mobileNavOverlay');
@@ -1445,21 +1674,68 @@ Which improvements can you spot from this landing page...
         document.querySelectorAll('.mobile-nav-link, .mobile-nav-cta').forEach(link => {
             link.addEventListener('click', closeMobileMenu);
         });
-        
-        // ===== LANGUAGE SWITCHING =====
+
+        // ===== IMPROVED LANGUAGE SWITCHING (No Page Jump) =====
         function switchLanguage(lang) {
-            document.body.setAttribute('data-lang', lang);
+            // Prevent multiple rapid clicks
+            if (document.body.getAttribute('data-lang') === lang) return;
             
-            // Update language switcher buttons
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
+            // Add loading state
+            document.body.style.opacity = '0.7';
+            document.body.style.transition = 'opacity 0.2s ease';
             
-            // Store preference
-            localStorage.setItem('huac_language', lang);
+            // Store current scroll position
+            const scrollPos = window.scrollY;
+            
+            setTimeout(() => {
+                // Switch language
+                document.body.setAttribute('data-lang', lang);
+                
+                // Update language switcher buttons
+                document.querySelectorAll('.lang-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.textContent.trim() === lang.toUpperCase()) {
+                        btn.classList.add('active');
+                    }
+                });
+                
+                // Store preference
+                localStorage.setItem('huac_language', lang);
+                
+                // Restore scroll position to prevent jump
+                window.scrollTo(0, scrollPos);
+                
+                // Remove loading state
+                document.body.style.opacity = '1';
+            }, 50);
         }
         
+        // ===== IMPROVED STICKY HEADER BEHAVIOR =====
+        let lastScrollTop = 0;
+        const header = document.querySelector('.superior-header');
+        
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            // Add shadow when scrolled
+            if (scrollTop > 10) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            
+            // Hide/show on scroll direction
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                // Scrolling down
+                header.classList.add('hidden');
+            } else {
+                // Scrolling up
+                header.classList.remove('hidden');
+            }
+            
+            lastScrollTop = scrollTop;
+        });
+
         // ===== SMOOTH SCROLLING =====
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -1483,6 +1759,36 @@ Which improvements can you spot from this landing page...
             });
         });
         
+        // ===== IMPROVED NEWSLETTER FORM =====
+        const newsletterForm = document.getElementById('newsletterForm');
+        const formSuccess = document.getElementById('formSuccess');
+        
+        newsletterForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const emailInput = this.querySelector('input[name="email"]');
+            const email = emailInput.value;
+            
+            // Simple validation
+            if (!email || !email.includes('@') || !email.includes('.')) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+            
+            // Show success message
+            formSuccess.classList.add('show');
+            
+            // Reset form
+            emailInput.value = '';
+            
+            // In a real application, you would send this to your server
+            console.log('Subscribed:', email);
+            
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                formSuccess.classList.remove('show');
+            }, 5000);
+        });
+        
         // ===== INITIALIZATION =====
         document.addEventListener('DOMContentLoaded', function() {
             // Check for saved language preference
@@ -1491,7 +1797,7 @@ Which improvements can you spot from this landing page...
                 document.body.setAttribute('data-lang', 'es');
                 document.querySelectorAll('.lang-btn').forEach(btn => {
                     btn.classList.remove('active');
-                    if (btn.textContent.includes('ES')) {
+                    if (btn.textContent.trim() === 'ES') {
                         btn.classList.add('active');
                     }
                 });
@@ -1516,34 +1822,6 @@ Which improvements can you spot from this landing page...
                     observer.observe(el);
                 });
             }
-            
-            // Header scroll effect
-            window.addEventListener('scroll', () => {
-                const header = document.querySelector('.superior-header');
-                if (window.scrollY > 10) {
-                    header.style.boxShadow = 'var(--shadow-lg)';
-                } else {
-                    header.style.boxShadow = 'var(--shadow-sm)';
-                }
-            });
-            
-            // Newsletter form
-            const newsletterForm = document.querySelector('.newsletter-form');
-            newsletterForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const email = this.querySelector('input').value;
-                
-                // Simple validation
-                if (!email || !email.includes('@')) {
-                    alert('Please enter a valid email address.');
-                    return;
-                }
-                
-                // In a real application, you would send this to your server
-                console.log('Subscribed:', email);
-                this.querySelector('input').value = '';
-                alert('Thank you for subscribing!');
-            });
         });
         
         // ===== KEYBOARD NAVIGATION =====
