@@ -14,32 +14,12 @@
     <meta property="og:title" content="Pneumology Research & Innovation | HUAC Hospital Universitario A Coruña">
     <meta property="og:description" content="Transforming respiratory care through clinical research and innovation at HUAC Hospital Universitario A Coruña.">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://huac.es/images/pneumology-innovation-og.jpg">
     <meta property="og:url" content="https://huac.es/pneumology-innovation">
     
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Pneumology Research & Innovation | HUAC">
     <meta name="twitter:description" content="Transforming respiratory care through clinical research and innovation.">
-    
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "MedicalOrganization",
-        "name": "HUAC Pneumology Research & Innovation",
-        "url": "https://huac.es/pneumology-innovation",
-        "medicalSpecialty": "Pulmonology",
-        "address": {
-            "@type": "PostalAddress",
-            "addressCountry": "ES",
-            "addressRegion": "Galicia",
-            "addressLocality": "A Coruña"
-        },
-        "description": "Transforming respiratory care through clinical research and innovation",
-        "founder": "Hospital Universitario A Coruña"
-    }
-    </script>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -97,12 +77,6 @@
             --radius-lg: 12px;
             --radius-xl: 16px;
             --radius-full: 9999px;
-            
-            /* Error States */
-            --error-red: #DC2626;
-            --error-red-light: #FEE2E2;
-            --success-green: #059669;
-            --success-green-light: #D1FAE5;
         }
 
         * {
@@ -122,16 +96,6 @@
             line-height: 1.6;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
-            }
         }
 
         h1, h2, h3, h4 {
@@ -139,15 +103,25 @@
             font-weight: 600;
             color: var(--medical-navy);
             line-height: 1.2;
+            letter-spacing: -0.02em;
         }
 
-        h1 { font-size: clamp(2.5rem, 5vw, 4rem); }
-        h2 { font-size: clamp(2rem, 4vw, 3rem); }
-        h3 { font-size: clamp(1.5rem, 3vw, 2.25rem); }
+        h1 { 
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            margin-bottom: var(--spacing-md);
+        }
+        h2 { 
+            font-size: clamp(2rem, 4vw, 2.75rem);
+            margin-bottom: var(--spacing-md);
+        }
+        h3 { 
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            margin-bottom: var(--spacing-sm);
+        }
 
         .container {
             width: 100%;
-            max-width: 1280px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 var(--spacing-md);
         }
@@ -156,41 +130,22 @@
             padding: var(--spacing-2xl) 0;
         }
 
-        @media (min-width: 768px) {
-            .section {
-                padding: var(--spacing-3xl) 0;
-            }
+        .section-content {
+            max-width: 900px;
+            margin: 0 auto;
         }
 
         .text-lead {
             font-size: 1.125rem;
             color: var(--slate-600);
             line-height: 1.7;
+            margin-bottom: var(--spacing-lg);
         }
 
-        @media (min-width: 768px) {
-            .text-lead {
-                font-size: 1.25rem;
-            }
-        }
-
-        /* ===== SKIP LINK ===== */
-        .skip-link {
-            position: absolute;
-            top: -40px;
-            left: 0;
-            background: var(--medical-teal);
-            color: white;
-            padding: 8px 16px;
-            border-radius: var(--radius-sm);
-            text-decoration: none;
-            font-weight: 600;
-            z-index: 9999;
-            transition: top 0.3s;
-        }
-
-        .skip-link:focus {
-            top: 10px;
+        .text-subtle {
+            font-size: 1rem;
+            color: var(--slate-500);
+            line-height: 1.6;
         }
 
         /* ===== SUPERIOR HEADER ===== */
@@ -201,7 +156,6 @@
             right: 0;
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--slate-200);
             z-index: 1000;
             box-shadow: var(--shadow-sm);
@@ -212,7 +166,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 80px;
+            height: 72px;
             position: relative;
         }
 
@@ -229,8 +183,8 @@
         }
 
         .logo-icon {
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             background: linear-gradient(135deg, var(--medical-navy), var(--medical-teal));
             border-radius: var(--radius-md);
             display: flex;
@@ -238,7 +192,7 @@
             justify-content: center;
             color: var(--medical-white);
             font-weight: 700;
-            font-size: 1.125rem;
+            font-size: 1rem;
         }
 
         .logo-text {
@@ -248,60 +202,17 @@
 
         .logo-main {
             font-family: var(--font-serif);
-            font-size: 1.125rem;
+            font-size: 1rem;
             font-weight: 700;
             color: var(--medical-navy);
             line-height: 1.2;
         }
 
         .logo-sub {
-            font-size: 0.6875rem;
+            font-size: 0.625rem;
             color: var(--slate-500);
             letter-spacing: 0.05em;
             line-height: 1.2;
-        }
-
-        /* ===== BREADCRUMB ===== */
-        .breadcrumb {
-            padding: var(--spacing-sm) 0;
-            background: var(--slate-100);
-            border-bottom: 1px solid var(--slate-200);
-            margin-top: 80px;
-        }
-
-        .breadcrumb ol {
-            display: flex;
-            list-style: none;
-            gap: var(--spacing-xs);
-            flex-wrap: wrap;
-        }
-
-        .breadcrumb li {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-xs);
-        }
-
-        .breadcrumb a {
-            color: var(--medical-teal);
-            text-decoration: none;
-            font-size: 0.875rem;
-            transition: color 0.3s ease;
-        }
-
-        .breadcrumb a:hover {
-            color: var(--medical-navy);
-            text-decoration: underline;
-        }
-
-        .breadcrumb .separator {
-            color: var(--slate-400);
-            font-size: 0.75rem;
-        }
-
-        .breadcrumb [aria-current="page"] {
-            color: var(--slate-600);
-            font-weight: 500;
         }
 
         /* ===== LANGUAGE SWITCHER ===== */
@@ -309,11 +220,10 @@
             display: flex;
             background: var(--medical-white);
             border-radius: var(--radius-full);
-            box-shadow: var(--shadow-md);
+            box-shadow: var(--shadow-sm);
             overflow: hidden;
             border: 1px solid var(--slate-200);
             backdrop-filter: blur(10px);
-            transform: scale(0.9);
         }
 
         .lang-btn {
@@ -328,8 +238,6 @@
             display: flex;
             align-items: center;
             gap: 0.25rem;
-            min-width: 70px;
-            justify-content: center;
         }
 
         .lang-btn.active {
@@ -338,7 +246,7 @@
         }
 
         .lang-btn:not(.active):hover {
-            background: var(--slate-50);
+            background: var(--slate-100);
             color: var(--medical-teal);
         }
 
@@ -369,29 +277,11 @@
                 font-size: 0.9375rem;
                 border-radius: var(--radius-full);
                 transition: all 0.3s ease;
-                position: relative;
             }
             
             .nav-link:hover {
                 color: var(--medical-teal);
                 background: var(--medical-teal-light);
-            }
-            
-            .nav-link.active {
-                color: var(--medical-teal);
-                font-weight: 600;
-            }
-            
-            .nav-link.active::after {
-                content: '';
-                position: absolute;
-                bottom: -2px;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 20px;
-                height: 3px;
-                background: var(--medical-teal);
-                border-radius: var(--radius-full);
             }
             
             .nav-cta {
@@ -408,30 +298,25 @@
             .nav-cta:hover {
                 transform: translateY(-2px);
                 box-shadow: var(--shadow-lg);
-                background: linear-gradient(135deg, var(--medical-sage), var(--medical-teal));
             }
         }
 
-        /* ===== MOBILE MENU TOGGLE ===== */
+        /* ===== IMPROVED MOBILE MENU ===== */
         .mobile-menu-toggle {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 5px;
             background: none;
             border: none;
             cursor: pointer;
-            padding: 0.75rem;
-            width: 48px;
-            height: 48px;
+            padding: 0.5rem;
+            width: 44px;
+            height: 44px;
             justify-content: center;
             align-items: center;
             border-radius: var(--radius-md);
             transition: all 0.3s ease;
             z-index: 1002;
-        }
-
-        .mobile-menu-toggle:hover {
-            background: var(--slate-100);
         }
 
         @media (min-width: 1024px) {
@@ -441,7 +326,7 @@
         }
 
         .menu-line {
-            width: 20px;
+            width: 22px;
             height: 2px;
             background: var(--slate-700);
             transition: all 0.3s ease;
@@ -449,96 +334,139 @@
         }
 
         .mobile-menu-toggle.active .menu-line:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
+            transform: rotate(45deg) translate(6px, 6px);
         }
 
         .mobile-menu-toggle.active .menu-line:nth-child(2) {
             opacity: 0;
-            transform: scaleX(0);
         }
 
         .mobile-menu-toggle.active .menu-line:nth-child(3) {
-            transform: rotate(-45deg) translate(5px, -5px);
+            transform: rotate(-45deg) translate(6px, -6px);
         }
 
-        /* ===== MOBILE NAVIGATION ===== */
-        .mobile-nav {
+        /* ===== FIXED MOBILE NAVIGATION - NO EMPTY SPACE ===== */
+        .mobile-nav-overlay {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 320px;
+            height: 100%;
             background: var(--medical-white);
-            transform: translateX(-100%);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 1001;
-            padding: 6rem var(--spacing-md) var(--spacing-xl);
+            box-shadow: var(--shadow-xl);
+            z-index: 1000;
+            transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
             overflow-y: auto;
         }
 
         .mobile-nav.active {
-            transform: translateX(0);
+            right: 0;
+        }
+
+        .mobile-nav-header {
+            padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-md);
+            border-bottom: 1px solid var(--slate-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mobile-nav-close {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            color: var(--slate-600);
+            font-size: 1.25rem;
         }
 
         .mobile-nav-links {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
+            padding: var(--spacing-lg);
+            flex: 1;
         }
 
         .mobile-nav-item {
             list-style: none;
+            margin-bottom: 0.5rem;
         }
 
         .mobile-nav-link {
             display: flex;
             align-items: center;
             gap: 1rem;
-            padding: 1rem 1.5rem;
+            padding: 1rem;
             color: var(--slate-700);
             text-decoration: none;
             font-weight: 500;
             border-radius: var(--radius-lg);
             transition: all 0.3s ease;
-            font-size: 1.125rem;
+            font-size: 1rem;
         }
 
-        .mobile-nav-link:hover {
+        .mobile-nav-link:hover,
+        .mobile-nav-link.active {
             background: var(--medical-teal-light);
             color: var(--medical-teal);
         }
 
-        /* ===== HERO SECTION ===== */
+        .mobile-nav-cta {
+            margin: var(--spacing-lg);
+            background: linear-gradient(135deg, var(--medical-teal), var(--medical-sage));
+            color: var(--medical-white);
+            text-align: center;
+            padding: 1rem;
+            border-radius: var(--radius-lg);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* ===== CLEAN HERO SECTION ===== */
         .hero-section {
             min-height: 100vh;
             display: flex;
             align-items: center;
             background: linear-gradient(135deg, 
                 rgba(26, 54, 93, 0.03) 0%,
-                rgba(45, 125, 125, 0.02) 50%,
-                rgba(184, 134, 11, 0.01) 100%);
+                rgba(45, 125, 125, 0.02) 100%);
             position: relative;
             overflow: hidden;
-            padding-top: 80px;
-        }
-
-        .hero-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(45, 125, 125, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(26, 54, 93, 0.05) 0%, transparent 50%);
+            padding-top: 72px;
         }
 
         .hero-content {
             position: relative;
             z-index: 1;
-            max-width: 1000px;
-            margin: 0 auto;
             text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: var(--spacing-xl) 0;
         }
 
         .hospital-badge {
@@ -550,17 +478,10 @@
             padding: 0.75rem 1.5rem;
             border-radius: var(--radius-full);
             font-weight: 600;
-            margin-bottom: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
             font-size: 0.875rem;
             border: 1px solid var(--slate-200);
             box-shadow: var(--shadow-sm);
-            backdrop-filter: blur(10px);
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
         }
 
         .hero-title {
@@ -571,22 +492,18 @@
             font-size: 1.25rem;
             color: var(--slate-600);
             line-height: 1.7;
-            max-width: 700px;
-            margin: 0 auto var(--spacing-2xl);
+            margin-bottom: var(--spacing-2xl);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        @media (min-width: 768px) {
-            .hero-subtitle {
-                font-size: 1.375rem;
-            }
-        }
-
-        /* ===== BUTTONS ===== */
+        /* ===== CLEAN BUTTONS ===== */
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 1rem 2rem;
+            padding: 0.875rem 1.75rem;
             border-radius: var(--radius-full);
             font-weight: 600;
             text-decoration: none;
@@ -595,11 +512,10 @@
             border: none;
             font-size: 0.9375rem;
             gap: 0.5rem;
-            text-align: center;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--medical-teal), var(--medical-sage));
+            background: var(--medical-teal);
             color: var(--medical-white);
             box-shadow: var(--shadow-md);
         }
@@ -607,6 +523,7 @@
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: var(--shadow-lg);
+            background: var(--medical-sage);
         }
 
         .btn-outline {
@@ -620,26 +537,9 @@
             transform: translateY(-2px);
         }
 
-        .btn-gold {
-            background: linear-gradient(135deg, var(--medical-gold), #DAA520);
-            color: var(--medical-white);
-            box-shadow: var(--shadow-md);
-        }
-
-        .btn-gold:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        /* ===== MISSION SECTION ===== */
+        /* ===== CLEAN CONTENT SECTIONS ===== */
         .mission-section {
             background: var(--medical-white);
-        }
-
-        .mission-content {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
         }
 
         .mission-icon {
@@ -655,35 +555,32 @@
             margin: 0 auto var(--spacing-xl);
         }
 
-        /* ===== PILLARS SECTION ===== */
+        /* ===== CLEAN PILLARS SECTION ===== */
         .pillars-section {
-            background: linear-gradient(135deg, 
-                rgba(26, 54, 93, 0.03) 0%,
-                rgba(45, 125, 125, 0.02) 100%);
+            background: var(--paper-gray);
         }
 
         .pillars-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: var(--spacing-xl);
+            gap: var(--spacing-lg);
             margin-top: var(--spacing-xl);
         }
 
         @media (min-width: 768px) {
             .pillars-grid {
                 grid-template-columns: repeat(2, 1fr);
+                gap: var(--spacing-xl);
             }
         }
 
         .pillar-card {
             background: var(--medical-white);
             border-radius: var(--radius-xl);
-            padding: var(--spacing-2xl);
+            padding: var(--spacing-xl);
             border: 1px solid var(--slate-200);
             transition: all 0.3s ease;
             text-align: center;
-            position: relative;
-            overflow: hidden;
         }
 
         .pillar-card:hover {
@@ -709,28 +606,7 @@
             background: linear-gradient(135deg, var(--medical-navy), var(--medical-teal));
         }
 
-        .pillar-card.research .pillar-icon {
-            background: linear-gradient(135deg, var(--medical-teal), var(--medical-sage));
-        }
-
-        .pillar-name {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--medical-navy);
-            margin-bottom: var(--spacing-md);
-        }
-
-        .pillar-description {
-            color: var(--slate-600);
-            margin-bottom: var(--spacing-lg);
-            line-height: 1.6;
-        }
-
-        /* ===== VALUES SECTION ===== */
-        .values-section {
-            background: var(--medical-white);
-        }
-
+        /* ===== CLEAN VALUES SECTION ===== */
         .values-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -753,7 +629,7 @@
 
         .value-card {
             text-align: center;
-            padding: var(--spacing-xl);
+            padding: var(--spacing-lg);
         }
 
         .value-icon {
@@ -766,137 +642,81 @@
             justify-content: center;
             color: var(--medical-teal);
             font-size: 1.25rem;
-            margin: 0 auto var(--spacing-lg);
+            margin: 0 auto var(--spacing-md);
         }
 
-        .value-name {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: var(--medical-navy);
-            margin-bottom: var(--spacing-sm);
-        }
-
-        .value-description {
-            color: var(--slate-600);
-            font-size: 0.9375rem;
-            line-height: 1.6;
-        }
-
-        /* ===== GATEWAY SECTION ===== */
+        /* ===== CLEAN GATEWAY SECTION ===== */
         .gateway-section {
-            background: linear-gradient(135deg, 
-                rgba(184, 134, 11, 0.05) 0%,
-                rgba(26, 54, 93, 0.02) 100%);
+            background: var(--paper-gray);
         }
 
         .gateway-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: var(--spacing-xl);
+            gap: var(--spacing-lg);
             margin-top: var(--spacing-xl);
         }
 
         @media (min-width: 768px) {
             .gateway-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: var(--spacing-2xl);
+                gap: var(--spacing-xl);
             }
         }
 
         .gateway-card {
             background: var(--medical-white);
             border-radius: var(--radius-xl);
-            padding: var(--spacing-2xl);
+            padding: var(--spacing-xl);
             border: 1px solid var(--slate-200);
             transition: all 0.3s ease;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            min-height: 400px;
-            position: relative;
-            overflow: hidden;
         }
 
         .gateway-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-4px);
             box-shadow: var(--shadow-xl);
         }
 
-        .gateway-card.innovation-hub {
-            border-top: 4px solid var(--medical-navy);
-        }
-
-        .gateway-card.clinical-research {
-            border-top: 4px solid var(--medical-teal);
-        }
-
         .gateway-icon {
-            width: 72px;
-            height: 72px;
-            border-radius: var(--radius-xl);
+            width: 64px;
+            height: 64px;
+            border-radius: var(--radius-lg);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
+            font-size: 1.5rem;
             margin-bottom: var(--spacing-lg);
+            color: var(--medical-white);
         }
 
         .gateway-card.innovation-hub .gateway-icon {
-            background: linear-gradient(135deg, var(--medical-navy), #2C5282);
-            color: var(--medical-white);
+            background: var(--medical-navy);
         }
 
         .gateway-card.clinical-research .gateway-icon {
-            background: linear-gradient(135deg, var(--medical-teal), #319795);
-            color: var(--medical-white);
-        }
-
-        .gateway-title {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--medical-navy);
-            margin-bottom: var(--spacing-md);
-        }
-
-        .gateway-description {
-            color: var(--slate-600);
-            margin-bottom: var(--spacing-lg);
-            line-height: 1.6;
-            flex-grow: 1;
+            background: var(--medical-teal);
         }
 
         .gateway-features {
-            text-align: left;
             margin: var(--spacing-lg) 0;
-            padding: var(--spacing-lg);
+            padding: var(--spacing-md);
             background: var(--slate-100);
             border-radius: var(--radius-lg);
-            width: 100%;
-        }
-
-        .gateway-features h4 {
-            color: var(--medical-navy);
-            margin-bottom: var(--spacing-sm);
-            font-size: 1rem;
-            font-weight: 600;
         }
 
         .gateway-features ul {
             list-style: none;
-            font-size: 0.9375rem;
-            color: var(--slate-600);
         }
 
         .gateway-features li {
-            padding: 0.5rem 0;
+            padding: 0.375rem 0;
             position: relative;
             padding-left: 1.5rem;
+            color: var(--slate-600);
         }
 
         .gateway-features li:before {
-            content: "•";
+            content: "✓";
             position: absolute;
             left: 0;
             color: var(--medical-teal);
@@ -905,126 +725,52 @@
 
         /* ===== NEWSLETTER SECTION ===== */
         .newsletter-section {
-            background: var(--medical-navy-light);
+            background: var(--medical-white);
             border-top: 1px solid var(--slate-200);
-            border-bottom: 1px solid var(--slate-200);
         }
 
         .newsletter-form {
             max-width: 500px;
             margin: 0 auto;
-            text-align: center;
-        }
-
-        .newsletter-form .form-group {
-            margin-bottom: var(--spacing-md);
         }
 
         .newsletter-form input {
             width: 100%;
             padding: 1rem;
-            border: 2px solid var(--slate-300);
+            border: 1px solid var(--slate-300);
             border-radius: var(--radius-lg);
             font-size: 1rem;
-            transition: all 0.3s ease;
+            margin-bottom: var(--spacing-md);
         }
 
         .newsletter-form input:focus {
             outline: none;
             border-color: var(--medical-teal);
-            box-shadow: 0 0 0 3px rgba(45, 125, 125, 0.1);
         }
 
-        .form-success {
-            background: var(--success-green-light);
-            color: var(--success-green);
-            padding: var(--spacing-md);
-            border-radius: var(--radius-lg);
-            margin-top: var(--spacing-md);
-            display: none;
-        }
-
-        .form-error {
-            background: var(--error-red-light);
-            color: var(--error-red);
-            padding: var(--spacing-md);
-            border-radius: var(--radius-lg);
-            margin-top: var(--spacing-md);
-            display: none;
-        }
-
-        /* ===== SOCIAL SHARING ===== */
-        .social-sharing {
-            display: flex;
-            justify-content: center;
-            gap: var(--spacing-sm);
-            margin-top: var(--spacing-lg);
-        }
-
-        .social-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: var(--slate-200);
-            color: var(--slate-700);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
-
-        .social-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .social-btn.twitter:hover {
-            background: #1DA1F2;
-            color: white;
-        }
-
-        .social-btn.linkedin:hover {
-            background: #0077B5;
-            color: white;
-        }
-
-        .social-btn.facebook:hover {
-            background: #4267B2;
-            color: white;
-        }
-
-        .social-btn.email:hover {
-            background: var(--medical-teal);
-            color: white;
-        }
-
-        /* ===== FOOTER ===== */
+        /* ===== PROFESSIONAL FOOTER ===== */
         .footer {
             background: var(--medical-navy);
             color: var(--medical-white);
-            padding: var(--spacing-2xl) 0 var(--spacing-xl);
+            padding: var(--spacing-2xl) 0;
         }
 
         .footer-content {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
-            text-align: center;
         }
 
         .footer-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: var(--spacing-2xl);
-            margin-bottom: var(--spacing-2xl);
+            margin-bottom: var(--spacing-xl);
         }
 
         @media (min-width: 768px) {
             .footer-grid {
                 grid-template-columns: repeat(3, 1fr);
-                text-align: left;
+                gap: var(--spacing-xl);
             }
         }
 
@@ -1060,16 +806,6 @@
             margin-bottom: 0.5rem;
         }
 
-        .contact-info a {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .contact-info a:hover {
-            color: var(--medical-white);
-        }
-
         .footer-logo {
             font-family: var(--font-serif);
             font-size: 1.5rem;
@@ -1087,71 +823,81 @@
         .copyright {
             font-size: 0.875rem;
             opacity: 0.6;
-            margin-top: var(--spacing-lg);
-            padding-top: var(--spacing-md);
+            padding-top: var(--spacing-lg);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
         }
 
-        /* ===== LANGUAGE CONTENT ===== */
-        .lang-en, .lang-es {
-            display: none;
-        }
-        
-        .lang-en.active, .lang-es.active {
-            display: inline;
-        }
-        
-        .lang-en.active-block, .lang-es.active-block {
-            display: block;
-        }
-
-        /* ===== ERROR MESSAGE ===== */
-        .error-message {
+        /* ===== PRINT BUTTON (Subtle) ===== */
+        .print-button {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--error-red);
+            bottom: var(--spacing-lg);
+            right: var(--spacing-lg);
+            width: 48px;
+            height: 48px;
+            background: var(--medical-teal);
             color: white;
-            padding: 1rem 1.5rem;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-xl);
-            z-index: 9999;
-            animation: slideIn 0.3s ease;
-            max-width: 400px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            z-index: 100;
+            transition: all 0.3s ease;
+            opacity: 0.8;
         }
 
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
+        .print-button:hover {
+            opacity: 1;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        @media print {
+            .print-button {
+                display: none;
             }
         }
 
         /* ===== UTILITY CLASSES ===== */
-        .hidden {
-            display: none !important;
-        }
-
         .text-center {
             text-align: center;
         }
 
-        .visually-hidden {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border: 0;
+        .mb-1 { margin-bottom: var(--spacing-sm); }
+        .mb-2 { margin-bottom: var(--spacing-md); }
+        .mb-3 { margin-bottom: var(--spacing-lg); }
+        .mb-4 { margin-bottom: var(--spacing-xl); }
+
+        .mt-1 { margin-top: var(--spacing-sm); }
+        .mt-2 { margin-top: var(--spacing-md); }
+        .mt-3 { margin-top: var(--spacing-lg); }
+        .mt-4 { margin-top: var(--spacing-xl); }
+
+        .hidden {
+            display: none !important;
         }
 
+        /* ===== LANGUAGE CONTENT ===== */
+        [lang="es"] {
+            display: none;
+        }
+        
+        body[data-lang="es"] [lang="en"] {
+            display: none;
+        }
+        
+        body[data-lang="es"] [lang="es"] {
+            display: block;
+        }
+        
+        body[data-lang="es"] [lang="es"].inline {
+            display: inline;
+        }
+
+        /* ===== ANIMATIONS ===== */
         .fade-in {
             animation: fadeIn 0.6s ease forwards;
         }
@@ -1166,106 +912,9 @@
                 transform: translateY(0);
             }
         }
-
-        .mt-1 { margin-top: var(--spacing-sm); }
-        .mt-2 { margin-top: var(--spacing-md); }
-        .mt-3 { margin-top: var(--spacing-lg); }
-        .mt-4 { margin-top: var(--spacing-xl); }
-        .mt-5 { margin-top: var(--spacing-2xl); }
-
-        .mb-1 { margin-bottom: var(--spacing-sm); }
-        .mb-2 { margin-bottom: var(--spacing-md); }
-        .mb-3 { margin-bottom: var(--spacing-lg); }
-        .mb-4 { margin-bottom: var(--spacing-xl); }
-        .mb-5 { margin-bottom: var(--spacing-2xl); }
-
-        /* ===== PRINT STYLES ===== */
-        @media print {
-            .superior-header,
-            .mobile-nav,
-            .btn,
-            .hospital-badge,
-            .breadcrumb,
-            .social-sharing,
-            .newsletter-section,
-            .language-switcher {
-                display: none !important;
-            }
-            
-            body {
-                font-size: 12pt;
-                line-height: 1.5;
-                color: #000;
-            }
-            
-            a {
-                color: #000;
-                text-decoration: underline;
-            }
-            
-            a[href]:after {
-                content: " (" attr(href) ")";
-                font-size: 0.8em;
-                font-weight: normal;
-            }
-            
-            .container {
-                max-width: 100%;
-                padding: 0;
-            }
-            
-            .section {
-                padding: 1rem 0;
-                break-inside: avoid;
-            }
-            
-            .footer {
-                background: white !important;
-                color: #000 !important;
-                padding: 1rem 0;
-            }
-            
-            .footer-logo,
-            .footer-column h3 {
-                color: #000 !important;
-            }
-            
-            .footer-links a,
-            .contact-info a {
-                color: #000 !important;
-            }
-        }
-
-        /* ===== LOADING STATES ===== */
-        .loading {
-            opacity: 0.5;
-            pointer-events: none;
-        }
-
-        .loading-spinner {
-            display: inline-block;
-            width: 1em;
-            height: 1em;
-            border: 2px solid currentColor;
-            border-radius: 50%;
-            border-top-color: transparent;
-            animation: spin 1s linear infinite;
-            vertical-align: middle;
-            margin-right: 0.5em;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
     </style>
 </head>
-<body>
-    <!-- Skip to Main Content Link -->
-    <a href="#main-content" class="skip-link visually-hidden">
-        <span class="lang-en active">Skip to main content</span>
-        <span class="lang-es">Saltar al contenido principal</span>
-    </a>
-
+<body data-lang="en">
     <!-- Superior Header -->
     <header class="superior-header">
         <div class="container header-container">
@@ -1279,158 +928,148 @@
 
             <!-- Language Switcher -->
             <div class="language-switcher">
-                <button class="lang-btn active" onclick="switchLanguage('en')" aria-label="Switch to English">
-                    <i class="fas fa-globe"></i> EN
+                <button class="lang-btn active" onclick="switchLanguage('en')" aria-label="English">
+                    EN
                 </button>
-                <button class="lang-btn" onclick="switchLanguage('es')" aria-label="Cambiar a Español">
-                    <i class="fas fa-globe"></i> ES
+                <button class="lang-btn" onclick="switchLanguage('es')" aria-label="Español">
+                    ES
                 </button>
             </div>
 
             <!-- Desktop Navigation -->
-            <nav class="desktop-nav" aria-label="Main navigation">
+            <nav class="desktop-nav">
                 <div class="nav-item">
                     <a href="#mission" class="nav-link">
                         <i class="fas fa-heartbeat"></i>
-                        <span class="lang-en active">Our Mission</span>
-                        <span class="lang-es">Nuestra Misión</span>
+                        <span lang="en">Mission</span>
+                        <span lang="es">Misión</span>
                     </a>
                 </div>
                 <div class="nav-item">
                     <a href="#pillars" class="nav-link">
                         <i class="fas fa-cube"></i>
-                        <span class="lang-en active">Our Pillars</span>
-                        <span class="lang-es">Nuestros Pilares</span>
+                        <span lang="en">Pillars</span>
+                        <span lang="es">Pilares</span>
                     </a>
                 </div>
                 <div class="nav-item">
                     <a href="#gateway" class="nav-link">
                         <i class="fas fa-compass"></i>
-                        <span class="lang-en active">Explore Work</span>
-                        <span class="lang-es">Explorar Trabajo</span>
-                    </a>
-                </div>
-                <div class="nav-item">
-                    <a href="#newsletter" class="nav-link">
-                        <i class="fas fa-newspaper"></i>
-                        <span class="lang-en active">Newsletter</span>
-                        <span class="lang-es">Boletín</span>
+                        <span lang="en">Our Work</span>
+                        <span lang="es">Trabajo</span>
                     </a>
                 </div>
                 <div class="nav-item">
                     <a href="innovation-hub.html" class="nav-cta">
                         <i class="fas fa-handshake"></i>
-                        <span class="lang-en active">Collaborate</span>
-                        <span class="lang-es">Colaborar</span>
+                        <span lang="en">Collaborate</span>
+                        <span lang="es">Colaborar</span>
                     </a>
                 </div>
             </nav>
 
             <!-- Mobile Menu Toggle -->
-            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mobileNav">
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Open menu">
                 <span class="menu-line"></span>
                 <span class="menu-line"></span>
                 <span class="menu-line"></span>
             </button>
         </div>
-
-        <!-- Mobile Navigation -->
-        <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
-            <ul class="mobile-nav-links">
-                <li class="mobile-nav-item">
-                    <a href="#mission" class="mobile-nav-link" onclick="closeMobileMenu()">
-                        <i class="fas fa-heartbeat"></i>
-                        <span class="lang-en active">Our Mission</span>
-                        <span class="lang-es">Nuestra Misión</span>
-                    </a>
-                </li>
-                <li class="mobile-nav-item">
-                    <a href="#pillars" class="mobile-nav-link" onclick="closeMobileMenu()">
-                        <i class="fas fa-cube"></i>
-                        <span class="lang-en active">Our Pillars</span>
-                        <span class="lang-es">Nuestros Pilares</span>
-                    </a>
-                </li>
-                <li class="mobile-nav-item">
-                    <a href="#gateway" class="mobile-nav-link" onclick="closeMobileMenu()">
-                        <i class="fas fa-compass"></i>
-                        <span class="lang-en active">Explore Work</span>
-                        <span class="lang-es">Explorar Trabajo</span>
-                    </a>
-                </li>
-                <li class="mobile-nav-item">
-                    <a href="#newsletter" class="mobile-nav-link" onclick="closeMobileMenu()">
-                        <i class="fas fa-newspaper"></i>
-                        <span class="lang-en active">Newsletter</span>
-                        <span class="lang-es">Boletín</span>
-                    </a>
-                </li>
-                <li class="mobile-nav-item">
-                    <a href="innovation-hub.html" class="mobile-nav-link" onclick="closeMobileMenu()">
-                        <i class="fas fa-lightbulb"></i>
-                        <span class="lang-en active">Innovation Hub</span>
-                        <span class="lang-es">Hub de Innovación</span>
-                    </a>
-                </li>
-                <li class="mobile-nav-item">
-                    <a href="clinical-research.html" class="mobile-nav-link" onclick="closeMobileMenu()">
-                        <i class="fas fa-microscope"></i>
-                        <span class="lang-en active">Clinical Research</span>
-                        <span class="lang-es">Investigación Clínica</span>
-                    </a>
-                </li>
-                <li class="mobile-nav-item">
-                    <a href="#contact" class="mobile-nav-link" onclick="closeMobileMenu()">
-                        <i class="fas fa-envelope"></i>
-                        <span class="lang-en active">Contact</span>
-                        <span class="lang-es">Contacto</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
     </header>
 
-    <!-- Breadcrumb Navigation -->
-    <nav class="breadcrumb" aria-label="Breadcrumb">
-        <div class="container">
-            <ol>
-                <li><a href="index.html" class="lang-en active">Home</a><a href="index.html" class="lang-es">Inicio</a></li>
-                <li class="separator">/</li>
-                <li><a href="pneumology.html" class="lang-en active">Pneumology</a><a href="pneumology.html" class="lang-es">Neumología</a></li>
-                <li class="separator">/</li>
-                <li><span aria-current="page" class="lang-en active">Research & Innovation</span><span aria-current="page" class="lang-es">Investigación e Innovación</span></li>
-            </ol>
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+
+    <!-- Mobile Navigation Panel -->
+    <div class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav-header">
+            <div class="logo">
+                <div class="logo-icon">P</div>
+                <div class="logo-text">
+                    <div class="logo-main">Pneumology R&I</div>
+                </div>
+            </div>
+            <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
-    </nav>
+        
+        <ul class="mobile-nav-links">
+            <li class="mobile-nav-item">
+                <a href="#mission" class="mobile-nav-link" onclick="closeMobileMenu()">
+                    <i class="fas fa-heartbeat"></i>
+                    <span lang="en">Our Mission</span>
+                    <span lang="es">Nuestra Misión</span>
+                </a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="#pillars" class="mobile-nav-link" onclick="closeMobileMenu()">
+                    <i class="fas fa-cube"></i>
+                    <span lang="en">Our Pillars</span>
+                    <span lang="es">Nuestros Pilares</span>
+                </a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="#gateway" class="mobile-nav-link" onclick="closeMobileMenu()">
+                    <i class="fas fa-compass"></i>
+                    <span lang="en">Our Work</span>
+                    <span lang="es">Nuestro Trabajo</span>
+                </a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="innovation-hub.html" class="mobile-nav-link" onclick="closeMobileMenu()">
+                    <i class="fas fa-lightbulb"></i>
+                    <span lang="en">Innovation Hub</span>
+                    <span lang="es">Centro de Innovación</span>
+                </a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="clinical-research.html" class="mobile-nav-link" onclick="closeMobileMenu()">
+                    <i class="fas fa-microscope"></i>
+                    <span lang="en">Clinical Research</span>
+                    <span lang="es">Investigación Clínica</span>
+                </a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="#contact" class="mobile-nav-link" onclick="closeMobileMenu()">
+                    <i class="fas fa-envelope"></i>
+                    <span lang="en">Contact</span>
+                    <span lang="es">Contacto</span>
+                </a>
+            </li>
+        </ul>
+        
+        <a href="innovation-hub.html" class="mobile-nav-cta" onclick="closeMobileMenu()">
+            <span lang="en">Start Collaboration</span>
+            <span lang="es">Iniciar Colaboración</span>
+        </a>
+    </div>
 
     <!-- Hero Section -->
-    <section class="hero-section" id="main-content">
-        <div class="hero-background"></div>
+    <section class="hero-section">
         <div class="container">
             <div class="hero-content fade-in">
                 <div class="hospital-badge">
                     <i class="fas fa-hospital"></i>
-                    <span class="lang-en active">Hospital Universitario A Coruña</span>
-                    <span class="lang-es">Hospital Universitario A Coruña</span>
+                    <span lang="en">Hospital Universitario A Coruña</span>
+                    <span lang="es">Hospital Universitario A Coruña</span>
                 </div>
                 
                 <h1 class="hero-title">
-                    <span class="lang-en active">Advancing Respiratory Care Through Discovery</span>
-                    <span class="lang-es">Avanzando en la Atención Respiratoria mediante el Descubrimiento</span>
+                    <span lang="en">Advancing Respiratory Care Through Discovery</span>
+                    <span lang="es">Innovación en Cuidado Respiratorio mediante el Descubrimiento</span>
                 </h1>
                 
                 <p class="hero-subtitle">
-                    <span class="lang-en active">At the intersection of clinical excellence and scientific innovation, we are passionate about transforming pulmonary medicine. Our commitment is to improve patient outcomes through rigorous clinical research and cutting-edge innovation.</span>
-                    <span class="lang-es">En la intersección de la excelencia clínica y la innovación científica, estamos apasionados por transformar la medicina pulmonar. Nuestro compromiso es mejorar los resultados de los pacientes mediante una investigación clínica rigurosa y una innovación de vanguardia.</span>
+                    <span lang="en">We are at the forefront of pulmonary medicine, combining clinical excellence with scientific innovation to transform patient outcomes through rigorous research and cutting-edge technology.</span>
+                    <span lang="es">Estamos a la vanguardia de la medicina pulmonar, combinando excelencia clínica con innovación científica para transformar los resultados de los pacientes mediante investigación rigurosa y tecnología de vanguardia.</span>
                 </p>
                 
-                <div>
-                    <a href="#gateway" class="btn btn-primary">
-                        <i class="fas fa-compass"></i>
-                        <span class="lang-en active">Explore Our Work</span>
-                        <span class="lang-es">Explorar Nuestro Trabajo</span>
-                    </a>
-                </div>
+                <a href="#gateway" class="btn btn-primary">
+                    <i class="fas fa-compass"></i>
+                    <span lang="en">Explore Our Work</span>
+                    <span lang="es">Explorar Nuestro Trabajo</span>
+                </a>
             </div>
         </div>
     </section>
@@ -1438,24 +1077,24 @@
     <!-- Mission Section -->
     <section class="section mission-section" id="mission">
         <div class="container">
-            <div class="mission-content">
+            <div class="section-content">
                 <div class="mission-icon">
                     <i class="fas fa-heartbeat"></i>
                 </div>
                 
                 <h2 class="text-center">
-                    <span class="lang-en active">Our Passion, Our Purpose</span>
-                    <span class="lang-es">Nuestra Pasión, Nuestro Propósito</span>
+                    <span lang="en">Our Passion, Our Purpose</span>
+                    <span lang="es">Nuestra Pasión, Nuestro Propósito</span>
                 </h2>
                 
-                <p class="text-lead mt-3">
-                    <span class="lang-en active">We believe that the future of respiratory care lies at the intersection of clinical expertise and scientific discovery. Every breath matters, and we are dedicated to ensuring that each one counts through meticulous research and thoughtful innovation.</span>
-                    <span class="lang-es">Creemos que el futuro de la atención respiratoria se encuentra en la intersección de la experiencia clínica y el descubrimiento científico. Cada respiración importa, y nos dedicamos a garantizar que cada una cuente mediante una investigación meticulosa y una innovación reflexiva.</span>
+                <p class="text-lead">
+                    <span lang="en">We believe the future of respiratory care lies at the intersection of clinical expertise and scientific discovery. Every breath matters, and we are dedicated to ensuring each one counts through meticulous research and thoughtful innovation.</span>
+                    <span lang="es">Creemos que el futuro del cuidado respiratorio se encuentra en la intersección entre experiencia clínica y descubrimiento científico. Cada respiración importa, y nos dedicamos a garantizar que cada una cuente mediante investigación meticulosa e innovación reflexiva.</span>
                 </p>
                 
-                <p class="text-lead mt-2">
-                    <span class="lang-en active">Our work is driven by a simple yet powerful conviction: that by combining clinical insight with scientific rigor, we can create meaningful change in pulmonary medicine. We are not just conducting studies or developing technologies—we are building a better future for patients with respiratory conditions.</span>
-                    <span class="lang-es">Nuestro trabajo está impulsado por una convicción simple pero poderosa: que al combinar la visión clínica con el rigor científico, podemos crear un cambio significativo en la medicina pulmonar. No solo estamos realizando estudios o desarrollando tecnologías; estamos construyendo un futuro mejor para los pacientes con afecciones respiratorias.</span>
+                <p class="text-lead">
+                    <span lang="en">Driven by the conviction that combining clinical insight with scientific rigor creates meaningful change in pulmonary medicine, we are building a better future for patients with respiratory conditions.</span>
+                    <span lang="es">Impulsados por la convicción de que combinar conocimiento clínico con rigor científico genera cambios significativos en medicina pulmonar, construimos un futuro mejor para pacientes con afecciones respiratorias.</span>
                 </p>
             </div>
         </div>
@@ -1464,38 +1103,36 @@
     <!-- Pillars Section -->
     <section class="section pillars-section" id="pillars">
         <div class="container">
-            <div class="text-center">
+            <div class="text-center mb-4">
                 <h2>
-                    <span class="lang-en active">Two Pillars, One Vision</span>
-                    <span class="lang-es">Dos Pilares, Una Visión</span>
+                    <span lang="en">Two Pillars, One Vision</span>
+                    <span lang="es">Dos Pilares, Una Visión</span>
                 </h2>
-                <p class="text-lead mt-2">
-                    <span class="lang-en active">Our work is structured around two complementary pillars that together drive progress in pulmonary medicine.</span>
-                    <span class="lang-es">Nuestro trabajo está estructurado en torno a dos pilares complementarios que juntos impulsan el progreso en la medicina pulmonar.</span>
+                <p class="text-lead">
+                    <span lang="en">Our work is structured around two complementary pillars that together drive progress in pulmonary medicine.</span>
+                    <span lang="es">Nuestro trabajo se estructura en torno a dos pilares complementarios que juntos impulsan el progreso en medicina pulmonar.</span>
                 </p>
             </div>
             
-            <div class="pillars-grid mt-5">
+            <div class="pillars-grid">
                 <!-- Innovation Pillar -->
                 <div class="pillar-card innovation fade-in">
                     <div class="pillar-icon">
                         <i class="fas fa-lightbulb"></i>
                     </div>
-                    <h3 class="pillar-name">
-                        <span class="lang-en active">Innovation</span>
-                        <span class="lang-es">Innovación</span>
+                    <h3>
+                        <span lang="en">Innovation</span>
+                        <span lang="es">Innovación</span>
                     </h3>
-                    <p class="pillar-description">
-                        <span class="lang-en active">Transforming clinical challenges into practical solutions through technology, design thinking, and collaborative development. We bridge the gap between clinical insight and technical implementation.</span>
-                        <span class="lang-es">Transformar desafíos clínicos en soluciones prácticas mediante tecnología, pensamiento de diseño y desarrollo colaborativo. Cerramos la brecha entre la visión clínica y la implementación técnica.</span>
+                    <p class="text-subtle mb-3">
+                        <span lang="en">Transforming clinical challenges into practical solutions through technology, design thinking, and collaborative development.</span>
+                        <span lang="es">Transformamos desafíos clínicos en soluciones prácticas mediante tecnología, pensamiento de diseño y desarrollo colaborativo.</span>
                     </p>
-                    <div class="mt-4">
-                        <a href="innovation-hub.html" class="btn btn-outline" onclick="trackEvent('Navigation', 'Click', 'Innovation Hub Link')">
-                            <i class="fas fa-rocket"></i>
-                            <span class="lang-en active">Explore Innovation Hub</span>
-                            <span class="lang-es">Explorar Hub de Innovación</span>
-                        </a>
-                    </div>
+                    <a href="innovation-hub.html" class="btn btn-outline">
+                        <i class="fas fa-rocket"></i>
+                        <span lang="en">Explore Innovation Hub</span>
+                        <span lang="es">Explorar Centro de Innovación</span>
+                    </a>
                 </div>
                 
                 <!-- Research Pillar -->
@@ -1503,21 +1140,19 @@
                     <div class="pillar-icon">
                         <i class="fas fa-microscope"></i>
                     </div>
-                    <h3 class="pillar-name">
-                        <span class="lang-en active">Clinical Research</span>
-                        <span class="lang-es">Investigación Clínica</span>
+                    <h3>
+                        <span lang="en">Clinical Research</span>
+                        <span lang="es">Investigación Clínica</span>
                     </h3>
-                    <p class="pillar-description">
-                        <span class="lang-en active">Advancing medical knowledge through rigorous clinical trials and scientific investigation. Our research groups focus on translating scientific discoveries into clinically meaningful improvements in patient care.</span>
-                        <span class="lang-es">Avanzar en el conocimiento médico mediante ensayos clínicos rigurosos e investigación científica. Nuestros grupos de investigación se centran en traducir descubrimientos científicos en mejoras clínicamente significativas en la atención al paciente.</span>
+                    <p class="text-subtle mb-3">
+                        <span lang="en">Advancing medical knowledge through rigorous clinical trials and scientific investigation focused on translating discoveries into clinical improvements.</span>
+                        <span lang="es">Avanzamos en conocimiento médico mediante ensayos clínicos rigurosos e investigación científica centrada en traducir descubrimientos en mejoras clínicas.</span>
                     </p>
-                    <div class="mt-4">
-                        <a href="clinical-research.html" class="btn btn-outline" onclick="trackEvent('Navigation', 'Click', 'Clinical Research Link')">
-                            <i class="fas fa-clipboard-check"></i>
-                            <span class="lang-en active">Explore Clinical Research</span>
-                            <span class="lang-es">Explorar Investigación Clínica</span>
-                        </a>
-                    </div>
+                    <a href="clinical-research.html" class="btn btn-outline">
+                        <i class="fas fa-clipboard-check"></i>
+                        <span lang="en">Explore Clinical Research</span>
+                        <span lang="es">Explorar Investigación Clínica</span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -1526,29 +1161,29 @@
     <!-- Values Section -->
     <section class="section values-section" id="values">
         <div class="container">
-            <div class="text-center">
+            <div class="text-center mb-4">
                 <h2>
-                    <span class="lang-en active">What Drives Us</span>
-                    <span class="lang-es">Lo que Nos Impulsa</span>
+                    <span lang="en">What Drives Us</span>
+                    <span lang="es">Lo que Nos Impulsa</span>
                 </h2>
-                <p class="text-lead mt-2">
-                    <span class="lang-en active">Our work is guided by core values that reflect our commitment to excellence in respiratory care.</span>
-                    <span class="lang-es">Nuestro trabajo está guiado por valores fundamentales que reflejan nuestro compromiso con la excelencia en la atención respiratoria.</span>
+                <p class="text-lead">
+                    <span lang="en">Our work is guided by core values that reflect our commitment to excellence in respiratory care.</span>
+                    <span lang="es">Nuestro trabajo está guiado por valores fundamentales que reflejan nuestro compromiso con la excelencia en cuidado respiratorio.</span>
                 </p>
             </div>
             
-            <div class="values-grid mt-5">
+            <div class="values-grid">
                 <div class="value-card fade-in">
                     <div class="value-icon">
                         <i class="fas fa-user-md"></i>
                     </div>
-                    <h3 class="value-name">
-                        <span class="lang-en active">Clinical Excellence</span>
-                        <span class="lang-es">Excelencia Clínica</span>
+                    <h3>
+                        <span lang="en">Clinical Excellence</span>
+                        <span lang="es">Excelencia Clínica</span>
                     </h3>
-                    <p class="value-description">
-                        <span class="lang-en active">Every research question and innovation must ultimately serve the patient. Clinical relevance is our primary filter.</span>
-                        <span class="lang-es">Cada pregunta de investigación e innovación debe servir finalmente al paciente. La relevancia clínica es nuestro filtro principal.</span>
+                    <p class="text-subtle">
+                        <span lang="en">Every research question and innovation must ultimately serve the patient. Clinical relevance is our primary filter.</span>
+                        <span lang="es">Cada pregunta de investigación e innovación debe servir finalmente al paciente. La relevancia clínica es nuestro filtro principal.</span>
                     </p>
                 </div>
                 
@@ -1556,13 +1191,13 @@
                     <div class="value-icon">
                         <i class="fas fa-flask"></i>
                     </div>
-                    <h3 class="value-name">
-                        <span class="lang-en active">Scientific Rigor</span>
-                        <span class="lang-es">Rigor Científico</span>
+                    <h3>
+                        <span lang="en">Scientific Rigor</span>
+                        <span lang="es">Rigor Científico</span>
                     </h3>
-                    <p class="value-description">
-                        <span class="lang-en active">We maintain the highest standards of scientific integrity in all our research and development activities.</span>
-                        <span class="lang-es">Mantenemos los más altos estándares de integridad científica en todas nuestras actividades de investigación y desarrollo.</span>
+                    <p class="text-subtle">
+                        <span lang="en">We maintain the highest standards of scientific integrity in all our research and development activities.</span>
+                        <span lang="es">Mantenemos los más altos estándares de integridad científica en todas nuestras actividades de investigación y desarrollo.</span>
                     </p>
                 </div>
                 
@@ -1570,13 +1205,13 @@
                     <div class="value-icon">
                         <i class="fas fa-handshake"></i>
                     </div>
-                    <h3 class="value-name">
-                        <span class="lang-en active">Collaboration</span>
-                        <span class="lang-es">Colaboración</span>
+                    <h3>
+                        <span lang="en">Collaboration</span>
+                        <span lang="es">Colaboración</span>
                     </h3>
-                    <p class="value-description">
-                        <span class="lang-en active">We believe the best solutions emerge from partnerships—between clinicians, researchers, and industry partners.</span>
-                        <span class="lang-es">Creemos que las mejores soluciones emergen de las asociaciones, entre médicos, investigadores y socios de la industria.</span>
+                    <p class="text-subtle">
+                        <span lang="en">The best solutions emerge from partnerships between clinicians, researchers, and industry partners.</span>
+                        <span lang="es">Las mejores soluciones emergen de colaboraciones entre clínicos, investigadores y socios industriales.</span>
                     </p>
                 </div>
                 
@@ -1584,13 +1219,13 @@
                     <div class="value-icon">
                         <i class="fas fa-chart-line"></i>
                     </div>
-                    <h3 class="value-name">
-                        <span class="lang-en active">Impact</span>
-                        <span class="lang-es">Impacto</span>
+                    <h3>
+                        <span lang="en">Impact</span>
+                        <span lang="es">Impacto</span>
                     </h3>
-                    <p class="value-description">
-                        <span class="lang-en active">We measure success not by publications alone, but by tangible improvements in patient outcomes and clinical practice.</span>
-                        <span class="lang-es">Medimos el éxito no solo por las publicaciones, sino por mejoras tangibles en los resultados de los pacientes y la práctica clínica.</span>
+                    <p class="text-subtle">
+                        <span lang="en">We measure success by tangible improvements in patient outcomes and clinical practice.</span>
+                        <span lang="es">Medimos el éxito por mejoras tangibles en resultados de pacientes y práctica clínica.</span>
                     </p>
                 </div>
             </div>
@@ -1600,117 +1235,85 @@
     <!-- Gateway Section -->
     <section class="section gateway-section" id="gateway">
         <div class="container">
-            <div class="text-center">
+            <div class="text-center mb-4">
                 <h2>
-                    <span class="lang-en active">Explore Our Work</span>
-                    <span class="lang-es">Explorar Nuestro Trabajo</span>
+                    <span lang="en">Explore Our Work</span>
+                    <span lang="es">Explorar Nuestro Trabajo</span>
                 </h2>
-                <p class="text-lead mt-2">
-                    <span class="lang-en active">Dive deeper into our specific areas of focus. Each represents a distinct yet interconnected aspect of our mission.</span>
-                    <span class="lang-es">Profundice en nuestras áreas específicas de enfoque. Cada una representa un aspecto distinto pero interconectado de nuestra misión.</span>
+                <p class="text-lead">
+                    <span lang="en">Dive deeper into our specific areas of focus. Each represents a distinct yet interconnected aspect of our mission.</span>
+                    <span lang="es">Profundice en nuestras áreas específicas de enfoque. Cada una representa un aspecto distinto pero interconectado de nuestra misión.</span>
                 </p>
             </div>
             
-            <div class="gateway-grid mt-5">
+            <div class="gateway-grid">
                 <!-- Innovation Hub Card -->
                 <div class="gateway-card innovation-hub fade-in">
-                    <div>
-                        <div class="gateway-icon">
-                            <i class="fas fa-lightbulb"></i>
-                        </div>
-                        <h3 class="gateway-title">
-                            <span class="lang-en active">Innovation Hub</span>
-                            <span class="lang-es">Hub de Innovación</span>
-                        </h3>
-                        <p class="gateway-description">
-                            <span class="lang-en active">Partner with clinical experts to develop, test, and validate new respiratory technologies. We bridge clinical insight with technical implementation.</span>
-                            <span class="lang-es">Colabora con expertos clínicos para desarrollar, probar y validar nuevas tecnologías respiratorias. Cerramos la brecha entre la visión clínica y la implementación técnica.</span>
-                        </p>
-                        
-                        <div class="gateway-features">
-                            <h4>
-                                <span class="lang-en active">What You'll Find:</span>
-                                <span class="lang-es">Lo que Encontrarás:</span>
-                            </h4>
-                            <ul>
-                                <li class="lang-en active">4D innovation pathways</li>
-                                <li class="lang-es">Vías de innovación 4D</li>
-                                <li class="lang-en active">Active technology projects</li>
-                                <li class="lang-es">Proyectos tecnológicos activos</li>
-                                <li class="lang-en active">Partnership opportunities</li>
-                                <li class="lang-es">Oportunidades de colaboración</li>
-                                <li class="lang-en active">Clinical workflow integration</li>
-                                <li class="lang-es">Integración de flujo de trabajo clínico</li>
-                            </ul>
-                        </div>
+                    <div class="gateway-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3>
+                        <span lang="en">Innovation Hub</span>
+                        <span lang="es">Centro de Innovación</span>
+                    </h3>
+                    <p class="text-subtle mb-3">
+                        <span lang="en">Partner with clinical experts to develop, test, and validate new respiratory technologies. We bridge clinical insight with technical implementation.</span>
+                        <span lang="es">Colabore con expertos clínicos para desarrollar, probar y validar nuevas tecnologías respiratorias. Conectamos conocimiento clínico con implementación técnica.</span>
+                    </p>
+                    
+                    <div class="gateway-features">
+                        <h4 class="mb-2">
+                            <span lang="en">What You'll Find:</span>
+                            <span lang="es">Lo que Encontrará:</span>
+                        </h4>
+                        <ul>
+                            <li><span lang="en">4D innovation pathways</span><span lang="es">Vías de innovación 4D</span></li>
+                            <li><span lang="en">Active technology projects</span><span lang="es">Proyectos tecnológicos activos</span></li>
+                            <li><span lang="en">Partnership opportunities</span><span lang="es">Oportunidades de colaboración</span></li>
+                            <li><span lang="en">Clinical workflow integration</span><span lang="es">Integración en flujos clínicos</span></li>
+                        </ul>
                     </div>
                     
-                    <div>
-                        <a href="innovation-hub.html" class="btn btn-primary" onclick="trackEvent('Navigation', 'Click', 'Innovation Hub Gateway')">
-                            <i class="fas fa-rocket"></i>
-                            <span class="lang-en active">Visit Innovation Hub</span>
-                            <span class="lang-es">Visitar Hub de Innovación</span>
-                        </a>
-                    </div>
+                    <a href="innovation-hub.html" class="btn btn-primary mt-3">
+                        <i class="fas fa-rocket"></i>
+                        <span lang="en">Visit Innovation Hub</span>
+                        <span lang="es">Visitar Centro de Innovación</span>
+                    </a>
                 </div>
                 
                 <!-- Clinical Research Card -->
                 <div class="gateway-card clinical-research fade-in">
-                    <div>
-                        <div class="gateway-icon">
-                            <i class="fas fa-microscope"></i>
-                        </div>
-                        <h3 class="gateway-title">
-                            <span class="lang-en active">Clinical Research</span>
-                            <span class="lang-es">Investigación Clínica</span>
-                        </h3>
-                        <p class="gateway-description">
-                            <span class="lang-en active">Explore our active clinical trials and research groups. Our work spans tuberculosis, sleep disorders, transplantation, and chronic respiratory diseases.</span>
-                            <span class="lang-es">Explora nuestros ensayos clínicos activos y grupos de investigación. Nuestro trabajo abarca tuberculosis, trastornos del sueño, trasplantes y enfermedades respiratorias crónicas.</span>
-                        </p>
-                        
-                        <div class="gateway-features">
-                            <h4>
-                                <span class="lang-en active">What You'll Find:</span>
-                                <span class="lang-es">Lo que Encontrarás:</span>
-                            </h4>
-                            <ul>
-                                <li class="lang-en active">6 specialized research groups</li>
-                                <li class="lang-es">6 grupos de investigación especializados</li>
-                                <li class="lang-en active">Active clinical trials</li>
-                                <li class="lang-es">Ensayos clínicos activos</li>
-                                <li class="lang-en active">Expert research teams</li>
-                                <li class="lang-es">Equipos de investigación expertos</li>
-                                <li class="lang-en active">Collaboration opportunities</li>
-                                <li class="lang-es">Oportunidades de colaboración</li>
-                            </ul>
-                        </div>
+                    <div class="gateway-icon">
+                        <i class="fas fa-microscope"></i>
+                    </div>
+                    <h3>
+                        <span lang="en">Clinical Research</span>
+                        <span lang="es">Investigación Clínica</span>
+                    </h3>
+                    <p class="text-subtle mb-3">
+                        <span lang="en">Explore our active clinical trials and research groups focused on tuberculosis, sleep disorders, transplantation, and chronic respiratory diseases.</span>
+                        <span lang="es">Explore nuestros ensayos clínicos activos y grupos de investigación centrados en tuberculosis, trastornos del sueño, trasplantes y enfermedades respiratorias crónicas.</span>
+                    </p>
+                    
+                    <div class="gateway-features">
+                        <h4 class="mb-2">
+                            <span lang="en">What You'll Find:</span>
+                            <span lang="es">Lo que Encontrará:</span>
+                        </h4>
+                        <ul>
+                            <li><span lang="en">6 specialized research groups</span><span lang="es">6 grupos de investigación especializados</span></li>
+                            <li><span lang="en">Active clinical trials</span><span lang="es">Ensayos clínicos activos</span></li>
+                            <li><span lang="en">Expert research teams</span><span lang="es">Equipos de investigación expertos</span></li>
+                            <li><span lang="en">Collaboration opportunities</span><span lang="es">Oportunidades de colaboración</span></li>
+                        </ul>
                     </div>
                     
-                    <div>
-                        <a href="clinical-research.html" class="btn btn-primary" onclick="trackEvent('Navigation', 'Click', 'Clinical Research Gateway')">
-                            <i class="fas fa-clipboard-check"></i>
-                            <span class="lang-en active">Visit Clinical Research</span>
-                            <span class="lang-es">Visitar Investigación Clínica</span>
-                        </a>
-                    </div>
+                    <a href="clinical-research.html" class="btn btn-primary mt-3">
+                        <i class="fas fa-clipboard-check"></i>
+                        <span lang="en">Visit Clinical Research</span>
+                        <span lang="es">Visitar Investigación Clínica</span>
+                    </a>
                 </div>
-            </div>
-
-            <!-- Social Sharing -->
-            <div class="social-sharing mt-5">
-                <button class="social-btn twitter" onclick="shareOnTwitter()" aria-label="Share on Twitter">
-                    <i class="fab fa-twitter"></i>
-                </button>
-                <button class="social-btn linkedin" onclick="shareOnLinkedIn()" aria-label="Share on LinkedIn">
-                    <i class="fab fa-linkedin-in"></i>
-                </button>
-                <button class="social-btn facebook" onclick="shareOnFacebook()" aria-label="Share on Facebook">
-                    <i class="fab fa-facebook-f"></i>
-                </button>
-                <button class="social-btn email" onclick="shareByEmail()" aria-label="Share by Email">
-                    <i class="fas fa-envelope"></i>
-                </button>
             </div>
         </div>
     </section>
@@ -1718,53 +1321,26 @@
     <!-- Newsletter Section -->
     <section class="section newsletter-section" id="newsletter">
         <div class="container">
-            <div class="text-center">
-                <h2>
-                    <span class="lang-en active">Stay Updated</span>
-                    <span class="lang-es">Mantente Informado</span>
-                </h2>
-                <p class="text-lead mt-2 mb-5">
-                    <span class="lang-en active">Subscribe to our newsletter for the latest research updates, innovation news, and collaboration opportunities.</span>
-                    <span class="lang-es">Suscríbete a nuestro boletín para recibir las últimas actualizaciones de investigación, noticias de innovación y oportunidades de colaboración.</span>
-                </p>
-                
-                <div class="newsletter-form">
-                    <form id="newsletterForm" novalidate>
-                        <div class="form-group">
-                            <input type="email" id="email" name="email" placeholder="your.email@example.com" required 
-                                   aria-label="Email address for newsletter subscription">
-                        </div>
-                        <div class="form-group">
-                            <label class="visually-hidden" for="consent">
-                                <span class="lang-en active">I agree to receive newsletters</span>
-                                <span class="lang-es">Acepto recibir boletines</span>
-                            </label>
-                            <div>
-                                <input type="checkbox" id="consent" name="consent" required>
-                                <label for="consent" style="font-size: 0.875rem; color: var(--slate-600);">
-                                    <span class="lang-en active">I agree to receive occasional updates about research and innovation from HUAC Pneumology.</span>
-                                    <span class="lang-es">Acepto recibir actualizaciones ocasionales sobre investigación e innovación de Neumología HUAC.</span>
-                                </label>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary">
-                            <span class="lang-en active">Subscribe</span>
-                            <span class="lang-es">Suscribirse</span>
-                        </button>
-                    </form>
-                    
-                    <div id="formSuccess" class="form-success mt-3" role="alert">
-                        <i class="fas fa-check-circle"></i>
-                        <span class="lang-en active">Thank you for subscribing! Please check your email to confirm.</span>
-                        <span class="lang-es">¡Gracias por suscribirte! Por favor, revisa tu email para confirmar.</span>
-                    </div>
-                    
-                    <div id="formError" class="form-error mt-3" role="alert">
-                        <i class="fas fa-exclamation-circle"></i>
-                        <span id="errorMessage" class="lang-en active">Something went wrong. Please try again.</span>
-                        <span id="errorMessageEs" class="lang-es">Algo salió mal. Por favor, inténtalo de nuevo.</span>
-                    </div>
+            <div class="section-content">
+                <div class="text-center mb-4">
+                    <h2>
+                        <span lang="en">Stay Updated</span>
+                        <span lang="es">Manténgase Informado</span>
+                    </h2>
+                    <p class="text-lead">
+                        <span lang="en">Subscribe for the latest research updates, innovation news, and collaboration opportunities.</span>
+                        <span lang="es">Suscríbase para recibir las últimas actualizaciones de investigación, noticias de innovación y oportunidades de colaboración.</span>
+                    </p>
                 </div>
+                
+                <form class="newsletter-form">
+                    <input type="email" placeholder="your.email@example.com" required>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-envelope"></i>
+                        <span lang="en">Subscribe</span>
+                        <span lang="es">Suscribirse</span>
+                    </button>
+                </form>
             </div>
         </div>
     </section>
@@ -1776,233 +1352,111 @@
                 <div class="footer-grid">
                     <div class="footer-column">
                         <div class="footer-logo">
-                            <span class="lang-en active">Pneumology Research & Innovation</span>
-                            <span class="lang-es">Investigación e Innovación en Neumología</span>
+                            <span lang="en">Pneumology Research & Innovation</span>
+                            <span lang="es">Investigación e Innovación en Neumología</span>
                         </div>
                         <p class="footer-description">
-                            <span class="lang-en active">Hospital Universitario A Coruña<br>Advancing pulmonary medicine through clinical excellence and scientific discovery</span>
-                            <span class="lang-es">Hospital Universitario A Coruña<br>Avanzando en medicina pulmonar mediante excelencia clínica y descubrimiento científico</span>
+                            <span lang="en">Hospital Universitario A Coruña</span>
+                            <span lang="es">Hospital Universitario A Coruña</span>
                         </p>
                     </div>
                     
                     <div class="footer-column">
                         <h3>
-                            <span class="lang-en active">Quick Links</span>
-                            <span class="lang-es">Enlaces Rápidos</span>
+                            <span lang="en">Quick Links</span>
+                            <span lang="es">Enlaces Rápidos</span>
                         </h3>
                         <ul class="footer-links">
                             <li><a href="innovation-hub.html">
-                                <span class="lang-en active">Innovation Hub</span>
-                                <span class="lang-es">Hub de Innovación</span>
+                                <span lang="en">Innovation Hub</span>
+                                <span lang="es">Centro de Innovación</span>
                             </a></li>
                             <li><a href="clinical-research.html">
-                                <span class="lang-en active">Clinical Research</span>
-                                <span class="lang-es">Investigación Clínica</span>
+                                <span lang="en">Clinical Research</span>
+                                <span lang="es">Investigación Clínica</span>
                             </a></li>
                             <li><a href="#values">
-                                <span class="lang-en active">Our Values</span>
-                                <span class="lang-es">Nuestros Valores</span>
-                            </a></li>
-                            <li><a href="#newsletter">
-                                <span class="lang-en active">Newsletter</span>
-                                <span class="lang-es">Boletín</span>
+                                <span lang="en">Our Values</span>
+                                <span lang="es">Nuestros Valores</span>
                             </a></li>
                         </ul>
                     </div>
                     
                     <div class="footer-column">
                         <h3>
-                            <span class="lang-en active">Contact Us</span>
-                            <span class="lang-es">Contáctanos</span>
+                            <span lang="en">Contact</span>
+                            <span lang="es">Contacto</span>
                         </h3>
                         <div class="contact-info">
-                            <p>
-                                <i class="fas fa-map-marker-alt"></i> 
-                                <span class="lang-en active">Hospital Universitario A Coruña<br>As Xubias, 84, 15006 A Coruña</span>
-                                <span class="lang-es">Hospital Universitario A Coruña<br>As Xubias, 84, 15006 A Coruña</span>
-                            </p>
-                            <p>
-                                <i class="fas fa-phone"></i> 
-                                <a href="tel:+34881111800">+34 881 111 800</a>
-                            </p>
-                            <p>
-                                <i class="fas fa-envelope"></i> 
-                                <a href="mailto:neumologia.huac@example.com">neumologia.huac@example.com</a>
-                            </p>
+                            <p><i class="fas fa-map-marker-alt"></i> As Xubias, 84, 15006 A Coruña</p>
+                            <p><i class="fas fa-phone"></i> +34 881 111 800</p>
+                            <p><i class="fas fa-envelope"></i> neumologia.innovacion@huac.es</p>
                         </div>
                     </div>
                 </div>
                 
                 <div class="copyright">
-                    © 2024 HUAC Pneumology Department. 
-                    <span class="lang-en active">All rights reserved.<br>Passionate about making every breath count.</span>
-                    <span class="lang-es">Todos los derechos reservados.<br>Apasionados por hacer que cada respiración cuente.</span>
+                    <p>© 2024 HUAC Pneumology Department. 
+                        <span lang="en">All rights reserved. Making every breath count.</span>
+                        <span lang="es">Todos los derechos reservados. Haciendo que cada respiración cuente.</span>
+                    </p>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Search Modal (Hidden by default) -->
-    <div id="searchModal" class="hidden" role="dialog" aria-modal="true" aria-label="Search dialog">
-        <div class="search-modal-content">
-            <!-- Search implementation would go here -->
-        </div>
-    </div>
+    <!-- Subtle Print Button -->
+    <button class="print-button" onclick="window.print()" aria-label="Print page">
+        <i class="fas fa-print"></i>
+    </button>
 
     <script>
-        // ===== ANALYTICS & EVENT TRACKING =====
-        function trackEvent(category, action, label) {
-            // Google Analytics (if available)
-            if (typeof gtag !== 'undefined') {
-                gtag('event', action, {
-                    'event_category': category,
-                    'event_label': label,
-                    'value': 1
-                });
-            }
-            
-            // Custom tracking
-            console.log(`[Analytics] ${category} - ${action} - ${label}`);
-            
-            // Send to backend (example)
-            try {
-                fetch('/api/track', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        category: category,
-                        action: action,
-                        label: label,
-                        timestamp: new Date().toISOString(),
-                        language: currentLanguage,
-                        url: window.location.href
-                    })
-                });
-            } catch (error) {
-                // Silent fail for analytics
-            }
-        }
-
-        // ===== LANGUAGE MANAGEMENT =====
-        let currentLanguage = 'en';
-        
-        function switchLanguage(lang) {
-            try {
-                // Show loading state
-                const btn = event.target;
-                const originalHTML = btn.innerHTML;
-                btn.innerHTML = '<span class="loading-spinner"></span>';
-                btn.classList.add('loading');
-                
-                // Disable all language buttons temporarily
-                document.querySelectorAll('.lang-btn').forEach(b => {
-                    b.disabled = true;
-                });
-                
-                if (currentLanguage === lang) return;
-                
-                currentLanguage = lang;
-                
-                // Update language switcher buttons
-                document.querySelectorAll('.lang-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-                btn.classList.add('active');
-                
-                // Update HTML lang attribute
-                document.documentElement.setAttribute('data-lang', lang);
-                document.documentElement.setAttribute('lang', lang);
-                
-                // Show/hide language-specific content with fade effect
-                const allLangElements = document.querySelectorAll('[class*="lang-"]');
-                
-                // Hide current language content
-                document.querySelectorAll(`.lang-${currentLanguage === 'en' ? 'es' : 'en'}`).forEach(el => {
-                    el.style.opacity = '0';
-                    el.style.transition = 'opacity 0.3s ease';
-                    setTimeout(() => {
-                        el.classList.remove('active', 'active-block');
-                        el.style.opacity = '';
-                    }, 300);
-                });
-                
-                // Show new language content
-                setTimeout(() => {
-                    document.querySelectorAll(`.lang-${lang}`).forEach(el => {
-                        el.classList.add('active');
-                        if (el.tagName === 'P' || el.tagName === 'DIV' || el.tagName === 'SPAN') {
-                            el.classList.add('active-block');
-                        }
-                        el.style.opacity = '0';
-                        el.style.transition = 'opacity 0.3s ease';
-                        setTimeout(() => {
-                            el.style.opacity = '1';
-                        }, 10);
-                    });
-                }, 300);
-                
-                // Track language switch
-                trackEvent('Language', 'Switch', lang);
-                
-                // Store preference in localStorage
-                localStorage.setItem('huac_language', lang);
-                
-                // Re-enable buttons and restore original HTML
-                setTimeout(() => {
-                    btn.innerHTML = originalHTML;
-                    btn.classList.remove('loading');
-                    document.querySelectorAll('.lang-btn').forEach(b => {
-                        b.disabled = false;
-                    });
-                }, 300);
-                
-            } catch (error) {
-                console.error('Language switching failed:', error);
-                showErrorMessage(
-                    currentLanguage === 'en' 
-                        ? 'Unable to switch language. Please refresh the page.'
-                        : 'No se pudo cambiar el idioma. Por favor, actualiza la página.'
-                );
-                
-                // Re-enable buttons on error
-                document.querySelectorAll('.lang-btn').forEach(b => {
-                    b.disabled = false;
-                    b.innerHTML = b.classList.contains('active') ? '<i class="fas fa-globe"></i> ' + (b.textContent.includes('EN') ? 'EN' : 'ES') : b.innerHTML;
-                    b.classList.remove('loading');
-                });
-            }
-        }
-        
-        // ===== MOBILE NAVIGATION =====
+        // ===== FIXED MOBILE MENU - NO EMPTY SPACE =====
         const mobileMenuToggle = document.getElementById('mobileMenuToggle');
         const mobileNav = document.getElementById('mobileNav');
+        const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+        const mobileNavClose = document.getElementById('mobileNavClose');
         
-        function toggleMobileMenu() {
-            const isExpanded = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
-            mobileMenuToggle.classList.toggle('active');
-            mobileNav.classList.toggle('active');
-            mobileMenuToggle.setAttribute('aria-expanded', !isExpanded);
-            document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
-            
-            // Track menu interaction
-            trackEvent('Navigation', 'Mobile Menu', isExpanded ? 'Close' : 'Open');
+        function openMobileMenu() {
+            mobileMenuToggle.classList.add('active');
+            mobileNav.classList.add('active');
+            mobileNavOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            mobileMenuToggle.setAttribute('aria-label', 'Close menu');
+            mobileMenuToggle.setAttribute('aria-expanded', 'true');
         }
         
         function closeMobileMenu() {
             mobileMenuToggle.classList.remove('active');
             mobileNav.classList.remove('active');
-            mobileMenuToggle.setAttribute('aria-expanded', 'false');
+            mobileNavOverlay.classList.remove('active');
             document.body.style.overflow = '';
+            mobileMenuToggle.setAttribute('aria-label', 'Open menu');
+            mobileMenuToggle.setAttribute('aria-expanded', 'false');
         }
         
-        mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+        mobileMenuToggle.addEventListener('click', openMobileMenu);
+        mobileNavClose.addEventListener('click', closeMobileMenu);
+        mobileNavOverlay.addEventListener('click', closeMobileMenu);
         
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!mobileNav.contains(e.target) && !mobileMenuToggle.contains(e.target) && mobileNav.classList.contains('active')) {
-                closeMobileMenu();
-            }
+        // Close mobile menu when clicking on links
+        document.querySelectorAll('.mobile-nav-link, .mobile-nav-cta').forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
         });
+        
+        // ===== LANGUAGE SWITCHING =====
+        function switchLanguage(lang) {
+            document.body.setAttribute('data-lang', lang);
+            
+            // Update language switcher buttons
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Store preference
+            localStorage.setItem('huac_language', lang);
+        }
         
         // ===== SMOOTH SCROLLING =====
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -2013,392 +1467,90 @@
                     const targetElement = document.getElementById(targetId);
                     if (targetElement) {
                         const headerHeight = document.querySelector('.superior-header').offsetHeight;
-                        const targetPosition = targetElement.offsetTop - headerHeight - 20;
+                        const targetPosition = targetElement.offsetTop - headerHeight;
                         
                         window.scrollTo({
                             top: targetPosition,
                             behavior: 'smooth'
                         });
                         
-                        // Update URL hash without jumping
-                        history.replaceState(null, null, `#${targetId}`);
-                        
-                        closeMobileMenu();
-                        
-                        // Track scroll clicks
-                        trackEvent('Navigation', 'Scroll to Section', targetId);
+                        // Update URL without jumping
+                        history.pushState(null, null, `#${targetId}`);
                     }
                 }
             });
-        });
-        
-        // ===== HEADER SCROLL EFFECT =====
-        let lastScrollTop = 0;
-        const header = document.querySelector('.superior-header');
-        
-        window.addEventListener('scroll', () => {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            
-            // Add shadow on scroll
-            if (scrollTop > 10) {
-                header.style.boxShadow = 'var(--shadow-lg)';
-                header.style.backdropFilter = 'blur(20px)';
-            } else {
-                header.style.boxShadow = 'var(--shadow-sm)';
-                header.style.backdropFilter = 'blur(20px)';
-            }
-            
-            // Hide/show header on scroll (optional)
-            if (scrollTop > lastScrollTop && scrollTop > 100) {
-                // Scrolling down
-                header.style.transform = 'translateY(-100%)';
-            } else {
-                // Scrolling up
-                header.style.transform = 'translateY(0)';
-            }
-            
-            lastScrollTop = scrollTop;
-        });
-        
-        // ===== NEWSLETTER FORM =====
-        const newsletterForm = document.getElementById('newsletterForm');
-        const formSuccess = document.getElementById('formSuccess');
-        const formError = document.getElementById('formError');
-        const errorMessage = document.getElementById('errorMessage');
-        const errorMessageEs = document.getElementById('errorMessageEs');
-        
-        newsletterForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('email').value;
-            const consent = document.getElementById('consent').checked;
-            
-            // Reset messages
-            formSuccess.style.display = 'none';
-            formError.style.display = 'none';
-            
-            // Simple validation
-            if (!email || !email.includes('@')) {
-                showFormError(
-                    currentLanguage === 'en' 
-                        ? 'Please enter a valid email address.'
-                        : 'Por favor, introduce una dirección de email válida.'
-                );
-                return;
-            }
-            
-            if (!consent) {
-                showFormError(
-                    currentLanguage === 'en'
-                        ? 'Please agree to receive updates.'
-                        : 'Por favor, acepta recibir actualizaciones.'
-                );
-                return;
-            }
-            
-            // Show loading state
-            const submitBtn = newsletterForm.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<span class="loading-spinner"></span>';
-            submitBtn.disabled = true;
-            
-            try {
-                // Simulate API call (replace with actual API)
-                await new Promise(resolve => setTimeout(resolve, 1000));
-                
-                // Success
-                formSuccess.style.display = 'block';
-                newsletterForm.reset();
-                
-                // Track subscription
-                trackEvent('Newsletter', 'Subscribe', 'Success');
-                
-            } catch (error) {
-                showFormError(
-                    currentLanguage === 'en'
-                        ? 'Subscription failed. Please try again later.'
-                        : 'La suscripción falló. Por favor, inténtalo más tarde.'
-                );
-                trackEvent('Newsletter', 'Subscribe', 'Error');
-            } finally {
-                // Restore button
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-            }
-        });
-        
-        function showFormError(message) {
-            if (currentLanguage === 'en') {
-                errorMessage.textContent = message;
-                errorMessage.style.display = 'inline';
-                errorMessageEs.style.display = 'none';
-            } else {
-                errorMessageEs.textContent = message;
-                errorMessage.style.display = 'none';
-                errorMessageEs.style.display = 'inline';
-            }
-            formError.style.display = 'block';
-        }
-        
-        // ===== SOCIAL SHARING =====
-        function shareOnTwitter() {
-            const url = encodeURIComponent(window.location.href);
-            const text = encodeURIComponent(
-                currentLanguage === 'en'
-                    ? 'Check out the Pneumology Research & Innovation platform from HUAC Hospital'
-                    : 'Echa un vistazo a la plataforma de Investigación e Innovación en Neumología del Hospital HUAC'
-            );
-            window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
-            trackEvent('Social', 'Share', 'Twitter');
-        }
-        
-        function shareOnLinkedIn() {
-            const url = encodeURIComponent(window.location.href);
-            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
-            trackEvent('Social', 'Share', 'LinkedIn');
-        }
-        
-        function shareOnFacebook() {
-            const url = encodeURIComponent(window.location.href);
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
-            trackEvent('Social', 'Share', 'Facebook');
-        }
-        
-        function shareByEmail() {
-            const subject = encodeURIComponent(
-                currentLanguage === 'en'
-                    ? 'Pneumology Research & Innovation Platform'
-                    : 'Plataforma de Investigación e Innovación en Neumología'
-            );
-            const body = encodeURIComponent(
-                (currentLanguage === 'en'
-                    ? 'Check out this amazing platform: '
-                    : 'Echa un vistazo a esta increíble plataforma: ') + window.location.href
-            );
-            window.location.href = `mailto:?subject=${subject}&body=${body}`;
-            trackEvent('Social', 'Share', 'Email');
-        }
-        
-        // ===== ERROR HANDLING =====
-        function showErrorMessage(message) {
-            const errorDiv = document.createElement('div');
-            errorDiv.className = 'error-message';
-            errorDiv.textContent = message;
-            errorDiv.setAttribute('role', 'alert');
-            errorDiv.setAttribute('aria-live', 'assertive');
-            
-            document.body.appendChild(errorDiv);
-            
-            // Auto-remove after 5 seconds
-            setTimeout(() => {
-                errorDiv.style.animation = 'slideIn 0.3s ease reverse';
-                setTimeout(() => errorDiv.remove(), 300);
-            }, 5000);
-        }
-        
-        // Global error handler
-        window.addEventListener('error', function(e) {
-            console.error('Global error:', e.error);
-            // Don't show error messages for minor issues in production
-            if (window.location.hostname !== 'localhost') return;
-            
-            showErrorMessage(
-                currentLanguage === 'en'
-                    ? 'An error occurred. Please refresh the page.'
-                    : 'Ocurrió un error. Por favor, actualiza la página.'
-            );
         });
         
         // ===== INITIALIZATION =====
         document.addEventListener('DOMContentLoaded', function() {
             // Check for saved language preference
             const savedLang = localStorage.getItem('huac_language');
-            if (savedLang && (savedLang === 'en' || savedLang === 'es')) {
-                currentLanguage = savedLang;
-                
-                // Update language switcher UI
+            if (savedLang === 'es') {
+                document.body.setAttribute('data-lang', 'es');
                 document.querySelectorAll('.lang-btn').forEach(btn => {
                     btn.classList.remove('active');
-                    if (btn.textContent.includes(savedLang.toUpperCase())) {
+                    if (btn.textContent.includes('ES')) {
                         btn.classList.add('active');
-                    }
-                });
-                
-                // Set initial language content
-                document.documentElement.setAttribute('data-lang', savedLang);
-                document.documentElement.setAttribute('lang', savedLang);
-                
-                document.querySelectorAll(`.lang-${savedLang}`).forEach(el => {
-                    el.classList.add('active');
-                    if (el.tagName === 'P' || el.tagName === 'DIV' || el.tagName === 'SPAN') {
-                        el.classList.add('active-block');
                     }
                 });
             }
             
-            // Add scroll animations with Intersection Observer (with fallback)
-            if ('IntersectionObserver' in window) {
-                const observerOptions = {
-                    threshold: 0.1,
-                    rootMargin: '0px 0px -50px 0px'
-                };
+            // Add scroll animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
 
+            if ('IntersectionObserver' in window) {
                 const observer = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
                             entry.target.classList.add('fade-in');
-                            observer.unobserve(entry.target);
                         }
                     });
                 }, observerOptions);
 
-                // Observe elements for animation
-                document.querySelectorAll('.pillar-card, .value-card, .gateway-card').forEach(el => {
+                document.querySelectorAll('.fade-in').forEach(el => {
                     observer.observe(el);
                 });
-            } else {
-                // Fallback for older browsers
-                window.addEventListener('scroll', function() {
-                    const elements = document.querySelectorAll('.pillar-card, .value-card, .gateway-card');
-                    elements.forEach(el => {
-                        const position = el.getBoundingClientRect();
-                        if (position.top < window.innerHeight * 0.8) {
-                            el.classList.add('fade-in');
-                        }
-                    });
-                });
-                // Trigger initial check
-                window.dispatchEvent(new Event('scroll'));
             }
             
-            // Update active nav link on scroll
+            // Header scroll effect
             window.addEventListener('scroll', () => {
-                const sections = document.querySelectorAll('section[id]');
-                const navLinks = document.querySelectorAll('.nav-link');
-                
-                let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop;
-                    const sectionHeight = section.clientHeight;
-                    const headerHeight = document.querySelector('.superior-header').offsetHeight;
-                    
-                    if (window.scrollY >= (sectionTop - headerHeight - 100)) {
-                        current = section.getAttribute('id');
-                    }
-                });
-                
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
-                    }
-                });
+                const header = document.querySelector('.superior-header');
+                if (window.scrollY > 10) {
+                    header.style.boxShadow = 'var(--shadow-lg)';
+                } else {
+                    header.style.boxShadow = 'var(--shadow-sm)';
+                }
             });
             
-            // Initialize tracking for page view
-            trackEvent('Page', 'View', 'Landing Page');
-            
-            // Handle keyboard navigation
-            document.addEventListener('keydown', (e) => {
-                // Escape key closes mobile menu
-                if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
-                    closeMobileMenu();
+            // Newsletter form
+            const newsletterForm = document.querySelector('.newsletter-form');
+            newsletterForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = this.querySelector('input').value;
+                
+                // Simple validation
+                if (!email || !email.includes('@')) {
+                    alert('Please enter a valid email address.');
+                    return;
                 }
                 
-                // Tab key management for mobile menu
-                if (mobileNav.classList.contains('active')) {
-                    const focusableElements = mobileNav.querySelectorAll('a, button, [tabindex]:not([tabindex="-1"])');
-                    const firstElement = focusableElements[0];
-                    const lastElement = focusableElements[focusableElements.length - 1];
-                    
-                    if (e.key === 'Tab') {
-                        if (e.shiftKey && document.activeElement === firstElement) {
-                            e.preventDefault();
-                            lastElement.focus();
-                        } else if (!e.shiftKey && document.activeElement === lastElement) {
-                            e.preventDefault();
-                            firstElement.focus();
-                        }
-                    }
-                }
+                // In a real application, you would send this to your server
+                console.log('Subscribed:', email);
+                this.querySelector('input').value = '';
+                alert('Thank you for subscribing!');
             });
-            
-            // Add focus styles for keyboard navigation
-            document.addEventListener('keyup', (e) => {
-                if (e.key === 'Tab') {
-                    document.documentElement.classList.add('keyboard-navigation');
-                }
-            });
-            
-            document.addEventListener('mousedown', () => {
-                document.documentElement.classList.remove('keyboard-navigation');
-            });
-            
-            // Add keyboard navigation CSS
-            const style = document.createElement('style');
-            style.textContent = `
-                .keyboard-navigation :focus {
-                    outline: 3px solid var(--medical-teal) !important;
-                    outline-offset: 2px !important;
-                }
-            `;
-            document.head.appendChild(style);
-            
-            // Print button functionality
-            const printBtn = document.createElement('button');
-            printBtn.className = 'btn btn-outline hidden-print';
-            printBtn.innerHTML = '<i class="fas fa-print"></i> <span class="lang-en active">Print Page</span><span class="lang-es">Imprimir Página</span>';
-            printBtn.style.position = 'fixed';
-            printBtn.style.bottom = '20px';
-            printBtn.style.right = '20px';
-            printBtn.style.zIndex = '1000';
-            printBtn.onclick = () => window.print();
-            document.body.appendChild(printBtn);
-            
-            // Add print-specific class
-            document.body.classList.add('no-print');
         });
         
-        // Handle page visibility for analytics
-        document.addEventListener('visibilitychange', function() {
-            if (document.visibilityState === 'visible') {
-                trackEvent('Page', 'Visibility', 'Visible');
-            } else {
-                trackEvent('Page', 'Visibility', 'Hidden');
+        // ===== KEYBOARD NAVIGATION =====
+        document.addEventListener('keydown', (e) => {
+            // Escape closes mobile menu
+            if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
+                closeMobileMenu();
             }
         });
-        
-        // Handle offline/online status
-        window.addEventListener('offline', () => {
-            showErrorMessage(
-                currentLanguage === 'en'
-                    ? 'You are offline. Some features may not work.'
-                    : 'Estás sin conexión. Algunas funciones pueden no funcionar.'
-            );
-        });
-        
-        window.addEventListener('online', () => {
-            showErrorMessage(
-                currentLanguage === 'en'
-                    ? 'Connection restored.'
-                    : 'Conexión restaurada.'
-            );
-        });
-        
-        // Performance monitoring
-        if ('performance' in window) {
-            window.addEventListener('load', () => {
-                setTimeout(() => {
-                    const perfData = window.performance.timing;
-                    const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
-                    
-                    if (pageLoadTime > 3000) {
-                        console.warn('Page load time is high:', pageLoadTime, 'ms');
-                        trackEvent('Performance', 'Load Time', pageLoadTime.toString());
-                    }
-                }, 0);
-            });
-        }
     </script>
 </body>
 </html>
