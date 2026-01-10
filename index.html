@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Pneumology Research & Innovation | HUAC Hospital Universitario A Coruña</title>
+    <title>Pneumology Research & Innovation | HUAC Hospital Universitario de A Coruña</title>
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Transforming respiratory care through clinical research and innovation at HUAC Hospital Universitario A Coruña. Discover our passion for advancing pulmonary medicine.">
+    <meta name="description" content="Transforming respiratory care through clinical research and innovation at HUAC Hospital Universitario de A Coruña. Discover our passion for advancing pulmonary medicine.">
     <meta name="keywords" content="pneumology, respiratory research, clinical trials, medical innovation, pulmonary medicine, HUAC, A Coruña">
     <meta name="author" content="HUAC Pneumology Department">
     
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Pneumology Research & Innovation | HUAC Hospital Universitario A Coruña">
-    <meta property="og:description" content="Transforming respiratory care through clinical research and innovation at HUAC Hospital Universitario A Coruña.">
+    <meta property="og:title" content="Pneumology Research & Innovation | HUAC Hospital Universitario de A Coruña">
+    <meta property="og:description" content="Transforming respiratory care through clinical research and innovation at HUAC Hospital Universitario de A Coruña.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://huac.es/pneumology-innovation">
     
@@ -21,11 +21,13 @@
     <meta name="twitter:title" content="Pneumology Research & Innovation | HUAC">
     <meta name="twitter:description" content="Transforming respiratory care through clinical research and innovation.">
     
+    <!-- Minimal CSS for essential icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+Pro:wght@400;600;700&display=swap" rel="stylesheet">
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     
     <style>
         /* ===== PROFESSIONAL LANDING PAGE DESIGN ===== */
@@ -819,19 +821,6 @@
             background: var(--medical-white);
         }
 
-        .mission-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--medical-teal), var(--medical-accent));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--medical-white);
-            font-size: 2rem;
-            margin: 0 auto var(--spacing-xl);
-        }
-
         /* ===== PILLARS SECTION ===== */
         .pillars-section {
             background: var(--paper-gray);
@@ -872,21 +861,16 @@
             border-color: var(--medical-teal);
         }
 
-        .pillar-icon {
+        .pillar-icon-wrapper {
             width: 64px;
             height: 64px;
-            background: linear-gradient(135deg, var(--medical-teal), var(--medical-accent));
-            border-radius: var(--radius-lg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--medical-white);
-            font-size: 1.5rem;
             margin: 0 auto var(--spacing-lg);
         }
 
-        .pillar-card.innovation .pillar-icon {
-            background: linear-gradient(135deg, var(--medical-navy), var(--medical-teal));
+        .pillar-icon {
+            font-size: 2rem;
+            color: var(--medical-teal);
+            text-align: center;
         }
 
         /* ===== VALUES SECTION ===== */
@@ -916,16 +900,11 @@
         }
 
         .value-icon {
-            width: 56px;
-            height: 56px;
-            background: var(--medical-teal-light);
-            border-radius: var(--radius-lg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-size: 1.75rem;
             color: var(--medical-teal);
-            font-size: 1.25rem;
-            margin: 0 auto var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+            display: block;
+            height: 40px;
         }
 
         /* ===== GATEWAY SECTION ===== */
@@ -967,15 +946,16 @@
         }
 
         .gateway-icon {
-            width: 64px;
-            height: 64px;
-            border-radius: var(--radius-lg);
+            font-size: 2rem;
+            color: var(--medical-white);
+            margin-bottom: var(--spacing-lg);
+            background: var(--medical-teal);
+            width: 60px;
+            height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: var(--spacing-lg);
-            color: var(--medical-white);
+            border-radius: var(--radius-lg);
         }
 
         .gateway-card.innovation-hub .gateway-icon {
@@ -1038,16 +1018,7 @@
             color: var(--medical-teal);
             flex-shrink: 0;
             opacity: 0.7;
-        }
-
-        .arrow-indicator:before {
-            content: "→";
-            font-size: 1.1rem;
-            transition: transform 0.3s ease;
-        }
-
-        .research-line:hover .arrow-indicator:before {
-            transform: translateX(3px);
+            font-weight: bold;
         }
 
         .research-content {
@@ -1116,16 +1087,10 @@
         }
 
         .contact-icon {
-            width: 56px;
-            height: 56px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: var(--radius-lg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-size: 1.75rem;
             color: var(--medical-white);
-            font-size: 1.5rem;
             margin-bottom: var(--spacing-md);
+            opacity: 0.9;
         }
 
         /* ===== NEWSLETTER SECTION ===== */
@@ -1349,28 +1314,24 @@
             <nav class="desktop-nav" aria-label="Main navigation">
                 <div class="nav-item">
                     <a href="#mission" class="nav-link">
-                        <i class="fas fa-bullseye"></i>
                         <span lang="en">Mission</span>
                         <span lang="es">Misión</span>
                     </a>
                 </div>
                 <div class="nav-item">
                     <a href="#pillars" class="nav-link">
-                        <i class="fas fa-layer-group"></i>
                         <span lang="en">Pillars</span>
                         <span lang="es">Pilares</span>
                     </a>
                 </div>
                 <div class="nav-item">
                     <a href="#gateway" class="nav-link">
-                        <i class="fas fa-project-diagram"></i>
                         <span lang="en">Our Work</span>
                         <span lang="es">Trabajo</span>
                     </a>
                 </div>
                 <div class="nav-item">
                     <a href="#collaboration" class="nav-cta">
-                        <i class="fas fa-handshake"></i>
                         <span lang="en">Collaborate</span>
                         <span lang="es">Colaborar</span>
                     </a>
@@ -1417,28 +1378,24 @@
         <ul class="mobile-nav-links">
             <li class="mobile-nav-item">
                 <a href="#mission" class="mobile-nav-link" onclick="closeMobileMenu()">
-                    <i class="fas fa-bullseye"></i>
                     <span lang="en">Our Mission</span>
                     <span lang="es">Nuestra Misión</span>
                 </a>
             </li>
             <li class="mobile-nav-item">
                 <a href="#pillars" class="mobile-nav-link" onclick="closeMobileMenu()">
-                    <i class="fas fa-layer-group"></i>
                     <span lang="en">Our Pillars</span>
                     <span lang="es">Nuestros Pilares</span>
                 </a>
             </li>
             <li class="mobile-nav-item">
                 <a href="#gateway" class="mobile-nav-link" onclick="closeMobileMenu()">
-                    <i class="fas fa-project-diagram"></i>
                     <span lang="en">Our Work</span>
                     <span lang="es">Nuestro Trabajo</span>
                 </a>
             </li>
             <li class="mobile-nav-item">
                 <a href="#collaboration" class="mobile-nav-link" onclick="closeMobileMenu()">
-                    <i class="fas fa-handshake"></i>
                     <span lang="en">Collaboration</span>
                     <span lang="es">Colaboración</span>
                 </a>
@@ -1456,9 +1413,8 @@
         <div class="container">
             <div class="hero-content">
                 <div class="hospital-badge fade-in">
-                    <i class="fas fa-hospital"></i>
-                    <span lang="en">Hospital Universitario A Coruña</span>
-                    <span lang="es">Hospital Universitario A Coruña</span>
+                    <span lang="en">Hospital Universitario de A Coruña</span>
+                    <span lang="es">Hospital Universitario de A Coruña</span>
                 </div>
                 
                 <h1 class="hero-title fade-in">
@@ -1471,15 +1427,15 @@
                     <div class="icon-diagram">
                         <!-- Technology & Innovation Icon -->
                         <div class="icon-circle technology">
-                            <i class="fas fa-robot"></i>
+                            T
                         </div>
                         <!-- Clinical Research Icon -->
                         <div class="icon-circle research">
-                            <i class="fas fa-clipboard-list"></i>
+                            R
                         </div>
                         <!-- Patient Care Icon -->
                         <div class="icon-circle patient">
-                            <i class="fas fa-user-heart"></i>
+                            P
                         </div>
                         <div class="connection-line line-1"></div>
                         <div class="connection-line line-2"></div>
@@ -1504,12 +1460,10 @@
                 
                 <div class="fade-in">
                     <a href="#gateway" class="btn btn-primary">
-                        <i class="fas fa-compass"></i>
                         <span lang="en">Explore Our Work</span>
                         <span lang="es">Explorar Nuestro Trabajo</span>
                     </a>
                     <a href="#collaboration" class="btn btn-outline" style="margin-left: 1rem;">
-                        <i class="fas fa-handshake"></i>
                         <span lang="en">Collaborate With Us</span>
                         <span lang="es">Colaborar Con Nosotros</span>
                     </a>
@@ -1522,10 +1476,6 @@
     <section class="section mission-section" id="mission">
         <div class="container">
             <div class="section-content">
-                <div class="mission-icon fade-in">
-                    <i class="fas fa-bullseye"></i>
-                </div>
-                
                 <h2 class="text-center fade-in">
                     <span lang="en">Our Vision for Respiratory Medicine</span>
                     <span lang="es">Nuestra Visión para la Medicina Respiratoria</span>
@@ -1561,8 +1511,10 @@
             <div class="pillars-grid">
                 <!-- Innovation Pillar -->
                 <div class="pillar-card innovation fade-in">
-                    <div class="pillar-icon">
-                        <i class="fas fa-lightbulb"></i>
+                    <div class="pillar-icon-wrapper">
+                        <div class="pillar-icon">
+                            I
+                        </div>
                     </div>
                     <h3>
                         <span lang="en">Innovation & Technology</span>
@@ -1573,7 +1525,6 @@
                         <span lang="es">Desarrollamos soluciones de próxima generación mediante innovación colaborativa, integración tecnológica y optimización de flujos clínicos.</span>
                     </p>
                     <a href="innovation-hub.html" class="btn btn-outline">
-                        <i class="fas fa-arrow-right"></i>
                         <span lang="en">Explore Innovation</span>
                         <span lang="es">Explorar Innovación</span>
                     </a>
@@ -1581,8 +1532,10 @@
                 
                 <!-- Research Pillar -->
                 <div class="pillar-card research fade-in">
-                    <div class="pillar-icon">
-                        <i class="fas fa-microscope"></i>
+                    <div class="pillar-icon-wrapper">
+                        <div class="pillar-icon">
+                            R
+                        </div>
                     </div>
                     <h3>
                         <span lang="en">Clinical Research</span>
@@ -1593,7 +1546,6 @@
                         <span lang="es">Avanzamos en medicina pulmonar mediante investigación metódica, ensayos clínicos y refinamiento de prácticas basadas en evidencia.</span>
                     </p>
                     <a href="clinical-research.html" class="btn btn-outline">
-                        <i class="fas fa-arrow-right"></i>
                         <span lang="en">Explore Research</span>
                         <span lang="es">Explorar Investigación</span>
                     </a>
@@ -1619,7 +1571,7 @@
             <div class="values-grid">
                 <div class="value-card fade-in">
                     <div class="value-icon">
-                        <i class="fas fa-user-md"></i>
+                        E
                     </div>
                     <h3>
                         <span lang="en">Clinical Excellence</span>
@@ -1633,7 +1585,7 @@
                 
                 <div class="value-card fade-in">
                     <div class="value-icon">
-                        <i class="fas fa-flask"></i>
+                        S
                     </div>
                     <h3>
                         <span lang="en">Scientific Rigor</span>
@@ -1647,7 +1599,7 @@
                 
                 <div class="value-card fade-in">
                     <div class="value-icon">
-                        <i class="fas fa-users"></i>
+                        C
                     </div>
                     <h3>
                         <span lang="en">Collaboration</span>
@@ -1661,7 +1613,7 @@
                 
                 <div class="value-card fade-in">
                     <div class="value-icon">
-                        <i class="fas fa-chart-line"></i>
+                        I
                     </div>
                     <h3>
                         <span lang="en">Impact-Driven</span>
@@ -1694,7 +1646,7 @@
                 <!-- Innovation Hub Card -->
                 <div class="gateway-card innovation-hub fade-in">
                     <div class="gateway-icon">
-                        <i class="fas fa-lightbulb"></i>
+                        I
                     </div>
                     <h3>
                         <span lang="en">Innovation Hub</span>
@@ -1719,7 +1671,6 @@
                     </div>
                     
                     <a href="innovation-hub.html" class="btn btn-primary mt-3">
-                        <i class="fas fa-arrow-right"></i>
                         <span lang="en">Visit Innovation Hub</span>
                         <span lang="es">Visitar Centro de Innovación</span>
                     </a>
@@ -1728,7 +1679,7 @@
                 <!-- Clinical Research Card -->
                 <div class="gateway-card clinical-research fade-in">
                     <div class="gateway-icon">
-                        <i class="fas fa-microscope"></i>
+                        R
                     </div>
                     <h3>
                         <span lang="en">Clinical Research</span>
@@ -1747,7 +1698,7 @@
                         <div>
                             <!-- FIXED Research Lines -->
                             <div class="research-line">
-                                <div class="arrow-indicator"></div>
+                                <div class="arrow-indicator">→</div>
                                 <div class="research-content">
                                     <strong>
                                         <span lang="en">Transplantation & Diffuse Pulmonary Disease</span>
@@ -1760,7 +1711,7 @@
                                 </div>
                             </div>
                             <div class="research-line">
-                                <div class="arrow-indicator"></div>
+                                <div class="arrow-indicator">→</div>
                                 <div class="research-content">
                                     <strong>
                                         <span lang="en">Obstructive Respiratory Diseases</span>
@@ -1773,11 +1724,11 @@
                                 </div>
                             </div>
                             <div class="research-line">
-                                <div class="arrow-indicator"></div>
+                                <div class="arrow-indicator">→</div>
                                 <div class="research-content">
                                     <strong>
-                                        <span lang="en">Interventionism & Lung Cancer</span>
-                                        <span lang="es">Intervencionismo y Cáncer de Pulmón</span>
+                                        <span lang="en">Interventional Pulmonology & Lung Cancer</span>
+                                        <span lang="es">Neumología Intervencionista y Cáncer de Pulmón</span>
                                     </strong>
                                     <span>
                                         <span lang="en">Minimally invasive procedures and oncological research</span>
@@ -1786,7 +1737,7 @@
                                 </div>
                             </div>
                             <div class="research-line">
-                                <div class="arrow-indicator"></div>
+                                <div class="arrow-indicator">→</div>
                                 <div class="research-content">
                                     <strong>
                                         <span lang="en">Respiratory Failure & Critical Care</span>
@@ -1799,11 +1750,11 @@
                                 </div>
                             </div>
                             <div class="research-line">
-                                <div class="arrow-indicator"></div>
+                                <div class="arrow-indicator">→</div>
                                 <div class="research-content">
                                     <strong>
-                                        <span lang="en">Personalized Medicine & Clinical Innovation</span>
-                                        <span lang="es">Medicina Personalizada e Innovación Clínica</span>
+                                        <span lang="en">Precision Medicine & Clinical Innovation</span>
+                                        <span lang="es">Medicina de Precisión e Innovación Clínica</span>
                                     </strong>
                                     <span>
                                         <span lang="en">Tailored treatments and innovative clinical approaches</span>
@@ -1815,7 +1766,6 @@
                     </div>
                     
                     <a href="clinical-research.html" class="btn btn-primary mt-3">
-                        <i class="fas fa-arrow-right"></i>
                         <span lang="en">Visit Clinical Research</span>
                         <span lang="es">Visitar Investigación Clínica</span>
                     </a>
@@ -1842,7 +1792,7 @@
                 <div class="contact-methods">
                     <div class="contact-method fade-in">
                         <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
+                            ✉
                         </div>
                         <h3>
                             <span lang="en">Research Inquiries</span>
@@ -1853,14 +1803,13 @@
                             <span lang="es">Para colaboraciones de investigación, ensayos clínicos y colaboración académica:</span>
                         </p>
                         <a href="mailto:neumologia.innovacion@huac.es" class="btn btn-primary mt-3">
-                            <i class="fas fa-paper-plane"></i>
                             neumologia.innovacion@huac.es
                         </a>
                     </div>
                     
                     <div class="contact-method fade-in">
                         <div class="contact-icon">
-                            <i class="fas fa-phone"></i>
+                            📞
                         </div>
                         <h3>
                             <span lang="en">Innovation Partnerships</span>
@@ -1871,7 +1820,6 @@
                             <span lang="es">Para desarrollo tecnológico, colaboraciones industriales y proyectos de innovación:</span>
                         </p>
                         <a href="tel:+34881111800" class="btn btn-outline mt-3" style="color: white; border-color: white;">
-                            <i class="fas fa-phone"></i>
                             +34 881 111 800
                         </a>
                     </div>
@@ -1898,13 +1846,11 @@
                 <form class="newsletter-form" id="newsletterForm">
                     <input type="email" name="email" placeholder="your.email@example.com" required aria-label="Email address">
                     <button type="submit" class="btn btn-primary" style="width: 100%;">
-                        <i class="fas fa-envelope"></i>
                         <span lang="en">Subscribe to Updates</span>
                         <span lang="es">Suscribirse a Actualizaciones</span>
                     </button>
                 </form>
                 <div class="form-success" id="formSuccess">
-                    <i class="fas fa-check-circle"></i>
                     <span lang="en">Thank you for subscribing! You'll receive our next update soon.</span>
                     <span lang="es">¡Gracias por suscribirse! Recibirá nuestra próxima actualización pronto.</span>
                 </div>
@@ -1923,8 +1869,8 @@
                             <span lang="es">Investigación e Innovación en Neumología</span>
                         </div>
                         <p class="footer-description">
-                            <span lang="en">Hospital Universitario A Coruña<br>Advancing respiratory care through discovery and innovation.</span>
-                            <span lang="es">Hospital Universitario A Coruña<br>Avanzando en cuidado respiratorio mediante descubrimiento e innovación.</span>
+                            <span lang="en">Hospital Universitario de A Coruña<br>Advancing respiratory care through discovery and innovation.</span>
+                            <span lang="es">Hospital Universitario de A Coruña<br>Avanzando en cuidado respiratorio mediante descubrimiento e innovación.</span>
                         </p>
                     </div>
                     
@@ -1935,17 +1881,14 @@
                         </h3>
                         <ul class="footer-links">
                             <li><a href="innovation-hub.html">
-                                <i class="fas fa-lightbulb"></i>
                                 <span lang="en">Innovation Hub</span>
                                 <span lang="es">Centro de Innovación</span>
                             </a></li>
                             <li><a href="clinical-research.html">
-                                <i class="fas fa-microscope"></i>
                                 <span lang="en">Clinical Research</span>
                                 <span lang="es">Investigación Clínica</span>
                             </a></li>
                             <li><a href="#collaboration">
-                                <i class="fas fa-handshake"></i>
                                 <span lang="en">Collaborate With Us</span>
                                 <span lang="es">Colaborar Con Nosotros</span>
                             </a></li>
@@ -1958,9 +1901,9 @@
                             <span lang="es">Contacto</span>
                         </h3>
                         <div class="contact-info">
-                            <p><i class="fas fa-map-marker-alt"></i> As Xubias, 84, 15006 A Coruña</p>
-                            <p><i class="fas fa-phone"></i> +34 881 111 800</p>
-                            <p><i class="fas fa-envelope"></i> neumologia.innovacion@huac.es</p>
+                            <p>As Xubias, 84, 15006 A Coruña</p>
+                            <p>+34 881 111 800</p>
+                            <p>neumologia.innovacion@huac.es</p>
                         </div>
                     </div>
                 </div>
