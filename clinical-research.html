@@ -1,42 +1,49 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clinical Research | Pulmonary Medicine | HUAC</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Clinical Research | HUAC Pneumology | Hospital Universitario A Coruña</title>
     
     <!-- SEO Meta Tags -->
-    <meta name="description" lang="en" content="Clinical research at HUAC Hospital Universitario A Coruña advancing pulmonary medicine through innovative clinical trials.">
-    <meta name="description" lang="es" content="Investigación clínica en HUAC Hospital Universitario A Coruña avanzando en medicina pulmonar mediante ensayos clínicos innovadores.">
-    <meta name="keywords" lang="en" content="clinical trials, pulmonary research, respiratory studies, clinical research, drug development, respiratory trials, COPD research, asthma studies, ILD research">
-    <meta name="keywords" lang="es" content="ensayos clínicos, investigación pulmonar, estudios respiratorios, investigación clínica, desarrollo de fármacos, ensayos respiratorios, investigación EPOC, estudios asma, investigación ILD">
+    <meta name="description" content="Clinical research at HUAC Hospital Universitario A Coruña advancing pulmonary medicine through innovative clinical trials and scientific investigation.">
+    <meta name="keywords" content="clinical trials, pulmonary research, respiratory studies, clinical research, respiratory trials, COPD research, asthma studies, ILD research, pneumology">
     <meta name="author" content="HUAC Clinical Research - Pneumology Department">
     
-    <!-- Fonts & Icons -->
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Clinical Research | HUAC Pneumology">
+    <meta property="og:description" content="Advancing respiratory medicine through rigorous clinical trials and scientific collaboration at HUAC Hospital Universitario A Coruña.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://huac.es/clinical-research">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Clinical Research | HUAC Pneumology">
+    <meta name="twitter:description" content="Advancing respiratory medicine through rigorous clinical trials and scientific collaboration.">
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+Pro:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* ===== PROFESSIONAL MEDICAL DESIGN SYSTEM ===== */
+        /* ===== PROFESSIONAL LANDING PAGE DESIGN ===== */
         :root {
-            /* Professional Medical Palette */
-            --medical-navy: #1A365D;
-            --medical-teal: #2D7D7D;
-            --medical-sage: #4A7C59;
-            --medical-plum: #5D4A66;
-            --medical-coral: #D56C5C;
+            /* Modern Professional Medical Palette */
+            --medical-navy: #2C3E50;
+            --medical-teal: #3498DB;
+            --medical-light: #ECF0F1;
+            --medical-accent: #1ABC9C;
+            --medical-coral: #E74C3C;
             
-            --medical-navy-light: #E8EEF7;
-            --medical-teal-light: #E8F6F6;
-            --medical-sage-light: #EDF5EE;
+            --medical-navy-light: #34495E;
+            --medical-teal-light: #EBF5FB;
+            --medical-accent-light: #D1F2EB;
             
             /* Neutrals */
             --medical-white: #FFFFFF;
             --paper-gray: #F8F9FA;
-            --slate-50: #F8FAFC;
             --slate-100: #F1F5F9;
             --slate-200: #E2E8F0;
             --slate-300: #CBD5E1;
@@ -50,6 +57,30 @@
             /* Typography */
             --font-sans: 'Inter', system-ui, sans-serif;
             --font-serif: 'Source Serif Pro', serif;
+            
+            /* Enhanced Typography System */
+            --text-xs: 0.75rem;     /* 12px */
+            --text-sm: 0.875rem;    /* 14px */
+            --text-base: 1rem;      /* 16px */
+            --text-lg: 1.125rem;    /* 18px */
+            --text-xl: 1.25rem;     /* 20px */
+            --text-2xl: 1.5rem;     /* 24px */
+            --text-3xl: 1.875rem;   /* 30px */
+            --text-4xl: 2.25rem;    /* 36px */
+            --text-5xl: 2.75rem;    /* 44px */
+            --text-6xl: 3.25rem;    /* 52px */
+            
+            /* Line heights */
+            --leading-tight: 1.2;
+            --leading-snug: 1.3;
+            --leading-normal: 1.6;
+            --leading-relaxed: 1.75;
+            
+            /* Letter spacing */
+            --tracking-tight: -0.02em;
+            --tracking-normal: 0;
+            --tracking-wide: 0.02em;
+            --tracking-wider: 0.05em;
             
             /* Spacing */
             --spacing-xs: 0.5rem;
@@ -73,13 +104,10 @@
             --radius-xl: 16px;
             --radius-full: 9999px;
             
-            /* Transitions */
-            --transition-fast: 150ms ease;
-            --transition-base: 250ms ease;
-            --transition-slow: 350ms ease;
+            /* Header Height */
+            --header-height: 72px;
         }
 
-        /* ===== RESET & BASE ===== */
         * {
             margin: 0;
             padding: 0;
@@ -88,131 +116,273 @@
 
         html {
             scroll-behavior: smooth;
-            scroll-padding-top: 100px;
+            font-size: 16px;
         }
 
         body {
             font-family: var(--font-sans);
             color: var(--slate-700);
             background: var(--medical-white);
-            line-height: 1.6;
+            line-height: var(--leading-normal);
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            padding-top: var(--header-height);
+            font-size: clamp(1rem, 1.5vw, 1.125rem);
+            text-rendering: optimizeLegibility;
         }
 
+        /* ===== ENHANCED TYPOGRAPHY ===== */
         h1, h2, h3, h4 {
             font-family: var(--font-serif);
             font-weight: 600;
             color: var(--medical-navy);
-            line-height: 1.2;
+            line-height: var(--leading-snug);
+            letter-spacing: var(--tracking-tight);
         }
 
-        h1 { font-size: clamp(2.25rem, 5vw, 3.5rem); }
-        h2 { font-size: clamp(1.75rem, 4vw, 2.75rem); }
-        h3 { font-size: clamp(1.5rem, 3vw, 2.25rem); }
-        h4 { font-size: clamp(1.125rem, 2.5vw, 1.5rem); }
+        h1 { 
+            font-size: clamp(2.25rem, 5vw, 3.5rem);
+            line-height: var(--leading-tight);
+            margin-bottom: var(--spacing-lg);
+        }
+        h2 { 
+            font-size: clamp(1.875rem, 4vw, 2.75rem);
+            margin-bottom: var(--spacing-md);
+        }
+        h3 { 
+            font-size: clamp(1.5rem, 3vw, 2.25rem);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .text-lead {
+            font-size: clamp(1.125rem, 2vw, 1.25rem);
+            line-height: var(--leading-relaxed);
+            color: var(--slate-600);
+            font-weight: 400;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .text-subtle {
+            font-size: var(--text-base);
+            line-height: var(--leading-normal);
+            color: var(--slate-500);
+        }
+
+        .text-small {
+            font-size: var(--text-sm);
+            line-height: var(--leading-normal);
+            color: var(--slate-400);
+        }
+
+        /* ===== LANGUAGE FIXES ===== */
+        [lang] {
+            display: none;
+        }
+        
+        body[data-lang="en"] [lang="en"],
+        body[data-lang="es"] [lang="es"] {
+            display: inline;
+        }
+        
+        body[data-lang="en"] [lang="en"].block,
+        body[data-lang="es"] [lang="es"].block {
+            display: block;
+        }
+        
+        body[data-lang="en"] [lang="es"],
+        body[data-lang="es"] [lang="en"] {
+            display: none;
+        }
 
         .container {
             width: 100%;
-            max-width: 1280px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 var(--spacing-md);
         }
 
         .section {
             padding: var(--spacing-2xl) 0;
-            position: relative;
         }
 
-        @media (min-width: 768px) {
+        @media (max-width: 768px) {
             .section {
-                padding: var(--spacing-3xl) 0;
+                padding: var(--spacing-xl) 0;
             }
-        }
-
-        .text-lead {
-            font-size: 1.125rem;
-            color: var(--slate-600);
-            line-height: 1.7;
-        }
-
-        @media (min-width: 768px) {
+            
+            :root {
+                --text-base: 0.9375rem;
+                --text-lg: 1rem;
+                --text-xl: 1.125rem;
+                --text-2xl: 1.25rem;
+                --text-3xl: 1.5rem;
+            }
+            
+            h1 {
+                font-size: clamp(2rem, 6vw, 2.5rem);
+            }
+            
+            h2 {
+                font-size: clamp(1.75rem, 5vw, 2rem);
+            }
+            
             .text-lead {
-                font-size: 1.25rem;
+                font-size: clamp(1rem, 3vw, 1.125rem);
             }
         }
 
-        .section-header {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto var(--spacing-2xl);
+        @media (max-width: 480px) {
+            h1 {
+                font-size: clamp(1.75rem, 8vw, 2rem);
+            }
+            
+            body {
+                font-size: 0.9375rem;
+                line-height: 1.6;
+            }
         }
 
-        /* ===== SUPERIOR NAVIGATION BAR ===== */
-        .main-navigation {
+        .section-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* ===== FIXED SUPERIOR HEADER ===== */
+        .superior-header {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
+            height: var(--header-height);
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--slate-200);
             z-index: 1000;
             box-shadow: var(--shadow-sm);
-            transition: all var(--transition-base);
+            transition: all 0.3s ease;
         }
 
-        .nav-container {
+        .superior-header.scrolled {
+            box-shadow: var(--shadow-lg);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(30px);
+        }
+
+        .header-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 80px;
+            height: 100%;
             position: relative;
+            gap: var(--spacing-sm);
         }
 
+        /* ===== LOGO ===== */
         .logo {
             display: flex;
             align-items: center;
             gap: var(--spacing-sm);
             text-decoration: none;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .logo:hover {
+            transform: translateY(-1px);
         }
 
         .logo-icon {
             width: 44px;
             height: 44px;
-            background: linear-gradient(135deg, var(--medical-navy), var(--medical-teal));
-            border-radius: var(--radius-md);
+            color: var(--medical-teal);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--medical-white);
-            font-weight: 700;
-            font-size: 1.125rem;
+            flex-shrink: 0;
+        }
+
+        .logo-icon svg {
+            width: 100%;
+            height: 100%;
         }
 
         .logo-text {
             display: flex;
             flex-direction: column;
+            flex-shrink: 0;
         }
 
         .logo-main {
             font-family: var(--font-serif);
-            font-size: 1.125rem;
+            font-size: 1rem;
             font-weight: 700;
             color: var(--medical-navy);
             line-height: 1.2;
+            white-space: nowrap;
         }
 
         .logo-sub {
-            font-size: 0.6875rem;
+            font-size: 0.625rem;
             color: var(--slate-500);
             letter-spacing: 0.05em;
             line-height: 1.2;
+            white-space: nowrap;
         }
 
-        /* Desktop Navigation */
+        /* ===== LANGUAGE SWITCHER ===== */
+        .language-switcher {
+            position: absolute;
+            right: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            background: var(--medical-white);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            border: 1px solid var(--slate-300);
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        @media (min-width: 1024px) {
+            .language-switcher {
+                right: 280px;
+            }
+        }
+
+        .language-switcher:hover {
+            opacity: 1;
+            transform: translateY(-50%) scale(1.05);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .lang-btn {
+            padding: 0.35rem 0.75rem;
+            background: var(--medical-white);
+            border: none;
+            font-weight: 500;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--slate-600);
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .lang-btn.active {
+            background: var(--medical-teal);
+            color: var(--medical-white);
+            font-weight: 600;
+        }
+
+        .lang-btn:not(.active):hover {
+            background: var(--slate-100);
+            color: var(--medical-teal);
+        }
+
+        /* ===== DESKTOP NAVIGATION ===== */
         .desktop-nav {
             display: none;
         }
@@ -222,6 +392,7 @@
                 display: flex;
                 align-items: center;
                 gap: var(--spacing-xs);
+                margin-left: auto;
             }
             
             .nav-item {
@@ -238,8 +409,8 @@
                 font-weight: 500;
                 font-size: 0.9375rem;
                 border-radius: var(--radius-full);
-                transition: all var(--transition-base);
-                position: relative;
+                transition: all 0.3s ease;
+                white-space: nowrap;
             }
             
             .nav-link:hover {
@@ -250,58 +421,56 @@
             .nav-link.active {
                 color: var(--medical-teal);
                 font-weight: 600;
+                position: relative;
             }
             
             .nav-link.active::after {
                 content: '';
                 position: absolute;
-                bottom: -2px;
+                bottom: -4px;
                 left: 50%;
                 transform: translateX(-50%);
-                width: 20px;
-                height: 3px;
+                width: 6px;
+                height: 6px;
                 background: var(--medical-teal);
-                border-radius: var(--radius-full);
+                border-radius: 50%;
             }
             
             .nav-cta {
                 margin-left: var(--spacing-sm);
-                background: linear-gradient(135deg, var(--medical-teal), var(--medical-sage));
+                background: linear-gradient(135deg, var(--medical-teal), var(--medical-accent));
                 color: var(--medical-white);
                 padding: 0.75rem 1.75rem;
                 border-radius: var(--radius-full);
                 font-weight: 600;
                 text-decoration: none;
-                transition: all var(--transition-base);
+                transition: all 0.3s ease;
+                white-space: nowrap;
             }
             
             .nav-cta:hover {
                 transform: translateY(-2px);
                 box-shadow: var(--shadow-lg);
-                background: linear-gradient(135deg, var(--medical-sage), var(--medical-teal));
             }
         }
 
-        /* Mobile Navigation */
+        /* ===== MOBILE MENU ===== */
         .mobile-menu-toggle {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 5px;
             background: none;
             border: none;
             cursor: pointer;
-            padding: 0.75rem;
-            width: 48px;
-            height: 48px;
+            padding: 0.5rem;
+            width: 44px;
+            height: 44px;
             justify-content: center;
             align-items: center;
             border-radius: var(--radius-md);
-            transition: all var(--transition-base);
+            transition: all 0.3s ease;
             z-index: 1002;
-        }
-
-        .mobile-menu-toggle:hover {
-            background: var(--slate-100);
+            flex-shrink: 0;
         }
 
         @media (min-width: 1024px) {
@@ -311,142 +480,162 @@
         }
 
         .menu-line {
-            width: 20px;
+            width: 22px;
             height: 2px;
             background: var(--slate-700);
-            transition: all var(--transition-base);
+            transition: all 0.3s ease;
             transform-origin: center;
         }
 
         .mobile-menu-toggle.active .menu-line:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
+            transform: rotate(45deg) translate(6px, 6px);
         }
 
         .mobile-menu-toggle.active .menu-line:nth-child(2) {
             opacity: 0;
-            transform: scaleX(0);
         }
 
         .mobile-menu-toggle.active .menu-line:nth-child(3) {
-            transform: rotate(-45deg) translate(5px, -5px);
+            transform: rotate(-45deg) translate(6px, -6px);
         }
 
-        .mobile-nav {
+        .mobile-nav-overlay {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(3px);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 300px;
+            max-width: 85vw;
+            height: 100%;
             background: var(--medical-white);
-            transform: translateX(-100%);
-            transition: transform var(--transition-slow) cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 1001;
-            padding: 6rem var(--spacing-md) var(--spacing-xl);
+            box-shadow: var(--shadow-xl);
+            z-index: 1000;
+            transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
             overflow-y: auto;
         }
 
         .mobile-nav.active {
-            transform: translateX(0);
+            right: 0;
+        }
+
+        .mobile-nav-header {
+            padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-md);
+            border-bottom: 1px solid var(--slate-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: var(--medical-white);
+            z-index: 1;
+        }
+
+        .mobile-nav-close {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            color: var(--slate-600);
+            font-size: 1.25rem;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-md);
+        }
+
+        .mobile-nav-close:hover {
+            background: var(--slate-100);
         }
 
         .mobile-nav-links {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
+            padding: var(--spacing-lg);
+            flex: 1;
         }
 
         .mobile-nav-item {
             list-style: none;
+            margin-bottom: 0.5rem;
         }
 
         .mobile-nav-link {
             display: flex;
             align-items: center;
             gap: 1rem;
-            padding: 1rem 1.5rem;
+            padding: 1rem;
             color: var(--slate-700);
             text-decoration: none;
             font-weight: 500;
             border-radius: var(--radius-lg);
-            transition: all var(--transition-base);
-            font-size: 1.125rem;
+            transition: all 0.3s ease;
+            font-size: 1rem;
         }
 
-        .mobile-nav-link:hover {
+        .mobile-nav-link:hover,
+        .mobile-nav-link.active {
             background: var(--medical-teal-light);
             color: var(--medical-teal);
         }
 
-        /* ===== SMALL LANGUAGE SWITCHER ===== */
-        .language-switcher {
-            position: fixed;
-            top: 100px;
-            right: 20px;
-            z-index: 999;
-            display: flex;
-            background: var(--medical-white);
-            border-radius: var(--radius-full);
-            box-shadow: var(--shadow-md);
-            overflow: hidden;
-            border: 1px solid var(--slate-200);
-            backdrop-filter: blur(10px);
-            transform: scale(0.9);
-        }
-
-        .lang-btn {
-            padding: 0.5rem 1rem;
-            background: transparent;
-            border: none;
-            font-weight: 500;
-            font-size: 0.75rem;
-            cursor: pointer;
-            transition: all var(--transition-base);
-            color: var(--slate-600);
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-        }
-
-        .lang-btn.active {
-            background: var(--medical-teal);
+        .mobile-nav-cta {
+            margin: var(--spacing-lg);
+            background: linear-gradient(135deg, var(--medical-teal), var(--medical-accent));
             color: var(--medical-white);
+            text-align: center;
+            padding: 1rem;
+            border-radius: var(--radius-lg);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
         }
 
-        .lang-btn:not(.active):hover {
-            background: var(--slate-50);
-            color: var(--medical-teal);
+        .mobile-nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
         }
 
         /* ===== HERO SECTION ===== */
         .hero-section {
-            padding: 160px 0 100px;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
             background: linear-gradient(135deg, 
-                rgba(26, 54, 93, 0.03) 0%,
-                rgba(45, 125, 125, 0.02) 100%);
+                rgba(44, 62, 80, 0.03) 0%,
+                rgba(52, 152, 219, 0.02) 100%);
             position: relative;
             overflow: hidden;
-        }
-
-        .hero-background {
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 60%;
-            height: 200%;
-            background: linear-gradient(135deg, 
-                rgba(45, 125, 125, 0.03) 0%,
-                rgba(26, 54, 93, 0.01) 100%);
-            transform: rotate(12deg);
-            z-index: 0;
         }
 
         .hero-content {
             position: relative;
             z-index: 1;
             max-width: 800px;
+            margin: 0 auto;
+            padding: var(--spacing-xl) 0;
         }
 
-        .hero-eyebrow {
+        .hospital-badge {
             display: inline-flex;
             align-items: center;
             gap: 0.75rem;
@@ -455,7 +644,7 @@
             padding: 0.75rem 1.5rem;
             border-radius: var(--radius-full);
             font-weight: 600;
-            margin-bottom: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
             font-size: 0.875rem;
             border: 1px solid var(--slate-200);
             box-shadow: var(--shadow-sm);
@@ -470,19 +659,7 @@
             color: var(--slate-600);
             line-height: 1.7;
             margin-bottom: var(--spacing-2xl);
-        }
-
-        @media (min-width: 768px) {
-            .hero-subtitle {
-                font-size: 1.375rem;
-            }
-        }
-
-        .hero-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: var(--spacing-md);
-            margin-bottom: var(--spacing-2xl);
+            max-width: 600px;
         }
 
         /* ===== BUTTONS ===== */
@@ -495,14 +672,21 @@
             font-weight: 600;
             text-decoration: none;
             cursor: pointer;
-            transition: all var(--transition-base);
+            transition: all 0.3s ease;
             border: none;
             font-size: 0.9375rem;
             gap: 0.5rem;
         }
 
+        @media (max-width: 768px) {
+            .btn {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.875rem;
+            }
+        }
+
         .btn-primary {
-            background: linear-gradient(135deg, var(--medical-teal), var(--medical-sage));
+            background: var(--medical-teal);
             color: var(--medical-white);
             box-shadow: var(--shadow-md);
         }
@@ -510,6 +694,7 @@
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: var(--shadow-lg);
+            background: var(--medical-navy-light);
         }
 
         .btn-outline {
@@ -523,21 +708,106 @@
             transform: translateY(-2px);
         }
 
+        /* ===== RESEARCH LINES SECTION ===== */
+        .research-lines-section {
+            background: var(--medical-white);
+        }
+
+        .research-line-card {
+            background: var(--medical-white);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            border: 1px solid var(--slate-200);
+            transition: all 0.3s ease;
+            margin-bottom: var(--spacing-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .research-line-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--medical-teal);
+        }
+
+        .research-line-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .research-line-number {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--medical-teal), var(--medical-accent));
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--medical-white);
+            font-weight: 700;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .research-line-content {
+            flex: 1;
+        }
+
+        .research-line-title {
+            font-size: 1.5rem;
+            color: var(--medical-navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .research-line-coordinator {
+            color: var(--slate-600);
+            font-weight: 500;
+        }
+
+        .research-line-coordinator strong {
+            color: var(--medical-teal);
+        }
+
+        .research-line-description {
+            color: var(--slate-600);
+            line-height: 1.7;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .research-line-expertise {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: var(--spacing-md);
+        }
+
+        .expertise-tag {
+            background: var(--medical-teal-light);
+            color: var(--medical-teal);
+            padding: 0.375rem 0.875rem;
+            border-radius: var(--radius-full);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
         /* ===== RESEARCH GROUPS SECTION ===== */
         .research-groups-section {
-            background: var(--medical-white);
+            background: var(--paper-gray);
         }
 
         .research-groups-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: var(--spacing-xl);
+            gap: var(--spacing-lg);
             margin-top: var(--spacing-xl);
         }
 
         @media (min-width: 768px) {
             .research-groups-grid {
                 grid-template-columns: repeat(2, 1fr);
+                gap: var(--spacing-xl);
             }
         }
 
@@ -549,10 +819,10 @@
 
         .research-group-card {
             background: var(--medical-white);
-            border-radius: var(--radius-lg);
+            border-radius: var(--radius-xl);
             padding: var(--spacing-xl);
             border: 1px solid var(--slate-200);
-            transition: all var(--transition-base);
+            transition: all 0.3s ease;
             cursor: pointer;
             position: relative;
             overflow: hidden;
@@ -570,8 +840,8 @@
         .research-group-icon {
             width: 56px;
             height: 56px;
-            background: linear-gradient(135deg, var(--medical-navy), var(--medical-plum));
-            border-radius: var(--radius-md);
+            background: linear-gradient(135deg, var(--medical-navy), var(--medical-teal));
+            border-radius: var(--radius-lg);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -620,7 +890,7 @@
             z-index: 2000;
             padding: var(--spacing-md);
             opacity: 0;
-            transition: opacity var(--transition-base);
+            transition: opacity 0.3s ease;
         }
 
         .modal-overlay.active {
@@ -637,7 +907,7 @@
             max-height: 90vh;
             overflow-y: auto;
             transform: translateY(20px);
-            transition: transform var(--transition-base);
+            transition: transform 0.3s ease;
             box-shadow: var(--shadow-xl);
         }
 
@@ -666,7 +936,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all var(--transition-base);
+            transition: all 0.3s ease;
         }
 
         .modal-close:hover {
@@ -742,8 +1012,8 @@
         /* ===== CLINICAL TRIALS SECTION ===== */
         .clinical-trials-section {
             background: linear-gradient(135deg, 
-                rgba(45, 125, 125, 0.03) 0%,
-                rgba(26, 54, 93, 0.02) 100%);
+                rgba(52, 152, 219, 0.03) 0%,
+                rgba(26, 188, 156, 0.02) 100%);
         }
 
         .trials-filters {
@@ -763,6 +1033,7 @@
             flex-direction: column;
             gap: var(--spacing-xs);
             min-width: 160px;
+            flex: 1;
         }
 
         .filter-label {
@@ -780,13 +1051,13 @@
             background: var(--medical-white);
             font-size: 0.875rem;
             color: var(--slate-700);
-            transition: all var(--transition-base);
+            transition: all 0.3s ease;
         }
 
         .filter-select:focus {
             outline: none;
             border-color: var(--medical-teal);
-            box-shadow: 0 0 0 3px rgba(45, 125, 125, 0.1);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
         }
 
         .trials-table-container {
@@ -805,7 +1076,7 @@
         }
 
         .trials-table thead {
-            background: var(--slate-50);
+            background: var(--slate-100);
         }
 
         .trials-table th {
@@ -827,7 +1098,7 @@
         }
 
         .trials-table tbody tr:hover td {
-            background: var(--slate-50);
+            background: var(--slate-100);
         }
 
         .trial-badge {
@@ -846,8 +1117,8 @@
         }
 
         .badge-status {
-            background: var(--medical-sage-light);
-            color: var(--medical-sage);
+            background: var(--medical-teal-light);
+            color: var(--medical-teal);
         }
 
         /* ===== CONTACT SECTION ===== */
@@ -879,7 +1150,7 @@
             border-radius: var(--radius-lg);
             padding: var(--spacing-xl);
             border: 1px solid var(--slate-200);
-            transition: all var(--transition-base);
+            transition: all 0.3s ease;
         }
 
         .contact-card:hover {
@@ -935,13 +1206,13 @@
             font-size: 0.9375rem;
             font-family: var(--font-sans);
             background: var(--medical-white);
-            transition: all var(--transition-base);
+            transition: all 0.3s ease;
         }
 
         .form-input:focus, .form-textarea:focus, .form-select:focus {
             outline: none;
             border-color: var(--medical-teal);
-            box-shadow: 0 0 0 3px rgba(45, 125, 125, 0.1);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
         }
 
         .form-textarea {
@@ -951,7 +1222,7 @@
 
         .form-submit {
             width: 100%;
-            background: linear-gradient(135deg, var(--medical-teal), var(--medical-sage));
+            background: linear-gradient(135deg, var(--medical-teal), var(--medical-accent));
             color: var(--medical-white);
             border: none;
             padding: 1.25rem;
@@ -959,7 +1230,7 @@
             font-weight: 600;
             font-size: 1rem;
             cursor: pointer;
-            transition: all var(--transition-base);
+            transition: all 0.3s ease;
         }
 
         .form-submit:hover {
@@ -971,75 +1242,32 @@
         .footer {
             background: var(--medical-navy);
             color: var(--medical-white);
-            padding: var(--spacing-3xl) 0 var(--spacing-2xl);
+            padding: var(--spacing-2xl) 0;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .footer-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: var(--spacing-2xl);
-            margin-bottom: var(--spacing-3xl);
+            margin-bottom: var(--spacing-xl);
         }
 
         @media (min-width: 768px) {
             .footer-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(3, 1fr);
+                gap: var(--spacing-xl);
             }
         }
 
-        @media (min-width: 1024px) {
-            .footer-grid {
-                grid-template-columns: 2fr repeat(3, 1fr);
-            }
-        }
-
-        .footer-brand {
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-md);
-        }
-
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-md);
-        }
-
-        .footer-icon {
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, var(--medical-teal), var(--medical-sage));
-            border-radius: var(--radius-lg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .footer-column h3 {
             color: var(--medical-white);
-            font-weight: 700;
-            font-size: 1.25rem;
-        }
-
-        .footer-name {
-            font-family: var(--font-serif);
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--medical-white);
-        }
-
-        .footer-tagline {
-            opacity: 0.8;
-            font-size: 0.875rem;
-            line-height: 1.6;
-            max-width: 400px;
-        }
-
-        .footer-heading {
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--medical-white);
-            margin-bottom: var(--spacing-lg);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            opacity: 0.9;
+            margin-bottom: var(--spacing-md);
+            font-size: 1.125rem;
         }
 
         .footer-links {
@@ -1047,414 +1275,445 @@
         }
 
         .footer-links li {
-            margin-bottom: var(--spacing-sm);
+            margin-bottom: 0.5rem;
         }
 
         .footer-links a {
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
-            font-size: 0.875rem;
-            transition: all var(--transition-base);
+            transition: color 0.3s ease;
         }
 
         .footer-links a:hover {
             color: var(--medical-white);
         }
 
-        .footer-bottom {
-            padding-top: var(--spacing-2xl);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-lg);
-            align-items: center;
-            text-align: center;
+        .contact-info {
+            color: rgba(255, 255, 255, 0.8);
         }
 
-        @media (min-width: 768px) {
-            .footer-bottom {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                text-align: left;
-            }
+        .contact-info p {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-logo {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--medical-white);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .footer-description {
+            opacity: 0.8;
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.6;
         }
 
         .copyright {
             font-size: 0.875rem;
             opacity: 0.6;
-        }
-
-        .footer-legal {
-            display: flex;
-            gap: var(--spacing-lg);
-            font-size: 0.875rem;
-            opacity: 0.6;
-        }
-
-        .footer-legal a {
-            color: rgba(255, 255, 255, 0.6);
-            text-decoration: none;
-            transition: color var(--transition-base);
-        }
-
-        .footer-legal a:hover {
-            color: var(--medical-white);
-        }
-
-        /* ===== UTILITY CLASSES ===== */
-        .hidden {
-            display: none !important;
-        }
-
-        .text-center {
+            padding-top: var(--spacing-lg);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             text-align: center;
         }
 
-        .mt-1 { margin-top: var(--spacing-sm); }
-        .mt-2 { margin-top: var(--spacing-md); }
-        .mt-3 { margin-top: var(--spacing-lg); }
-        .mt-4 { margin-top: var(--spacing-xl); }
-        .mt-5 { margin-top: var(--spacing-2xl); }
+        /* ===== UTILITY CLASSES ===== */
+        .text-center {
+            text-align: center;
+        }
 
         .mb-1 { margin-bottom: var(--spacing-sm); }
         .mb-2 { margin-bottom: var(--spacing-md); }
         .mb-3 { margin-bottom: var(--spacing-lg); }
         .mb-4 { margin-bottom: var(--spacing-xl); }
-        .mb-5 { margin-bottom: var(--spacing-2xl); }
+
+        .mt-1 { margin-top: var(--spacing-sm); }
+        .mt-2 { margin-top: var(--spacing-md); }
+        .mt-3 { margin-top: var(--spacing-lg); }
+        .mt-4 { margin-top: var(--spacing-xl); }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== SCROLL INDICATOR ===== */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--medical-teal), var(--medical-accent));
+            z-index: 1001;
+            transition: width 0.1s ease;
+        }
     </style>
 </head>
-<body>
-    <!-- Superior Navigation -->
-    <nav class="main-navigation" id="navigation">
-        <div class="container nav-container">
-            <a href="#hero" class="logo">
-                <div class="logo-icon">CR</div>
+<body data-lang="en">
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator" id="scrollIndicator"></div>
+
+    <!-- Superior Header -->
+    <header class="superior-header" id="mainHeader">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" fill="none">
+                        <path d="M20 54 C20 30 36 22 46 28 V66 C46 74 38 82 28 82 C22 82 20 76 20 70 Z" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M76 54 C76 30 60 22 50 28 V66 C50 74 58 82 68 82 C74 82 76 76 76 70 Z" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        <line x1="48" y1="18" x2="48" y2="66" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                        <rect x="42" y="22" width="12" height="30" rx="2" fill="currentColor"/>
+                        <rect x="40" y="18" width="16" height="6" rx="2" fill="currentColor"/>
+                        <path d="M40 18 Q48 10 56 18" stroke="currentColor" stroke-width="4" fill="none" stroke-linecap="round"/>
+                        <path d="M48 44 C42 42 38 38 36 34" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M48 44 C54 42 58 38 60 34" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                    </svg>
+                </div>
                 <div class="logo-text">
                     <div class="logo-main">Clinical Research</div>
                     <div class="logo-sub">Pneumology | HUAC</div>
                 </div>
             </a>
 
+            <!-- Language Switcher -->
+            <div class="language-switcher">
+                <button class="lang-btn active" onclick="switchLanguage('en')" aria-label="English">
+                    EN
+                </button>
+                <button class="lang-btn" onclick="switchLanguage('es')" aria-label="Español">
+                    ES
+                </button>
+            </div>
+
             <!-- Desktop Navigation -->
-            <div class="desktop-nav">
+            <nav class="desktop-nav" aria-label="Main navigation">
                 <div class="nav-item">
-        <a href="index.html" class="nav-link">
-            <i class="fas fa-home"></i>
-            <span class="lang-en">Home</span>
-            <span class="lang-es hidden">Inicio</span>
-        </a>
-    </div>
+                    <a href="index.html" class="nav-link">
+                        <i class="fas fa-home"></i>
+                        <span lang="en">Home</span>
+                        <span lang="es">Inicio</span>
+                    </a>
+                </div>
                 <div class="nav-item">
-                    <a href="#research-groups" class="nav-link active">
-                        <i class="fas fa-users"></i>
-                        <span class="lang-en">Research Groups</span>
-                        <span class="lang-es hidden">Grupos de Investigación</span>
+                    <a href="#research-lines" class="nav-link active">
+                        <i class="fas fa-layer-group"></i>
+                        <span lang="en">Research Lines</span>
+                        <span lang="es">Líneas de Investigación</span>
                     </a>
                 </div>
                 <div class="nav-item">
                     <a href="#clinical-trials" class="nav-link">
                         <i class="fas fa-clipboard-check"></i>
-                        <span class="lang-en">Clinical Trials</span>
-                        <span class="lang-es hidden">Ensayos Clínicos</span>
-                    </a>
-                </div>
-                <div class="nav-item">
-                    <a href="#infrastructure" class="nav-link">
-                        <i class="fas fa-hospital-alt"></i>
-                        <span class="lang-en">Infrastructure</span>
-                        <span class="lang-es hidden">Infraestructura</span>
+                        <span lang="en">Clinical Trials</span>
+                        <span lang="es">Ensayos Clínicos</span>
                     </a>
                 </div>
                 <div class="nav-item">
                     <a href="innovation-hub.html" class="nav-link">
                         <i class="fas fa-lightbulb"></i>
-                        <span class="lang-en">Innovation Hub</span>
-                        <span class="lang-es hidden">Hub de Innovación</span>
+                        <span lang="en">Innovation Hub</span>
+                        <span lang="es">Hub de Innovación</span>
                     </a>
                 </div>
                 <div class="nav-item">
                     <a href="#contact" class="nav-cta">
                         <i class="fas fa-handshake"></i>
-                        <span class="lang-en">Collaborate</span>
-                        <span class="lang-es hidden">Colaborar</span>
+                        <span lang="en">Collaborate</span>
+                        <span lang="es">Colaborar</span>
                     </a>
                 </div>
-            </div>
+            </nav>
 
             <!-- Mobile Menu Toggle -->
-            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Open menu" aria-expanded="false">
                 <span class="menu-line"></span>
                 <span class="menu-line"></span>
                 <span class="menu-line"></span>
             </button>
         </div>
+    </header>
 
-        <!-- Mobile Navigation -->
-        <div class="mobile-nav" id="mobileNav">
-            <ul class="mobile-nav-links">
-                 <li class="mobile-nav-item">
-        <a href="index.html" class="mobile-nav-link" onclick="closeMobileMenu()">
-            <i class="fas fa-home"></i>
-            <span class="lang-en">Home</span>
-            <span class="lang-es hidden">Inicio</span>
-        </a>
-    </li>
-                <li class="mobile-nav-item">
-                    <a href="#research-groups" class="mobile-nav-link" onclick="closeMobileMenu()">
-                        <i class="fas fa-users"></i>
-                        <span class="lang-en">Research Groups</span>
-                        <span class="lang-es hidden">Grupos de Investigación</span>
-                    </a>
-                </li>
-                <li class="mobile-nav-item">
-                    <a href="#clinical-trials" class="mobile-nav-link" onclick="closeMobileMenu()">
-                        <i class="fas fa-clipboard-check"></i>
-                        <span class="lang-en">Clinical Trials</span>
-                        <span class="lang-es hidden">Ensayos Clínicos</span>
-                    </a>
-                </li>
-                <li class="mobile-nav-item">
-                    <a href="#infrastructure" class="mobile-nav-link" onclick="closeMobileMenu()">
-                        <i class="fas fa-hospital-alt"></i>
-                        <span class="lang-en">Infrastructure</span>
-                        <span class="lang-es hidden">Infraestructura</span>
-                    </a>
-                </li>
-                <li class="mobile-nav-item">
-                    <a href="innovation-hub.html" class="mobile-nav-link" onclick="closeMobileMenu()">
-                        <i class="fas fa-lightbulb"></i>
-                        <span class="lang-en">Innovation Hub</span>
-                        <span class="lang-es hidden">Hub de Innovación</span>
-                    </a>
-                </li>
-                <li class="mobile-nav-item">
-                    <a href="#contact" class="mobile-nav-link" onclick="closeMobileMenu()">
-                        <i class="fas fa-handshake"></i>
-                        <span class="lang-en">Collaborate</span>
-                        <span class="lang-es hidden">Colaborar</span>
-                    </a>
-                </li>
-            </ul>
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+        <div class="mobile-nav-header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" fill="none" width="36" height="36">
+                        <path d="M20 54 C20 30 36 22 46 28 V66 C46 74 38 82 28 82 C22 82 20 76 20 70 Z" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M76 54 C76 30 60 22 50 28 V66 C50 74 58 82 68 82 C74 82 76 76 76 70 Z" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        <line x1="48" y1="18" x2="48" y2="66" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                        <rect x="42" y="22" width="12" height="30" rx="2" fill="currentColor"/>
+                        <rect x="40" y="18" width="16" height="6" rx="2" fill="currentColor"/>
+                        <path d="M40 18 Q48 10 56 18" stroke="currentColor" stroke-width="4" fill="none" stroke-linecap="round"/>
+                        <path d="M48 44 C42 42 38 38 36 34" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M48 44 C54 42 58 38 60 34" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <div class="logo-main">Clinical Research</div>
+                </div>
+            </div>
+            <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
+        
+        <ul class="mobile-nav-links">
+            <li class="mobile-nav-item">
+                <a href="index.html" class="mobile-nav-link" onclick="closeMobileMenu()">
+                    <i class="fas fa-home"></i>
+                    <span lang="en">Home</span>
+                    <span lang="es">Inicio</span>
+                </a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="#research-lines" class="mobile-nav-link" onclick="closeMobileMenu()">
+                    <i class="fas fa-layer-group"></i>
+                    <span lang="en">Research Lines</span>
+                    <span lang="es">Líneas de Investigación</span>
+                </a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="#clinical-trials" class="mobile-nav-link" onclick="closeMobileMenu()">
+                    <i class="fas fa-clipboard-check"></i>
+                    <span lang="en">Clinical Trials</span>
+                    <span lang="es">Ensayos Clínicos</span>
+                </a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="innovation-hub.html" class="mobile-nav-link" onclick="closeMobileMenu()">
+                    <i class="fas fa-lightbulb"></i>
+                    <span lang="en">Innovation Hub</span>
+                    <span lang="es">Hub de Innovación</span>
+                </a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="#contact" class="mobile-nav-link" onclick="closeMobileMenu()">
+                    <i class="fas fa-handshake"></i>
+                    <span lang="en">Collaborate</span>
+                    <span lang="es">Colaborar</span>
+                </a>
+            </li>
+        </ul>
+        
+        <a href="#contact" class="mobile-nav-cta" onclick="closeMobileMenu()">
+            <span lang="en">Start Collaboration</span>
+            <span lang="es">Iniciar Colaboración</span>
+        </a>
     </nav>
-
-    <!-- Small Language Switcher -->
-    <div class="language-switcher">
-        <button class="lang-btn active" onclick="switchLanguage('en')">
-            <i class="fas fa-globe"></i> EN
-        </button>
-        <button class="lang-btn" onclick="switchLanguage('es')">
-            <i class="fas fa-globe"></i> ES
-        </button>
-    </div>
 
     <!-- Hero Section -->
     <section class="hero-section" id="hero">
-        <div class="hero-background"></div>
         <div class="container">
             <div class="hero-content">
-                <div class="hero-eyebrow">
+                <div class="hospital-badge fade-in">
                     <i class="fas fa-hospital"></i>
-                    <span class="lang-en">Hospital Universitario A Coruña</span>
-                    <span class="lang-es hidden">Hospital Universitario A Coruña</span>
+                    <span lang="en">Hospital Universitario A Coruña</span>
+                    <span lang="es">Hospital Universitario A Coruña</span>
                 </div>
                 
-                <h1 class="hero-title">
-                    <span class="lang-en">Clinical Research in Pulmonary Medicine</span>
-                    <span class="lang-es hidden">Investigación Clínica en Medicina Pulmonar</span>
+                <h1 class="hero-title fade-in">
+                    <span lang="en">Clinical Research in Pulmonary Medicine</span>
+                    <span lang="es">Investigación Clínica en Medicina Pulmonar</span>
                 </h1>
                 
-                <p class="hero-subtitle">
-                    <span class="lang-en">Advancing respiratory medicine through rigorous clinical trials and scientific collaboration. Our research groups consist of experts in Pneumology with extensive research background and clinical experience.</span>
-                    <span class="lang-es hidden">Avanzando en medicina respiratoria mediante ensayos clínicos rigurosos y colaboración científica. Nuestros grupos de investigación están formados por expertos en Neumología con amplia trayectoria investigadora y experiencia clínica.</span>
+                <p class="hero-subtitle fade-in">
+                    <span lang="en">Advancing respiratory medicine through rigorous clinical trials and scientific collaboration. Our research groups consist of experts in Pneumology with extensive research background and clinical experience.</span>
+                    <span lang="es">Avanzando en medicina respiratoria mediante ensayos clínicos rigurosos y colaboración científica. Nuestros grupos de investigación están formados por expertos en Neumología con amplia trayectoria investigadora y experiencia clínica.</span>
                 </p>
                 
-                <div class="hero-actions">
-                    <a href="#research-groups" class="btn btn-primary">
+                <div class="fade-in">
+                    <a href="#research-lines" class="btn btn-primary">
                         <i class="fas fa-users"></i>
-                        <span class="lang-en">Explore Research Groups</span>
-                        <span class="lang-es hidden">Explorar Grupos</span>
+                        <span lang="en">Explore Research Lines</span>
+                        <span lang="es">Explorar Líneas de Investigación</span>
                     </a>
-                    <a href="#clinical-trials" class="btn btn-outline">
+                    <a href="#clinical-trials" class="btn btn-outline" style="margin-left: 1rem;">
                         <i class="fas fa-search"></i>
-                        <span class="lang-en">View Clinical Trials</span>
-                        <span class="lang-es hidden">Ver Ensayos Clínicos</span>
+                        <span lang="en">View Clinical Trials</span>
+                        <span lang="es">Ver Ensayos Clínicos</span>
                     </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Research Groups Section -->
-    <section class="section research-groups-section" id="research-groups">
+    <!-- Research Lines Section -->
+    <section class="section research-lines-section" id="research-lines">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">
-                    <span class="lang-en">Research Groups</span>
-                    <span class="lang-es hidden">Grupos de Investigación</span>
+                <h2 class="text-center fade-in">
+                    <span lang="en">Research Lines</span>
+                    <span lang="es">Líneas de Investigación</span>
                 </h2>
-                <p class="text-lead">
-                    <span class="lang-en">Our research groups consist of experts in Pneumology with extensive research background and clinical experience, driving innovation in respiratory medicine.</span>
-                    <span class="lang-es hidden">Nuestros grupos de investigación están formados por expertos en Neumología con amplia trayectoria investigadora y experiencia clínica, impulsando la innovación en medicina respiratoria.</span>
+                <p class="text-lead text-center fade-in">
+                    <span lang="en">Our specialized research lines are led by expert coordinators and focus on advancing specific areas of pulmonary medicine through clinical investigation.</span>
+                    <span lang="es">Nuestras líneas de investigación especializadas están dirigidas por coordinadores expertos y se centran en avanzar áreas específicas de la medicina pulmonar mediante investigación clínica.</span>
                 </p>
             </div>
-
-            <div class="research-groups-grid">
-                <!-- Tuberculosis Research Group -->
-                <div class="research-group-card" onclick="openModal('tb-modal')">
-                    <div class="research-group-icon">
-                        <i class="fas fa-microscope"></i>
-                    </div>
-                    <h3 class="research-group-name">
-                        <span class="lang-en">Tuberculosis & Respiratory Infections</span>
-                        <span class="lang-es hidden">Tuberculosis e Infecciones Respiratorias</span>
-                    </h3>
-                    <p class="research-group-description">
-                        <span class="lang-en">Specialized in clinical trials for novel TB treatments, drug resistance studies, and preventive therapies for respiratory infections.</span>
-                        <span class="lang-es hidden">Especializado en ensayos clínicos para nuevos tratamientos de TB, estudios de resistencia a fármacos y terapias preventivas para infecciones respiratorias.</span>
-                    </p>
-                    <div class="research-group-meta">
-                        <span>
-                            <i class="fas fa-clipboard-check"></i>
-                            <span class="lang-en">6 Active Trials</span>
-                            <span class="lang-es hidden">6 Ensayos Activos</span>
-                        </span>
-                        <span>
-                            <i class="fas fa-user-md"></i>
-                            5 Investigators
-                        </span>
+            
+            <!-- Research Line 1 -->
+            <div class="research-line-card fade-in">
+                <div class="research-line-header">
+                    <div class="research-line-number">1</div>
+                    <div class="research-line-content">
+                        <h3 class="research-line-title">
+                            <span lang="en">Transplantation, Hypertension and Diffuse Pulmonary Disease</span>
+                            <span lang="es">Trasplante, Hipertensión y Enfermedad Difusa Pulmonar</span>
+                        </h3>
+                        <p class="research-line-coordinator">
+                            <span lang="en">Coordinator:</span>
+                            <span lang="es">Coordinadora:</span>
+                            <strong>Dra. Pilar Sanjuán</strong>
+                        </p>
                     </div>
                 </div>
-
-                <!-- Sleep Disorders Research Group -->
-                <div class="research-group-card" onclick="openModal('sleep-modal')">
-                    <div class="research-group-icon">
-                        <i class="fas fa-bed"></i>
-                    </div>
-                    <h3 class="research-group-name">
-                        <span class="lang-en">Sleep & Ventilatory Disorders</span>
-                        <span class="lang-es hidden">Trastornos del Sueño y Ventilatorios</span>
-                    </h3>
-                    <p class="research-group-description">
-                        <span class="lang-en">Focus on sleep apnea treatments, CPAP optimization, and novel ventilation therapies through controlled clinical studies.</span>
-                        <span class="lang-es hidden">Enfoque en tratamientos de apnea del sueño, optimización de CPAP y nuevas terapias ventilatorias mediante estudios clínicos controlados.</span>
-                    </p>
-                    <div class="research-group-meta">
-                        <span>
-                            <i class="fas fa-clipboard-check"></i>
-                            <span class="lang-en">4 Active Trials</span>
-                            <span class="lang-es hidden">4 Ensayos Activos</span>
-                        </span>
-                        <span>
-                            <i class="fas fa-user-md"></i>
-                            4 Investigators
-                        </span>
+                <p class="research-line-description">
+                    <span lang="en">This research line focuses on advancing lung transplantation techniques, managing pulmonary hypertension, and understanding diffuse pulmonary diseases. Our work includes clinical trials for novel immunosuppressive regimens, interventions for pulmonary arterial hypertension, and studies on interstitial lung diseases.</span>
+                    <span lang="es">Esta línea de investigación se centra en avanzar técnicas de trasplante pulmonar, manejar hipertensión pulmonar y comprender enfermedades pulmonares difusas. Nuestro trabajo incluye ensayos clínicos para nuevos regímenes inmunosupresores, intervenciones para hipertensión arterial pulmonar y estudios sobre enfermedades pulmonares intersticiales.</span>
+                </p>
+                <div class="research-line-expertise">
+                    <span class="expertise-tag">Lung Transplantation</span>
+                    <span class="expertise-tag">Pulmonary Hypertension</span>
+                    <span class="expertise-tag">Interstitial Lung Disease</span>
+                    <span class="expertise-tag">Immunosuppression</span>
+                </div>
+            </div>
+            
+            <!-- Research Line 2 -->
+            <div class="research-line-card fade-in">
+                <div class="research-line-header">
+                    <div class="research-line-number">2</div>
+                    <div class="research-line-content">
+                        <h3 class="research-line-title">
+                            <span lang="en">Obstructive Respiratory Diseases</span>
+                            <span lang="es">Enfermedades Obstructivas Respiratorias</span>
+                        </h3>
+                        <p class="research-line-coordinator">
+                            <span lang="en">Coordinator:</span>
+                            <span lang="es">Coordinadora:</span>
+                            <strong>Dra. Marina Blanco Aparicio</strong>
+                        </p>
                     </div>
                 </div>
-
-                <!-- Advanced Therapies Research Group -->
-                <div class="research-group-card" onclick="openModal('advanced-modal')">
-                    <div class="research-group-icon">
-                        <i class="fas fa-procedures"></i>
-                    </div>
-                    <h3 class="research-group-name">
-                        <span class="lang-en">Advanced Respiratory Therapies</span>
-                        <span class="lang-es hidden">Terapias Respiratorias Avanzadas</span>
-                    </h3>
-                    <p class="research-group-description">
-                        <span class="lang-en">Research in lung transplantation, ECMO, advanced ventilation, and ICU management with dedicated research capabilities.</span>
-                        <span class="lang-es hidden">Investigación en trasplante pulmonar, ECMO, ventilación avanzada y manejo de UCI con capacidades de investigación dedicadas.</span>
-                    </p>
-                    <div class="research-group-meta">
-                        <span>
-                            <i class="fas fa-clipboard-check"></i>
-                            <span class="lang-en">3 Active Trials</span>
-                            <span class="lang-es hidden">3 Ensayos Activos</span>
-                        </span>
-                        <span>
-                            <i class="fas fa-user-md"></i>
-                            6 Investigators
-                        </span>
+                <p class="research-line-description">
+                    <span lang="en">Dedicated to improving diagnosis, treatment, and management of obstructive respiratory diseases including COPD, asthma, and bronchiectasis. Our research includes clinical trials for novel bronchodilators, anti-inflammatory therapies, and personalized treatment approaches.</span>
+                    <span lang="es">Dedicada a mejorar diagnóstico, tratamiento y manejo de enfermedades respiratorias obstructivas incluyendo EPOC, asma y bronquiectasias. Nuestra investigación incluye ensayos clínicos para nuevos broncodilatadores, terapias antiinflamatorias y enfoques de tratamiento personalizado.</span>
+                </p>
+                <div class="research-line-expertise">
+                    <span class="expertise-tag">COPD</span>
+                    <span class="expertise-tag">Asthma</span>
+                    <span class="expertise-tag">Bronchiectasis</span>
+                    <span class="expertise-tag">Bronchodilators</span>
+                </div>
+            </div>
+            
+            <!-- Research Line 3 -->
+            <div class="research-line-card fade-in">
+                <div class="research-line-header">
+                    <div class="research-line-number">3</div>
+                    <div class="research-line-content">
+                        <h3 class="research-line-title">
+                            <span lang="en">Interventional Pneumology & Lung Cancer</span>
+                            <span lang="es">Intervencionismo y Cáncer de Pulmón</span>
+                        </h3>
+                        <p class="research-line-coordinator">
+                            <span lang="en">Coordinator:</span>
+                            <span lang="es">Coordinador:</span>
+                            <strong>Dr. Rachid Tazi</strong>
+                        </p>
                     </div>
                 </div>
-
-                <!-- Chronic Diseases Research Group -->
-                <div class="research-group-card" onclick="openModal('chronic-modal')">
-                    <div class="research-group-icon">
-                        <i class="fas fa-lungs"></i>
-                    </div>
-                    <h3 class="research-group-name">
-                        <span class="lang-en">Chronic Respiratory Diseases</span>
-                        <span class="lang-es hidden">Enfermedades Respiratorias Crónicas</span>
-                    </h3>
-                    <p class="research-group-description">
-                        <span class="lang-en">Clinical studies in severe asthma, COPD, interstitial lung diseases, and smoking cessation interventions.</span>
-                        <span class="lang-es hidden">Estudios clínicos en asma grave, EPOC, enfermedades pulmonares intersticiales e intervenciones de cesación tabáquica.</span>
-                    </p>
-                    <div class="research-group-meta">
-                        <span>
-                            <i class="fas fa-clipboard-check"></i>
-                            <span class="lang-en">7 Active Trials</span>
-                            <span class="lang-es hidden">7 Ensayos Activos</span>
-                        </span>
-                        <span>
-                            <i class="fas fa-user-md"></i>
-                            8 Investigators
-                        </span>
+                <p class="research-line-description">
+                    <span lang="en">Focus on minimally invasive diagnostic and therapeutic procedures for pulmonary diseases, with special emphasis on lung cancer. Our work includes clinical trials for targeted therapies, immunotherapies, and studies on bronchoscopic techniques and thoracic oncology.</span>
+                    <span lang="es">Enfoque en procedimientos diagnósticos y terapéuticos mínimamente invasivos para enfermedades pulmonares, con especial énfasis en cáncer de pulmón. Nuestro trabajo incluye ensayos clínicos para terapias dirigidas, inmunoterapias y estudios sobre técnicas broncoscópicas y oncología torácica.</span>
+                </p>
+                <div class="research-line-expertise">
+                    <span class="expertise-tag">Lung Cancer</span>
+                    <span class="expertise-tag">Interventional Pulmonology</span>
+                    <span class="expertise-tag">Bronchoscopy</span>
+                    <span class="expertise-tag">Thoracic Oncology</span>
+                </div>
+            </div>
+            
+            <!-- Research Line 4 -->
+            <div class="research-line-card fade-in">
+                <div class="research-line-header">
+                    <div class="research-line-number">4</div>
+                    <div class="research-line-content">
+                        <h3 class="research-line-title">
+                            <span lang="en">Respiratory Failure and Critical Respiratory Care</span>
+                            <span lang="es">Insuficiencia Respiratoria y Cuidados Críticos Respiratorio</span>
+                        </h3>
+                        <p class="research-line-coordinator">
+                            <span lang="en">Coordinator:</span>
+                            <span lang="es">Coordinadora:</span>
+                            <strong>Dra. Angélica Consuegra</strong>
+                        </p>
                     </div>
                 </div>
-
-                <!-- Personalized Medicine Research Group -->
-                <div class="research-group-card" onclick="openModal('personalized-modal')">
-                    <div class="research-group-icon">
-                        <i class="fas fa-dna"></i>
-                    </div>
-                    <h3 class="research-group-name">
-                        <span class="lang-en">Personalized Medicine & Biomarkers</span>
-                        <span class="lang-es hidden">Medicina Personalizada y Biomarcadores</span>
-                    </h3>
-                    <p class="research-group-description">
-                        <span class="lang-en">Biomarker discovery, targeted therapies, and precision medicine approaches for respiratory conditions.</span>
-                        <span class="lang-es hidden">Descubrimiento de biomarcadores, terapias dirigidas y enfoques de medicina de precisión para condiciones respiratorias.</span>
-                    </p>
-                    <div class="research-group-meta">
-                        <span>
-                            <i class="fas fa-clipboard-check"></i>
-                            <span class="lang-en">5 Active Trials</span>
-                            <span class="lang-es hidden">5 Ensayos Activos</span>
-                        </span>
-                        <span>
-                            <i class="fas fa-user-md"></i>
-                            4 Investigators
-                        </span>
+                <p class="research-line-description">
+                    <span lang="en">Research focused on acute respiratory failure management, critical care ventilation strategies, and advanced respiratory support. Our clinical trials investigate novel ventilation modes, weaning protocols, and interventions for acute respiratory distress syndrome (ARDS) and other critical conditions.</span>
+                    <span lang="es">Investigación centrada en manejo de insuficiencia respiratoria aguda, estrategias de ventilación en cuidados críticos y soporte respiratorio avanzado. Nuestros ensayos clínicos investigan nuevos modos de ventilación, protocolos de destete e intervenciones para síndrome de distrés respiratorio agudo (SDRA) y otras condiciones críticas.</span>
+                </p>
+                <div class="research-line-expertise">
+                    <span class="expertise-tag">Respiratory Failure</span>
+                    <span class="expertise-tag">Critical Care</span>
+                    <span class="expertise-tag">Mechanical Ventilation</span>
+                    <span class="expertise-tag">ARDS</span>
+                </div>
+            </div>
+            
+            <!-- Research Line 5 -->
+            <div class="research-line-card fade-in">
+                <div class="research-line-header">
+                    <div class="research-line-number">5</div>
+                    <div class="research-line-content">
+                        <h3 class="research-line-title">
+                            <span lang="en">Personalized Respiratory Medicine, Management and Clinical Innovation</span>
+                            <span lang="es">Medicina Personalizada Respiratoria, Gestión e Innovación Clínica</span>
+                        </h3>
+                        <p class="research-line-coordinator">
+                            <span lang="en">Coordinator:</span>
+                            <span lang="es">Coordinador:</span>
+                            <strong>Dr. Pedro J Marcos</strong>
+                        </p>
                     </div>
                 </div>
-
-                <!-- Pediatric Research Group -->
-                <div class="research-group-card" onclick="openModal('pediatric-modal')">
-                    <div class="research-group-icon">
-                        <i class="fas fa-child"></i>
-                    </div>
-                    <h3 class="research-group-name">
-                        <span class="lang-en">Pediatric Respiratory Research</span>
-                        <span class="lang-es hidden">Investigación Respiratoria Pediátrica</span>
-                    </h3>
-                    <p class="research-group-description">
-                        <span class="lang-en">Clinical studies focused on pediatric asthma, cystic fibrosis, bronchopulmonary dysplasia, and childhood respiratory infections.</span>
-                        <span class="lang-es hidden">Estudios clínicos enfocados en asma pediátrica, fibrosis quística, displasia broncopulmonar e infecciones respiratorias infantiles.</span>
-                    </p>
-                    <div class="research-group-meta">
-                        <span>
-                            <i class="fas fa-clipboard-check"></i>
-                            <span class="lang-en">3 Active Trials</span>
-                            <span class="lang-es hidden">3 Ensayos Activos</span>
-                        </span>
-                        <span>
-                            <i class="fas fa-user-md"></i>
-                            3 Investigators
-                        </span>
-                    </div>
+                <p class="research-line-description">
+                    <span lang="en">This innovative research line integrates personalized medicine approaches with healthcare management and clinical innovation. Our work includes biomarker discovery, implementation science, healthcare quality improvement studies, and the development of novel clinical care pathways for respiratory diseases.</span>
+                    <span lang="es">Esta línea de investigación innovadora integra enfoques de medicina personalizada con gestión sanitaria e innovación clínica. Nuestro trabajo incluye descubrimiento de biomarcadores, ciencia de implementación, estudios de mejora de calidad asistencial y desarrollo de nuevos circuitos de atención clínica para enfermedades respiratorias.</span>
+                </p>
+                <div class="research-line-expertise">
+                    <span class="expertise-tag">Personalized Medicine</span>
+                    <span class="expertise-tag">Biomarkers</span>
+                    <span class="expertise-tag">Healthcare Management</span>
+                    <span class="expertise-tag">Clinical Innovation</span>
                 </div>
             </div>
         </div>
@@ -1464,48 +1723,87 @@
     <section class="section clinical-trials-section" id="clinical-trials">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">
-                    <span class="lang-en">Active Clinical Trials</span>
-                    <span class="lang-es hidden">Ensayos Clínicos Activos</span>
+                <h2 class="text-center fade-in">
+                    <span lang="en">Active Clinical Trials</span>
+                    <span lang="es">Ensayos Clínicos Activos</span>
                 </h2>
-                <p class="text-lead">
-                    <span class="lang-en">Current research studies exploring novel therapies and treatments across pulmonary specialties.</span>
-                    <span class="lang-es hidden">Estudios de investigación actuales explorando nuevas terapias y tratamientos en especialidades pulmonares.</span>
+                <p class="text-lead text-center fade-in">
+                    <span lang="en">Current research studies exploring novel therapies and treatments across pulmonary specialties within our research lines.</span>
+                    <span lang="es">Estudios de investigación actuales explorando nuevas terapias y tratamientos en especialidades pulmonares dentro de nuestras líneas de investigación.</span>
                 </p>
             </div>
 
             <div class="trials-filters">
                 <div class="filter-group">
                     <label class="filter-label">
-                        <span class="lang-en">Research Area</span>
-                        <span class="lang-es hidden">Área de Investigación</span>
+                        <span lang="en">Research Line</span>
+                        <span lang="es">Línea de Investigación</span>
                     </label>
                     <select class="filter-select" onchange="filterTrials()">
                         <option value="all">
-                            <span class="lang-en">All Areas</span>
-                            <span class="lang-es hidden">Todas las Áreas</span>
+                            <span lang="en">All Lines</span>
+                            <span lang="es">Todas las Líneas</span>
                         </option>
-                        <option value="tuberculosis">Tuberculosis</option>
-                        <option value="sleep">Sleep Disorders</option>
-                        <option value="asthma">Asthma</option>
-                        <option value="ild">ILD</option>
-                        <option value="copd">COPD</option>
+                        <option value="transplant">
+                            <span lang="en">Transplantation & Diffuse Disease</span>
+                            <span lang="es">Trasplante y Enfermedad Difusa</span>
+                        </option>
+                        <option value="obstructive">
+                            <span lang="en">Obstructive Diseases</span>
+                            <span lang="es">Enfermedades Obstructivas</span>
+                        </option>
+                        <option value="interventional">
+                            <span lang="en">Interventional & Lung Cancer</span>
+                            <span lang="es">Intervencionismo y Cáncer</span>
+                        </option>
+                        <option value="critical">
+                            <span lang="en">Critical Care</span>
+                            <span lang="es">Cuidados Críticos</span>
+                        </option>
+                        <option value="personalized">
+                            <span lang="en">Personalized Medicine</span>
+                            <span lang="es">Medicina Personalizada</span>
+                        </option>
                     </select>
                 </div>
                 <div class="filter-group">
                     <label class="filter-label">
-                        <span class="lang-en">Study Phase</span>
-                        <span class="lang-es hidden">Fase del Estudio</span>
+                        <span lang="en">Study Phase</span>
+                        <span lang="es">Fase del Estudio</span>
                     </label>
                     <select class="filter-select" onchange="filterTrials()">
                         <option value="all">
-                            <span class="lang-en">All Phases</span>
-                            <span class="lang-es hidden">Todas las Fases</span>
+                            <span lang="en">All Phases</span>
+                            <span lang="es">Todas las Fases</span>
                         </option>
                         <option value="i">Phase I</option>
                         <option value="ii">Phase II</option>
                         <option value="iii">Phase III</option>
                         <option value="iv">Phase IV</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">
+                        <span lang="en">Status</span>
+                        <span lang="es">Estado</span>
+                    </label>
+                    <select class="filter-select" onchange="filterTrials()">
+                        <option value="all">
+                            <span lang="en">All Status</span>
+                            <span lang="es">Todos los Estados</span>
+                        </option>
+                        <option value="recruiting">
+                            <span lang="en">Recruiting</span>
+                            <span lang="es">Reclutando</span>
+                        </option>
+                        <option value="active">
+                            <span lang="en">Active</span>
+                            <span lang="es">Activo</span>
+                        </option>
+                        <option value="completed">
+                            <span lang="en">Completed</span>
+                            <span lang="es">Completado</span>
+                        </option>
                     </select>
                 </div>
             </div>
@@ -1515,73 +1813,97 @@
                     <thead>
                         <tr>
                             <th>
-                                <span class="lang-en">Protocol</span>
-                                <span class="lang-es hidden">Protocolo</span>
+                                <span lang="en">Protocol</span>
+                                <span lang="es">Protocolo</span>
                             </th>
                             <th>
-                                <span class="lang-en">Study Title</span>
-                                <span class="lang-es hidden">Título del Estudio</span>
+                                <span lang="en">Study Title</span>
+                                <span lang="es">Título del Estudio</span>
                             </th>
                             <th>
-                                <span class="lang-en">Group</span>
-                                <span class="lang-es hidden">Grupo</span>
+                                <span lang="en">Research Line</span>
+                                <span lang="es">Línea de Investigación</span>
                             </th>
                             <th>
-                                <span class="lang-en">Phase</span>
-                                <span class="lang-es hidden">Fase</span>
+                                <span lang="en">Phase</span>
+                                <span lang="es">Fase</span>
                             </th>
                             <th>
-                                <span class="lang-en">Status</span>
-                                <span class="lang-es hidden">Estado</span>
+                                <span lang="en">Status</span>
+                                <span lang="es">Estado</span>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr data-area="tuberculosis" data-phase="iii">
-                            <td>HUAC-TB-2024-001</td>
+                        <tr data-line="transplant" data-phase="iii" data-status="recruiting">
+                            <td>HUAC-TPL-2024-001</td>
                             <td>
                                 <strong>
-                                    <span class="lang-en">Novel Regimen for Drug-Resistant TB</span>
-                                    <span class="lang-es hidden">Nuevo Régimen para TB Multirresistente</span>
+                                    <span lang="en">Novel Immunosuppressive Regimen in Lung Transplantation</span>
+                                    <span lang="es">Nuevo Régimen Inmunosupresor en Trasplante Pulmonar</span>
                                 </strong>
                             </td>
-                            <td>Tuberculosis</td>
+                            <td>Transplantation</td>
                             <td><span class="trial-badge badge-phase">Phase III</span></td>
                             <td><span class="trial-badge badge-status">Recruiting</span></td>
                         </tr>
-                        <tr data-area="sleep" data-phase="ii">
-                            <td>HUAC-SLEEP-2024-002</td>
+                        <tr data-line="obstructive" data-phase="iii" data-status="recruiting">
+                            <td>HUAC-OBS-2024-002</td>
                             <td>
                                 <strong>
-                                    <span class="lang-en">CPAP Adherence Optimization</span>
-                                    <span class="lang-es hidden">Optimización de Adherencia a CPAP</span>
+                                    <span lang="en">Triple Therapy Optimization in Severe COPD</span>
+                                    <span lang="es">Optimización de Terapia Triple en EPOC Grave</span>
                                 </strong>
                             </td>
-                            <td>Sleep Disorders</td>
+                            <td>Obstructive Diseases</td>
+                            <td><span class="trial-badge badge-phase">Phase III</span></td>
+                            <td><span class="trial-badge badge-status">Recruiting</span></td>
+                        </tr>
+                        <tr data-line="interventional" data-phase="ii" data-status="active">
+                            <td>HUAC-INT-2024-003</td>
+                            <td>
+                                <strong>
+                                    <span lang="en">Targeted Therapy in EGFR-mutated Lung Cancer</span>
+                                    <span lang="es">Terapia Dirigida en Cáncer de Pulmón con mutación EGFR</span>
+                                </strong>
+                            </td>
+                            <td>Interventional & Lung Cancer</td>
                             <td><span class="trial-badge badge-phase">Phase II</span></td>
                             <td><span class="trial-badge badge-status">Active</span></td>
                         </tr>
-                        <tr data-area="asthma" data-phase="iii">
-                            <td>HUAC-ASTHMA-2024-003</td>
+                        <tr data-line="critical" data-phase="ii" data-status="recruiting">
+                            <td>HUAC-CRT-2024-004</td>
                             <td>
                                 <strong>
-                                    <span class="lang-en">Biologic Therapy in Severe Asthma</span>
-                                    <span class="lang-es hidden">Terapia Biológica en Asma Grave</span>
+                                    <span lang="en">Prone Positioning in Moderate to Severe ARDS</span>
+                                    <span lang="es">Posición Prona en SDRA Moderado a Grave</span>
                                 </strong>
                             </td>
-                            <td>Asthma</td>
-                            <td><span class="trial-badge badge-phase">Phase III</span></td>
+                            <td>Critical Care</td>
+                            <td><span class="trial-badge badge-phase">Phase II</span></td>
                             <td><span class="trial-badge badge-status">Recruiting</span></td>
+                        </tr>
+                        <tr data-line="personalized" data-phase="i" data-status="active">
+                            <td>HUAC-PER-2024-005</td>
+                            <td>
+                                <strong>
+                                    <span lang="en">Biomarker-guided Therapy in Severe Asthma</span>
+                                    <span lang="es">Terapia Guiada por Biomarcadores en Asma Grave</span>
+                                </strong>
+                            </td>
+                            <td>Personalized Medicine</td>
+                            <td><span class="trial-badge badge-phase">Phase I</span></td>
+                            <td><span class="trial-badge badge-status">Active</span></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-            <div class="text-center mt-5">
+            <div class="text-center mt-4">
                 <a href="#contact" class="btn btn-primary">
                     <i class="fas fa-info-circle"></i>
-                    <span class="lang-en">Request Trial Information</span>
-                    <span class="lang-es hidden">Solicitar Información</span>
+                    <span lang="en">Request Trial Information</span>
+                    <span lang="es">Solicitar Información</span>
                 </a>
             </div>
         </div>
@@ -1591,13 +1913,13 @@
     <section class="section contact-section" id="contact">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">
-                    <span class="lang-en">Collaborate With Us</span>
-                    <span class="lang-es hidden">Colabore con Nosotros</span>
+                <h2 class="text-center fade-in">
+                    <span lang="en">Collaborate With Us</span>
+                    <span lang="es">Colabore con Nosotros</span>
                 </h2>
-                <p class="text-lead">
-                    <span class="lang-en">Interested in collaborating with our clinical research groups? Contact our research team.</span>
-                    <span class="lang-es hidden">¿Interesado en colaborar con nuestros grupos de investigación clínica? Contacte a nuestro equipo de investigación.</span>
+                <p class="text-lead text-center fade-in">
+                    <span lang="en">Interested in collaborating with our clinical research teams? Contact our research coordination office.</span>
+                    <span lang="es">¿Interesado en colaborar con nuestros equipos de investigación clínica? Contacte con nuestra oficina de coordinación de investigación.</span>
                 </p>
             </div>
 
@@ -1606,8 +1928,8 @@
                     <div class="contact-card">
                         <div class="contact-label">
                             <i class="fas fa-headset"></i>
-                            <span class="lang-en">Clinical Research Office</span>
-                            <span class="lang-es hidden">Oficina de Investigación Clínica</span>
+                            <span lang="en">Clinical Research Office</span>
+                            <span lang="es">Oficina de Investigación Clínica</span>
                         </div>
                         <div class="contact-value">research.pneumology@huac.es</div>
                     </div>
@@ -1615,77 +1937,92 @@
                     <div class="contact-card">
                         <div class="contact-label">
                             <i class="fas fa-map-marker-alt"></i>
-                            <span class="lang-en">Research Center</span>
-                            <span class="lang-es hidden">Centro de Investigación</span>
+                            <span lang="en">Research Center</span>
+                            <span lang="es">Centro de Investigación</span>
                         </div>
                         <div class="contact-value">
-                            <span class="lang-en">Hospital Universitario A Coruña<br>Clinical Research Center<br>As Xubias, 15006 A Coruña</span>
-                            <span class="lang-es hidden">Hospital Universitario A Coruña<br>Centro de Investigación Clínica<br>As Xubias, 15006 A Coruña</span>
+                            <span lang="en">Hospital Universitario A Coruña<br>Clinical Research Center<br>As Xubias, 15006 A Coruña</span>
+                            <span lang="es">Hospital Universitario A Coruña<br>Centro de Investigación Clínica<br>As Xubias, 15006 A Coruña</span>
                         </div>
                     </div>
                     
                     <div class="contact-card">
                         <div class="contact-label">
                             <i class="fas fa-phone"></i>
-                            <span class="lang-en">Research Inquiries</span>
-                            <span class="lang-es hidden">Consultas de Investigación</span>
+                            <span lang="en">Research Inquiries</span>
+                            <span lang="es">Consultas de Investigación</span>
                         </div>
-                        <div class="contact-value">+34 981 178 000 (Research Office)</div>
+                        <div class="contact-value">+34 881 111 800 (Research Office)</div>
                     </div>
                 </div>
 
                 <div class="contact-form-container">
-                    <h3 class="section-title" style="font-size: 1.5rem; margin-bottom: var(--spacing-xl);">
-                        <span class="lang-en">Research Collaboration Inquiry</span>
-                        <span class="lang-es hidden">Consulta de Colaboración</span>
+                    <h3 class="mb-4">
+                        <span lang="en">Research Collaboration Inquiry</span>
+                        <span lang="es">Consulta de Colaboración</span>
                     </h3>
                     <form id="researchForm">
                         <div class="form-group">
                             <label class="form-label">
-                                <span class="lang-en">Organization / Institution</span>
-                                <span class="lang-es hidden">Organización / Institución</span>
+                                <span lang="en">Organization / Institution</span>
+                                <span lang="es">Organización / Institución</span>
                             </label>
                             <input type="text" class="form-input" required>
                         </div>
                         <div class="form-group">
                             <label class="form-label">
-                                <span class="lang-en">Your Name</span>
-                                <span class="lang-es hidden">Su Nombre</span>
+                                <span lang="en">Your Name</span>
+                                <span lang="es">Su Nombre</span>
                             </label>
                             <input type="text" class="form-input" required>
                         </div>
                         <div class="form-group">
                             <label class="form-label">
-                                <span class="lang-en">Email Address</span>
-                                <span class="lang-es hidden">Correo Electrónico</span>
+                                <span lang="en">Email Address</span>
+                                <span lang="es">Correo Electrónico</span>
                             </label>
                             <input type="email" class="form-input" required>
                         </div>
                         <div class="form-group">
                             <label class="form-label">
-                                <span class="lang-en">Area of Interest</span>
-                                <span class="lang-es hidden">Área de Interés</span>
+                                <span lang="en">Research Line of Interest</span>
+                                <span lang="es">Línea de Investigación de Interés</span>
                             </label>
                             <select class="form-select">
                                 <option value="">Select...</option>
-                                <option value="tuberculosis">Tuberculosis</option>
-                                <option value="sleep">Sleep Disorders</option>
-                                <option value="asthma">Asthma</option>
-                                <option value="ild">ILD</option>
-                                <option value="copd">COPD</option>
+                                <option value="transplant">
+                                    <span lang="en">Transplantation & Diffuse Disease</span>
+                                    <span lang="es">Trasplante y Enfermedad Difusa</span>
+                                </option>
+                                <option value="obstructive">
+                                    <span lang="en">Obstructive Diseases</span>
+                                    <span lang="es">Enfermedades Obstructivas</span>
+                                </option>
+                                <option value="interventional">
+                                    <span lang="en">Interventional & Lung Cancer</span>
+                                    <span lang="es">Intervencionismo y Cáncer</span>
+                                </option>
+                                <option value="critical">
+                                    <span lang="en">Critical Care</span>
+                                    <span lang="es">Cuidados Críticos</span>
+                                </option>
+                                <option value="personalized">
+                                    <span lang="en">Personalized Medicine</span>
+                                    <span lang="es">Medicina Personalizada</span>
+                                </option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label class="form-label">
-                                <span class="lang-en">Message</span>
-                                <span class="lang-es hidden">Mensaje</span>
+                                <span lang="en">Message</span>
+                                <span lang="es">Mensaje</span>
                             </label>
                             <textarea class="form-textarea" rows="5" placeholder="Please provide details about your research collaboration inquiry..." required></textarea>
                         </div>
                         <button type="submit" class="form-submit">
                             <i class="fas fa-paper-plane"></i>
-                            <span class="lang-en">Submit Inquiry</span>
-                            <span class="lang-es hidden">Enviar Consulta</span>
+                            <span lang="en">Submit Inquiry</span>
+                            <span lang="es">Enviar Consulta</span>
                         </button>
                     </form>
                 </div>
@@ -1696,560 +2033,152 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <div class="footer-logo">
-                        <div class="footer-icon">CR</div>
-                        <div class="footer-name">Clinical Research</div>
+            <div class="footer-content">
+                <div class="footer-grid">
+                    <div class="footer-column">
+                        <div class="footer-logo">
+                            <span lang="en">Clinical Research</span>
+                            <span lang="es">Investigación Clínica</span>
+                        </div>
+                        <p class="footer-description">
+                            <span lang="en">Hospital Universitario A Coruña - Advancing Respiratory Medicine Through Clinical Research</span>
+                            <span lang="es">Hospital Universitario A Coruña - Avanzando en Medicina Respiratoria Mediante Investigación Clínica</span>
+                        </p>
                     </div>
-                    <p class="footer-tagline">
-                        <span class="lang-en">Hospital Universitario A Coruña - Advancing Respiratory Medicine Through Clinical Research</span>
-                        <span class="lang-es hidden">Hospital Universitario A Coruña - Avanzando en Medicina Respiratoria Mediante Investigación Clínica</span>
-                    </p>
+                    
+                    <div class="footer-column">
+                        <h3>
+                            <span lang="en">Research Lines</span>
+                            <span lang="es">Líneas de Investigación</span>
+                        </h3>
+                        <ul class="footer-links">
+                            <li><a href="#research-lines">
+                                <span lang="en">Transplantation & Diffuse Disease</span>
+                                <span lang="es">Trasplante y Enfermedad Difusa</span>
+                            </a></li>
+                            <li><a href="#research-lines">
+                                <span lang="en">Obstructive Diseases</span>
+                                <span lang="es">Enfermedades Obstructivas</span>
+                            </a></li>
+                            <li><a href="#research-lines">
+                                <span lang="en">Interventional & Lung Cancer</span>
+                                <span lang="es">Intervencionismo y Cáncer</span>
+                            </a></li>
+                            <li><a href="#research-lines">
+                                <span lang="en">Critical Care</span>
+                                <span lang="es">Cuidados Críticos</span>
+                            </a></li>
+                            <li><a href="#research-lines">
+                                <span lang="en">Personalized Medicine</span>
+                                <span lang="es">Medicina Personalizada</span>
+                            </a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h3>
+                            <span lang="en">Contact</span>
+                            <span lang="es">Contacto</span>
+                        </h3>
+                        <div class="contact-info">
+                            <p><i class="fas fa-map-marker-alt"></i> As Xubias, 84, 15006 A Coruña</p>
+                            <p><i class="fas fa-phone"></i> +34 881 111 800</p>
+                            <p><i class="fas fa-envelope"></i> research.pneumology@huac.es</p>
+                        </div>
+                    </div>
                 </div>
-
-                <div>
-                    <h4 class="footer-heading">
-                        <span class="lang-en">Research Groups</span>
-                        <span class="lang-es hidden">Grupos de Investigación</span>
-                    </h4>
-                    <ul class="footer-links">
-                        <li><a href="#research-groups">Tuberculosis Research</a></li>
-                        <li><a href="#research-groups">Sleep Disorders</a></li>
-                        <li><a href="#research-groups">Advanced Therapies</a></li>
-                        <li><a href="#research-groups">Chronic Diseases</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="footer-heading">
-                        <span class="lang-en">Clinical Trials</span>
-                        <span class="lang-es hidden">Ensayos Clínicos</span>
-                    </h4>
-                    <ul class="footer-links">
-                        <li><a href="#clinical-trials">Active Trials</a></li>
-                        <li><a href="#contact">Trial Participation</a></li>
-                        <li><a href="#contact">Investigator Resources</a></li>
-                        <li><a href="#contact">Patient Information</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="footer-heading">
-                        <span class="lang-en">Resources</span>
-                        <span class="lang-es hidden">Recursos</span>
-                    </h4>
-                    <ul class="footer-links">
-                        <li><a href="innovation-hub.html">Innovation Hub</a></li>
-                        <li><a href="#">Publications</a></li>
-                        <li><a href="#">Research Ethics</a></li>
-                        <li><a href="#">Training Programs</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
+                
                 <div class="copyright">
-                    © <span id="currentYear">2024</span> 
-                    <span class="lang-en">Hospital Universitario A Coruña - Clinical Research. All rights reserved.</span>
-                    <span class="lang-es hidden">Hospital Universitario A Coruña - Investigación Clínica. Todos los derechos reservados.</span>
-                </div>
-                <div class="footer-legal">
-                    <a href="#">
-                        <span class="lang-en">Privacy Policy</span>
-                        <span class="lang-es hidden">Privacidad</span>
-                    </a>
-                    <a href="#">
-                        <span class="lang-en">Legal</span>
-                        <span class="lang-es hidden">Legal</span>
-                    </a>
+                    <p>© 2024 HUAC Pneumology Department. 
+                        <span lang="en">All rights reserved. Advancing respiratory medicine through clinical investigation.</span>
+                        <span lang="es">Todos los derechos reservados. Avanzando en medicina respiratoria mediante investigación clínica.</span>
+                    </p>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Research Group Modals -->
-    <!-- Tuberculosis Modal -->
-    <div class="modal-overlay" id="tb-modal">
-        <div class="modal">
-            <div class="modal-header">
-                <button class="modal-close" onclick="closeModal()">
-                    <i class="fas fa-times"></i>
-                </button>
-                <h3 class="modal-title">
-                    <span class="lang-en">Tuberculosis & Respiratory Infections Research Group</span>
-                    <span class="lang-es hidden">Grupo de Investigación en Tuberculosis e Infecciones Respiratorias</span>
-                </h3>
-                <p class="modal-subtitle">
-                    <span class="lang-en">Experts in clinical trials for novel TB treatments and respiratory infections</span>
-                    <span class="lang-es hidden">Expertos en ensayos clínicos para nuevos tratamientos de TB e infecciones respiratorias</span>
-                </p>
-            </div>
-            <div class="modal-body">
-                <p class="modal-description">
-                    <span class="lang-en">Our Tuberculosis Research Group consists of experts in Pneumology with extensive research background and clinical experience in managing complex respiratory infections. The group focuses on developing and testing novel therapeutic approaches for drug-resistant tuberculosis and other challenging respiratory infections.</span>
-                    <span class="lang-es hidden">Nuestro Grupo de Investigación en Tuberculosis está formado por expertos en Neumología con amplia trayectoria investigadora y experiencia clínica en el manejo de infecciones respiratorias complejas. El grupo se centra en desarrollar y probar nuevos enfoques terapéuticos para tuberculosis multirresistente y otras infecciones respiratorias desafiantes.</span>
-                </p>
-                
-                <div class="modal-expertise">
-                    <h4>
-                        <span class="lang-en">Areas of Expertise</span>
-                        <span class="lang-es hidden">Áreas de Experiencia</span>
-                    </h4>
-                    <ul class="expertise-list">
-                        <li>
-                            <i class="fas fa-check-circle"></i>
-                            <span class="lang-en">Drug-resistant tuberculosis clinical trials</span>
-                            <span class="lang-es hidden">Ensayos clínicos de tuberculosis multirresistente</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check-circle"></i>
-                            <span class="lang-en">Novel antimicrobial development</span>
-                            <span class="lang-es hidden">Desarrollo de nuevos antimicrobianos</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check-circle"></i>
-                            <span class="lang-en">Preventive therapy studies</span>
-                            <span class="lang-es hidden">Estudios de terapias preventivas</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check-circle"></i>
-                            <span class="lang-en">Infection control research</span>
-                            <span class="lang-es hidden">Investigación en control de infecciones</span>
-                        </li>
-                    </ul>
-                </div>
-                
-                <div class="modal-trials">
-                    <h4>
-                        <span class="lang-en">Current Active Trials</span>
-                        <span class="lang-es hidden">Ensayos Activos Actuales</span>
-                    </h4>
-                    <p>
-                        <span class="lang-en">6 active Phase II-III clinical trials focusing on novel TB regimens and respiratory infection treatments.</span>
-                        <span class="lang-es hidden">6 ensayos clínicos activos Fase II-III centrados en nuevos regímenes de TB y tratamientos de infecciones respiratorias.</span>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Sleep Disorders Modal -->
-    <div class="modal-overlay" id="sleep-modal">
-        <div class="modal">
-            <div class="modal-header">
-                <button class="modal-close" onclick="closeModal()">
-                    <i class="fas fa-times"></i>
-                </button>
-                <h3 class="modal-title">
-                    <span class="lang-en">Sleep & Ventilatory Disorders Research Group</span>
-                    <span class="lang-es hidden">Grupo de Investigación en Trastornos del Sueño y Ventilatorios</span>
-                </h3>
-                <p class="modal-subtitle">
-                    <span class="lang-en">Specialized in sleep apnea treatments and ventilation therapy research</span>
-                    <span class="lang-es hidden">Especializado en tratamientos de apnea del sueño e investigación en terapia ventilatorias</span>
-                </p>
-            </div>
-            <div class="modal-body">
-                <p class="modal-description">
-                    <span class="lang-en">Our Sleep Disorders Research Group brings together clinical experts with extensive research experience in sleep medicine. The group conducts rigorous clinical trials to optimize existing therapies and develop new approaches for sleep-related breathing disorders.</span>
-                    <span class="lang-es hidden">Nuestro Grupo de Investigación en Trastornos del Sueño reúne a expertos clínicos con amplia experiencia investigadora en medicina del sueño. El grupo realiza ensayos clínicos rigurosos para optimizar terapias existentes y desarrollar nuevos enfoques para trastornos respiratorios relacionados con el sueño.</span>
-                </p>
-                
-                <div class="modal-expertise">
-                    <h4>
-                        <span class="lang-en">Areas of Expertise</span>
-                        <span class="lang-es hidden">Áreas de Experiencia</span>
-                    </h4>
-                    <ul class="expertise-list">
-                        <li>
-                            <i class="fas fa-check-circle"></i>
-                            <span class="lang-en">CPAP adherence and optimization studies</span>
-                            <span class="lang-es hidden">Estudios de adherencia y optimización de CPAP</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check-circle"></i>
-                            <span class="lang-en">Novel ventilation therapy trials</span>
-                            <span class="lang-es hidden">Ensayos de nuevas terapias ventilatorias</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check-circle"></i>
-                            <span class="lang-en">Sleep disorder diagnostics research</span>
-                            <span class="lang-es hidden">Investigación en diagnóstico de trastornos del sueño</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check-circle"></i>
-                            <span class="lang-en">Pediatric sleep studies</span>
-                            <span class="lang-es hidden">Estudios de sueño pediátrico</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Advanced Therapies Modal -->
-    <div class="modal-overlay" id="advanced-modal">
-        <div class="modal">
-            <div class="modal-header">
-                <button class="modal-close" onclick="closeModal()">
-                    <i class="fas fa-times"></i>
-                </button>
-                <h3 class="modal-title">
-                    <span class="lang-en">Advanced Respiratory Therapies Research Group</span>
-                    <span class="lang-es hidden">Grupo de Investigación en Terapias Respiratorias Avanzadas</span>
-                </h3>
-                <p class="modal-subtitle">
-                    <span class="lang-en">Leading research in transplantation, ECMO, and critical care ventilation</span>
-                    <span class="lang-es hidden">Investigación líder en trasplante, ECMO y ventilación en cuidados críticos</span>
-                </p>
-            </div>
-            <div class="modal-body">
-                <p class="modal-description">
-                    <span class="lang-en">The Advanced Therapies Research Group comprises clinical specialists with extensive experience in managing complex respiratory conditions requiring advanced interventions. Our research focuses on improving outcomes for patients undergoing lung transplantation, ECMO, and other advanced respiratory support modalities.</span>
-                    <span class="lang-es hidden">El Grupo de Investigación en Terapias Avanzadas está formado por especialistas clínicos con amplia experiencia en el manejo de condiciones respiratorias complejas que requieren intervenciones avanzadas. Nuestra investigación se centra en mejorar los resultados para pacientes sometidos a trasplante pulmonar, ECMO y otras modalidades avanzadas de soporte respiratorio.</span>
-                </p>
-                
-                <div class="modal-expertise">
-                    <h4>
-                        <span class="lang-en">Areas of Expertise</span>
-                        <span class="lang-es hidden">Áreas de Experiencia</span>
-                    </h4>
-                    <ul class="expertise-list">
-                        <li>
-                            <i class="fas fa-check-circle"></i>
-                            <span class="lang-en">Lung transplantation outcome studies</span>
-                            <span class="lang-es hidden">Estudios de resultados de trasplante pulmonar</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check-circle"></i>
-                            <span class="lang-en">ECMO management research</span>
-                            <span class="lang-es hidden">Investigación en manejo de ECMO</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check-circle"></i>
-                            <span class="lang-en">Advanced ventilation strategies</span>
-                            <span class="lang-es hidden">Estrategias de ventilación avanzada</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check-circle"></i>
-                            <span class="lang-en">Immunosuppression optimization</span>
-                            <span class="lang-es hidden">Optimización de inmunosupresión</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Chronic Diseases Modal -->
-    <div class="modal-overlay" id="chronic-modal">
-        <div class="modal">
-            <div class="modal-header">
-                <button class="modal-close" onclick="closeModal()">
-                    <i class="fas fa-times"></i>
-                </button>
-                <h3 class="modal-title">
-                    <span class="lang-en">Chronic Respiratory Diseases Research Group</span>
-                    <span class="lang-es hidden">Grupo de Investigación en Enfermedades Respiratorias Crónicas</span>
-                </h3>
-                <p class="modal-subtitle">
-                    <span class="lang-en">Specialized in asthma, COPD, ILD, and smoking cessation research</span>
-                    <span class="lang-es hidden">Especializado en investigación en asma, EPOC, ILD y cesación tabáquica</span>
-                </p>
-            </div>
-            <div class="modal-body">
-                <p class="modal-description">
-                    <span class="lang-en">Our Chronic Diseases Research Group brings together clinical experts with extensive research experience in managing long-term respiratory conditions. The group conducts clinical trials focused on improving disease management, developing new therapies, and enhancing quality of life for patients with chronic respiratory diseases.</span>
-                    <span class="lang-es hidden">Nuestro Grupo de Investigación en Enfermedades Crónicas reúne a expertos clínicos con amplia experiencia investigadora en el manejo de condiciones respiratorias a largo plazo. El grupo realiza ensayos clínicos centrados en mejorar el manejo de enfermedades, desarrollar nuevas terapias y mejorar la calidad de vida de pacientes con enfermedades respiratorias crónicas.</span>
-                </p>
-                
-                <div class="modal-expertise">
-                    <h4>
-                        <span class="lang-en">Areas of Expertise</span>
-                        <span class="lang-es hidden">Áreas de Experiencia</span>
-                    </h4>
-                    <ul class="expertise-list">
-                        <li>
-                            <i class="fas fa-check-circle"></i>
-                            <span class="lang-en">Severe asthma biologic therapies</span>
-                            <span class="lang-es hidden">Terapias biológicas para asma grave</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check-circle"></i>
-                            <span class="lang-en">COPD exacerbation prevention</span>
-                            <span class="lang-es hidden">Prevención de exacerbaciones de EPOC</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check-circle"></i>
-                            <span class="lang-en">Interstitial lung disease trials</span>
-                            <span class="lang-es hidden">Ensayos en enfermedad pulmonar intersticial</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check-circle"></i>
-                            <span class="lang-en">Smoking cessation interventions</span>
-                            <span class="lang-es hidden">Intervenciones de cesación tabáquica</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Personalized Medicine Modal -->
-    <div class="modal-overlay" id="personalized-modal">
-        <div class="modal">
-            <div class="modal-header">
-                <button class="modal-close" onclick="closeModal()">
-                    <i class="fas fa-times"></i>
-                </button>
-                <h3 class="modal-title">
-                    <span class="lang-en">Personalized Medicine & Biomarkers Research Group</span>
-                    <span class="lang-es hidden">Grupo de Investigación en Medicina Personalizada y Biomarcadores</span>
-                </h3>
-                <p class="modal-subtitle">
-                    <span class="lang-en">Biomarker discovery and precision medicine approaches</span>
-                    <span class="lang-es hidden">Descubrimiento de biomarcadores y enfoques de medicina de precisión</span>
-                </p>
-            </div>
-            <div class="modal-body">
-                <p class="modal-description">
-                    <span class="lang-en">The Personalized Medicine Research Group consists of clinical and translational researchers with expertise in biomarker discovery and precision medicine. Our work focuses on identifying predictive biomarkers, developing targeted therapies, and implementing personalized treatment approaches for respiratory conditions.</span>
-                    <span class="lang-es hidden">El Grupo de Investigación en Medicina Personalizada está formado por investigadores clínicos y traslacionales con experiencia en descubrimiento de biomarcadores y medicina de precisión. Nuestro trabajo se centra en identificar biomarcadores predictivos, desarrollar terapias dirigidas e implementar enfoques de tratamiento personalizado para condiciones respiratorias.</span>
-                </p>
-                
-                <div class="modal-expertise">
-                    <h4>
-                        <span class="lang-en">Areas of Expertise</span>
-                        <span class="lang-es hidden">Áreas de Experiencia</span>
-                    </h4>
-                    <ul class="expertise-list">
-                        <li>
-                            <i class="fas fa-check-circle"></i>
-                            <span class="lang-en">Biomarker discovery and validation</span>
-                            <span class="lang-es hidden">Descubrimiento y validación de biomarcadores</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check-circle"></i>
-                            <span class="lang-en">Pharmacogenomics studies</span>
-                            <span class="lang-es hidden">Estudios de farmacogenómica</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check-circle"></i>
-                            <span class="lang-en">Targeted therapy development</span>
-                            <span class="lang-es hidden">Desarrollo de terapias dirigidas</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check-circle"></i>
-                            <span class="lang-en">Precision medicine implementation</span>
-                            <span class="lang-es hidden">Implementación de medicina de precisión</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Pediatric Research Modal -->
-    <div class="modal-overlay" id="pediatric-modal">
-        <div class="modal">
-            <div class="modal-header">
-                <button class="modal-close" onclick="closeModal()">
-                    <i class="fas fa-times"></i>
-                </button>
-                <h3 class="modal-title">
-                    <span class="lang-en">Pediatric Respiratory Research Group</span>
-                    <span class="lang-es hidden">Grupo de Investigación Respiratoria Pediátrica</span>
-                </h3>
-                <p class="modal-subtitle">
-                    <span class="lang-en">Specialized in pediatric asthma, cystic fibrosis, and childhood respiratory conditions</span>
-                    <span class="lang-es hidden">Especializado en asma pediátrica, fibrosis quística y condiciones respiratorias infantiles</span>
-                </p>
-            </div>
-            <div class="modal-body">
-                <p class="modal-description">
-                    <span class="lang-en">Our Pediatric Research Group comprises pediatric pulmonologists and researchers with extensive experience in managing respiratory conditions in children. The group conducts clinical trials specifically designed for pediatric populations, focusing on safety, efficacy, and age-appropriate treatment approaches.</span>
-                    <span class="lang-es hidden">Nuestro Grupo de Investigación Pediátrica está formado por neumólogos pediátricos e investigadores con amplia experiencia en el manejo de condiciones respiratorias en niños. El grupo realiza ensayos clínicos específicamente diseñados para poblaciones pediátricas, centrándose en seguridad, eficacia y enfoques de tratamiento apropiados para la edad.</span>
-                </p>
-                
-                <div class="modal-expertise">
-                    <h4>
-                        <span class="lang-en">Areas of Expertise</span>
-                        <span class="lang-es hidden">Áreas de Experiencia</span>
-                    </h4>
-                    <ul class="expertise-list">
-                        <li>
-                            <i class="fas fa-check-circle"></i>
-                            <span class="lang-en">Pediatric asthma management trials</span>
-                            <span class="lang-es hidden">Ensayos de manejo de asma pediátrica</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check-circle"></i>
-                            <span class="lang-en">Cystic fibrosis therapy development</span>
-                            <span class="lang-es hidden">Desarrollo de terapias para fibrosis quística</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check-circle"></i>
-                            <span class="lang-en">Bronchopulmonary dysplasia studies</span>
-                            <span class="lang-es hidden">Estudios de displasia broncopulmonar</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check-circle"></i>
-                            <span class="lang-en">Pediatric respiratory infections</span>
-                            <span class="lang-es hidden">Infecciones respiratorias pediátricas</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script>
-        // ===== LANGUAGE MANAGEMENT =====
-        let currentLanguage = 'en';
-        
-        function switchLanguage(lang) {
-            currentLanguage = lang;
-            
-            // Update language switcher buttons
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            // Show/hide language-specific content
-            document.querySelectorAll('.lang-' + lang).forEach(el => {
-                el.classList.remove('hidden');
-            });
-            
-            document.querySelectorAll('.lang-' + (lang === 'en' ? 'es' : 'en')).forEach(el => {
-                el.classList.add('hidden');
-            });
-            
-            // Store preference
-            localStorage.setItem('preferredLanguage', lang);
-        }
-        
-        // ===== MOBILE NAVIGATION =====
+        // ===== MOBILE MENU =====
         const mobileMenuToggle = document.getElementById('mobileMenuToggle');
         const mobileNav = document.getElementById('mobileNav');
+        const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+        const mobileNavClose = document.getElementById('mobileNavClose');
         
-        function toggleMobileMenu() {
-            const isExpanded = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
-            mobileMenuToggle.classList.toggle('active');
-            mobileNav.classList.toggle('active');
-            mobileMenuToggle.setAttribute('aria-expanded', !isExpanded);
-            document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+        function openMobileMenu() {
+            mobileMenuToggle.classList.add('active');
+            mobileNav.classList.add('active');
+            mobileNavOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            mobileMenuToggle.setAttribute('aria-label', 'Close menu');
+            mobileMenuToggle.setAttribute('aria-expanded', 'true');
         }
         
         function closeMobileMenu() {
             mobileMenuToggle.classList.remove('active');
             mobileNav.classList.remove('active');
+            mobileNavOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+            mobileMenuToggle.setAttribute('aria-label', 'Open menu');
             mobileMenuToggle.setAttribute('aria-expanded', 'false');
-            document.body.style.overflow = '';
         }
         
-        mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+        mobileMenuToggle.addEventListener('click', openMobileMenu);
+        mobileNavClose.addEventListener('click', closeMobileMenu);
+        mobileNavOverlay.addEventListener('click', closeMobileMenu);
         
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!mobileNav.contains(e.target) && !mobileMenuToggle.contains(e.target) && mobileNav.classList.contains('active')) {
-                closeMobileMenu();
-            }
+        document.querySelectorAll('.mobile-nav-link, .mobile-nav-cta').forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
         });
-        
-        // ===== MODAL FUNCTIONS =====
-        function openModal(modalId) {
-            const modal = document.getElementById(modalId);
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-        
-        function closeModal() {
-            document.querySelectorAll('.modal-overlay').forEach(modal => {
-                modal.classList.remove('active');
-            });
-            document.body.style.overflow = '';
-        }
-        
-        // Close modal when clicking outside
-        document.querySelectorAll('.modal-overlay').forEach(modal => {
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    closeModal();
-                }
-            });
-        });
-        
-        // Close modal with Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeModal();
-            }
-        });
-        
-        // ===== CLINICAL TRIALS FILTERING =====
-        function filterTrials() {
-            const areaFilter = document.querySelector('.filter-select:first-child').value;
-            const phaseFilter = document.querySelector('.filter-select:last-child').value;
-            const rows = document.querySelectorAll('.trials-table tbody tr');
+
+        // ===== LANGUAGE SWITCHING =====
+        function switchLanguage(lang) {
+            if (document.body.getAttribute('data-lang') === lang) return;
             
-            rows.forEach(row => {
-                const area = row.getAttribute('data-area');
-                const phase = row.getAttribute('data-phase');
-                
-                const areaMatch = areaFilter === 'all' || area === areaFilter;
-                const phaseMatch = phaseFilter === 'all' || phase === phaseFilter;
-                
-                if (areaMatch && phaseMatch) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
+            if (window.switchingLanguage) return;
+            window.switchingLanguage = true;
+            
+            document.body.style.opacity = '0.9';
+            const scrollPos = window.scrollY;
+            
+            document.body.setAttribute('data-lang', lang);
+            
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.trim() === lang.toUpperCase()) {
+                    btn.classList.add('active');
                 }
             });
+            
+            document.body.offsetHeight;
+            
+            setTimeout(() => {
+                window.scrollTo(0, scrollPos);
+                document.body.style.opacity = '1';
+                window.switchingLanguage = false;
+            }, 50);
+            
+            localStorage.setItem('huac_language', lang);
         }
         
-        // ===== FORM SUBMISSION =====
-        document.getElementById('researchForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert(currentLanguage === 'en' 
-                ? 'Thank you for your research inquiry. Our clinical research team will contact you within 3 business days.' 
-                : 'Gracias por su consulta de investigación. Nuestro equipo de investigación clínica se pondrá en contacto con usted en 3 días hábiles.');
-            this.reset();
-        });
+        // ===== HEADER SCROLL BEHAVIOR =====
+        const header = document.getElementById('mainHeader');
+        const scrollIndicator = document.getElementById('scrollIndicator');
         
-        // ===== NAVIGATION SCROLL BEHAVIOR =====
         window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navigation');
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             
-            // Add shadow on scroll
-            if (window.scrollY > 10) {
-                nav.style.boxShadow = 'var(--shadow-lg)';
+            const windowHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / windowHeight) * 100;
+            scrollIndicator.style.width = scrollPercent + '%';
+            
+            if (scrollTop > 10) {
+                header.classList.add('scrolled');
             } else {
-                nav.style.boxShadow = 'var(--shadow-sm)';
+                header.classList.remove('scrolled');
             }
-            
-            // Update active nav link
-            const sections = document.querySelectorAll('section[id]');
-            const navLinks = document.querySelectorAll('.nav-link');
-            
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (scrollY >= (sectionTop - 150)) {
-                    current = section.getAttribute('id');
-                }
-            });
-            
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${current}`) {
-                    link.classList.add('active');
-                }
-            });
         });
-        
+
         // ===== SMOOTH SCROLLING =====
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -2258,58 +2187,97 @@
                 if (targetId) {
                     const targetElement = document.getElementById(targetId);
                     if (targetElement) {
+                        const headerHeight = document.querySelector('.superior-header').offsetHeight;
+                        const targetPosition = targetElement.offsetTop - headerHeight;
+                        
                         window.scrollTo({
-                            top: targetElement.offsetTop - 100,
+                            top: targetPosition,
                             behavior: 'smooth'
                         });
-                        closeMobileMenu();
+                        
+                        history.pushState(null, null, `#${targetId}`);
                     }
                 }
             });
         });
         
-        // ===== INITIALIZATION =====
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set current year
-            document.getElementById('currentYear').textContent = new Date().getFullYear();
+        // ===== FORM SUBMISSION =====
+        const researchForm = document.getElementById('researchForm');
+        
+        researchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
             
-            // Check for saved language preference
-            const savedLang = localStorage.getItem('preferredLanguage');
-            if (savedLang) {
-                // Update language switcher
-                document.querySelectorAll('.lang-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                    if (btn.textContent.includes(savedLang.toUpperCase())) {
-                        btn.classList.add('active');
+            const currentLang = document.body.getAttribute('data-lang');
+            const successMessage = currentLang === 'en' 
+                ? 'Thank you for your research inquiry. Our clinical research team will contact you within 3 business days.' 
+                : 'Gracias por su consulta de investigación. Nuestro equipo de investigación clínica se pondrá en contacto con usted en 3 días hábiles.';
+            
+            alert(successMessage);
+            this.reset();
+        });
+        
+        // ===== CLINICAL TRIALS FILTERING =====
+        function filterTrials() {
+            const lineFilter = document.querySelector('.filter-select:nth-child(1)').value;
+            const phaseFilter = document.querySelector('.filter-select:nth-child(2)').value;
+            const statusFilter = document.querySelector('.filter-select:nth-child(3)').value;
+            const rows = document.querySelectorAll('.trials-table tbody tr');
+            
+            rows.forEach(row => {
+                const line = row.getAttribute('data-line');
+                const phase = row.getAttribute('data-phase');
+                const status = row.getAttribute('data-status');
+                
+                const lineMatch = lineFilter === 'all' || line === lineFilter;
+                const phaseMatch = phaseFilter === 'all' || phase === phaseFilter;
+                const statusMatch = statusFilter === 'all' || status === statusFilter;
+                
+                if (lineMatch && phaseMatch && statusMatch) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+        
+        // ===== SCROLL ANIMATIONS =====
+        function initScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
                     }
                 });
-                // Switch language
-                switchLanguage(savedLang);
-            } else {
-                // Default to English
-                switchLanguage('en');
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+        }
+        
+        // ===== INITIALIZATION =====
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('huac_language');
+            if (savedLang === 'es') {
+                switchLanguage('es');
             }
             
-            // Add scroll animations to cards
-            if ('IntersectionObserver' in window) {
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.style.opacity = '1';
-                            entry.target.style.transform = 'translateY(0)';
-                        }
-                    });
-                }, {
-                    threshold: 0.1
-                });
-                
-                // Observe cards for animation
-                document.querySelectorAll('.research-group-card').forEach(card => {
-                    card.style.opacity = '0';
-                    card.style.transform = 'translateY(20px)';
-                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                    observer.observe(card);
-                });
+            initScrollAnimations();
+            
+            if (window.scrollY > 10) {
+                header.classList.add('scrolled');
+            }
+        });
+        
+        // ===== KEYBOARD NAVIGATION =====
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
+                closeMobileMenu();
             }
         });
     </script>
