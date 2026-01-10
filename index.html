@@ -21,9 +21,6 @@
     <meta name="twitter:title" content="Pneumology Research & Innovation | HUAC">
     <meta name="twitter:description" content="Transforming respiratory care through clinical research and innovation.">
     
-    <!-- Minimal CSS for essential icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -120,6 +117,13 @@
             scroll-behavior: smooth;
             font-size: 16px;
         }
+        /* Creates an X without needing FontAwesome */
+.mobile-nav-close::before {
+    content: "×";  /* This is the multiplication/X symbol */
+    font-size: 1.8rem;
+    font-weight: 300;
+    line-height: 1;
+}
 
         body {
             font-family: var(--font-sans);
@@ -1369,11 +1373,9 @@
                 <div class="logo-text">
                     <div class="logo-main">Pneumology R&I</div>
                 </div>
-            </div>
-            <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
+             <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu">
+    <!-- EMPTY - CSS adds the X -->
+</button>
         
         <ul class="mobile-nav-links">
             <li class="mobile-nav-item">
