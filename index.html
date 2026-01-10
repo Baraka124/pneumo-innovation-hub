@@ -6,7 +6,7 @@
     <title>Pneumology Research & Innovation | HUAC Hospital Universitario A Coruña</title>
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Transforming respiratory care through clinical research and innovation at HUAC Hospital Universitario A Coruña. Discover our passion for advancing pulmonary medicine.">
+    <meta name="description" content="Transforming respiratory care through clinical research and innovation at HUAC Hospital Universitario A Coruña.">
     <meta name="keywords" content="pneumology, respiratory research, clinical trials, medical innovation, pulmonary medicine, HUAC, A Coruña">
     <meta name="author" content="HUAC Pneumology Department">
     
@@ -106,16 +106,6 @@
             padding-top: var(--header-height);
         }
 
-        /* Prevent layout shift during language switch */
-        [lang] {
-            min-height: 0;
-            display: block;
-        }
-
-        .equal-height {
-            min-height: 60px;
-        }
-
         /* Responsive typography */
         @media (max-width: 768px) {
             html {
@@ -211,17 +201,15 @@
             align-items: center;
             height: 100%;
             position: relative;
-            gap: var(--spacing-sm);
         }
 
-        /* ===== LOGO WITH YOUR ICON ===== */
+        /* ===== NEW PROFESSIONAL LOGO ===== */
         .logo {
             display: flex;
             align-items: center;
             gap: var(--spacing-sm);
             text-decoration: none;
             transition: transform 0.3s ease;
-            flex-shrink: 0;
         }
 
         .logo:hover {
@@ -235,7 +223,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
         }
 
         .logo-icon svg {
@@ -246,7 +233,6 @@
         .logo-text {
             display: flex;
             flex-direction: column;
-            flex-shrink: 0;
         }
 
         .logo-main {
@@ -255,7 +241,6 @@
             font-weight: 700;
             color: var(--medical-navy);
             line-height: 1.2;
-            white-space: nowrap;
         }
 
         .logo-sub {
@@ -263,13 +248,12 @@
             color: var(--slate-500);
             letter-spacing: 0.05em;
             line-height: 1.2;
-            white-space: nowrap;
         }
 
-        /* ===== FIXED LANGUAGE SWITCHER - CORRECT POSITION ===== */
+        /* ===== FIXED LANGUAGE SWITCHER ===== */
         .language-switcher {
             position: absolute;
-            right: 60px;
+            right: 280px;
             top: 50%;
             transform: translateY(-50%);
             display: flex;
@@ -282,9 +266,10 @@
             z-index: 10;
         }
 
-        @media (min-width: 1024px) {
+        @media (max-width: 1023px) {
             .language-switcher {
-                right: 280px;
+                right: 60px;
+                opacity: 0.6;
             }
         }
 
@@ -346,7 +331,6 @@
                 font-size: 0.9375rem;
                 border-radius: var(--radius-full);
                 transition: all 0.3s ease;
-                white-space: nowrap;
             }
             
             .nav-link:hover {
@@ -363,7 +347,6 @@
                 font-weight: 600;
                 text-decoration: none;
                 transition: all 0.3s ease;
-                white-space: nowrap;
             }
             
             .nav-cta:hover {
@@ -388,7 +371,6 @@
             border-radius: var(--radius-md);
             transition: all 0.3s ease;
             z-index: 1002;
-            flex-shrink: 0;
         }
 
         @media (min-width: 1024px) {
@@ -584,8 +566,8 @@
             margin-right: auto;
         }
 
-        /* NEW: Collaboration Icon (Based on your diagram) */
-        .collaboration-icon {
+        /* Collaboration Diagram */
+        .collaboration-diagram {
             max-width: 600px;
             margin: var(--spacing-xl) auto;
             padding: 2rem;
@@ -595,16 +577,13 @@
             gap: 2rem;
         }
 
-        .icon-diagram {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            position: relative;
+        .diagram-visual {
             width: 300px;
             height: 200px;
+            position: relative;
         }
 
-        .icon-circle {
+        .diagram-circle {
             width: 80px;
             height: 80px;
             border-radius: 50%;
@@ -613,51 +592,51 @@
             justify-content: center;
             font-size: 1.5rem;
             color: var(--medical-white);
-            position: relative;
+            position: absolute;
             box-shadow: var(--shadow-lg);
             transition: all 0.3s ease;
         }
 
-        .icon-circle:hover {
+        .diagram-circle:hover {
             transform: scale(1.1);
         }
 
-        .icon-circle.clinical {
+        .diagram-clinical {
             background: linear-gradient(135deg, var(--medical-teal), #2980B9);
-            grid-column: 1;
-            grid-row: 1;
+            top: 0;
+            left: 0;
         }
 
-        .icon-circle.research {
+        .diagram-research {
             background: linear-gradient(135deg, var(--medical-accent), #16A085);
-            grid-column: 3;
-            grid-row: 1;
+            top: 0;
+            right: 0;
         }
 
-        .icon-circle.patient {
-            background: linear-gradient(135deg, #E74C3C, #C0392B);
-            grid-column: 2;
-            grid-row: 2;
-            margin-top: 1rem;
+        .diagram-patient {
+            background: linear-gradient(135deg, #9B59B6, #8E44AD);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         .connection-line {
             position: absolute;
             background: var(--medical-teal);
-            height: 3px;
+            height: 2px;
             border-radius: 2px;
-            opacity: 0.6;
+            opacity: 0.5;
         }
 
         .line-1 {
-            width: 80px;
+            width: 100px;
             top: 40px;
             left: 90px;
             transform: rotate(-30deg);
         }
 
         .line-2 {
-            width: 80px;
+            width: 100px;
             top: 40px;
             right: 90px;
             transform: rotate(30deg);
@@ -669,12 +648,12 @@
             left: 120px;
         }
 
-        .icon-text {
+        .diagram-text {
             text-align: center;
             color: var(--slate-600);
         }
 
-        .icon-text strong {
+        .diagram-text strong {
             color: var(--medical-navy);
             font-weight: 600;
             display: block;
@@ -926,7 +905,7 @@
             font-weight: bold;
         }
 
-        /* Research Lines with Subtle Arrows */
+        /* Research Lines */
         .research-line {
             display: flex;
             align-items: center;
@@ -1181,11 +1160,7 @@
         .mt-3 { margin-top: var(--spacing-lg); }
         .mt-4 { margin-top: var(--spacing-xl); }
 
-        .hidden {
-            display: none !important;
-        }
-
-        /* ===== LANGUAGE CONTENT ===== */
+        /* ===== FIXED LANGUAGE SYSTEM ===== */
         [lang="es"] {
             display: none;
         }
@@ -1247,16 +1222,27 @@
         <div class="container header-container">
             <a href="index.html" class="logo">
                 <div class="logo-icon">
+                    <!-- NEW PROFESSIONAL LOGO ICON -->
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" fill="none">
-                        <!-- Your original lung/airflow icon -->
-                        <path d="M20 54 C20 30 36 22 46 28 V66 C46 74 38 82 28 82 C22 82 20 76 20 70 Z" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M76 54 C76 30 60 22 50 28 V66 C50 74 58 82 68 82 C74 82 76 76 76 70 Z" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-                        <line x1="48" y1="18" x2="48" y2="66" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
-                        <rect x="42" y="22" width="12" height="30" rx="2" fill="currentColor"/>
-                        <rect x="40" y="18" width="16" height="6" rx="2" fill="currentColor"/>
-                        <path d="M40 18 Q48 10 56 18" stroke="currentColor" stroke-width="4" fill="none" stroke-linecap="round"/>
-                        <path d="M48 44 C42 42 38 38 36 34" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-                        <path d="M48 44 C54 42 58 38 60 34" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        <!-- Abstract DNA + Research Symbol -->
+                        <circle cx="48" cy="48" r="36" stroke="currentColor" stroke-width="2" fill="none"/>
+                        
+                        <!-- Research Magnifying Glass -->
+                        <circle cx="60" cy="36" r="12" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <line x1="72" y1="48" x2="84" y2="60" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        
+                        <!-- Innovation/DNA Helix -->
+                        <path d="M30 30 Q36 24, 42 30 Q48 36, 54 30 Q60 24, 66 30" 
+                              stroke="currentColor" stroke-width="2" fill="none"/>
+                        <path d="M30 42 Q36 48, 42 42 Q48 36, 54 42 Q60 48, 66 42" 
+                              stroke="currentColor" stroke-width="2" fill="none"/>
+                        
+                        <!-- Connecting Bridge -->
+                        <line x1="36" y1="36" x2="48" y2="36" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3"/>
+                        
+                        <!-- Subtle Respiratory Elements -->
+                        <ellipse cx="36" cy="60" rx="6" ry="10" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                        <ellipse cx="60" cy="60" rx="6" ry="10" stroke="currentColor" stroke-width="1.5" fill="none"/>
                     </svg>
                 </div>
                 <div class="logo-text">
@@ -1325,14 +1311,10 @@
             <div class="logo">
                 <div class="logo-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" fill="none" width="36" height="36">
-                        <path d="M20 54 C20 30 36 22 46 28 V66 C46 74 38 82 28 82 C22 82 20 76 20 70 Z" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M76 54 C76 30 60 22 50 28 V66 C50 74 58 82 68 82 C74 82 76 76 76 70 Z" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-                        <line x1="48" y1="18" x2="48" y2="66" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
-                        <rect x="42" y="22" width="12" height="30" rx="2" fill="currentColor"/>
-                        <rect x="40" y="18" width="16" height="6" rx="2" fill="currentColor"/>
-                        <path d="M40 18 Q48 10 56 18" stroke="currentColor" stroke-width="4" fill="none" stroke-linecap="round"/>
-                        <path d="M48 44 C42 42 38 38 36 34" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-                        <path d="M48 44 C54 42 58 38 60 34" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        <circle cx="48" cy="48" r="24" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <circle cx="60" cy="36" r="8" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <path d="M30 30 Q36 24, 42 30 Q48 36, 54 30 Q60 24, 66 30" 
+                              stroke="currentColor" stroke-width="1.5" fill="none"/>
                     </svg>
                 </div>
                 <div class="logo-text">
@@ -1410,23 +1392,23 @@
                     <span lang="es">Donde la Excelencia Clínica se Encuentra con la Innovación Científica</span>
                 </h1>
                 
-                <!-- NEW: Collaboration Diagram Icon (Based on your image) -->
-                <div class="collaboration-icon fade-in">
-                    <div class="icon-diagram">
-                        <div class="icon-circle clinical">
+                <!-- Collaboration Diagram -->
+                <div class="collaboration-diagram fade-in">
+                    <div class="diagram-visual">
+                        <div class="diagram-circle diagram-clinical">
                             <i class="fas fa-user-md"></i>
                         </div>
-                        <div class="icon-circle research">
+                        <div class="diagram-circle diagram-research">
                             <i class="fas fa-microscope"></i>
                         </div>
-                        <div class="icon-circle patient">
+                        <div class="diagram-circle diagram-patient">
                             <i class="fas fa-heartbeat"></i>
                         </div>
                         <div class="connection-line line-1"></div>
                         <div class="connection-line line-2"></div>
                         <div class="connection-line line-3"></div>
                     </div>
-                    <div class="icon-text">
+                    <div class="diagram-text">
                         <strong lang="en">Bridging Clinical Insight with Research Innovation</strong>
                         <strong lang="es">Conectando Conocimiento Clínico con Innovación Investigadora</strong>
                         <p lang="en">Creating a seamless collaboration between patient care, clinical expertise, and scientific discovery</p>
@@ -1468,14 +1450,9 @@
                     <span lang="es">Nuestra Visión para la Medicina Respiratoria</span>
                 </h2>
                 
-                <p class="text-lead fade-in equal-height">
+                <p class="text-lead fade-in">
                     <span lang="en">At the intersection of clinical insight and scientific discovery lies the future of respiratory care. We are dedicated to exploring this frontier, ensuring that every innovation and discovery translates into meaningful improvements for patients.</span>
                     <span lang="es">En la intersección entre conocimiento clínico y descubrimiento científico yace el futuro del cuidado respiratorio. Nos dedicamos a explorar esta frontera, garantizando que cada innovación y descubrimiento se traduzca en mejoras significativas para los pacientes.</span>
-                </p>
-                
-                <p class="text-lead fade-in equal-height">
-                    <span lang="en">Our multidisciplinary team works collaboratively to address the most pressing challenges in pulmonary medicine, creating a continuous cycle of learning, innovation, and improved patient outcomes.</span>
-                    <span lang="es">Nuestro equipo multidisciplinario trabaja colaborativamente para abordar los desafíos más urgentes en medicina pulmonar, creando un ciclo continuo de aprendizaje, innovación y mejora de resultados para pacientes.</span>
                 </p>
             </div>
         </div>
@@ -1489,7 +1466,7 @@
                     <span lang="en">Foundations of Our Work</span>
                     <span lang="es">Fundamentos de Nuestro Trabajo</span>
                 </h2>
-                <p class="text-lead fade-in equal-height">
+                <p class="text-lead fade-in">
                     <span lang="en">Our approach is built upon two complementary pillars that together drive progress in respiratory medicine.</span>
                     <span lang="es">Nuestro enfoque se construye sobre dos pilares complementarios que juntos impulsan el progreso en medicina respiratoria.</span>
                 </p>
@@ -1505,7 +1482,7 @@
                         <span lang="en">Innovation & Technology</span>
                         <span lang="es">Innovación y Tecnología</span>
                     </h3>
-                    <p class="text-subtle mb-3 equal-height">
+                    <p class="text-subtle mb-3">
                         <span lang="en">Developing next-generation solutions through collaborative innovation, technology integration, and clinical workflow optimization.</span>
                         <span lang="es">Desarrollamos soluciones de próxima generación mediante innovación colaborativa, integración tecnológica y optimización de flujos clínicos.</span>
                     </p>
@@ -1525,7 +1502,7 @@
                         <span lang="en">Clinical Research</span>
                         <span lang="es">Investigación Clínica</span>
                     </h3>
-                    <p class="text-subtle mb-3 equal-height">
+                    <p class="text-subtle mb-3">
                         <span lang="en">Advancing pulmonary medicine through methodical investigation, clinical trials, and evidence-based practice refinement.</span>
                         <span lang="es">Avanzamos en medicina pulmonar mediante investigación metódica, ensayos clínicos y refinamiento de prácticas basadas en evidencia.</span>
                     </p>
@@ -1539,80 +1516,6 @@
         </div>
     </section>
 
-    <!-- Values Section -->
-    <section class="section values-section" id="values">
-        <div class="container">
-            <div class="text-center mb-4">
-                <h2 class="fade-in">
-                    <span lang="en">Our Guiding Principles</span>
-                    <span lang="es">Nuestros Principios Rectores</span>
-                </h2>
-                <p class="text-lead fade-in equal-height">
-                    <span lang="en">These core values shape every aspect of our work and define our approach to respiratory care advancement.</span>
-                    <span lang="es">Estos valores fundamentales moldean cada aspecto de nuestro trabajo y definen nuestro enfoque para el avance del cuidado respiratorio.</span>
-                </p>
-            </div>
-            
-            <div class="values-grid">
-                <div class="value-card fade-in">
-                    <div class="value-icon">
-                        <i class="fas fa-user-md"></i>
-                    </div>
-                    <h3>
-                        <span lang="en">Clinical Excellence</span>
-                        <span lang="es">Excelencia Clínica</span>
-                    </h3>
-                    <p class="text-subtle equal-height">
-                        <span lang="en">Every research question and innovation initiative must ultimately serve patient care and clinical outcomes.</span>
-                        <span lang="es">Cada pregunta de investigación e iniciativa de innovación debe servir finalmente al cuidado del paciente y resultados clínicos.</span>
-                    </p>
-                </div>
-                
-                <div class="value-card fade-in">
-                    <div class="value-icon">
-                        <i class="fas fa-flask"></i>
-                    </div>
-                    <h3>
-                        <span lang="en">Scientific Rigor</span>
-                        <span lang="es">Rigor Científico</span>
-                    </h3>
-                    <p class="text-subtle equal-height">
-                        <span lang="en">Maintaining the highest standards of scientific integrity in all research and development activities.</span>
-                        <span lang="es">Mantenemos los más altos estándares de integridad científica en todas las actividades de investigación y desarrollo.</span>
-                    </p>
-                </div>
-                
-                <div class="value-card fade-in">
-                    <div class="value-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3>
-                        <span lang="en">Collaboration</span>
-                        <span lang="es">Colaboración</span>
-                    </h3>
-                    <p class="text-subtle equal-height">
-                        <span lang="en">Meaningful progress emerges from partnerships across disciplines, institutions, and sectors.</span>
-                        <span lang="es">El progreso significativo emerge de colaboraciones entre disciplinas, instituciones y sectores.</span>
-                    </p>
-                </div>
-                
-                <div class="value-card fade-in">
-                    <div class="value-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3>
-                        <span lang="en">Impact-Driven</span>
-                        <span lang="es">Orientado al Impacto</span>
-                    </h3>
-                    <p class="text-subtle equal-height">
-                        <span lang="en">Measuring success by tangible improvements in clinical practice and patient quality of life.</span>
-                        <span lang="es">Medimos el éxito por mejoras tangibles en práctica clínica y calidad de vida del paciente.</span>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Gateway Section -->
     <section class="section gateway-section" id="gateway">
         <div class="container">
@@ -1621,7 +1524,7 @@
                     <span lang="en">Explore Our Focus Areas</span>
                     <span lang="es">Explorar Nuestras Áreas de Enfoque</span>
                 </h2>
-                <p class="text-lead fade-in equal-height">
+                <p class="text-lead fade-in">
                     <span lang="en">Dive deeper into our specialized domains where clinical insight meets scientific exploration and innovation.</span>
                     <span lang="es">Profundice en nuestros dominios especializados donde el conocimiento clínico se encuentra con exploración científica e innovación.</span>
                 </p>
@@ -1637,7 +1540,7 @@
                         <span lang="en">Innovation Hub</span>
                         <span lang="es">Centro de Innovación</span>
                     </h3>
-                    <p class="text-subtle mb-3 equal-height">
+                    <p class="text-subtle mb-3">
                         <span lang="en">Where clinical challenges become opportunities for technological advancement and workflow optimization.</span>
                         <span lang="es">Donde los desafíos clínicos se convierten en oportunidades para avance tecnológico y optimización de flujos de trabajo.</span>
                     </p>
@@ -1671,7 +1574,7 @@
                         <span lang="en">Clinical Research</span>
                         <span lang="es">Investigación Clínica</span>
                     </h3>
-                    <p class="text-subtle mb-3 equal-height">
+                    <p class="text-subtle mb-3">
                         <span lang="en">Dedicated to advancing pulmonary medicine through methodical investigation across five specialized research domains.</span>
                         <span lang="es">Dedicado a avanzar en medicina pulmonar mediante investigación metódica en cinco dominios de investigación especializados.</span>
                     </p>
@@ -1687,8 +1590,6 @@
                                 <div class="research-content">
                                     <strong lang="en">Transplantation & Diffuse Pulmonary Disease</strong>
                                     <strong lang="es">Trasplante y Enfermedad Pulmonar Difusa</strong>
-                                    <span lang="en">Advancing transplantation techniques and diffuse disease management</span>
-                                    <span lang="es">Avanzando técnicas de trasplante y manejo de enfermedad difusa</span>
                                 </div>
                             </div>
                             <div class="research-line">
@@ -1696,8 +1597,6 @@
                                 <div class="research-content">
                                     <strong lang="en">Obstructive Respiratory Diseases</strong>
                                     <strong lang="es">Enfermedades Respiratorias Obstructivas</strong>
-                                    <span lang="en">Research on COPD, asthma, and other obstructive conditions</span>
-                                    <span lang="es">Investigación sobre EPOC, asma y otras condiciones obstructivas</span>
                                 </div>
                             </div>
                             <div class="research-line">
@@ -1705,8 +1604,6 @@
                                 <div class="research-content">
                                     <strong lang="en">Interventionism & Lung Cancer</strong>
                                     <strong lang="es">Intervencionismo y Cáncer de Pulmón</strong>
-                                    <span lang="en">Minimally invasive procedures and oncological research</span>
-                                    <span lang="es">Procedimientos mínimamente invasivos e investigación oncológica</span>
                                 </div>
                             </div>
                             <div class="research-line">
@@ -1714,8 +1611,6 @@
                                 <div class="research-content">
                                     <strong lang="en">Respiratory Failure & Critical Care</strong>
                                     <strong lang="es">Insuficiencia Respiratoria y Cuidados Críticos</strong>
-                                    <span lang="en">Acute respiratory care and critical condition management</span>
-                                    <span lang="es">Cuidado respiratorio agudo y manejo de condiciones críticas</span>
                                 </div>
                             </div>
                             <div class="research-line">
@@ -1723,8 +1618,6 @@
                                 <div class="research-content">
                                     <strong lang="en">Personalized Medicine & Clinical Innovation</strong>
                                     <strong lang="es">Medicina Personalizada e Innovación Clínica</strong>
-                                    <span lang="en">Tailored treatments and innovative clinical approaches</span>
-                                    <span lang="es">Tratamientos personalizados y enfoques clínicos innovadores</span>
                                 </div>
                             </div>
                         </div>
@@ -1749,7 +1642,7 @@
                         <span lang="en">Partner With Us</span>
                         <span lang="es">Colabore Con Nosotros</span>
                     </h2>
-                    <p class="text-lead fade-in equal-height">
+                    <p class="text-lead fade-in">
                         <span lang="en">Join our mission to advance respiratory medicine. We welcome partnerships with researchers, clinicians, industry leaders, and innovators.</span>
                         <span lang="es">Únase a nuestra misión para avanzar en medicina respiratoria. Damos la bienvenida a colaboraciones con investigadores, clínicos, líderes industriales e innovadores.</span>
                     </p>
@@ -1764,7 +1657,7 @@
                             <span lang="en">Research Inquiries</span>
                             <span lang="es">Consultas de Investigación</span>
                         </h3>
-                        <p class="text-lead equal-height">
+                        <p class="text-lead">
                             <span lang="en">For research partnerships, clinical trials, and academic collaboration:</span>
                             <span lang="es">Para colaboraciones de investigación, ensayos clínicos y colaboración académica:</span>
                         </p>
@@ -1782,7 +1675,7 @@
                             <span lang="en">Innovation Partnerships</span>
                             <span lang="es">Colaboraciones de Innovación</span>
                         </h3>
-                        <p class="text-lead equal-height">
+                        <p class="text-lead">
                             <span lang="en">For technology development, industry partnerships, and innovation projects:</span>
                             <span lang="es">Para desarrollo tecnológico, colaboraciones industriales y proyectos de innovación:</span>
                         </p>
@@ -1791,38 +1684,6 @@
                             +34 881 111 800
                         </a>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Newsletter Section -->
-    <section class="section newsletter-section" id="newsletter">
-        <div class="container">
-            <div class="section-content">
-                <div class="text-center mb-4">
-                    <h2 class="fade-in">
-                        <span lang="en">Stay Connected</span>
-                        <span lang="es">Manténgase Conectado</span>
-                    </h2>
-                    <p class="text-lead fade-in equal-height">
-                        <span lang="en">Receive updates on our latest research, innovation projects, and collaboration opportunities.</span>
-                        <span lang="es">Reciba actualizaciones sobre nuestras últimas investigaciones, proyectos de innovación y oportunidades de colaboración.</span>
-                    </p>
-                </div>
-                
-                <form class="newsletter-form" id="newsletterForm">
-                    <input type="email" name="email" placeholder="your.email@example.com" required aria-label="Email address">
-                    <button type="submit" class="btn btn-primary" style="width: 100%;">
-                        <i class="fas fa-envelope"></i>
-                        <span lang="en">Subscribe to Updates</span>
-                        <span lang="es">Suscribirse a Actualizaciones</span>
-                    </button>
-                </form>
-                <div class="form-success" id="formSuccess">
-                    <i class="fas fa-check-circle"></i>
-                    <span lang="en">Thank you for subscribing! You'll receive our next update soon.</span>
-                    <span lang="es">¡Gracias por suscribirse! Recibirá nuestra próxima actualización pronto.</span>
                 </div>
             </div>
         </div>
@@ -1838,7 +1699,7 @@
                             <span lang="en">Pneumology Research & Innovation</span>
                             <span lang="es">Investigación e Innovación en Neumología</span>
                         </div>
-                        <p class="footer-description equal-height">
+                        <p class="footer-description">
                             <span lang="en">Hospital Universitario A Coruña<br>Advancing respiratory care through discovery and innovation.</span>
                             <span lang="es">Hospital Universitario A Coruña<br>Avanzando en cuidado respiratorio mediante descubrimiento e innovación.</span>
                         </p>
@@ -1883,8 +1744,8 @@
                 
                 <div class="copyright">
                     <p>© 2024 HUAC Pneumology Department. 
-                        <span lang="en">All rights reserved. Transforming respiratory care through discovery.</span>
-                        <span lang="es">Todos los derechos reservados. Transformando el cuidado respiratorio mediante el descubrimiento.</span>
+                        <span lang="en">All rights reserved.</span>
+                        <span lang="es">Todos los derechos reservados.</span>
                     </p>
                 </div>
             </div>
@@ -1892,6 +1753,27 @@
     </footer>
 
     <script>
+        // ===== FIXED LANGUAGE SWITCHING =====
+        function switchLanguage(lang) {
+            // Don't switch if already on this language
+            if (document.body.getAttribute('data-lang') === lang) return;
+            
+            // Switch language attribute
+            document.body.setAttribute('data-lang', lang);
+            
+            // Update buttons
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if ((btn.textContent.trim() === 'EN' && lang === 'en') || 
+                    (btn.textContent.trim() === 'ES' && lang === 'es')) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Save preference
+            localStorage.setItem('huac_language', lang);
+        }
+        
         // ===== MOBILE MENU =====
         const mobileMenuToggle = document.getElementById('mobileMenuToggle');
         const mobileNav = document.getElementById('mobileNav');
@@ -1916,53 +1798,14 @@
             mobileMenuToggle.setAttribute('aria-expanded', 'false');
         }
         
-        mobileMenuToggle.addEventListener('click', openMobileMenu);
-        mobileNavClose.addEventListener('click', closeMobileMenu);
-        mobileNavOverlay.addEventListener('click', closeMobileMenu);
+        if (mobileMenuToggle) mobileMenuToggle.addEventListener('click', openMobileMenu);
+        if (mobileNavClose) mobileNavClose.addEventListener('click', closeMobileMenu);
+        if (mobileNavOverlay) mobileNavOverlay.addEventListener('click', closeMobileMenu);
         
         // Close mobile menu when clicking on links
         document.querySelectorAll('.mobile-nav-link, .mobile-nav-cta').forEach(link => {
             link.addEventListener('click', closeMobileMenu);
         });
-
-        // ===== LANGUAGE SWITCHING - FIXED LAYOUT SHIFT =====
-        function switchLanguage(lang) {
-            if (document.body.getAttribute('data-lang') === lang) return;
-            
-            // Prevent multiple clicks
-            if (window.switchingLanguage) return;
-            window.switchingLanguage = true;
-            
-            // Add loading state
-            document.body.style.opacity = '0.9';
-            
-            // Store scroll position
-            const scrollPos = window.scrollY;
-            
-            // Switch language
-            document.body.setAttribute('data-lang', lang);
-            
-            // Update buttons
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.textContent.trim() === lang.toUpperCase()) {
-                    btn.classList.add('active');
-                }
-            });
-            
-            // Force reflow to prevent layout shift
-            document.body.offsetHeight;
-            
-            // Restore scroll position
-            setTimeout(() => {
-                window.scrollTo(0, scrollPos);
-                document.body.style.opacity = '1';
-                window.switchingLanguage = false;
-            }, 50);
-            
-            // Save preference
-            localStorage.setItem('huac_language', lang);
-        }
         
         // ===== HEADER SCROLL BEHAVIOR =====
         const header = document.getElementById('mainHeader');
@@ -1974,16 +1817,18 @@
             // Scroll progress indicator
             const windowHeight = document.documentElement.scrollHeight - window.innerHeight;
             const scrollPercent = (scrollTop / windowHeight) * 100;
-            scrollIndicator.style.width = scrollPercent + '%';
+            if (scrollIndicator) {
+                scrollIndicator.style.width = scrollPercent + '%';
+            }
             
             // Header shadow
-            if (scrollTop > 10) {
+            if (scrollTop > 10 && header) {
                 header.classList.add('scrolled');
-            } else {
+            } else if (header) {
                 header.classList.remove('scrolled');
             }
         });
-
+        
         // ===== SMOOTH SCROLLING =====
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -2011,28 +1856,34 @@
         const newsletterForm = document.getElementById('newsletterForm');
         const formSuccess = document.getElementById('formSuccess');
         
-        newsletterForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const emailInput = this.querySelector('input[name="email"]');
-            const email = emailInput.value;
-            
-            // Simple validation
-            if (!email || !email.includes('@') || !email.includes('.')) {
-                alert('Please enter a valid email address.');
-                return;
-            }
-            
-            // Show success message
-            formSuccess.classList.add('show');
-            
-            // Reset form
-            emailInput.value = '';
-            
-            // Hide success message after 5 seconds
-            setTimeout(() => {
-                formSuccess.classList.remove('show');
-            }, 5000);
-        });
+        if (newsletterForm) {
+            newsletterForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const emailInput = this.querySelector('input[name="email"]');
+                const email = emailInput.value;
+                
+                // Simple validation
+                if (!email || !email.includes('@') || !email.includes('.')) {
+                    alert('Please enter a valid email address.');
+                    return;
+                }
+                
+                // Show success message
+                if (formSuccess) {
+                    formSuccess.classList.add('show');
+                }
+                
+                // Reset form
+                emailInput.value = '';
+                
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    if (formSuccess) {
+                        formSuccess.classList.remove('show');
+                    }
+                }, 5000);
+            });
+        }
         
         // ===== SCROLL ANIMATIONS =====
         function initScrollAnimations() {
@@ -2066,16 +1917,8 @@
             initScrollAnimations();
             
             // Set initial scroll position for header
-            if (window.scrollY > 10) {
+            if (window.scrollY > 10 && header) {
                 header.classList.add('scrolled');
-            }
-        });
-        
-        // ===== KEYBOARD NAVIGATION =====
-        document.addEventListener('keydown', (e) => {
-            // Escape closes mobile menu
-            if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
-                closeMobileMenu();
             }
         });
     </script>
