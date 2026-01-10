@@ -10,6 +10,37 @@
     <meta name="keywords" content="pneumology, respiratory research, clinical trials, medical innovation, pulmonary medicine, HUAC, A Coruña">
     <meta name="author" content="HUAC Pneumology Department">
     
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Pneumology Research & Innovation | HUAC Hospital Universitario A Coruña">
+    <meta property="og:description" content="Transforming respiratory care through clinical research and innovation at HUAC Hospital Universitario A Coruña.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://huac.es/images/pneumology-innovation-og.jpg">
+    <meta property="og:url" content="https://huac.es/pneumology-innovation">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Pneumology Research & Innovation | HUAC">
+    <meta name="twitter:description" content="Transforming respiratory care through clinical research and innovation.">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "MedicalOrganization",
+        "name": "HUAC Pneumology Research & Innovation",
+        "url": "https://huac.es/pneumology-innovation",
+        "medicalSpecialty": "Pulmonology",
+        "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "ES",
+            "addressRegion": "Galicia",
+            "addressLocality": "A Coruña"
+        },
+        "description": "Transforming respiratory care through clinical research and innovation",
+        "founder": "Hospital Universitario A Coruña"
+    }
+    </script>
+    
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -66,6 +97,12 @@
             --radius-lg: 12px;
             --radius-xl: 16px;
             --radius-full: 9999px;
+            
+            /* Error States */
+            --error-red: #DC2626;
+            --error-red-light: #FEE2E2;
+            --success-green: #059669;
+            --success-green-light: #D1FAE5;
         }
 
         * {
@@ -85,6 +122,16 @@
             line-height: 1.6;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
         }
 
         h1, h2, h3, h4 {
@@ -125,6 +172,25 @@
             .text-lead {
                 font-size: 1.25rem;
             }
+        }
+
+        /* ===== SKIP LINK ===== */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--medical-teal);
+            color: white;
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            font-weight: 600;
+            z-index: 9999;
+            transition: top 0.3s;
+        }
+
+        .skip-link:focus {
+            top: 10px;
         }
 
         /* ===== SUPERIOR HEADER ===== */
@@ -195,6 +261,49 @@
             line-height: 1.2;
         }
 
+        /* ===== BREADCRUMB ===== */
+        .breadcrumb {
+            padding: var(--spacing-sm) 0;
+            background: var(--slate-100);
+            border-bottom: 1px solid var(--slate-200);
+            margin-top: 80px;
+        }
+
+        .breadcrumb ol {
+            display: flex;
+            list-style: none;
+            gap: var(--spacing-xs);
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb li {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .breadcrumb a {
+            color: var(--medical-teal);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--medical-navy);
+            text-decoration: underline;
+        }
+
+        .breadcrumb .separator {
+            color: var(--slate-400);
+            font-size: 0.75rem;
+        }
+
+        .breadcrumb [aria-current="page"] {
+            color: var(--slate-600);
+            font-weight: 500;
+        }
+
         /* ===== LANGUAGE SWITCHER ===== */
         .language-switcher {
             display: flex;
@@ -219,6 +328,8 @@
             display: flex;
             align-items: center;
             gap: 0.25rem;
+            min-width: 70px;
+            justify-content: center;
         }
 
         .lang-btn.active {
@@ -484,6 +595,7 @@
             border: none;
             font-size: 0.9375rem;
             gap: 0.5rem;
+            text-align: center;
         }
 
         .btn-primary {
@@ -791,17 +903,171 @@
             font-weight: bold;
         }
 
+        /* ===== NEWSLETTER SECTION ===== */
+        .newsletter-section {
+            background: var(--medical-navy-light);
+            border-top: 1px solid var(--slate-200);
+            border-bottom: 1px solid var(--slate-200);
+        }
+
+        .newsletter-form {
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .newsletter-form .form-group {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .newsletter-form input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--slate-300);
+            border-radius: var(--radius-lg);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: var(--medical-teal);
+            box-shadow: 0 0 0 3px rgba(45, 125, 125, 0.1);
+        }
+
+        .form-success {
+            background: var(--success-green-light);
+            color: var(--success-green);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-lg);
+            margin-top: var(--spacing-md);
+            display: none;
+        }
+
+        .form-error {
+            background: var(--error-red-light);
+            color: var(--error-red);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-lg);
+            margin-top: var(--spacing-md);
+            display: none;
+        }
+
+        /* ===== SOCIAL SHARING ===== */
+        .social-sharing {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-lg);
+        }
+
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--slate-200);
+            color: var(--slate-700);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .social-btn.twitter:hover {
+            background: #1DA1F2;
+            color: white;
+        }
+
+        .social-btn.linkedin:hover {
+            background: #0077B5;
+            color: white;
+        }
+
+        .social-btn.facebook:hover {
+            background: #4267B2;
+            color: white;
+        }
+
+        .social-btn.email:hover {
+            background: var(--medical-teal);
+            color: white;
+        }
+
         /* ===== FOOTER ===== */
         .footer {
             background: var(--medical-navy);
             color: var(--medical-white);
             padding: var(--spacing-2xl) 0 var(--spacing-xl);
-            text-align: center;
         }
 
         .footer-content {
-            max-width: 600px;
+            max-width: 1000px;
             margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-2xl);
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        @media (min-width: 768px) {
+            .footer-grid {
+                grid-template-columns: repeat(3, 1fr);
+                text-align: left;
+            }
+        }
+
+        .footer-column h3 {
+            color: var(--medical-white);
+            margin-bottom: var(--spacing-md);
+            font-size: 1.125rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--medical-white);
+        }
+
+        .contact-info {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .contact-info p {
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-info a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-info a:hover {
+            color: var(--medical-white);
         }
 
         .footer-logo {
@@ -822,6 +1088,8 @@
             font-size: 0.875rem;
             opacity: 0.6;
             margin-top: var(--spacing-lg);
+            padding-top: var(--spacing-md);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         /* ===== LANGUAGE CONTENT ===== */
@@ -837,6 +1105,32 @@
             display: block;
         }
 
+        /* ===== ERROR MESSAGE ===== */
+        .error-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--error-red);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-xl);
+            z-index: 9999;
+            animation: slideIn 0.3s ease;
+            max-width: 400px;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
         /* ===== UTILITY CLASSES ===== */
         .hidden {
             display: none !important;
@@ -844,6 +1138,18 @@
 
         .text-center {
             text-align: center;
+        }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
         }
 
         .fade-in {
@@ -872,9 +1178,94 @@
         .mb-3 { margin-bottom: var(--spacing-lg); }
         .mb-4 { margin-bottom: var(--spacing-xl); }
         .mb-5 { margin-bottom: var(--spacing-2xl); }
+
+        /* ===== PRINT STYLES ===== */
+        @media print {
+            .superior-header,
+            .mobile-nav,
+            .btn,
+            .hospital-badge,
+            .breadcrumb,
+            .social-sharing,
+            .newsletter-section,
+            .language-switcher {
+                display: none !important;
+            }
+            
+            body {
+                font-size: 12pt;
+                line-height: 1.5;
+                color: #000;
+            }
+            
+            a {
+                color: #000;
+                text-decoration: underline;
+            }
+            
+            a[href]:after {
+                content: " (" attr(href) ")";
+                font-size: 0.8em;
+                font-weight: normal;
+            }
+            
+            .container {
+                max-width: 100%;
+                padding: 0;
+            }
+            
+            .section {
+                padding: 1rem 0;
+                break-inside: avoid;
+            }
+            
+            .footer {
+                background: white !important;
+                color: #000 !important;
+                padding: 1rem 0;
+            }
+            
+            .footer-logo,
+            .footer-column h3 {
+                color: #000 !important;
+            }
+            
+            .footer-links a,
+            .contact-info a {
+                color: #000 !important;
+            }
+        }
+
+        /* ===== LOADING STATES ===== */
+        .loading {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            border: 2px solid currentColor;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+            vertical-align: middle;
+            margin-right: 0.5em;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
+    <!-- Skip to Main Content Link -->
+    <a href="#main-content" class="skip-link visually-hidden">
+        <span class="lang-en active">Skip to main content</span>
+        <span class="lang-es">Saltar al contenido principal</span>
+    </a>
+
     <!-- Superior Header -->
     <header class="superior-header">
         <div class="container header-container">
@@ -888,16 +1279,16 @@
 
             <!-- Language Switcher -->
             <div class="language-switcher">
-                <button class="lang-btn active" onclick="switchLanguage('en')">
+                <button class="lang-btn active" onclick="switchLanguage('en')" aria-label="Switch to English">
                     <i class="fas fa-globe"></i> EN
                 </button>
-                <button class="lang-btn" onclick="switchLanguage('es')">
+                <button class="lang-btn" onclick="switchLanguage('es')" aria-label="Cambiar a Español">
                     <i class="fas fa-globe"></i> ES
                 </button>
             </div>
 
             <!-- Desktop Navigation -->
-            <nav class="desktop-nav">
+            <nav class="desktop-nav" aria-label="Main navigation">
                 <div class="nav-item">
                     <a href="#mission" class="nav-link">
                         <i class="fas fa-heartbeat"></i>
@@ -920,6 +1311,13 @@
                     </a>
                 </div>
                 <div class="nav-item">
+                    <a href="#newsletter" class="nav-link">
+                        <i class="fas fa-newspaper"></i>
+                        <span class="lang-en active">Newsletter</span>
+                        <span class="lang-es">Boletín</span>
+                    </a>
+                </div>
+                <div class="nav-item">
                     <a href="innovation-hub.html" class="nav-cta">
                         <i class="fas fa-handshake"></i>
                         <span class="lang-en active">Collaborate</span>
@@ -929,7 +1327,7 @@
             </nav>
 
             <!-- Mobile Menu Toggle -->
-            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle mobile menu">
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mobileNav">
                 <span class="menu-line"></span>
                 <span class="menu-line"></span>
                 <span class="menu-line"></span>
@@ -937,7 +1335,7 @@
         </div>
 
         <!-- Mobile Navigation -->
-        <div class="mobile-nav" id="mobileNav">
+        <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
             <ul class="mobile-nav-links">
                 <li class="mobile-nav-item">
                     <a href="#mission" class="mobile-nav-link" onclick="closeMobileMenu()">
@@ -958,6 +1356,13 @@
                         <i class="fas fa-compass"></i>
                         <span class="lang-en active">Explore Work</span>
                         <span class="lang-es">Explorar Trabajo</span>
+                    </a>
+                </li>
+                <li class="mobile-nav-item">
+                    <a href="#newsletter" class="mobile-nav-link" onclick="closeMobileMenu()">
+                        <i class="fas fa-newspaper"></i>
+                        <span class="lang-en active">Newsletter</span>
+                        <span class="lang-es">Boletín</span>
                     </a>
                 </li>
                 <li class="mobile-nav-item">
@@ -982,11 +1387,24 @@
                     </a>
                 </li>
             </ul>
-        </div>
+        </nav>
     </header>
 
+    <!-- Breadcrumb Navigation -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+        <div class="container">
+            <ol>
+                <li><a href="index.html" class="lang-en active">Home</a><a href="index.html" class="lang-es">Inicio</a></li>
+                <li class="separator">/</li>
+                <li><a href="pneumology.html" class="lang-en active">Pneumology</a><a href="pneumology.html" class="lang-es">Neumología</a></li>
+                <li class="separator">/</li>
+                <li><span aria-current="page" class="lang-en active">Research & Innovation</span><span aria-current="page" class="lang-es">Investigación e Innovación</span></li>
+            </ol>
+        </div>
+    </nav>
+
     <!-- Hero Section -->
-    <section class="hero-section">
+    <section class="hero-section" id="main-content">
         <div class="hero-background"></div>
         <div class="container">
             <div class="hero-content fade-in">
@@ -1072,7 +1490,7 @@
                         <span class="lang-es">Transformar desafíos clínicos en soluciones prácticas mediante tecnología, pensamiento de diseño y desarrollo colaborativo. Cerramos la brecha entre la visión clínica y la implementación técnica.</span>
                     </p>
                     <div class="mt-4">
-                        <a href="innovation-hub.html" class="btn btn-outline">
+                        <a href="innovation-hub.html" class="btn btn-outline" onclick="trackEvent('Navigation', 'Click', 'Innovation Hub Link')">
                             <i class="fas fa-rocket"></i>
                             <span class="lang-en active">Explore Innovation Hub</span>
                             <span class="lang-es">Explorar Hub de Innovación</span>
@@ -1094,7 +1512,7 @@
                         <span class="lang-es">Avanzar en el conocimiento médico mediante ensayos clínicos rigurosos e investigación científica. Nuestros grupos de investigación se centran en traducir descubrimientos científicos en mejoras clínicamente significativas en la atención al paciente.</span>
                     </p>
                     <div class="mt-4">
-                        <a href="clinical-research.html" class="btn btn-outline">
+                        <a href="clinical-research.html" class="btn btn-outline" onclick="trackEvent('Navigation', 'Click', 'Clinical Research Link')">
                             <i class="fas fa-clipboard-check"></i>
                             <span class="lang-en active">Explore Clinical Research</span>
                             <span class="lang-es">Explorar Investigación Clínica</span>
@@ -1228,7 +1646,7 @@
                     </div>
                     
                     <div>
-                        <a href="innovation-hub.html" class="btn btn-primary">
+                        <a href="innovation-hub.html" class="btn btn-primary" onclick="trackEvent('Navigation', 'Click', 'Innovation Hub Gateway')">
                             <i class="fas fa-rocket"></i>
                             <span class="lang-en active">Visit Innovation Hub</span>
                             <span class="lang-es">Visitar Hub de Innovación</span>
@@ -1270,7 +1688,7 @@
                     </div>
                     
                     <div>
-                        <a href="clinical-research.html" class="btn btn-primary">
+                        <a href="clinical-research.html" class="btn btn-primary" onclick="trackEvent('Navigation', 'Click', 'Clinical Research Gateway')">
                             <i class="fas fa-clipboard-check"></i>
                             <span class="lang-en active">Visit Clinical Research</span>
                             <span class="lang-es">Visitar Investigación Clínica</span>
@@ -1278,17 +1696,75 @@
                     </div>
                 </div>
             </div>
-            
-            <div class="text-center mt-5 fade-in">
-                <p class="text-lead mb-4">
-                    <span class="lang-en active">Whether you're interested in technology development or clinical research collaboration, we welcome partnerships that advance respiratory care.</span>
-                    <span class="lang-es">Ya sea que estés interesado en el desarrollo de tecnología o la colaboración en investigación clínica, damos la bienvenida a asociaciones que avancen en la atención respiratoria.</span>
-                </p>
-                <a href="mailto:neumologia.huac@example.com" class="btn btn-gold">
+
+            <!-- Social Sharing -->
+            <div class="social-sharing mt-5">
+                <button class="social-btn twitter" onclick="shareOnTwitter()" aria-label="Share on Twitter">
+                    <i class="fab fa-twitter"></i>
+                </button>
+                <button class="social-btn linkedin" onclick="shareOnLinkedIn()" aria-label="Share on LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </button>
+                <button class="social-btn facebook" onclick="shareOnFacebook()" aria-label="Share on Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </button>
+                <button class="social-btn email" onclick="shareByEmail()" aria-label="Share by Email">
                     <i class="fas fa-envelope"></i>
-                    <span class="lang-en active">Contact Our Team</span>
-                    <span class="lang-es">Contactar Nuestro Equipo</span>
-                </a>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="section newsletter-section" id="newsletter">
+        <div class="container">
+            <div class="text-center">
+                <h2>
+                    <span class="lang-en active">Stay Updated</span>
+                    <span class="lang-es">Mantente Informado</span>
+                </h2>
+                <p class="text-lead mt-2 mb-5">
+                    <span class="lang-en active">Subscribe to our newsletter for the latest research updates, innovation news, and collaboration opportunities.</span>
+                    <span class="lang-es">Suscríbete a nuestro boletín para recibir las últimas actualizaciones de investigación, noticias de innovación y oportunidades de colaboración.</span>
+                </p>
+                
+                <div class="newsletter-form">
+                    <form id="newsletterForm" novalidate>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" placeholder="your.email@example.com" required 
+                                   aria-label="Email address for newsletter subscription">
+                        </div>
+                        <div class="form-group">
+                            <label class="visually-hidden" for="consent">
+                                <span class="lang-en active">I agree to receive newsletters</span>
+                                <span class="lang-es">Acepto recibir boletines</span>
+                            </label>
+                            <div>
+                                <input type="checkbox" id="consent" name="consent" required>
+                                <label for="consent" style="font-size: 0.875rem; color: var(--slate-600);">
+                                    <span class="lang-en active">I agree to receive occasional updates about research and innovation from HUAC Pneumology.</span>
+                                    <span class="lang-es">Acepto recibir actualizaciones ocasionales sobre investigación e innovación de Neumología HUAC.</span>
+                                </label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <span class="lang-en active">Subscribe</span>
+                            <span class="lang-es">Suscribirse</span>
+                        </button>
+                    </form>
+                    
+                    <div id="formSuccess" class="form-success mt-3" role="alert">
+                        <i class="fas fa-check-circle"></i>
+                        <span class="lang-en active">Thank you for subscribing! Please check your email to confirm.</span>
+                        <span class="lang-es">¡Gracias por suscribirte! Por favor, revisa tu email para confirmar.</span>
+                    </div>
+                    
+                    <div id="formError" class="form-error mt-3" role="alert">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span id="errorMessage" class="lang-en active">Something went wrong. Please try again.</span>
+                        <span id="errorMessageEs" class="lang-es">Algo salió mal. Por favor, inténtalo de nuevo.</span>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1297,14 +1773,66 @@
     <footer class="footer" id="contact">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-logo">
-                    <span class="lang-en active">Pneumology Research & Innovation</span>
-                    <span class="lang-es">Investigación e Innovación en Neumología</span>
+                <div class="footer-grid">
+                    <div class="footer-column">
+                        <div class="footer-logo">
+                            <span class="lang-en active">Pneumology Research & Innovation</span>
+                            <span class="lang-es">Investigación e Innovación en Neumología</span>
+                        </div>
+                        <p class="footer-description">
+                            <span class="lang-en active">Hospital Universitario A Coruña<br>Advancing pulmonary medicine through clinical excellence and scientific discovery</span>
+                            <span class="lang-es">Hospital Universitario A Coruña<br>Avanzando en medicina pulmonar mediante excelencia clínica y descubrimiento científico</span>
+                        </p>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h3>
+                            <span class="lang-en active">Quick Links</span>
+                            <span class="lang-es">Enlaces Rápidos</span>
+                        </h3>
+                        <ul class="footer-links">
+                            <li><a href="innovation-hub.html">
+                                <span class="lang-en active">Innovation Hub</span>
+                                <span class="lang-es">Hub de Innovación</span>
+                            </a></li>
+                            <li><a href="clinical-research.html">
+                                <span class="lang-en active">Clinical Research</span>
+                                <span class="lang-es">Investigación Clínica</span>
+                            </a></li>
+                            <li><a href="#values">
+                                <span class="lang-en active">Our Values</span>
+                                <span class="lang-es">Nuestros Valores</span>
+                            </a></li>
+                            <li><a href="#newsletter">
+                                <span class="lang-en active">Newsletter</span>
+                                <span class="lang-es">Boletín</span>
+                            </a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h3>
+                            <span class="lang-en active">Contact Us</span>
+                            <span class="lang-es">Contáctanos</span>
+                        </h3>
+                        <div class="contact-info">
+                            <p>
+                                <i class="fas fa-map-marker-alt"></i> 
+                                <span class="lang-en active">Hospital Universitario A Coruña<br>As Xubias, 84, 15006 A Coruña</span>
+                                <span class="lang-es">Hospital Universitario A Coruña<br>As Xubias, 84, 15006 A Coruña</span>
+                            </p>
+                            <p>
+                                <i class="fas fa-phone"></i> 
+                                <a href="tel:+34881111800">+34 881 111 800</a>
+                            </p>
+                            <p>
+                                <i class="fas fa-envelope"></i> 
+                                <a href="mailto:neumologia.huac@example.com">neumologia.huac@example.com</a>
+                            </p>
+                        </div>
+                    </div>
                 </div>
-                <p class="footer-description">
-                    <span class="lang-en active">Hospital Universitario A Coruña<br>Advancing pulmonary medicine through clinical excellence and scientific discovery</span>
-                    <span class="lang-es">Hospital Universitario A Coruña<br>Avanzando en medicina pulmonar mediante excelencia clínica y descubrimiento científico</span>
-                </p>
+                
                 <div class="copyright">
                     © 2024 HUAC Pneumology Department. 
                     <span class="lang-en active">All rights reserved.<br>Passionate about making every breath count.</span>
@@ -1314,36 +1842,135 @@
         </div>
     </footer>
 
+    <!-- Search Modal (Hidden by default) -->
+    <div id="searchModal" class="hidden" role="dialog" aria-modal="true" aria-label="Search dialog">
+        <div class="search-modal-content">
+            <!-- Search implementation would go here -->
+        </div>
+    </div>
+
     <script>
+        // ===== ANALYTICS & EVENT TRACKING =====
+        function trackEvent(category, action, label) {
+            // Google Analytics (if available)
+            if (typeof gtag !== 'undefined') {
+                gtag('event', action, {
+                    'event_category': category,
+                    'event_label': label,
+                    'value': 1
+                });
+            }
+            
+            // Custom tracking
+            console.log(`[Analytics] ${category} - ${action} - ${label}`);
+            
+            // Send to backend (example)
+            try {
+                fetch('/api/track', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        category: category,
+                        action: action,
+                        label: label,
+                        timestamp: new Date().toISOString(),
+                        language: currentLanguage,
+                        url: window.location.href
+                    })
+                });
+            } catch (error) {
+                // Silent fail for analytics
+            }
+        }
+
         // ===== LANGUAGE MANAGEMENT =====
         let currentLanguage = 'en';
         
         function switchLanguage(lang) {
-            currentLanguage = lang;
-            
-            // Update language switcher buttons
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            // Update HTML lang attribute
-            document.documentElement.setAttribute('data-lang', lang);
-            
-            // Show/hide language-specific content
-            document.querySelectorAll('.lang-' + lang).forEach(el => {
-                el.classList.add('active');
-                if (el.tagName === 'P' || el.tagName === 'DIV') {
-                    el.classList.add('active-block');
-                }
-            });
-            
-            document.querySelectorAll('.lang-' + (lang === 'en' ? 'es' : 'en')).forEach(el => {
-                el.classList.remove('active', 'active-block');
-            });
-            
-            // Store preference in localStorage
-            localStorage.setItem('huac_language', lang);
+            try {
+                // Show loading state
+                const btn = event.target;
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = '<span class="loading-spinner"></span>';
+                btn.classList.add('loading');
+                
+                // Disable all language buttons temporarily
+                document.querySelectorAll('.lang-btn').forEach(b => {
+                    b.disabled = true;
+                });
+                
+                if (currentLanguage === lang) return;
+                
+                currentLanguage = lang;
+                
+                // Update language switcher buttons
+                document.querySelectorAll('.lang-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                btn.classList.add('active');
+                
+                // Update HTML lang attribute
+                document.documentElement.setAttribute('data-lang', lang);
+                document.documentElement.setAttribute('lang', lang);
+                
+                // Show/hide language-specific content with fade effect
+                const allLangElements = document.querySelectorAll('[class*="lang-"]');
+                
+                // Hide current language content
+                document.querySelectorAll(`.lang-${currentLanguage === 'en' ? 'es' : 'en'}`).forEach(el => {
+                    el.style.opacity = '0';
+                    el.style.transition = 'opacity 0.3s ease';
+                    setTimeout(() => {
+                        el.classList.remove('active', 'active-block');
+                        el.style.opacity = '';
+                    }, 300);
+                });
+                
+                // Show new language content
+                setTimeout(() => {
+                    document.querySelectorAll(`.lang-${lang}`).forEach(el => {
+                        el.classList.add('active');
+                        if (el.tagName === 'P' || el.tagName === 'DIV' || el.tagName === 'SPAN') {
+                            el.classList.add('active-block');
+                        }
+                        el.style.opacity = '0';
+                        el.style.transition = 'opacity 0.3s ease';
+                        setTimeout(() => {
+                            el.style.opacity = '1';
+                        }, 10);
+                    });
+                }, 300);
+                
+                // Track language switch
+                trackEvent('Language', 'Switch', lang);
+                
+                // Store preference in localStorage
+                localStorage.setItem('huac_language', lang);
+                
+                // Re-enable buttons and restore original HTML
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                    btn.classList.remove('loading');
+                    document.querySelectorAll('.lang-btn').forEach(b => {
+                        b.disabled = false;
+                    });
+                }, 300);
+                
+            } catch (error) {
+                console.error('Language switching failed:', error);
+                showErrorMessage(
+                    currentLanguage === 'en' 
+                        ? 'Unable to switch language. Please refresh the page.'
+                        : 'No se pudo cambiar el idioma. Por favor, actualiza la página.'
+                );
+                
+                // Re-enable buttons on error
+                document.querySelectorAll('.lang-btn').forEach(b => {
+                    b.disabled = false;
+                    b.innerHTML = b.classList.contains('active') ? '<i class="fas fa-globe"></i> ' + (b.textContent.includes('EN') ? 'EN' : 'ES') : b.innerHTML;
+                    b.classList.remove('loading');
+                });
+            }
         }
         
         // ===== MOBILE NAVIGATION =====
@@ -1356,6 +1983,9 @@
             mobileNav.classList.toggle('active');
             mobileMenuToggle.setAttribute('aria-expanded', !isExpanded);
             document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+            
+            // Track menu interaction
+            trackEvent('Navigation', 'Mobile Menu', isExpanded ? 'Close' : 'Open');
         }
         
         function closeMobileMenu() {
@@ -1382,26 +2012,201 @@
                 if (targetId) {
                     const targetElement = document.getElementById(targetId);
                     if (targetElement) {
+                        const headerHeight = document.querySelector('.superior-header').offsetHeight;
+                        const targetPosition = targetElement.offsetTop - headerHeight - 20;
+                        
                         window.scrollTo({
-                            top: targetElement.offsetTop - 100,
+                            top: targetPosition,
                             behavior: 'smooth'
                         });
+                        
+                        // Update URL hash without jumping
+                        history.replaceState(null, null, `#${targetId}`);
+                        
                         closeMobileMenu();
+                        
+                        // Track scroll clicks
+                        trackEvent('Navigation', 'Scroll to Section', targetId);
                     }
                 }
             });
         });
         
         // ===== HEADER SCROLL EFFECT =====
+        let lastScrollTop = 0;
+        const header = document.querySelector('.superior-header');
+        
         window.addEventListener('scroll', () => {
-            const header = document.querySelector('.superior-header');
-            if (window.scrollY > 10) {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            // Add shadow on scroll
+            if (scrollTop > 10) {
                 header.style.boxShadow = 'var(--shadow-lg)';
                 header.style.backdropFilter = 'blur(20px)';
             } else {
                 header.style.boxShadow = 'var(--shadow-sm)';
                 header.style.backdropFilter = 'blur(20px)';
             }
+            
+            // Hide/show header on scroll (optional)
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                // Scrolling down
+                header.style.transform = 'translateY(-100%)';
+            } else {
+                // Scrolling up
+                header.style.transform = 'translateY(0)';
+            }
+            
+            lastScrollTop = scrollTop;
+        });
+        
+        // ===== NEWSLETTER FORM =====
+        const newsletterForm = document.getElementById('newsletterForm');
+        const formSuccess = document.getElementById('formSuccess');
+        const formError = document.getElementById('formError');
+        const errorMessage = document.getElementById('errorMessage');
+        const errorMessageEs = document.getElementById('errorMessageEs');
+        
+        newsletterForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const consent = document.getElementById('consent').checked;
+            
+            // Reset messages
+            formSuccess.style.display = 'none';
+            formError.style.display = 'none';
+            
+            // Simple validation
+            if (!email || !email.includes('@')) {
+                showFormError(
+                    currentLanguage === 'en' 
+                        ? 'Please enter a valid email address.'
+                        : 'Por favor, introduce una dirección de email válida.'
+                );
+                return;
+            }
+            
+            if (!consent) {
+                showFormError(
+                    currentLanguage === 'en'
+                        ? 'Please agree to receive updates.'
+                        : 'Por favor, acepta recibir actualizaciones.'
+                );
+                return;
+            }
+            
+            // Show loading state
+            const submitBtn = newsletterForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span class="loading-spinner"></span>';
+            submitBtn.disabled = true;
+            
+            try {
+                // Simulate API call (replace with actual API)
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                // Success
+                formSuccess.style.display = 'block';
+                newsletterForm.reset();
+                
+                // Track subscription
+                trackEvent('Newsletter', 'Subscribe', 'Success');
+                
+            } catch (error) {
+                showFormError(
+                    currentLanguage === 'en'
+                        ? 'Subscription failed. Please try again later.'
+                        : 'La suscripción falló. Por favor, inténtalo más tarde.'
+                );
+                trackEvent('Newsletter', 'Subscribe', 'Error');
+            } finally {
+                // Restore button
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+        
+        function showFormError(message) {
+            if (currentLanguage === 'en') {
+                errorMessage.textContent = message;
+                errorMessage.style.display = 'inline';
+                errorMessageEs.style.display = 'none';
+            } else {
+                errorMessageEs.textContent = message;
+                errorMessage.style.display = 'none';
+                errorMessageEs.style.display = 'inline';
+            }
+            formError.style.display = 'block';
+        }
+        
+        // ===== SOCIAL SHARING =====
+        function shareOnTwitter() {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent(
+                currentLanguage === 'en'
+                    ? 'Check out the Pneumology Research & Innovation platform from HUAC Hospital'
+                    : 'Echa un vistazo a la plataforma de Investigación e Innovación en Neumología del Hospital HUAC'
+            );
+            window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+            trackEvent('Social', 'Share', 'Twitter');
+        }
+        
+        function shareOnLinkedIn() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
+            trackEvent('Social', 'Share', 'LinkedIn');
+        }
+        
+        function shareOnFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+            trackEvent('Social', 'Share', 'Facebook');
+        }
+        
+        function shareByEmail() {
+            const subject = encodeURIComponent(
+                currentLanguage === 'en'
+                    ? 'Pneumology Research & Innovation Platform'
+                    : 'Plataforma de Investigación e Innovación en Neumología'
+            );
+            const body = encodeURIComponent(
+                (currentLanguage === 'en'
+                    ? 'Check out this amazing platform: '
+                    : 'Echa un vistazo a esta increíble plataforma: ') + window.location.href
+            );
+            window.location.href = `mailto:?subject=${subject}&body=${body}`;
+            trackEvent('Social', 'Share', 'Email');
+        }
+        
+        // ===== ERROR HANDLING =====
+        function showErrorMessage(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.textContent = message;
+            errorDiv.setAttribute('role', 'alert');
+            errorDiv.setAttribute('aria-live', 'assertive');
+            
+            document.body.appendChild(errorDiv);
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                errorDiv.style.animation = 'slideIn 0.3s ease reverse';
+                setTimeout(() => errorDiv.remove(), 300);
+            }, 5000);
+        }
+        
+        // Global error handler
+        window.addEventListener('error', function(e) {
+            console.error('Global error:', e.error);
+            // Don't show error messages for minor issues in production
+            if (window.location.hostname !== 'localhost') return;
+            
+            showErrorMessage(
+                currentLanguage === 'en'
+                    ? 'An error occurred. Please refresh the page.'
+                    : 'Ocurrió un error. Por favor, actualiza la página.'
+            );
         });
         
         // ===== INITIALIZATION =====
@@ -1409,31 +2214,62 @@
             // Check for saved language preference
             const savedLang = localStorage.getItem('huac_language');
             if (savedLang && (savedLang === 'en' || savedLang === 'es')) {
-                // Simulate click on the correct language button
-                const langBtn = document.querySelector(`.lang-btn:contains("${savedLang.toUpperCase()}")`);
-                if (langBtn) {
-                    langBtn.click();
-                }
-            }
-            
-            // Add scroll animations
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('fade-in');
+                currentLanguage = savedLang;
+                
+                // Update language switcher UI
+                document.querySelectorAll('.lang-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.textContent.includes(savedLang.toUpperCase())) {
+                        btn.classList.add('active');
                     }
                 });
-            }, observerOptions);
+                
+                // Set initial language content
+                document.documentElement.setAttribute('data-lang', savedLang);
+                document.documentElement.setAttribute('lang', savedLang);
+                
+                document.querySelectorAll(`.lang-${savedLang}`).forEach(el => {
+                    el.classList.add('active');
+                    if (el.tagName === 'P' || el.tagName === 'DIV' || el.tagName === 'SPAN') {
+                        el.classList.add('active-block');
+                    }
+                });
+            }
+            
+            // Add scroll animations with Intersection Observer (with fallback)
+            if ('IntersectionObserver' in window) {
+                const observerOptions = {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -50px 0px'
+                };
 
-            // Observe elements for animation
-            document.querySelectorAll('.pillar-card, .value-card, .gateway-card').forEach(el => {
-                observer.observe(el);
-            });
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('fade-in');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, observerOptions);
+
+                // Observe elements for animation
+                document.querySelectorAll('.pillar-card, .value-card, .gateway-card').forEach(el => {
+                    observer.observe(el);
+                });
+            } else {
+                // Fallback for older browsers
+                window.addEventListener('scroll', function() {
+                    const elements = document.querySelectorAll('.pillar-card, .value-card, .gateway-card');
+                    elements.forEach(el => {
+                        const position = el.getBoundingClientRect();
+                        if (position.top < window.innerHeight * 0.8) {
+                            el.classList.add('fade-in');
+                        }
+                    });
+                });
+                // Trigger initial check
+                window.dispatchEvent(new Event('scroll'));
+            }
             
             // Update active nav link on scroll
             window.addEventListener('scroll', () => {
@@ -1444,7 +2280,9 @@
                 sections.forEach(section => {
                     const sectionTop = section.offsetTop;
                     const sectionHeight = section.clientHeight;
-                    if (scrollY >= (sectionTop - 150)) {
+                    const headerHeight = document.querySelector('.superior-header').offsetHeight;
+                    
+                    if (window.scrollY >= (sectionTop - headerHeight - 100)) {
                         current = section.getAttribute('id');
                     }
                 });
@@ -1456,12 +2294,111 @@
                     }
                 });
             });
+            
+            // Initialize tracking for page view
+            trackEvent('Page', 'View', 'Landing Page');
+            
+            // Handle keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                // Escape key closes mobile menu
+                if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
+                    closeMobileMenu();
+                }
+                
+                // Tab key management for mobile menu
+                if (mobileNav.classList.contains('active')) {
+                    const focusableElements = mobileNav.querySelectorAll('a, button, [tabindex]:not([tabindex="-1"])');
+                    const firstElement = focusableElements[0];
+                    const lastElement = focusableElements[focusableElements.length - 1];
+                    
+                    if (e.key === 'Tab') {
+                        if (e.shiftKey && document.activeElement === firstElement) {
+                            e.preventDefault();
+                            lastElement.focus();
+                        } else if (!e.shiftKey && document.activeElement === lastElement) {
+                            e.preventDefault();
+                            firstElement.focus();
+                        }
+                    }
+                }
+            });
+            
+            // Add focus styles for keyboard navigation
+            document.addEventListener('keyup', (e) => {
+                if (e.key === 'Tab') {
+                    document.documentElement.classList.add('keyboard-navigation');
+                }
+            });
+            
+            document.addEventListener('mousedown', () => {
+                document.documentElement.classList.remove('keyboard-navigation');
+            });
+            
+            // Add keyboard navigation CSS
+            const style = document.createElement('style');
+            style.textContent = `
+                .keyboard-navigation :focus {
+                    outline: 3px solid var(--medical-teal) !important;
+                    outline-offset: 2px !important;
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Print button functionality
+            const printBtn = document.createElement('button');
+            printBtn.className = 'btn btn-outline hidden-print';
+            printBtn.innerHTML = '<i class="fas fa-print"></i> <span class="lang-en active">Print Page</span><span class="lang-es">Imprimir Página</span>';
+            printBtn.style.position = 'fixed';
+            printBtn.style.bottom = '20px';
+            printBtn.style.right = '20px';
+            printBtn.style.zIndex = '1000';
+            printBtn.onclick = () => window.print();
+            document.body.appendChild(printBtn);
+            
+            // Add print-specific class
+            document.body.classList.add('no-print');
         });
         
-        // Helper function to check if element contains text
-        Element.prototype.containsText = function(text) {
-            return this.textContent.includes(text);
-        };
+        // Handle page visibility for analytics
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'visible') {
+                trackEvent('Page', 'Visibility', 'Visible');
+            } else {
+                trackEvent('Page', 'Visibility', 'Hidden');
+            }
+        });
+        
+        // Handle offline/online status
+        window.addEventListener('offline', () => {
+            showErrorMessage(
+                currentLanguage === 'en'
+                    ? 'You are offline. Some features may not work.'
+                    : 'Estás sin conexión. Algunas funciones pueden no funcionar.'
+            );
+        });
+        
+        window.addEventListener('online', () => {
+            showErrorMessage(
+                currentLanguage === 'en'
+                    ? 'Connection restored.'
+                    : 'Conexión restaurada.'
+            );
+        });
+        
+        // Performance monitoring
+        if ('performance' in window) {
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    const perfData = window.performance.timing;
+                    const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
+                    
+                    if (pageLoadTime > 3000) {
+                        console.warn('Page load time is high:', pageLoadTime, 'ms');
+                        trackEvent('Performance', 'Load Time', pageLoadTime.toString());
+                    }
+                }, 0);
+            });
+        }
     </script>
 </body>
 </html>
