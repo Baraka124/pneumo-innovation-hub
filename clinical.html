@@ -4,13 +4,13 @@
   <script>try{var _l=localStorage.getItem('huac_lang');if(_l&&(_l==='en'||_l==='es'))document.documentElement.dataset.lang=_l;}catch(e){}</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-  <title>Clinical Research | neumAC R&I | Área Sanitaria de A Coruña y Cee</title>
+  <title>Research | neumAC R&I · CHUAC · INIBIC</title>
   <meta name="description" content="Clinical research at neumAC R&I conducting research across six specialised respiratory and thoracic medicine lines." />
   <link rel="canonical" href="https://neumact.org/clinical.html"/>
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="neumAC R&I"/> 
   <meta property="og:url" content="https://neumact.org/clinical.html"/>
-  <meta property="og:title" content="Clinical Research | neumAC R&I"/>
+  <meta property="og:title" content="Research | neumAC R&I"/>
   <meta property="og:description" content="Active and recruiting clinical studies across six respiratory medicine research lines at the Área Sanitaria de A Coruña y Cee."/>
   <meta property="og:image" content="https://neumact.org/og-clinical.jpg"/>
   <meta name="twitter:card" content="summary_large_image"/>
@@ -1131,6 +1131,94 @@
     .footer-bottom{border-top:1px solid rgba(255,255,255,.06);margin-top:2rem;padding-top:1.25rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;font-family:var(--ff-mono);font-size:.575rem;letter-spacing:.05em;color:rgba(255,255,255,.18);position:relative;z-index:1;}
     @media(max-width:900px){.footer-inner{flex-direction:column;align-items:flex-start;gap:1.5rem;}.footer-right{align-items:flex-start;}.footer-nav{justify-content:flex-start;}}
   </style>
+
+  <!-- neumAC Design System 2.0 — overrides for all pages -->
+  <style>
+    /* ── Design tokens: desaturated teal, sharp radii ── */
+    :root {
+      --teal:#007A7A !important;
+      --teal-2:#009090 !important;
+      --teal-lt:#E2F0F0 !important;
+      --teal-dim:rgba(0,122,122,.1) !important;
+      --accent:#007A7A !important;
+      --accent-2:#009090 !important;
+      --r-xs:2px !important;
+      --r-sm:3px !important;
+      --r-md:4px !important;
+      --r-lg:6px !important;
+      --r-xl:8px !important;
+      --navy:#07111F !important;
+      --navy-2:#0D1B2E !important;
+      --header-h:88px !important;
+    }
+
+    /* ── Buttons: kill the AI rectangle ── */
+    .btn-primary,.btn-secondary,.btn-primary-alt,.btn-ghost,
+    .btn-ghost-dark,.btn-outline,.btn-violet,.btn-cta,
+    .form-trigger-btn,.path-btn,.cta-pill,
+    button[type="submit"].btn-primary,
+    a[class*="btn-"] {
+      border-radius:3px !important;
+    }
+    .btn-primary,.btn-primary-alt,.btn-violet,.form-trigger-btn {
+      background:var(--teal) !important;
+    }
+    .btn-primary:hover,.btn-primary-alt:hover,.btn-violet:hover,.form-trigger-btn:hover {
+      background:#006666 !important;
+    }
+
+    /* ── Nav: consistent labels across all pages ── */
+    .nav a[href="clinical.html"] .en-label,
+    .nav a[href="clinical.html"] span[lang="en"]  { /* handled via JS */ }
+
+    /* ── Section headings: sentence case, no "Our" prefix ── */
+    .sec-head p.eyebrow + h2 { letter-spacing:-.02em; }
+
+    /* ── Team grid on clinical page ── */
+    #teamGrid {
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(min(100%,320px),1fr));
+      gap:1px;
+      background:var(--rule-l,rgba(0,0,0,.07));
+      border:1px solid rgba(0,0,0,.07);
+      border-radius:4px;
+      overflow:hidden;
+    }
+    .team-card-api {
+      background:#fff;
+      padding:1.5rem;
+      display:flex;align-items:flex-start;gap:1.125rem;
+    }
+    .team-card-api:hover { background:var(--teal-lt,#E2F0F0); }
+    .tca-avatar {
+      width:40px;height:40px;border-radius:3px;flex-shrink:0;
+      background:var(--teal,#007A7A);
+      display:flex;align-items:center;justify-content:center;
+      font-family:var(--ff-mono,monospace);font-size:.625rem;
+      font-weight:600;letter-spacing:.05em;color:#fff;
+    }
+    .tca-name { font-size:.9375rem;font-weight:600;color:#111;line-height:1.3;margin-bottom:.2rem; }
+    .tca-spec { font-size:.75rem;color:#6B6B6B;margin-bottom:.375rem; }
+    .tca-line {
+      display:inline-flex;align-items:center;gap:.3rem;
+      font-family:var(--ff-mono,monospace);font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;
+      padding:.2rem .5rem;border-radius:2px;
+      background:rgba(0,122,122,.08);color:var(--teal,#007A7A);border:1px solid rgba(0,122,122,.18);
+    }
+    .tca-bio { font-size:.8125rem;color:#404040;line-height:1.6;margin-top:.5rem; }
+    .tca-tags { display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.5rem; }
+    .tca-tag {
+      font-size:.625rem;padding:.15rem .4rem;border-radius:2px;
+      background:rgba(0,0,0,.04);color:#6B6B6B;border:1px solid rgba(0,0,0,.06);
+      font-family:var(--ff-mono,monospace);letter-spacing:.06em;text-transform:uppercase;
+    }
+    .tca-affil {
+      font-size:.625rem;padding:.15rem .4rem;border-radius:2px;
+      background:rgba(245,158,11,.08);color:#b45309;border:1px solid rgba(245,158,11,.2);
+      font-family:var(--ff-mono,monospace);letter-spacing:.06em;text-transform:uppercase;
+    }
+  </style>
+
 </head>
 <body>
 <script>
@@ -1157,9 +1245,9 @@
 
       <nav class="nav" aria-label="Primary navigation">
           <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
-          <a href="clinical.html" class="current" aria-current="page"><span lang="en">Clinical Research</span><span lang="es">Investigación Clínica</span></a>
-          <a href="innovation.html"><span lang="en">Innovation Hub</span><span lang="es">Centro de Innovación</span></a>
-          <a href="news.html"><span lang="en">Perspectives</span><span lang="es">Perspectivas</span></a>
+          <a href="clinical.html" class="current" aria-current="page"><span lang="en">Research</span><span lang="es">Investigación</span></a>
+          <a href="innovation.html"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
+          <a href="news.html"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
           </nav>
 
       <div class="header-right">
@@ -1222,9 +1310,9 @@
     </div>
     <div class="mob-links">
       <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
-      <a href="clinical.html" class="current" aria-current="page"><span lang="en">Clinical Research</span><span lang="es">Investigación Clínica</span></a>
-      <a href="innovation.html"><span lang="en">Innovation Hub</span><span lang="es">Centro de Innovación</span></a>
-      <a href="news.html"><span lang="en">Perspectives</span><span lang="es">Perspectivas</span></a>
+      <a href="clinical.html" class="current" aria-current="page"><span lang="en">Research</span><span lang="es">Investigación</span></a>
+      <a href="innovation.html"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
+      <a href="news.html"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
     </div>
     <div class="mob-footer">
       <a href="#contact" class="mob-cta" onclick="closeMob()"><span lang="en">Contact Us</span><span lang="es">Contáctenos</span></a>
@@ -1307,7 +1395,7 @@
     <div class="container">
       <div class="sec-head reveal">
         <p class="eyebrow"><span lang="en">Specialized Lines</span><span lang="es">Líneas Especializadas</span></p>
-        <h2 class="display lg"><span lang="en">Our Research Portfolio</span><span lang="es">Nuestro Portfolio de Investigación</span></h2>
+        <h2 class="display lg"><span lang="en">Research portfolio</span><span lang="es">Programa de investigación</span></h2>
         <p><span lang="en">Each line represents a focused area of clinical expertise with an active pipeline of investigator-initiated and sponsored studies. Expand any line to explore its scope and capabilities.</span><span lang="es">Cada línea representa un área de experiencia clínica con un pipeline activo de ensayos. Expanda para ver su alcance y capacidades.</span></p>
       </div>
 
@@ -1549,20 +1637,29 @@
     <div class="container">
       <div class="sec-head reveal">
         <p class="eyebrow"><span lang="en">Research Coordinators</span><span lang="es">Coordinadores de Investigación</span></p>
-        <h2 class="display lg"><span lang="en">Meet the Research Leads</span><span lang="es">Los Responsables de Investigación</span></h2>
+        <h2 class="display lg" style="letter-spacing:-.025em;"><span lang="en">The research leads</span><span lang="es">Los responsables</span></h2>
         <p><span lang="en">Each research line is directed by a clinician-scientist with extensive clinical study experience — your primary contact for collaboration discussions within their domain.</span><span lang="es">Cada línea está dirigida por un médico-científico con amplia experiencia en ensayos, su contacto principal para discusiones de colaboración.</span></p>
       </div>
-      <div class="team-grid">
-        <div class="team-card reveal">
-          <div class="team-avatar">PS</div>
-          <div class="team-body">
-            <div class="team-name">Dra. María Pilar Sanjuán López</div>
-            <div class="team-role"><span lang="en">Line 01 · Coordinator</span><span lang="es">Línea 01 · Coordinadora</span></div>
-            <span class="team-line-tag">Trasplante, Hipertensión y Enfermedad Difusa Pulmonar</span>
-            <p class="team-bio">Jefa de la Línea 1 de Investigación (neumACt – INIBIC). Especialista en neumología con dedicación a trasplante pulmonar, hipertensión pulmonar arterial y enfermedades pulmonares intersticiales difusas. Miembro activo de redes nacionales e internacionales de investigación en trasplante y enfermedades pulmonares avanzadas.</p>
-            <div class="team-expertise"><span class="team-tag">Lung Transplant</span><span class="team-tag">PAH</span><span class="team-tag">ILD</span></div>
+      <!-- TEAM GRID — populated by api.js loadTeam() from /api/team/website -->
+      <div id="teamGrid">
+        <!-- Skeleton while loading -->
+        <div class="team-card-api" style="opacity:.4;">
+          <div class="tca-avatar">—</div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:.375rem;">
+            <div style="height:14px;width:60%;background:rgba(0,0,0,.06);border-radius:2px;"></div>
+            <div style="height:11px;width:40%;background:rgba(0,0,0,.04);border-radius:2px;"></div>
           </div>
         </div>
+        <div class="team-card-api" style="opacity:.4;">
+          <div class="tca-avatar">—</div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:.375rem;">
+            <div style="height:14px;width:55%;background:rgba(0,0,0,.06);border-radius:2px;"></div>
+            <div style="height:11px;width:35%;background:rgba(0,0,0,.04);border-radius:2px;"></div>
+          </div>
+        </div>
+      </div>
+      <!-- End team-grid -->
+      <div class="team-card reveal" style="display:none;"><!-- legacy placeholder --><div class="team-avatar">PS</div>
         <div class="team-card reveal reveal-d1">
           <div class="team-avatar">MB</div>
           <div class="team-body">
@@ -1648,7 +1745,7 @@
     <div class="container">
       <div class="sec-head reveal">
         <p class="label"><span lang="en">Work With Us</span><span lang="es">Trabaje Con Nosotros</span></p>
-        <h2 class="display lg"><span lang="en">Research Collaboration Inquiry</span><span lang="es">Consulta de Colaboración</span></h2>
+        <h2 class="display lg"><span lang="en">Work with us</span><span lang="es">Trabaja con nosotros</span></h2>
         <p style="max-width:560px;"><span lang="en">Whether you're qualifying our site for a sponsored study, exploring investigator-initiated partnerships, or requesting a feasibility assessment — our team responds within 2 business days.</span><span lang="es">Ya sea que esté calificando nuestro sitio o explorando colaboraciones, responderemos en 2 días hábiles.</span></p>
       </div>
       <div class="contact-layout">
@@ -1676,7 +1773,7 @@
           </div>
           <div class="form-body" id="clinBody">
             <div class="form-card dark" style="margin-top:.75rem;">
-          <h3 class="display sm" style="margin-bottom:1.375rem;"><span lang="en">Send an Inquiry</span><span lang="es">Enviar una Consulta</span></h3>
+          <h3 class="display sm" style="margin-bottom:1.375rem;"><span lang="en">Send a message</span><span lang="es">Enviar un mensaje</span></h3>
           <form id="researchForm" novalidate>
             <div class="form-grid">
               <div class="form-group"><label><span lang="en">Organisation</span><span lang="es">Organización</span></label><input type="text" placeholder="Pharma Corp, University…" required /></div>
@@ -1739,9 +1836,9 @@
         </div>
         <nav class="footer-nav" aria-label="Footer navigation">
           <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
-          <a href="clinical.html"><span lang="en">Clinical Research</span><span lang="es">Investigación Clínica</span></a>
-          <a href="innovation.html"><span lang="en">Innovation Hub</span><span lang="es">Centro de Innovación</span></a>
-          <a href="news.html"><span lang="en">Perspectives</span><span lang="es">Perspectivas</span></a>
+          <a href="clinical.html"><span lang="en">Research</span><span lang="es">Investigación</span></a>
+          <a href="innovation.html"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
+          <a href="news.html"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
         </nav>
         <div class="footer-right">
           <div class="footer-contact">
