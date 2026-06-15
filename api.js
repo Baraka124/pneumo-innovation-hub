@@ -196,6 +196,19 @@ async function loadResearchLines() {
     window._researchLineMap = {};
     data.forEach(line => { window._researchLineMap[String(line.line_number)] = line.id; });
 
+    // Populate filterLine dropdown on clinical page
+    const filterLineEl = document.getElementById('filterLine');
+    if (filterLineEl && filterLineEl.options.length <= 1) {
+      data.forEach(line => {
+        const num = String(line.line_number).padStart(2, '0');
+        const shortName = line.name.split(',')[0].split('y ')[0].trim();
+        const opt = document.createElement('option');
+        opt.value = String(line.line_number);
+        opt.textContent = `${num} — ${shortName}`;
+        filterLineEl.appendChild(opt);
+      });
+    }
+
     if (clinicalList) {
       clinicalList.innerHTML = data.map(line => `
         <div class="line-card" id="line-${line.id}">
@@ -718,10 +731,12 @@ document.addEventListener('DOMContentLoaded', () => {
     case 'index':
       loadResearchLines();
       loadLiveStats();
+      loadFeaturedStories();
       initContactForm();
       break;
     case 'clinical':
       loadResearchLines();
+      loadTeam();
       initTrialFilters();
       initContactForm();
       break;
@@ -737,3 +752,97 @@ document.addEventListener('DOMContentLoaded', () => {
       break;
   }
 });
+
+// ─────────────────────────────────────────────
+// 6. HOMEPAGE STORY SECTION
+// Fetches featured posts first, fills remainder from recent public posts
+// Renders Feature (left) + Sidebar (right 4) layout
+// ─────────────────────────────────────────────
+
+async function loadFeaturedStories() {
+  const section = document.getElementById('storySection');
+  const skeleton = document.getElementById('storySkeleton');
+  if (!section) return;
+
+  try {
+    const { data } = await apiFetch('/api/news/website?limit=8');
+    const posts = data || [];
+
+    if (!posts.length) {
+      if (skeleton) skeleton.innerHTML = '<p style="color:var(--ink-3);font-size:.875rem;padding:2rem 0;">No posts available.</p>';
+      return;
+    }
+
+    // Split: first is the feature, next up to 4 are sidebar
+    const [feature, ...rest] = posts;
+    const sidebar = rest.slice(0, 4);
+
+    const typeLabel = {
+      publication: 'Publication', article: 'Article',
+      highlight: 'Highlight', update: 'Update', photo_story: 'Photo Story'
+    };
+    const typePill = {
+      publication: 'pill-pub', article: 'pill-article',
+      highlight: 'pill-highlight', update: 'pill-update', photo_story: 'pill-article'
+    };
+
+    function formatDate(d) {
+      if (!d) return '';
+      const dt = new Date(d);
+      return dt.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
+    }
+
+    // ── Main feature (left) ──────────────────
+    const hasImg = !!feature.featured_image_url;
+    const topArea = hasImg
+      ? `<div class="story-main-img">
+           <img src="${escHtml(feature.featured_image_url)}" alt="${escHtml(feature.title)}" loading="eager"/>
+         </div>`
+      : `<div class="story-main-typographic">
+           <canvas id="storyCanvas" aria-hidden="true"></canvas>
+           ${feature.journal_name ? `<div class="story-typographic-journal">${escHtml(feature.journal_name)}</div>` : ''}
+           <div class="story-typographic-title">${escHtml(feature.title)}</div>
+         </div>`;
+
+    const featureHTML = `
+      <div class="story-main">
+        ${topArea}
+        <div class="story-main-body">
+          <span class="story-type-pill ${typePill[feature.post_type] || 'pill-article'}">
+            ${typeLabel[feature.post_type] || feature.post_type}
+            ${feature.is_featured ? ' · Featured' : ''}
+          </span>
+          ${hasImg ? `<div class="story-main-title">${escHtml(feature.title)}</div>` : ''}
+          <div class="story-main-meta">
+            ${feature.author?.full_name ? `<span>${escHtml(feature.author.full_name)}</span><span class="story-meta-sep">·</span>` : ''}
+            ${feature.journal_name && !hasImg ? '' : feature.journal_name ? `<span style="color:var(--teal);font-weight:500;">${escHtml(feature.journal_name)}</span><span class="story-meta-sep">·</span>` : ''}
+            <span>${formatDate(feature.published_at)}</span>
+            ${feature.doi ? `<span class="story-meta-sep">·</span><a href="https://doi.org/${escHtml(feature.doi)}" target="_blank" rel="noopener">DOI</a>` : ''}
+          </div>
+        </div>
+      </div>`;
+
+    // ── Sidebar items (right) ────────────────
+    const sidebarHTML = `
+      <div class="story-sidebar">
+        ${sidebar.map(p => `
+          <a class="story-side-item" href="news.html" aria-label="${escHtml(p.title)}">
+            ${p.journal_name ? `<div class="story-side-journal">${escHtml(p.journal_name)}</div>` : ''}
+            <div class="story-side-title">${escHtml(p.title)}</div>
+            <div class="story-side-meta">${formatDate(p.published_at)}${p.author?.full_name ? ' · ' + escHtml(p.author.full_name) : ''}</div>
+          </a>`).join('')}
+      </div>`;
+
+    section.innerHTML = `<div class="story-layout">${featureHTML}${sidebarHTML}</div>`;
+
+    // Boot mini bronchial tree in typographic card if no image
+    if (!hasImg) {
+      const c = document.getElementById('storyCanvas');
+      if (c && window._bootMiniTree) window._bootMiniTree(c);
+    }
+
+  } catch (err) {
+    console.error('Story section load failed:', err);
+    if (skeleton) skeleton.innerHTML = '<p style="color:var(--ink-3);font-size:.875rem;padding:2rem 0;">Unable to load recent posts.</p>';
+  }
+}
