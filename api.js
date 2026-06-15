@@ -126,6 +126,7 @@ const PAGE = (() => {
   if (p.startsWith('clinical'))   return 'clinical';
   if (p.startsWith('innovation')) return 'innovation';
   if (p.startsWith('news'))       return 'news';
+  if (p.startsWith('team'))       return 'team';
   return 'index';
 })();
 
@@ -446,6 +447,57 @@ async function loadNews(filters = {}) {
 }
 
 // ─────────────────────────────────────────────
+// 5. TEAM (team.html)
+// ─────────────────────────────────────────────
+
+async function loadTeam() {
+  const grid = document.getElementById('teamGrid');
+  if (!grid) return;
+
+  setLoading(grid, 6);
+
+  try {
+    const { data } = await apiFetch('/api/team/website');
+    const members = data || [];
+
+    if (!members.length) {
+      setError(grid, 'Team information coming soon.');
+      return;
+    }
+
+    grid.innerHTML = members.map(m => {
+      const initials = m.full_name.split(' ').filter(Boolean).slice(0, 2).map(n => n[0]).join('').toUpperCase();
+      const lineTag  = m.coordinates_line
+        ? `<span class="team-line-tag">L${String(m.coordinates_line.line_number).padStart(2,'0')} — ${escHtml(m.coordinates_line.name)}</span>`
+        : '';
+      const affTag = m.is_external
+        ? `<span class="team-affil-tag">${escHtml(m.primary_dept_name || 'Affiliated')}</span>`
+        : '';
+
+      return `
+        <div class="team-card">
+          <div class="team-avatar">
+            ${m.public_photo_url
+              ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" loading="lazy">`
+              : `<span class="team-initials">${initials}</span>`}
+          </div>
+          <div class="team-body">
+            <div class="team-name">${escHtml(m.full_name)}</div>
+            ${m.specialization ? `<div class="team-spec">${escHtml(m.specialization)}</div>` : ''}
+            ${affTag}
+            ${lineTag}
+            ${m.public_bio ? `<p class="team-bio">${escHtml(m.public_bio)}</p>` : ''}
+          </div>
+        </div>`;
+    }).join('');
+
+  } catch (err) {
+    console.error('Team load failed:', err);
+    setError(grid);
+  }
+}
+
+// ─────────────────────────────────────────────
 // LIVE STATS (index.html hero panel)
 // ─────────────────────────────────────────────
 
@@ -679,6 +731,9 @@ document.addEventListener('DOMContentLoaded', () => {
       break;
     case 'news':
       loadNews();
+      break;
+    case 'team':
+      loadTeam();
       break;
   }
 });
