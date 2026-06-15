@@ -4,13 +4,13 @@
   <script>try{var _l=localStorage.getItem('huac_lang');if(_l&&(_l==='en'||_l==='es'))document.documentElement.dataset.lang=_l;}catch(e){}</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-  <title>Innovation Hub | neumAC R&I | Área Sanitaria de A Coruña y Cee</title>
-  <meta name="description" content="neumAC R&I Innovation Hub — co-developing, validating and scaling medical devices, AI diagnostic tools and digital health platforms within a clinical environment." />
+  <title>Innovation | neumAC R&I · CHUAC · INIBIC</title>
+  <meta name="description" content="neumAC R&I Innovation — co-developing, validating and scaling medical devices, AI diagnostic tools and digital health platforms within a clinical respiratory medicine environment at CHUAC." />
   <link rel="canonical" href="https://neumact.org/innovation.html"/>
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="neumAC R&I"/>
   <meta property="og:url" content="https://neumact.org/innovation.html"/>
-  <meta property="og:title" content="Innovation Hub | neumAC R&I"/>
+  <meta property="og:title" content="Innovation | neumAC R&I"/>
   <meta property="og:image" content="https://neumact.org/og-innovation.jpg"/> 
   <meta name="twitter:card" content="summary_large_image"/>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -1184,6 +1184,94 @@
     .footer-bottom{border-top:1px solid rgba(255,255,255,.06);margin-top:2rem;padding-top:1.25rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;font-family:var(--ff-mono);font-size:.575rem;letter-spacing:.05em;color:rgba(255,255,255,.18);position:relative;z-index:1;}
     @media(max-width:900px){.footer-inner{flex-direction:column;align-items:flex-start;gap:1.5rem;}.footer-right{align-items:flex-start;}.footer-nav{justify-content:flex-start;}}
   </style>
+
+  <!-- neumAC Design System 2.0 — overrides for all pages -->
+  <style>
+    /* ── Design tokens: desaturated teal, sharp radii ── */
+    :root {
+      --teal:#007A7A !important;
+      --teal-2:#009090 !important;
+      --teal-lt:#E2F0F0 !important;
+      --teal-dim:rgba(0,122,122,.1) !important;
+      --accent:#007A7A !important;
+      --accent-2:#009090 !important;
+      --r-xs:2px !important;
+      --r-sm:3px !important;
+      --r-md:4px !important;
+      --r-lg:6px !important;
+      --r-xl:8px !important;
+      --navy:#07111F !important;
+      --navy-2:#0D1B2E !important;
+      --header-h:88px !important;
+    }
+
+    /* ── Buttons: kill the AI rectangle ── */
+    .btn-primary,.btn-secondary,.btn-primary-alt,.btn-ghost,
+    .btn-ghost-dark,.btn-outline,.btn-violet,.btn-cta,
+    .form-trigger-btn,.path-btn,.cta-pill,
+    button[type="submit"].btn-primary,
+    a[class*="btn-"] {
+      border-radius:3px !important;
+    }
+    .btn-primary,.btn-primary-alt,.btn-violet,.form-trigger-btn {
+      background:var(--teal) !important;
+    }
+    .btn-primary:hover,.btn-primary-alt:hover,.btn-violet:hover,.form-trigger-btn:hover {
+      background:#006666 !important;
+    }
+
+    /* ── Nav: consistent labels across all pages ── */
+    .nav a[href="clinical.html"] .en-label,
+    .nav a[href="clinical.html"] span[lang="en"]  { /* handled via JS */ }
+
+    /* ── Section headings: sentence case, no "Our" prefix ── */
+    .sec-head p.eyebrow + h2 { letter-spacing:-.02em; }
+
+    /* ── Team grid on clinical page ── */
+    #teamGrid {
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(min(100%,320px),1fr));
+      gap:1px;
+      background:var(--rule-l,rgba(0,0,0,.07));
+      border:1px solid rgba(0,0,0,.07);
+      border-radius:4px;
+      overflow:hidden;
+    }
+    .team-card-api {
+      background:#fff;
+      padding:1.5rem;
+      display:flex;align-items:flex-start;gap:1.125rem;
+    }
+    .team-card-api:hover { background:var(--teal-lt,#E2F0F0); }
+    .tca-avatar {
+      width:40px;height:40px;border-radius:3px;flex-shrink:0;
+      background:var(--teal,#007A7A);
+      display:flex;align-items:center;justify-content:center;
+      font-family:var(--ff-mono,monospace);font-size:.625rem;
+      font-weight:600;letter-spacing:.05em;color:#fff;
+    }
+    .tca-name { font-size:.9375rem;font-weight:600;color:#111;line-height:1.3;margin-bottom:.2rem; }
+    .tca-spec { font-size:.75rem;color:#6B6B6B;margin-bottom:.375rem; }
+    .tca-line {
+      display:inline-flex;align-items:center;gap:.3rem;
+      font-family:var(--ff-mono,monospace);font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;
+      padding:.2rem .5rem;border-radius:2px;
+      background:rgba(0,122,122,.08);color:var(--teal,#007A7A);border:1px solid rgba(0,122,122,.18);
+    }
+    .tca-bio { font-size:.8125rem;color:#404040;line-height:1.6;margin-top:.5rem; }
+    .tca-tags { display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.5rem; }
+    .tca-tag {
+      font-size:.625rem;padding:.15rem .4rem;border-radius:2px;
+      background:rgba(0,0,0,.04);color:#6B6B6B;border:1px solid rgba(0,0,0,.06);
+      font-family:var(--ff-mono,monospace);letter-spacing:.06em;text-transform:uppercase;
+    }
+    .tca-affil {
+      font-size:.625rem;padding:.15rem .4rem;border-radius:2px;
+      background:rgba(245,158,11,.08);color:#b45309;border:1px solid rgba(245,158,11,.2);
+      font-family:var(--ff-mono,monospace);letter-spacing:.06em;text-transform:uppercase;
+    }
+  </style>
+
 </head>
 <body>
 <script>
@@ -1210,9 +1298,9 @@
 
       <nav class="nav" aria-label="Primary navigation">
           <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
-          <a href="clinical.html"><span lang="en">Clinical Research</span><span lang="es">Investigación Clínica</span></a>
-          <a href="innovation.html" class="current" aria-current="page"><span lang="en">Innovation Hub</span><span lang="es">Centro de Innovación</span></a>
-          <a href="news.html"><span lang="en">Perspectives</span><span lang="es">Perspectivas</span></a>
+          <a href="clinical.html"><span lang="en">Research</span><span lang="es">Investigación</span></a>
+          <a href="innovation.html" class="current" aria-current="page"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
+          <a href="news.html"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
           </nav>
 
       <div class="header-right">
@@ -1275,9 +1363,9 @@
     </div>
     <div class="mob-links">
       <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
-      <a href="clinical.html"><span lang="en">Clinical Research</span><span lang="es">Investigación Clínica</span></a>
-      <a href="innovation.html" class="current" aria-current="page"><span lang="en">Innovation Hub</span><span lang="es">Centro de Innovación</span></a>
-      <a href="news.html"><span lang="en">Perspectives</span><span lang="es">Perspectivas</span></a>
+      <a href="clinical.html"><span lang="en">Research</span><span lang="es">Investigación</span></a>
+      <a href="innovation.html" class="current" aria-current="page"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
+      <a href="news.html"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
     </div>
     <div class="mob-footer">
       <a href="#contact" class="mob-cta" onclick="closeMob()"><span lang="en">Contact Us</span><span lang="es">Contáctenos</span></a>
@@ -1340,7 +1428,7 @@
     <div class="container">
       <div class="sec-head reveal">
         <p class="label"><span lang="en">Structured Approach</span><span lang="es">Enfoque Estructurado</span></p>
-        <h2 class="display lg"><span lang="en">Our Innovation Framework</span><span lang="es">Nuestro Marco de Innovación</span></h2>
+        <h2 class="display lg"><span lang="en">How we work</span><span lang="es">Cómo trabajamos</span></h2>
         <p><span lang="en">A proven four-phase methodology that transforms clinical challenges into market-ready solutions — with the hospital as the development and validation stage.</span><span lang="es">Una metodología de cuatro fases probada que transforma desafíos clínicos en soluciones listas para el mercado.</span></p>
       </div>
 
@@ -1406,7 +1494,7 @@
     <div class="container">
       <div class="sec-head reveal">
         <p class="label"><span lang="en">Open Collaborations</span><span lang="es">Colaboraciones Abiertas</span></p>
-        <h2 class="display lg"><span lang="en">Active Development Projects</span><span lang="es">Proyectos de Desarrollo Activos</span></h2>
+        <h2 class="display lg"><span lang="en">Active projects</span><span lang="es">Proyectos activos</span></h2>
         <p style="max-width:600px;"><span lang="en">Ongoing initiatives where external partners can contribute technical expertise, co-invest, or provide scale-up capabilities. Current open projects include AIRWAYSCOPE (explainable AI / RAG platform for treatable traits) and CBI-EPOC (corticosteroid burden index platform). Contact us to explore entry points.</span><span lang="es">Iniciativas en curso donde socios externos pueden contribuir experiencia técnica, co-invertir o proporcionar capacidades de escalado. Proyectos abiertos actuales: AIRWAYSCOPE (plataforma IA explicable / RAG para rasgos tratables) y CBI-EPOC (índice de carga corticoidea). Contáctenos para explorar puntos de entrada.</span></p>
       </div>
 
@@ -1429,7 +1517,7 @@
     <div class="container">
       <div class="sec-head reveal">
         <p class="label"><span lang="en">What We Bring</span><span lang="es">Lo Que Aportamos</span></p>
-        <h2 class="display lg"><span lang="en">Our Innovation Capabilities</span><span lang="es">Nuestras Capacidades de Innovación</span></h2>
+        <h2 class="display lg"><span lang="en">What we bring</span><span lang="es">Qué aportamos</span></h2>
         <p><span lang="en">The assets and expertise that make neumAC R&amp;I a high-value clinical innovation partner — beyond a simple trial site.</span><span lang="es">Los activos y experiencia que hacen de neumAC R&amp;I un socio de innovación clínica de alto valor.</span></p>
       </div>
       <div class="cap-grid">
@@ -1553,7 +1641,7 @@
     <div class="container partner-inner">
       <div class="sec-head reveal">
         <p class="label"><span lang="en">How We Work Together</span><span lang="es">Cómo Trabajamos Juntos</span></p>
-        <h2 class="display lg"><span lang="en">Flexible Partnership Models</span><span lang="es">Modelos de Colaboración Flexibles</span></h2>
+        <h2 class="display lg"><span lang="en">Partnership models</span><span lang="es">Modelos de colaboración</span></h2>
         <p><span lang="en">We adapt to your project stage and strategic goals. All models are built around shared value creation and clear IP arrangements agreed upfront.</span><span lang="es">Nos adaptamos a la etapa de su proyecto con acuerdos de PI claros desde el inicio.</span></p>
       </div>
       <div class="partner-models">
@@ -1581,7 +1669,7 @@
     <div class="container">
       <div class="sec-head reveal">
         <p class="label"><span lang="en">Contact</span><span lang="es">Contáctenos</span></p>
-        <h2 class="display lg"><span lang="en">Start a Partnership</span><span lang="es">Iniciar una Colaboración</span></h2>
+        <h2 class="display lg"><span lang="en">Work with us</span><span lang="es">Trabaja con nosotros</span></h2>
         <p style="max-width:540px;"><span lang="en">Whether you have a specific project proposal or are simply exploring what's possible — our innovation team responds within 2 business days.</span><span lang="es">Ya sea que tenga una propuesta específica o esté explorando posibilidades, nuestro equipo le responderá en el plazo de dos días hábiles.</span></p>
       </div>
       <div class="contact-layout">
@@ -1609,7 +1697,7 @@
           </div>
           <div class="form-body" id="innovBody">
             <div class="form-card dark" style="margin-top:.75rem;">
-          <h3 class="display sm" style="margin-bottom:1.375rem;"><span lang="en">Send a Project Proposal</span><span lang="es">Enviar una Propuesta de Proyecto</span></h3>
+          <h3 class="display sm" style="margin-bottom:1.375rem;"><span lang="en">Send a proposal</span><span lang="es">Enviar una propuesta</span></h3>
           <form id="innovForm" novalidate>
             <div class="form-grid">
               <div class="form-group"><label><span lang="en">Organisation</span><span lang="es">Organización</span></label><input type="text" placeholder="Company / Institution" required /></div>
@@ -1670,9 +1758,9 @@
         </div>
         <nav class="footer-nav" aria-label="Footer navigation">
           <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
-          <a href="clinical.html"><span lang="en">Clinical Research</span><span lang="es">Investigación Clínica</span></a>
-          <a href="innovation.html"><span lang="en">Innovation Hub</span><span lang="es">Centro de Innovación</span></a>
-          <a href="news.html"><span lang="en">Perspectives</span><span lang="es">Perspectivas</span></a>
+          <a href="clinical.html"><span lang="en">Research</span><span lang="es">Investigación</span></a>
+          <a href="innovation.html"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
+          <a href="news.html"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
         </nav>
         <div class="footer-right">
           <div class="footer-contact">
