@@ -161,26 +161,21 @@ async function loadResearchLines() {
 
       indexGrid.innerHTML = data.map((line, i) => {
         const num = String(line.line_number).padStart(2, '0');
-        const isNew = line.is_new || false;
-        const numCell = isNew
-          ? `<div class="line-num" style="display:flex;flex-direction:column;gap:4px;align-items:flex-start;">
-               <span class="lt-new" style="font-size:.5rem;padding:.15rem .4rem;">
-                 <span lang="en">New</span><span lang="es">Nueva</span>
-               </span>
-             </div>`
-          : `<div class="line-num">${num}</div>`;
-
+        const displayName = line.short_name || line.name;
+        const trialBadge = line.active_trials > 0
+          ? `<span class="line-tag">${line.active_trials} active</span>` : '';
         return `
           <a href="clinical.html#research-lines" class="line-card">
-            ${numCell}
+            <div class="line-num">${num}</div>
             <div class="line-body">
-              <div class="line-title">${escHtml(line.name)}</div>
+              <div class="line-title">${escHtml(displayName)}</div>
               ${line.coordinator?.full_name
-                ? `<div class="line-coord-new">${escHtml(line.coordinator.full_name)}</div>`
+                ? `<div class="line-coord">${escHtml(line.coordinator.full_name)}</div>`
                 : ''}
+              ${trialBadge ? `<div class="line-meta">${trialBadge}</div>` : ''}
             </div>
-            <div class="line-arrow-new">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:10px;height:10px;">
+            <div class="line-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px;">
                 <path d="M5 12h14M12 5l7 7-7 7"/>
               </svg>
             </div>
@@ -463,69 +458,288 @@ async function loadNews(filters = {}) {
 // 5. TEAM (team.html)
 // ─────────────────────────────────────────────
 
+// ─────────────────────────────────────────────
+// TEAM PAGE — two targeted functions
+// ─────────────────────────────────────────────
+
+const EXPERTISE_MAP = {
+  '04c82d53': ['Lung Transplant','PAH','ILD / IPF','CLAD'],
+  '09ed9240': ['Severe Asthma','COPD','Biologics','Bronchiectasis','CF'],
+  '97c8ee3f': ['EBUS-TBNA','Lung Cancer','Cryobiopsy','Bronchoscopy'],
+  'e1cbfedb': ['NIV','Critical Care','Sleep Medicine','Home O₂'],
+  '5d329d71': ['VATS','RATS','Thoracic Oncology','ERATS'],
+  'c290a7e5': ['Precision Medicine','AI / Digital Health','Rare Diseases','AAT'],
+};
+function _getExpertise(id) {
+  const prefix = (id||'').replace(/-/g,'').slice(0,8);
+  return EXPERTISE_MAP[prefix] || [];
+}
+
+async function loadTeamLeads() {
+  const grid = document.getElementById('leadsGrid');
+  if (!grid) return;
+  try {
+    const { data } = await apiFetch('/api/team/website');
+    const leads = (data||[]).filter(m => m.coordinates_line)
+      .sort((a,b) => (a.coordinates_line?.line_number||99) - (b.coordinates_line?.line_number||99));
+    if (!leads.length) { grid.innerHTML = '<p class="state-empty">Research lead profiles coming soon.</p>'; return; }
+    grid.innerHTML = leads.map((m,i) => {
+      const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
+      const lineNum = m.coordinates_line?.line_number ? String(m.coordinates_line.line_number).padStart(2,'0') : '';
+      const lineName = m.coordinates_line?.name || '';
+      const expertise = _getExpertise(m.id);
+      const isAffiliated = m.is_external;
+      const avatarArea = m.public_photo_url
+        ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:100%;height:100%;object-fit:cover;"/>`
+        : `<span class="lead-initials">${initials}</span>`;
+      const pills = [
+        lineNum ? `<span class="lead-line-num">L${lineNum}</span>` : '',
+        lineName ? `<span class="lead-line-pill">${escHtml(lineName)}</span>` : '',
+        isAffiliated ? `<span class="lead-affil-pill">${escHtml(m.primary_dept_name||'Affiliated')}</span>` : '',
+      ].filter(Boolean).join('');
+      const tags = expertise.map(t=>`<span class="lead-tag">${escHtml(t)}</span>`).join('');
+      const piTag = m.can_be_pi ? `<span class="lead-tag pi"><span lang="en">Principal Investigator</span><span lang="es">IP</span></span>` : '';
+
+      // Contextual live signals — not a duplicate of other pages, just counts + one highlight
+      const trialSignal = m.recruiting_trials > 0
+        ? `<div class="lead-signal lead-signal--recruiting">
+             <span class="ls-dot"></span>
+             <span lang="en">${m.recruiting_trials} recruiting ${m.recruiting_trials === 1 ? 'study' : 'studies'}</span>
+             <span lang="es">${m.recruiting_trials} ${m.recruiting_trials === 1 ? 'estudio' : 'estudios'} en reclutamiento</span>
+             <a href="clinical.html" class="ls-link">
+               <span lang="en">View trials</span><span lang="es">Ver ensayos</span> →
+             </a>
+           </div>`
+        : m.active_trials > 0
+          ? `<div class="lead-signal lead-signal--active">
+               <span class="ls-dot"></span>
+               <span lang="en">${m.active_trials} active ${m.active_trials === 1 ? 'study' : 'studies'}</span>
+               <span lang="es">${m.active_trials} ${m.active_trials === 1 ? 'estudio' : 'estudios'} activo${m.active_trials === 1 ? '' : 's'}</span>
+             </div>`
+          : '';
+
+      const partnerSignal = m.seeking_partner
+        ? `<div class="lead-signal lead-signal--partner">
+             <span class="ls-dot"></span>
+             <span lang="en">Seeking innovation partner</span>
+             <span lang="es">Buscando socio innovador</span>
+             <a href="innovation.html" class="ls-link">
+               <span lang="en">View projects</span><span lang="es">Ver proyectos</span> →
+             </a>
+           </div>`
+        : '';
+
+      const pubSignal = m.latest_pub
+        ? `<div class="lead-pub">
+             <span class="lp-journal">${escHtml(m.latest_pub.journal)} ${m.latest_pub.year || ''}</span>
+             <span class="lp-title">${escHtml(m.latest_pub.title)}</span>
+             ${m.latest_pub.doi
+               ? `<a href="https://doi.org/${escHtml(m.latest_pub.doi)}" target="_blank" rel="noopener" class="lp-doi">DOI →</a>`
+               : `<a href="news.html" class="lp-doi"><span lang="en">All publications</span><span lang="es">Publicaciones</span> →</a>`}
+           </div>`
+        : '';
+      const delayClass = i > 0 ? ` reveal-d${Math.min(i,3)}` : '';
+      return `<div class="lead-row reveal${delayClass}">
+        <div class="lead-visual">
+          <div class="lead-avatar" data-line="L${lineNum}" aria-hidden="true">${avatarArea}</div>
+          ${pills ? `<div style="display:flex;flex-wrap:wrap;gap:.375rem;">${pills}</div>` : ''}
+        </div>
+        <div class="lead-copy">
+          <div class="lead-name">${escHtml(m.display_name || m.full_name)}</div>
+          ${m.specialization ? `<div class="lead-spec">${escHtml(m.specialization)}${isAffiliated?' · '+escHtml(m.primary_dept_name||'External'):' · Neumología, CHUAC'}</div>` : ''}
+          ${lineName ? `<div class="lead-line-name">${escHtml(lineName)}</div>` : ''}
+          ${m.public_bio ? `<p class="lead-bio">${escHtml(m.public_bio)}</p>` : ''}
+          ${(trialSignal || partnerSignal || pubSignal) ? `
+            <div class="lead-context">
+              ${trialSignal}
+              ${partnerSignal}
+              ${pubSignal}
+            </div>` : ''}
+          ${(tags||piTag) ? `<div class="lead-tags">${piTag}${tags}</div>` : ''}
+        </div>
+      </div>`;
+    }).join('');
+    if (window._revealObserver) grid.querySelectorAll('.reveal').forEach(el=>window._revealObserver.observe(el));
+  } catch(err) { console.error('Leads load failed:',err); grid.innerHTML='<p class="state-empty">Unable to load team profiles.</p>'; }
+}
+
+async function loadTeamGroup() {
+  const grid = document.getElementById('teamGroup');
+  if (!grid) return;
+  try {
+    const { data } = await apiFetch('/api/team/website');
+    const group = (data||[]).filter(m => !m.coordinates_line);
+    if (!group.length) { grid.style.display='none'; return; }
+    const roleLabel = { attending_physician:'Attending Physician', medical_resident:'Resident', fellow:'Fellow', nurse_practitioner:'Nurse Practitioner', studies_coordinator:'Studies Coordinator', data_manager:'Data Manager', labtech:'Lab Technician', biomedical_engineer:'Biomedical Engineer', administrator:'Administrator' };
+    grid.innerHTML = group.map(m => {
+      const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
+      const role = roleLabel[m.staff_type] || m.staff_type;
+      return `<div class="team-member">
+        <div class="tm-avatar">${m.public_photo_url ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:36px;height:36px;object-fit:cover;border-radius:2px;"/>` : initials}</div>
+        <div style="min-width:0;">
+          <div class="tm-name">${escHtml(m.display_name || m.full_name)}</div>
+          <div class="tm-role">${escHtml(role)}</div>
+          ${m.specialization ? `<div class="tm-spec">${escHtml(m.specialization)}</div>` : ''}
+        </div>
+      </div>`;
+    }).join('');
+  } catch(err) { console.error('Team group load failed:',err); }
+}
+
+// Legacy loadTeam() — used by clinical.html #teamGrid
 async function loadTeam() {
+  if (PAGE === 'team') return;
   const grid = document.getElementById('teamGrid');
   if (!grid) return;
-
-  setLoading(grid, 6);
-
   try {
     const { data } = await apiFetch('/api/team/website');
     const members = data || [];
-
-    if (!members.length) {
-      setError(grid, 'Team information coming soon.');
-      return;
-    }
-
+    if (!members.length) { grid.innerHTML='<p style="padding:2rem;color:#6B6B6B;font-size:.875rem;">Team information coming soon.</p>'; return; }
     grid.innerHTML = members.map(m => {
-      const initials = m.full_name.split(' ').filter(Boolean).slice(0, 2).map(n => n[0]).join('').toUpperCase();
-      const lineTag  = m.coordinates_line
-        ? `<span class="team-line-tag">L${String(m.coordinates_line.line_number).padStart(2,'0')} — ${escHtml(m.coordinates_line.name)}</span>`
-        : '';
-      const affTag = m.is_external
-        ? `<span class="team-affil-tag">${escHtml(m.primary_dept_name || 'Affiliated')}</span>`
-        : '';
+      const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
+      const lineTag = m.coordinates_line ? `<span class="tca-line">L${String(m.coordinates_line.line_number).padStart(2,'0')} — ${escHtml(m.coordinates_line.name)}</span>` : '';
+      const affiliTag = m.is_external ? `<span class="tca-affil">${escHtml(m.primary_dept_name||'Affiliated')}</span>` : '';
+      return `<div class="team-card-api">
+        <div class="tca-avatar">${m.public_photo_url ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:40px;height:40px;object-fit:cover;border-radius:3px;">` : initials}</div>
+        <div style="flex:1;min-width:0;">
+          <div class="tca-name">${escHtml(m.display_name || m.full_name)}</div>
+          ${m.specialization ? `<div class="tca-spec">${escHtml(m.specialization)}</div>` : ''}
+          <div style="display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.375rem;">${lineTag}${affiliTag}</div>
+          ${m.public_bio ? `<p class="tca-bio">${escHtml(m.public_bio)}</p>` : ''}
+        </div>
+      </div>`;
+    }).join('');
+  } catch(err) { console.error('Team load failed:',err); grid.innerHTML='<p style="padding:2rem;color:#6B6B6B;">Unable to load team information.</p>'; }
+}
 
+// ─────────────────────────────────────────────
+// 7. TEAM PAGE — PUBLICATION STRIP
+// Horizontal scrolling journal index.
+// NOT a duplicate of news.html — no body text.
+// ─────────────────────────────────────────────
+
+async function loadPublicationStrip() {
+  const inner = document.getElementById('pubStripInner');
+  const countEl = document.getElementById('pubCount');
+  if (!inner) return;
+
+  try {
+    const { data } = await apiFetch('/api/news/website?type=publication&limit=30');
+    const pubs = (data || []).filter(p => p.journal_name);
+
+    if (!pubs.length) { inner.innerHTML = '<div class="pub-card" style="color:rgba(255,255,255,.4);font-size:.875rem;padding:2rem;">No publications available.</div>'; return; }
+
+    inner.innerHTML = pubs.map(p => {
+      const year = p.published_at ? new Date(p.published_at).getFullYear() : '';
+      const authorLine = p.authors_text ? p.authors_text.split(';')[0].trim() + (p.authors_text.includes(';') ? ' et al.' : '') : (p.author?.full_name || '');
       return `
-        <div class="team-card">
-          <div class="team-avatar">
-            ${m.public_photo_url
-              ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" loading="lazy">`
-              : `<span class="team-initials">${initials}</span>`}
+        <div class="pub-card">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:.5rem;">
+            <span class="pub-journal">${escHtml(p.journal_name)}</span>
+            <span class="pub-year">${year}</span>
           </div>
-          <div class="team-body">
-            <div class="team-name">${escHtml(m.full_name)}</div>
-            ${m.specialization ? `<div class="team-spec">${escHtml(m.specialization)}</div>` : ''}
-            ${affTag}
-            ${lineTag}
-            ${m.public_bio ? `<p class="team-bio">${escHtml(m.public_bio)}</p>` : ''}
-          </div>
+          <div class="pub-title">${escHtml(p.title)}</div>
+          ${authorLine ? `<div class="pub-authors">${escHtml(authorLine)}</div>` : ''}
+          ${p.doi
+            ? `<a href="https://doi.org/${escHtml(p.doi)}" target="_blank" rel="noopener" class="pub-doi-link">DOI →</a>`
+            : `<a href="news.html" class="pub-doi-link"><span lang="en">View</span><span lang="es">Ver</span> →</a>`}
         </div>`;
     }).join('');
 
+    if (countEl) countEl.textContent = `${pubs.length} publications`;
+
+    // Scroll controls
+    const scroll = document.getElementById('pubScroll');
+    const prev = document.getElementById('pubPrev');
+    const next = document.getElementById('pubNext');
+    const STEP = 280;
+    if (prev) prev.addEventListener('click', () => scroll.scrollBy({left:-STEP,behavior:'smooth'}));
+    if (next) next.addEventListener('click', () => scroll.scrollBy({left: STEP,behavior:'smooth'}));
+
   } catch (err) {
-    console.error('Team load failed:', err);
-    setError(grid);
+    console.error('Publication strip failed:', err);
   }
 }
 
 // ─────────────────────────────────────────────
-// LIVE STATS (index.html hero panel)
+// 8. TEAM PAGE — OPEN OPPORTUNITIES
+// Recruiting trials + innovation projects seeking partners.
+// Unique content — not shown elsewhere.
 // ─────────────────────────────────────────────
+
+async function loadOpportunities() {
+  const grid = document.getElementById('oppsGrid');
+  const section = document.getElementById('opportunities');
+  if (!grid) return;
+
+  try {
+    const [trialsRes, projectsRes] = await Promise.all([
+      apiFetch('/api/clinical-trials/website'),
+      apiFetch('/api/innovation-projects/website'),
+    ]);
+
+    const recruiting = (trialsRes.data || []).filter(t =>
+      ['Reclutando','Recruiting'].includes(t.status)
+    );
+    const seekingProjects = (projectsRes.data || []).filter(p =>
+      p.funding_status === 'seeking'
+    );
+
+    if (!recruiting.length && !seekingProjects.length) return; // keep section hidden
+
+    if (section) section.style.display = '';
+
+    const trialCards = recruiting.slice(0, 4).map(t => `
+      <div class="opp-card">
+        <span class="opp-type opp-type--trial">${escHtml(t.phase || 'Clinical Study')} · <span lang="en">Recruiting</span><span lang="es">Reclutando</span></span>
+        <div class="opp-title">${escHtml(t.title || t.study_id || '—')}</div>
+        <div class="opp-meta">${t.sponsor ? escHtml(t.sponsor) : ''}</div>
+        <a href="clinical.html" class="opp-link">
+          <span lang="en">View study</span><span lang="es">Ver estudio</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:10px;height:10px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>`).join('');
+
+    const projCards = seekingProjects.slice(0, 2).map(p => `
+      <div class="opp-card">
+        <span class="opp-type opp-type--inno"><span lang="en">Innovation · Seeking partner</span><span lang="es">Innovación · Buscando socio</span></span>
+        <div class="opp-title">${escHtml(p.title || '—')}</div>
+        <div class="opp-meta">${p.current_stage ? escHtml(p.current_stage.charAt(0).toUpperCase() + p.current_stage.slice(1)) : ''}</div>
+        <a href="innovation.html" class="opp-link">
+          <span lang="en">View project</span><span lang="es">Ver proyecto</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:10px;height:10px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>`).join('');
+
+    grid.innerHTML = trialCards + projCards;
+
+  } catch (err) {
+    console.error('Opportunities load failed:', err);
+  }
+}
 
 async function loadLiveStats() {
   if (PAGE !== 'index') return;
   try {
     const linesRes = await apiFetch('/api/research-lines/website');
     const lineCount = linesRes.data?.length || 0;
-    if (lineCount > 0) _setStat('statLines', lineCount);
+    if (lineCount > 0) {
+      _setStat('statLines', lineCount);
+      // Sum active trials across all lines
+      const totalActive = linesRes.data.reduce((sum, l) => sum + (l.active_trials || 0), 0);
+      if (totalActive > 0) {
+        _setStat('statTrials', totalActive + '+');
+        _setStat('statTrials2', totalActive + '+');
+      }
+    }
 
+    // Team count from website endpoint
     try {
-      const trialsRes = await apiFetch('/api/clinical-trials/website');
-      const trialCount = trialsRes.data?.length || 0;
-      if (trialCount > 0) _setStat('statTrials', trialCount + '+');
+      const teamRes = await apiFetch('/api/team/website');
+      const memberCount = teamRes.data?.length || 0;
+      if (memberCount > 0) _setStat('statMembers', memberCount);
     } catch { /* keep static fallback */ }
+
   } catch (err) {
     console.warn('Live stats not available:', err.message);
   }
@@ -748,7 +962,10 @@ document.addEventListener('DOMContentLoaded', () => {
       loadNews();
       break;
     case 'team':
-      loadTeam();
+      loadTeamLeads();
+      loadTeamGroup();
+      loadPublicationStrip();
+      loadOpportunities();
       break;
   }
 });
