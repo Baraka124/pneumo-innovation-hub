@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+  <script>try{var _l=localStorage.getItem('huac_lang');if(_l&&(_l==='en'||_l==='es'))document.documentElement.dataset.lang=_l;}catch(e){}</script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0"/>
+  <title>Team | neumAC R&I · CHUAC · INIBIC</title>
+  <meta name="description" content="23 clinician-investigators across six specialist research lines in respiratory medicine at CHUAC. Part of INIBIC and the SERGAS network."/>
+  <link rel="canonical" href="https://neumact.org/team.html"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="neumAC R&I"/>
+  <meta property="og:title" content="The Team | neumAC R&I"/>
+  <meta property="og:description" content="23 clinician-investigators. Six specialist research lines. Respiratory medicine at CHUAC, INIBIC, SERGAS."/>
+  <meta property="og:image" content="https://neumact.org/og-home.jpg"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    /* ══ DESIGN SYSTEM — identical to index.html ══ */
+    :root{
+      --navy:#07111F; --navy-2:#0D1B2E; --navy-3:#132240;
+      --teal:#007A7A; --teal-lt:#E2F0F0; --teal-mid:rgba(0,122,122,.12);
+      --white:#FFFFFF; --surface:#F7F6F3;
+      --border-l:rgba(0,0,0,.06); --border-d:rgba(255,255,255,.08);
+      --ink:#111111; --ink-2:#3A3A3A; --ink-3:#6B6B6B; --ink-4:#9B9B9B;
+      --accent:var(--teal);
+      --ff-display:'Fraunces',Georgia,serif;
+      --ff-body:'DM Sans',system-ui,sans-serif;
+      --ff-mono:'DM Mono','Courier New',monospace;
+      --hdr:88px; --max:1380px; --pad:clamp(1.25rem,4vw,3rem);
+      --r-xs:2px; --r-sm:3px; --r-md:4px; --r-lg:6px;
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;font-size:16px;}
+    body{font-family:var(--ff-body);background:var(--white);color:var(--ink);
+      line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased;
+      padding-top:var(--hdr);}
+    ::selection{background:var(--teal-lt);color:var(--ink);}
+    #pb{position:fixed;top:0;left:0;height:1.5px;width:0;background:var(--teal);z-index:3000;transition:width .08s linear;pointer-events:none;}
+
+    /* ══ HEADER — identical to index.html ══ */
+    .hdr{position:fixed;top:0;left:0;right:0;height:var(--hdr);background:rgba(7,17,31,.97);border-bottom:1px solid var(--border-d);z-index:900;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:background .2s,border-color .2s;}
+    .hdr.light{background:rgba(255,255,255,.97);border-bottom:1px solid var(--border-l);}
+    .hdr-inner{display:flex;align-items:center;height:100%;max-width:var(--max);margin:0 auto;padding:0 var(--pad);}
+    .hdr-logo{display:flex;align-items:center;gap:.75rem;text-decoration:none;flex-shrink:0;margin-right:2.5rem;}
+    .hdr-logo-mark{width:32px;height:32px;border-radius:var(--r-sm);background:var(--teal);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .hdr-logo-mark svg{width:18px;height:18px;stroke:white;fill:none;stroke-width:2;stroke-linecap:round;}
+    .hdr-logo-name{font-size:.9375rem;font-weight:600;color:#fff;letter-spacing:-.01em;line-height:1;}
+    .hdr-logo-sub{font-family:var(--ff-mono);font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);line-height:1.3;margin-top:2px;}
+    .hdr.light .hdr-logo-name{color:var(--ink);} .hdr.light .hdr-logo-sub{color:var(--ink-3);}
+    .hdr-nav{display:flex;align-items:center;flex:1;min-width:0;}
+    .hdr-nav a{padding:.5rem .875rem;font-size:.8125rem;font-weight:400;color:rgba(255,255,255,.62);text-decoration:none;white-space:nowrap;transition:color .15s;border-bottom:1.5px solid transparent;}
+    .hdr-nav a:hover{color:rgba(255,255,255,.92);} .hdr-nav a.current{color:white;border-bottom-color:var(--teal);}
+    .hdr.light .hdr-nav a{color:var(--ink-3);} .hdr.light .hdr-nav a:hover{color:var(--ink);} .hdr.light .hdr-nav a.current{color:var(--ink);border-bottom-color:var(--teal);}
+    .hdr-right{display:flex;align-items:center;gap:.75rem;margin-left:auto;flex-shrink:0;}
+    .btn-cta{display:inline-flex;align-items:center;gap:.4rem;padding:.5rem 1rem;font-size:.75rem;font-weight:600;letter-spacing:.02em;background:var(--teal);color:#fff;border:none;border-radius:var(--r-sm);cursor:pointer;text-decoration:none;white-space:nowrap;transition:background .15s;}
+    .btn-cta:hover{background:#006666;}
+    .btn-cta.outline{background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.8);}
+    .btn-cta.outline:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.4);color:#fff;}
+    .hdr.light .btn-cta.outline{border-color:var(--border-l);color:var(--ink-2);} .hdr.light .btn-cta.outline:hover{background:var(--surface);color:var(--ink);}
+    .lang-sw{position:relative;}
+    .lang-btn{display:flex;align-items:center;gap:.3rem;padding:.4rem .6rem;border-radius:var(--r-sm);font-family:var(--ff-mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);background:transparent;border:1px solid rgba(255,255,255,.12);cursor:pointer;transition:color .15s,border-color .15s;}
+    .lang-btn:hover{color:rgba(255,255,255,.8);border-color:rgba(255,255,255,.28);}
+    .hdr.light .lang-btn{color:var(--ink-3);border-color:var(--border-l);} .hdr.light .lang-btn:hover{color:var(--ink);border-color:rgba(0,0,0,.2);}
+    .lang-drop{position:absolute;top:calc(100% + 8px);right:0;background:#0D1B2E;border:1px solid rgba(255,255,255,.1);border-radius:var(--r-md);overflow:hidden;min-width:100px;z-index:200;opacity:0;pointer-events:none;transform:translateY(-6px);transition:opacity .15s,transform .15s;}
+    .lang-sw.open .lang-drop{opacity:1;pointer-events:auto;transform:none;}
+    .hdr.light .lang-drop{background:#fff;border-color:var(--border-l);box-shadow:0 8px 24px rgba(0,0,0,.1);}
+    .lang-opt{width:100%;display:flex;align-items:center;justify-content:space-between;padding:.6rem 1rem;font-size:.8125rem;color:rgba(255,255,255,.6);background:none;border:none;cursor:pointer;text-align:left;transition:background .1s,color .1s;}
+    .lang-opt:hover{background:rgba(255,255,255,.05);color:#fff;} .lang-opt.active{color:#fff;font-weight:500;}
+    .hdr.light .lang-opt{color:var(--ink-3);} .hdr.light .lang-opt:hover{background:var(--surface);color:var(--ink);} .hdr.light .lang-opt.active{color:var(--ink);}
+    .lang-tick{width:5px;height:5px;border-radius:50%;background:var(--teal);opacity:0;} .lang-opt.active .lang-tick{opacity:1;}
+    .mob-toggle{display:none;width:40px;height:40px;background:transparent;border:1px solid rgba(255,255,255,.12);border-radius:var(--r-sm);cursor:pointer;align-items:center;justify-content:center;flex-direction:column;gap:5px;}
+    .mob-toggle span{display:block;width:16px;height:1.5px;background:#fff;transition:all .25s;}
+    .hdr.light .mob-toggle{border-color:var(--border-l);} .hdr.light .mob-toggle span{background:var(--ink);}
+    @media(max-width:900px){.mob-toggle{display:flex;}.hdr-nav,.hdr-right .btn-cta:not(.mob-show),.hdr-right .lang-sw{display:none;}}
+    .mob-drawer{position:fixed;top:0;right:-100%;bottom:0;width:min(320px,90vw);background:var(--navy-2);border-left:1px solid var(--border-d);z-index:1100;transition:right .28s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;padding-top:var(--hdr);overflow-y:auto;}
+    .mob-drawer.open{right:0;}
+    .mob-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1050;opacity:0;pointer-events:none;transition:opacity .28s;} .mob-overlay.open{opacity:1;pointer-events:auto;}
+    .mob-links{padding:1.5rem 1.25rem;display:flex;flex-direction:column;gap:.25rem;}
+    .mob-links a{padding:.7rem .875rem;font-size:.9375rem;color:rgba(255,255,255,.7);text-decoration:none;border-radius:var(--r-md);transition:background .15s,color .15s;}
+    .mob-links a:hover,.mob-links a.current{background:rgba(255,255,255,.06);color:#fff;}
+    .mob-links .mob-cta{margin-top:.75rem;background:var(--teal);color:#fff;text-align:center;font-weight:600;}
+    .mob-close{position:absolute;top:1.25rem;right:1.25rem;width:32px;height:32px;background:rgba(255,255,255,.08);border:none;border-radius:var(--r-sm);cursor:pointer;color:rgba(255,255,255,.6);font-size:1rem;display:flex;align-items:center;justify-content:center;}
+
+    /* ══ PAGE LAYOUT ══ */
+    .wrap{width:100%;max-width:var(--max);margin:0 auto;padding:0 var(--pad);}
+    .section{padding:5rem 0;}
+    @media(max-width:768px){.section{padding:3.5rem 0;}}
+
+    /* ══ HERO — minimal, editorial ══ */
+    .hero{
+      background:var(--navy);
+      padding:5rem 0 4rem;
+      border-bottom:1px solid var(--border-d);
+      position:relative;overflow:hidden;
+    }
+    .hero canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;}
+    .hero-inner{position:relative;z-index:1;}
+    .hero-kicker{display:flex;align-items:center;gap:.625rem;margin-bottom:1.75rem;}
+    .hero-kicker-line{width:24px;height:1px;background:var(--teal);}
+    .label{font-family:var(--ff-mono);font-size:.625rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;}
+    .label.on-dark{color:rgba(255,255,255,.45);}
+    .hero-h1{
+      font-family:var(--ff-display);font-size:clamp(2.5rem,5vw,4rem);font-weight:700;
+      color:#fff;line-height:1.05;letter-spacing:-.03em;margin-bottom:1.25rem;
+    }
+    .hero-h1 em{font-style:italic;font-weight:300;color:rgba(255,255,255,.4);}
+    .hero-desc{font-size:1rem;line-height:1.7;color:rgba(255,255,255,.5);max-width:520px;margin-bottom:2.5rem;}
+    .hero-desc strong{color:rgba(255,255,255,.8);font-weight:500;}
+
+    /* Hero stat row */
+    .hero-stats-row{
+      display:flex;align-items:center;gap:0;
+      border-top:1px solid var(--border-d);padding-top:2rem;
+      flex-wrap:wrap;
+    }
+    .hsr-item{
+      padding-right:2.5rem;margin-right:2.5rem;
+      border-right:1px solid var(--border-d);
+    }
+    .hsr-item:last-child{border-right:none;}
+    .hsr-n{
+      font-family:var(--ff-display);font-size:2.5rem;font-weight:700;
+      color:#fff;line-height:1;letter-spacing:-.04em;margin-bottom:.25rem;
+    }
+    .hsr-l{font-family:var(--ff-mono);font-size:.5625rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);}
+    @media(max-width:640px){
+      .hsr-item{padding-right:1.5rem;margin-right:1.5rem;margin-bottom:1.25rem;}
+      .hero-stats-row{gap:0;}
+    }
+
+    /* ══ SECTION INTRO ══ */
+    .sec-kicker{display:flex;align-items:center;gap:.625rem;margin-bottom:1.25rem;}
+    .sec-kicker-line{width:20px;height:1px;background:var(--teal);}
+    .display-md{font-family:var(--ff-display);font-size:clamp(1.5rem,2.5vw,2.125rem);font-weight:700;line-height:1.1;letter-spacing:-.025em;}
+    .sec-body{font-size:1rem;color:var(--ink-3);max-width:540px;line-height:1.7;margin-top:.875rem;}
+
+    /* ══ RESEARCH LEADS ══════════════════════════
+       Each lead gets a full-width editorial row.
+       Photo/initials left, copy right.
+       Separated by horizontal rules — no boxes.
+    ═══════════════════════════════════════════ */
+    .leads-list{margin-top:3rem;}
+    .lead-row{
+      display:grid;
+      grid-template-columns:220px 1fr;
+      gap:3rem;
+      padding:3rem 0;
+      border-top:1px solid var(--border-l);
+      align-items:start;
+    }
+    .lead-row:first-child{border-top:none;}
+    @media(max-width:768px){.lead-row{grid-template-columns:1fr;gap:1.5rem;}}
+
+    /* Left: visual identity */
+    .lead-visual{display:flex;flex-direction:column;align-items:flex-start;gap:1rem;}
+    .lead-avatar{
+      width:120px;height:120px;
+      border-radius:var(--r-sm);
+      background:var(--navy);
+      display:flex;align-items:center;justify-content:center;
+      position:relative;overflow:hidden;flex-shrink:0;
+    }
+    .lead-avatar img{width:100%;height:100%;object-fit:cover;}
+    .lead-initials{
+      font-family:var(--ff-display);font-size:2.25rem;font-weight:700;
+      color:rgba(255,255,255,.35);letter-spacing:-.03em;
+    }
+    /* Subtle line accent behind initials */
+    .lead-avatar::after{
+      content:attr(data-line);
+      position:absolute;bottom:8px;right:10px;
+      font-family:var(--ff-mono);font-size:.625rem;letter-spacing:.1em;
+      color:rgba(255,255,255,.18);font-weight:600;
+    }
+    .lead-line-pill{
+      display:inline-flex;align-items:center;gap:.4rem;
+      font-family:var(--ff-mono);font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;
+      padding:.275rem .625rem;border-radius:var(--r-xs);
+      background:var(--teal-lt);color:var(--teal);
+      border:1px solid rgba(0,122,122,.18);
+    }
+    .lead-line-num{
+      font-family:var(--ff-mono);font-size:.5rem;letter-spacing:.1em;
+      padding:.2rem .45rem;border-radius:var(--r-xs);
+      background:var(--teal);color:#fff;font-weight:600;
+    }
+    .lead-affil-pill{
+      display:inline-flex;align-items:center;gap:.3rem;
+      font-family:var(--ff-mono);font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;
+      padding:.275rem .625rem;border-radius:var(--r-xs);
+      background:rgba(245,158,11,.08);color:#92400e;
+      border:1px solid rgba(245,158,11,.2);
+    }
+
+    /* Right: editorial copy */
+    .lead-copy{}
+    .lead-name{
+      font-family:var(--ff-display);font-size:clamp(1.375rem,2vw,1.75rem);
+      font-weight:700;color:var(--ink);letter-spacing:-.025em;
+      line-height:1.1;margin-bottom:.375rem;
+    }
+    .lead-spec{font-size:.875rem;color:var(--ink-3);margin-bottom:1.125rem;font-weight:400;}
+    .lead-line-name{
+      font-size:.9375rem;font-weight:500;color:var(--ink-2);
+      margin-bottom:1rem;line-height:1.3;
+    }
+    .lead-bio{font-size:.9375rem;color:var(--ink-2);line-height:1.75;max-width:600px;}
+    .lead-tags{display:flex;flex-wrap:wrap;gap:.375rem;margin-top:1.125rem;}
+    .lead-tag{
+      font-family:var(--ff-mono);font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;
+      padding:.2rem .55rem;border-radius:var(--r-xs);
+      background:var(--surface);color:var(--ink-3);border:1px solid var(--border-l);
+    }
+    .lead-tag.pi{background:rgba(0,122,122,.07);color:var(--teal);border-color:rgba(0,122,122,.2);}
+
+    /* ══ BROADER TEAM GRID ══════════════════════
+       All other public staff — compact grid.
+       Name, role, specialisation. No bios unless set.
+    ═══════════════════════════════════════════ */
+    .team-section{background:var(--surface);border-top:1px solid var(--border-l);}
+    .team-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));
+      gap:0;
+      border:1px solid var(--border-l);border-radius:var(--r-md);
+      overflow:hidden;margin-top:2.5rem;
+    }
+    .team-member{
+      padding:1.25rem 1.375rem;
+      border-right:1px solid var(--border-l);
+      border-bottom:1px solid var(--border-l);
+      background:var(--white);
+      transition:background .12s;
+      display:flex;align-items:flex-start;gap:.875rem;
+    }
+    .team-member:hover{background:var(--teal-lt);}
+    .tm-avatar{
+      width:36px;height:36px;border-radius:var(--r-xs);flex-shrink:0;
+      background:var(--navy);
+      display:flex;align-items:center;justify-content:center;
+      font-family:var(--ff-mono);font-size:.5625rem;font-weight:600;
+      letter-spacing:.04em;color:rgba(255,255,255,.6);
+    }
+    .tm-name{font-size:.9rem;font-weight:500;color:var(--ink);line-height:1.3;margin-bottom:.2rem;}
+    .tm-role{font-size:.75rem;color:var(--ink-3);}
+    .tm-spec{font-size:.6875rem;color:var(--ink-4);margin-top:.2rem;font-family:var(--ff-mono);letter-spacing:.03em;}
+
+    /* ══ LIVE CONTEXT SIGNALS ══ */
+    .lead-context{
+      margin:1rem 0;
+      display:flex;flex-direction:column;gap:.5rem;
+      padding:1rem 1.125rem;
+      background:var(--surface);
+      border-left:2px solid var(--teal);
+      border-radius:0 var(--r-sm) var(--r-sm) 0;
+    }
+    .lead-signal{
+      display:flex;align-items:center;gap:.5rem;
+      font-size:.8125rem;color:var(--ink-2);flex-wrap:wrap;
+    }
+    .ls-dot{
+      width:6px;height:6px;border-radius:50%;flex-shrink:0;
+    }
+    .lead-signal--recruiting .ls-dot{background:#16a34a;}
+    .lead-signal--active .ls-dot{background:var(--teal);}
+    .lead-signal--partner .ls-dot{background:#d97706;}
+    .ls-link{
+      font-size:.75rem;color:var(--teal);text-decoration:none;
+      border-bottom:1px solid rgba(0,122,122,.25);padding-bottom:1px;
+      margin-left:.25rem;transition:color .15s;
+    }
+    .ls-link:hover{color:#006666;}
+
+    /* Latest publication preview */
+    .lead-pub{
+      display:flex;align-items:baseline;gap:.625rem;flex-wrap:wrap;
+      padding-top:.5rem;margin-top:.25rem;
+      border-top:1px solid var(--border-l);
+    }
+    .lp-journal{
+      font-family:var(--ff-mono);font-size:.5625rem;letter-spacing:.1em;
+      text-transform:uppercase;color:var(--teal);font-weight:500;flex-shrink:0;
+    }
+    .lp-title{
+      font-size:.8125rem;color:var(--ink-3);line-height:1.4;flex:1;min-width:0;
+      display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;
+    }
+    .lp-doi{
+      font-family:var(--ff-mono);font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;
+      color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(0,122,122,.25);
+      flex-shrink:0;transition:color .15s;
+    }
+    .lp-doi:hover{color:#006666;}
+
+    /* ══ PUBLICATIONS STRIP ═════════════════════
+       Horizontal scroll — journal index style.
+       NOT a duplicate of news.html — no body text,
+       just journal reference format.
+    ═══════════════════════════════════════════ */
+    .pub-strip-section{
+      border-top:1px solid var(--border-l);
+      padding:4rem 0;background:var(--navy);
+    }
+    .pub-strip-scroll{
+      overflow-x:auto;
+      margin-top:2rem;
+      padding-bottom:.75rem;
+      scrollbar-width:thin;
+      scrollbar-color:rgba(255,255,255,.15) transparent;
+    }
+    .pub-strip-scroll::-webkit-scrollbar{height:3px;}
+    .pub-strip-scroll::-webkit-scrollbar-track{background:transparent;}
+    .pub-strip-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:2px;}
+    .pub-strip-inner{
+      display:flex;align-items:stretch;gap:0;
+      width:max-content;
+      border:1px solid var(--border-d);border-radius:var(--r-sm);overflow:hidden;
+    }
+    .pub-card{
+      width:260px;flex-shrink:0;
+      padding:1.25rem 1.375rem;
+      border-right:1px solid var(--border-d);
+      display:flex;flex-direction:column;gap:.5rem;
+      transition:background .12s;cursor:default;
+    }
+    .pub-card:last-child{border-right:none;}
+    .pub-card:hover{background:rgba(255,255,255,.04);}
+    .pub-card a{text-decoration:none;}
+    .pub-journal{
+      font-family:var(--ff-mono);font-size:.5rem;letter-spacing:.14em;
+      text-transform:uppercase;color:var(--teal);font-weight:500;
+    }
+    .pub-year{
+      font-family:var(--ff-mono);font-size:.5rem;letter-spacing:.1em;
+      color:rgba(255,255,255,.25);
+    }
+    .pub-title{
+      font-size:.8125rem;color:rgba(255,255,255,.75);line-height:1.45;
+      display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+      flex:1;
+    }
+    .pub-authors{
+      font-size:.6875rem;color:rgba(255,255,255,.3);line-height:1.4;
+      display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;
+    }
+    .pub-doi-link{
+      font-family:var(--ff-mono);font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;
+      color:rgba(0,179,179,.6);text-decoration:none;margin-top:auto;padding-top:.375rem;
+      border-top:1px solid rgba(255,255,255,.06);transition:color .15s;
+    }
+    .pub-doi-link:hover{color:rgba(0,200,200,.9);}
+    .pub-strip-nav{
+      display:flex;align-items:center;gap:.625rem;margin-top:1rem;
+    }
+    .psn-btn{
+      width:32px;height:32px;border-radius:var(--r-sm);
+      background:rgba(255,255,255,.06);border:1px solid var(--border-d);
+      display:flex;align-items:center;justify-content:center;
+      cursor:pointer;color:rgba(255,255,255,.5);transition:background .15s,color .15s;
+    }
+    .psn-btn:hover{background:rgba(255,255,255,.1);color:#fff;}
+    .psn-btn svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;}
+    .psn-count{font-family:var(--ff-mono);font-size:.5625rem;letter-spacing:.1em;color:rgba(255,255,255,.3);}
+
+    /* ══ OPEN OPPORTUNITIES ════════════════════ */
+    .opps-section{background:var(--surface);border-top:1px solid var(--border-l);}
+    .opps-grid{
+      display:grid;grid-template-columns:1fr 1fr;gap:0;
+      border:1px solid var(--border-l);border-radius:var(--r-md);
+      overflow:hidden;margin-top:2.5rem;
+    }
+    @media(max-width:640px){.opps-grid{grid-template-columns:1fr;}}
+    .opp-card{
+      padding:1.75rem 2rem;border-right:1px solid var(--border-l);
+      border-bottom:1px solid var(--border-l);
+      display:flex;flex-direction:column;gap:.875rem;
+      background:var(--white);
+    }
+    .opp-card:nth-child(2n){border-right:none;}
+    .opp-card:last-child,.opp-card:nth-last-child(2):nth-child(odd){border-bottom:none;}
+    @media(max-width:640px){.opp-card{border-right:none;}}
+    .opp-type{
+      font-family:var(--ff-mono);font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;
+      padding:.2rem .55rem;border-radius:var(--r-xs);width:fit-content;
+    }
+    .opp-type--trial{background:rgba(22,163,74,.08);color:#15803d;border:1px solid rgba(22,163,74,.2);}
+    .opp-type--inno{background:rgba(217,119,6,.08);color:#b45309;border:1px solid rgba(217,119,6,.2);}
+    .opp-title{font-size:.9375rem;font-weight:500;color:var(--ink);line-height:1.4;}
+    .opp-meta{font-family:var(--ff-mono);font-size:.5625rem;letter-spacing:.08em;color:var(--ink-4);}
+    .opp-link{
+      display:inline-flex;align-items:center;gap:.3rem;
+      font-size:.75rem;font-weight:500;color:var(--teal);
+      text-decoration:none;border-bottom:1px solid rgba(0,122,122,.25);
+      padding-bottom:1px;margin-top:auto;width:fit-content;
+      transition:color .15s;
+    }
+    .opp-link:hover{color:#006666;}
+    @keyframes shimmer{to{background-position:200% center;}}
+    .skel{border-radius:2px;
+      background:linear-gradient(90deg,rgba(0,0,0,.05) 25%,rgba(0,0,0,.02) 50%,rgba(0,0,0,.05) 75%);
+      background-size:200%;animation:shimmer 1.4s ease-in-out infinite;}
+    .lead-skeleton{padding:3rem 0;border-top:1px solid var(--border-l);}
+    .lead-skeleton:first-child{border-top:none;}
+
+    /* ══ EMPTY / ERROR STATES ══ */
+    .state-empty{
+      padding:4rem 2rem;text-align:center;
+      font-size:.9375rem;color:var(--ink-3);
+    }
+
+    /* ══ CONTACT STRIP ══ */
+    .contact-strip{
+      background:var(--navy);border-top:1px solid var(--border-d);
+      padding:3.5rem 0;
+    }
+    .contact-strip-inner{
+      display:flex;align-items:center;justify-content:space-between;
+      gap:2rem;flex-wrap:wrap;
+    }
+    .cs-copy{}
+    .cs-label{font-family:var(--ff-mono);font-size:.5625rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:.625rem;}
+    .cs-heading{font-family:var(--ff-display);font-size:clamp(1.25rem,2vw,1.625rem);font-weight:700;color:#fff;letter-spacing:-.02em;line-height:1.2;}
+    .cs-sub{font-size:.875rem;color:rgba(255,255,255,.45);margin-top:.5rem;line-height:1.6;max-width:400px;}
+    .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.625rem 1.25rem;font-size:.8125rem;font-weight:500;letter-spacing:.01em;border-radius:var(--r-sm);cursor:pointer;text-decoration:none;white-space:nowrap;transition:background .15s,color .15s,border-color .15s;border:1px solid transparent;}
+    .btn-primary{background:var(--teal);color:#fff;border-color:var(--teal);}
+    .btn-primary:hover{background:#006666;border-color:#006666;}
+    .btn-ghost{background:transparent;color:rgba(255,255,255,.75);border-color:rgba(255,255,255,.2);}
+    .btn-ghost:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.4);color:#fff;}
+    .btn-text{display:inline-flex;align-items:center;gap:.35rem;font-size:.8125rem;font-weight:500;color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(0,122,122,.25);padding-bottom:1px;transition:color .15s,border-color .15s;}
+    .btn-text:hover{color:#006666;border-bottom-color:rgba(0,102,102,.5);}
+
+    /* ══ FOOTER ══ */
+    .footer{background:var(--navy);border-top:1px solid var(--border-d);padding:2.5rem 0;position:relative;overflow:hidden;}
+    .footer canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.35;}
+    .footer-inner{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;}
+    .footer-brand-name{font-size:.9375rem;font-weight:600;color:rgba(255,255,255,.85);}
+    .footer-brand-sub{font-size:.6875rem;color:rgba(255,255,255,.3);margin-top:.15rem;}
+    .footer-nav{display:flex;flex-wrap:wrap;}
+    .footer-nav a{font-size:.75rem;color:rgba(255,255,255,.38);text-decoration:none;padding:.25rem .75rem;transition:color .15s;border-right:1px solid var(--border-d);}
+    .footer-nav a:last-child{border-right:none;} .footer-nav a:hover{color:rgba(255,255,255,.75);}
+    .footer-cert{display:flex;gap:.5rem;flex-wrap:wrap;}
+    .footer-cert span{font-family:var(--ff-mono);font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .5rem;border:1px solid rgba(255,255,255,.1);border-radius:var(--r-xs);color:rgba(255,255,255,.3);}
+    .footer-bottom{position:relative;z-index:1;border-top:1px solid var(--border-d);margin-top:1.5rem;padding-top:1.25rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem;font-size:.6875rem;color:rgba(255,255,255,.25);}
+
+    /* ══ SCROLL TO TOP ══ */
+    #scrollTop{position:fixed;bottom:1.5rem;right:1.5rem;width:40px;height:40px;background:var(--navy);border:1px solid var(--border-d);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(255,255,255,.55);opacity:0;pointer-events:none;transition:opacity .2s,background .15s;z-index:500;}
+    #scrollTop.visible{opacity:1;pointer-events:auto;} #scrollTop:hover{background:var(--navy-2);color:#fff;}
+    #scrollTop svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;}
+
+    /* ══ REVEAL ══ */
+    .reveal{opacity:0;transform:translateY(18px);transition:opacity .55s,transform .55s;}
+    .reveal.in{opacity:1;transform:none;}
+    .reveal-d1{transition-delay:.08s;} .reveal-d2{transition-delay:.16s;} .reveal-d3{transition-delay:.24s;}
+
+    /* ══ RESPONSIVE ══ */
+    @media(max-width:640px){
+      :root{--hdr:72px;}
+      .hsr-item{border-right:none;padding:0;margin:0 0 1.25rem;}
+      .lead-row{gap:1.25rem;}
+      .lead-avatar{width:80px;height:80px;}
+      .lead-initials{font-size:1.5rem;}
+      .footer-inner{flex-direction:column;align-items:flex-start;}
+    }
+  </style>
+</head>
+<body>
+<div id="pb" aria-hidden="true"></div>
+
+<!-- ═══ HEADER ═══════════════════════════════════════ -->
+<header class="hdr" id="hdr">
+  <div class="hdr-inner">
+    <a href="index.html" class="hdr-logo" aria-label="neumAC R&I — Home">
+      <div class="hdr-logo-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M5 18V9l7-5 7 5v9"/><path d="M9 18v-6h6v6"/></svg>
+      </div>
+      <div>
+        <div class="hdr-logo-name">neumAC R&amp;I</div>
+        <div class="hdr-logo-sub">CHUAC · INIBIC · SERGAS</div>
+      </div>
+    </a>
+
+    <nav class="hdr-nav" aria-label="Primary navigation">
+      <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
+      <a href="clinical.html"><span lang="en">Research</span><span lang="es">Investigación</span></a>
+      <a href="innovation.html"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
+      <a href="news.html"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
+      <a href="team.html" class="current" aria-current="page"><span lang="en">Team</span><span lang="es">Equipo</span></a>
+    </nav>
+
+    <div class="hdr-right">
+      <div class="lang-sw" id="langSw">
+        <button class="lang-btn" id="langBtn" aria-haspopup="listbox" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="width:12px;height:12px;"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+          <span id="langLabel">EN</span>
+        </button>
+        <div class="lang-drop" role="listbox">
+          <button class="lang-opt active" data-lang="en" role="option" aria-selected="true">English <span class="lang-tick"></span></button>
+          <button class="lang-opt" data-lang="es" role="option" aria-selected="false">Español <span class="lang-tick"></span></button>
+        </div>
+      </div>
+      <a href="index.html#contact" class="btn-cta"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
+      <button class="mob-toggle" id="mobToggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobDrawer">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mob-overlay" id="mobOverlay" aria-hidden="true"></div>
+<nav class="mob-drawer" id="mobDrawer" aria-label="Mobile navigation">
+  <button class="mob-close" id="mobClose" aria-label="Close navigation">✕</button>
+  <div class="mob-links">
+    <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
+    <a href="clinical.html"><span lang="en">Research</span><span lang="es">Investigación</span></a>
+    <a href="innovation.html"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
+    <a href="news.html"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
+    <a href="team.html" class="current"><span lang="en">Team</span><span lang="es">Equipo</span></a>
+    <a href="index.html#contact" class="mob-cta" onclick="closeMob()"><span lang="en">Get in touch</span><span lang="es">Contacto</span></a>
+  </div>
+  <div style="padding:1rem 1.25rem;border-top:1px solid rgba(255,255,255,.06);display:flex;gap:.5rem;">
+    <button id="mobLangEn" onclick="selectLang('en')" class="lang-opt active" data-lang="en" style="flex:1;border-radius:var(--r-sm);padding:.6rem;">EN</button>
+    <button id="mobLangEs" onclick="selectLang('es')" class="lang-opt" data-lang="es" style="flex:1;border-radius:var(--r-sm);padding:.6rem;">ES</button>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══════════════════════════════════════════ -->
+<section class="hero" aria-labelledby="teamHeroTitle">
+  <canvas id="heroBg" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="hero-inner">
+      <div class="hero-kicker reveal">
+        <div class="hero-kicker-line"></div>
+        <span class="label on-dark"><span lang="en">neumACt Research Group · INIBIC</span><span lang="es">Grupo de Investigación neumACt · INIBIC</span></span>
+      </div>
+      <h1 class="hero-h1 reveal reveal-d1" id="teamHeroTitle">
+        <span lang="en">The people<br>behind the work.</span>
+        <span lang="es">Las personas<br><em>detrás de la ciencia.</em></span>
+      </h1>
+      <p class="hero-desc reveal reveal-d2">
+        <span lang="en"><strong>23 clinician-investigators</strong> across six specialist research lines. Each line led by a physician-scientist who carries both the clinical load and the research portfolio — running trials, treating patients, building evidence.</span>
+        <span lang="es"><strong>23 investigadores clínicos</strong> en seis líneas especializadas. Cada línea dirigida por un médico-científico que compagina la carga asistencial con la cartera investigadora: ensayos, pacientes, evidencia.</span>
+      </p>
+
+      <div class="hero-stats-row reveal reveal-d3">
+        <div class="hsr-item">
+          <div class="hsr-n" id="statMembers">23</div>
+          <div class="hsr-l"><span lang="en">Clinician-investigators</span><span lang="es">Investigadores clínicos</span></div>
+        </div>
+        <div class="hsr-item">
+          <div class="hsr-n" id="statLines">6</div>
+          <div class="hsr-l"><span lang="en">Research lines</span><span lang="es">Líneas de investigación</span></div>
+        </div>
+        <div class="hsr-item">
+          <div class="hsr-n" id="statTrials">15<span style="font-size:.55em;color:var(--teal);font-style:normal;">+</span></div>
+          <div class="hsr-l"><span lang="en">Active studies</span><span lang="es">Estudios activos</span></div>
+        </div>
+        <div class="hsr-item">
+          <div class="hsr-n">~1<span style="font-size:.55em;color:var(--teal);font-style:normal;">K</span></div>
+          <div class="hsr-l"><span lang="en">Lung transplants</span><span lang="es">Trasplantes pulmonares</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ RESEARCH LEADS ══════════════════════════════════ -->
+<section class="section" style="background:var(--white);" id="leads">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="sec-kicker">
+        <div class="sec-kicker-line"></div>
+        <span class="label"><span lang="en">Research Coordinators</span><span lang="es">Coordinadores de Investigación</span></span>
+      </div>
+      <h2 class="display-md">
+        <span lang="en">The research leads</span>
+        <span lang="es">Los responsables de investigación</span>
+      </h2>
+      <p class="sec-body">
+        <span lang="en">Each research line is directed by a specialist physician-investigator — your primary scientific contact for collaboration within their domain.</span>
+        <span lang="es">Cada línea está dirigida por un médico-investigador especialista, su contacto científico principal para la colaboración en su área.</span>
+      </p>
+    </div>
+
+    <!-- Populated by api.js loadTeamLeads() -->
+    <div class="leads-list" id="leadsGrid">
+      <!-- Skeletons while loading -->
+      <div class="lead-skeleton reveal">
+        <div style="display:grid;grid-template-columns:220px 1fr;gap:3rem;align-items:start;">
+          <div style="display:flex;flex-direction:column;gap:.75rem;">
+            <div class="skel" style="width:120px;height:120px;border-radius:3px;"></div>
+            <div class="skel" style="height:20px;width:90px;"></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:.625rem;padding-top:.25rem;">
+            <div class="skel" style="height:28px;width:65%;"></div>
+            <div class="skel" style="height:14px;width:35%;"></div>
+            <div class="skel" style="height:14px;width:80%;margin-top:.5rem;"></div>
+            <div class="skel" style="height:14px;width:75%;"></div>
+            <div class="skel" style="height:14px;width:60%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ BROADER TEAM ════════════════════════════════════ -->
+<section class="section team-section" id="group">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="sec-kicker">
+        <div class="sec-kicker-line"></div>
+        <span class="label"><span lang="en">The Group</span><span lang="es">El Grupo</span></span>
+      </div>
+      <h2 class="display-md">
+        <span lang="en">Full research group</span>
+        <span lang="es">Grupo de investigación completo</span>
+      </h2>
+      <p class="sec-body">
+        <span lang="en">Attending physicians, residents, fellows, engineers, and coordinators working across the six research lines.</span>
+        <span lang="es">Médicos adjuntos, residentes, fellows, ingenieros y coordinadores que trabajan en las seis líneas de investigación.</span>
+      </p>
+    </div>
+
+    <!-- Populated by api.js loadTeamGroup() -->
+    <div class="team-grid" id="teamGroup">
+      <!-- Skeletons -->
+      <div class="team-member" style="opacity:.4;"><div class="tm-avatar">—</div><div><div style="height:13px;width:120px;border-radius:2px;background:rgba(0,0,0,.07);margin-bottom:6px;"></div><div style="height:11px;width:80px;border-radius:2px;background:rgba(0,0,0,.05);"></div></div></div>
+      <div class="team-member" style="opacity:.4;"><div class="tm-avatar">—</div><div><div style="height:13px;width:100px;border-radius:2px;background:rgba(0,0,0,.07);margin-bottom:6px;"></div><div style="height:11px;width:70px;border-radius:2px;background:rgba(0,0,0,.05);"></div></div></div>
+      <div class="team-member" style="opacity:.4;"><div class="tm-avatar">—</div><div><div style="height:13px;width:110px;border-radius:2px;background:rgba(0,0,0,.07);margin-bottom:6px;"></div><div style="height:11px;width:75px;border-radius:2px;background:rgba(0,0,0,.05);"></div></div></div>
+      <div class="team-member" style="opacity:.4;"><div class="tm-avatar">—</div><div><div style="height:13px;width:130px;border-radius:2px;background:rgba(0,0,0,.07);margin-bottom:6px;"></div><div style="height:11px;width:65px;border-radius:2px;background:rgba(0,0,0,.05);"></div></div></div>
+    </div>
+
+    <div style="margin-top:1.5rem;" class="reveal">
+      <p style="font-size:.8125rem;color:var(--ink-4);line-height:1.6;">
+        <span lang="en">Only staff members who have enabled public visibility appear here. Team profiles are managed through the neumDesk platform.</span>
+        <span lang="es">Solo aparecen los miembros del equipo que han habilitado la visibilidad pública. Los perfiles se gestionan a través de la plataforma neumDesk.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PUBLICATIONS STRIP ═════════════════════════════ -->
+<section class="pub-strip-section" id="publications">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="sec-kicker">
+        <div class="sec-kicker-line"></div>
+        <span class="label on-dark"><span lang="en">Scientific Output</span><span lang="es">Producción Científica</span></span>
+      </div>
+      <h2 class="display-md" style="color:#fff;margin-top:.75rem;">
+        <span lang="en">Published work</span>
+        <span lang="es">Publicaciones</span>
+      </h2>
+      <p style="color:rgba(255,255,255,.4);font-size:.9rem;max-width:520px;margin-top:.625rem;line-height:1.65;">
+        <span lang="en">A journal index of the group's peer-reviewed output. Full text and abstracts available at each DOI.</span>
+        <span lang="es">Índice de la producción revisada por pares del grupo. Texto completo y resúmenes disponibles en cada DOI.</span>
+      </p>
+    </div>
+    <div class="pub-strip-scroll reveal reveal-d1" id="pubScroll">
+      <div class="pub-strip-inner" id="pubStripInner">
+        <!-- Populated by loadPublicationStrip() -->
+        <div class="pub-card" style="opacity:.3;">
+          <div class="skel" style="height:10px;width:80px;background:rgba(255,255,255,.1);"></div>
+          <div class="skel" style="height:14px;width:95%;background:rgba(255,255,255,.08);"></div>
+          <div class="skel" style="height:14px;width:80%;background:rgba(255,255,255,.06);"></div>
+          <div class="skel" style="height:14px;width:60%;background:rgba(255,255,255,.04);"></div>
+        </div>
+      </div>
+    </div>
+    <div class="pub-strip-nav">
+      <button class="psn-btn" id="pubPrev" aria-label="Scroll left">
+        <svg viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+      </button>
+      <button class="psn-btn" id="pubNext" aria-label="Scroll right">
+        <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+      </button>
+      <span class="psn-count" id="pubCount"></span>
+      <a href="news.html" style="margin-left:auto;" class="btn-text on-dark">
+        <span lang="en">Full publications page</span><span lang="es">Página de publicaciones</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:11px;height:11px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ OPEN OPPORTUNITIES ══════════════════════════════ -->
+<section class="section opps-section" id="opportunities" style="display:none;">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="sec-kicker">
+        <div class="sec-kicker-line"></div>
+        <span class="label"><span lang="en">Open Now</span><span lang="es">Abierto ahora</span></span>
+      </div>
+      <h2 class="display-md" style="margin-top:.75rem;">
+        <span lang="en">Current opportunities</span>
+        <span lang="es">Oportunidades actuales</span>
+      </h2>
+      <p class="sec-body">
+        <span lang="en">Recruiting clinical studies and innovation projects actively seeking partners.</span>
+        <span lang="es">Estudios clínicos en reclutamiento y proyectos de innovación en búsqueda de socios.</span>
+      </p>
+    </div>
+    <div class="opps-grid" id="oppsGrid">
+      <!-- Populated by loadOpportunities() -->
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT STRIP ════════════════════════════════════ -->
+<div class="contact-strip">
+  <div class="wrap">
+    <div class="contact-strip-inner">
+      <div class="cs-copy">
+        <div class="cs-label"><span lang="en">Collaboration</span><span lang="es">Colaboración</span></div>
+        <h2 class="cs-heading">
+          <span lang="en">Work with this team</span>
+          <span lang="es">Trabaja con este equipo</span>
+        </h2>
+        <p class="cs-sub">
+          <span lang="en">Clinical study sponsorship, academic collaboration, technology validation, or innovation co-development. Each lead handles their own domain — contact us to find the right person.</span>
+          <span lang="es">Patrocinio de estudios clínicos, colaboración académica, validación de tecnología o codesarrollo de innovación. Cada responsable gestiona su ámbito. Contáctenos para encontrar al interlocutor adecuado.</span>
+        </p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:.75rem;flex-shrink:0;">
+        <a href="index.html#contact" class="btn btn-primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:13px;height:13px;"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
+          <span lang="en">Get in touch</span><span lang="es">Contactar</span>
+        </a>
+        <a href="clinical.html" class="btn btn-ghost">
+          <span lang="en">Research programme</span><span lang="es">Programa de investigación</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═══════════════════════════════════════════ -->
+<footer class="footer">
+  <canvas id="footerBg" aria-hidden="true"></canvas>
+  <div class="wrap" style="position:relative;z-index:1;">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand-name">neumAC R&amp;I</div>
+        <div class="footer-brand-sub">Área Sanitaria de A Coruña y Cee</div>
+      </div>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
+        <a href="clinical.html"><span lang="en">Research</span><span lang="es">Investigación</span></a>
+        <a href="innovation.html"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
+        <a href="news.html"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
+        <a href="team.html"><span lang="en">Team</span><span lang="es">Equipo</span></a>
+        <a href="index.html#contact"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
+      </nav>
+      <div class="footer-cert"><span>GCP</span><span>INIBIC</span><span>CE MDR</span><span>AEMPS</span></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 neumAC R&amp;I · CHUAC · As Xubias, 84 · 15006 A Coruña</span>
+      <span>INIBIC · SERGAS</span>
+    </div>
+  </div>
+</footer>
+
+<button id="scrollTop" aria-label="Scroll to top">
+  <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script src="api.js"></script>
+<script>
+/* ── Header ── */
+(function(){
+  var hdr=document.getElementById('hdr'),pb=document.getElementById('pb'),stt=document.getElementById('scrollTop');
+  window.addEventListener('scroll',function(){
+    var y=window.scrollY,tot=document.documentElement.scrollHeight-window.innerHeight;
+    hdr.classList.toggle('light',y>60);
+    if(pb)pb.style.width=(tot>0?(y/tot*100):0)+'%';
+    if(stt)stt.classList.toggle('visible',y>400);
+  },{passive:true});
+  if(stt)stt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+
+/* ── Mobile ── */
+var _tog=document.getElementById('mobToggle'),_drw=document.getElementById('mobDrawer'),_ovl=document.getElementById('mobOverlay'),_cls=document.getElementById('mobClose');
+function openMob(){if(!_tog||!_drw)return;_drw.classList.add('open');_ovl&&_ovl.classList.add('open');document.body.style.overflow='hidden';}
+function closeMob(){if(!_drw)return;_drw.classList.remove('open');_ovl&&_ovl.classList.remove('open');document.body.style.overflow='';}
+if(_tog)_tog.addEventListener('click',openMob);
+if(_cls)_cls.addEventListener('click',closeMob);
+if(_ovl)_ovl.addEventListener('click',closeMob);
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeMob();closeLang();}});
+
+/* ── Language ── */
+var _lsw=document.getElementById('langSw'),_lbt=document.getElementById('langBtn'),_lbl=document.getElementById('langLabel');
+function openLang(){if(!_lsw)return;_lsw.classList.add('open');if(_lbt)_lbt.setAttribute('aria-expanded','true');}
+function closeLang(){if(!_lsw)return;_lsw.classList.remove('open');if(_lbt)_lbt.setAttribute('aria-expanded','false');}
+function setLang(l){if(l!=='en'&&l!=='es')return;document.documentElement.dataset.lang=l;try{localStorage.setItem('huac_lang',l);}catch(e){}}
+function selectLang(l){
+  setLang(l);
+  document.querySelectorAll('.lang-opt').forEach(function(o){var a=o.dataset.lang===l;o.classList.toggle('active',a);o.setAttribute('aria-selected',String(a));});
+  var me=document.getElementById('mobLangEn'),mes=document.getElementById('mobLangEs');
+  if(me)me.classList.toggle('active',l==='en');if(mes)mes.classList.toggle('active',l==='es');
+  if(_lbl)_lbl.textContent=l.toUpperCase();
+  closeLang();
+}
+if(_lbt){_lbt.addEventListener('click',function(e){e.stopPropagation();_lsw.classList.contains('open')?closeLang():openLang();});}
+if(_lsw)_lsw.addEventListener('click',function(e){e.stopPropagation();});
+document.addEventListener('click',function(){closeLang();});
+document.querySelectorAll('.lang-opt').forEach(function(o){o.addEventListener('click',function(e){e.stopPropagation();selectLang(o.dataset.lang);});});
+(function(){try{var s=localStorage.getItem('huac_lang');if(s==='en'||s==='es')selectLang(s);}catch(e){}})();
+
+/* ── Reveal — exposed globally so api.js can observe dynamically injected elements ── */
+window._revealObserver = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');window._revealObserver.unobserve(e.target);}});
+},{threshold:.08,rootMargin:'0px 0px -32px 0px'});
+document.querySelectorAll('.reveal').forEach(function(el){window._revealObserver.observe(el);});
+
+/* ── Anchor scroll ── */
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click',function(e){
+    var id=a.getAttribute('href').slice(1);if(!id)return;
+    var el=document.getElementById(id);if(!el)return;
+    e.preventDefault();closeMob();
+    setTimeout(function(){window.scrollTo({top:el.offsetTop-96,behavior:'smooth'});},50);
+  });
+});
+</script>
+
+<script>
+/* ══ BRONCHIAL TREE ══ */
+(function(){
+  var REDUCED=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function drawTree(ctx,W,H,breath,dir,cx,originY,trunkH,mainLen){
+    ctx.lineCap='round';var nodes=[];
+    function branch(x,y,angle,len,depth){
+      if(depth>8||len<1.5)return;
+      var ex=x+Math.sin(angle)*len,ey=y+dir*Math.cos(angle)*len;
+      var sw=Math.max(0.12,0.9*Math.pow(0.67,depth));
+      var alpha=Math.max(0.06,0.52*Math.pow(0.77,depth));
+      ctx.lineWidth=sw;ctx.strokeStyle='rgba(0,179,179,'+alpha.toFixed(3)+')';
+      ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(ex,ey);ctx.stroke();
+      nodes.push({x:ex,y:ey,depth:depth});
+      var spread=0.40+breath*0.06;
+      branch(ex,ey,angle-spread,len*0.69,depth+1);
+      branch(ex,ey,angle+spread,len*0.69,depth+1);
+    }
+    ctx.lineWidth=0.85;ctx.strokeStyle='rgba(0,179,179,0.48)';
+    ctx.beginPath();ctx.moveTo(cx,originY);ctx.lineTo(cx,originY+dir*trunkH);ctx.stroke();
+    nodes.push({x:cx,y:originY+dir*trunkH,depth:-1});
+    var bo=breath*0.03;
+    branch(cx,originY+dir*trunkH,-(0.30+bo),mainLen,0);
+    branch(cx,originY+dir*trunkH,(0.25+bo),mainLen*0.94,0);
+    nodes.forEach(function(n){
+      var r=n.depth<0?2.2:Math.max(0.7,2.2*Math.pow(0.72,n.depth+1));
+      var a=Math.max(0.08,0.55*Math.pow(0.78,Math.max(n.depth,0)));
+      ctx.beginPath();ctx.arc(n.x,n.y,r,0,Math.PI*2);
+      ctx.fillStyle='rgba(0,179,179,'+a.toFixed(3)+')';ctx.fill();
+    });
+    var sc=Math.min(H*0.36,W*0.17),cy=originY+dir*(trunkH+mainLen*1.1);
+    var lo=0.07+breath*0.04,lx=cx-sc*0.18,rx=cx+sc*0.18;
+    ctx.lineWidth=0.35;ctx.strokeStyle='rgba(0,179,179,'+lo.toFixed(3)+')';
+    ctx.beginPath();ctx.moveTo(cx,cy-dir*sc);ctx.bezierCurveTo(lx-sc*1.05,cy-dir*sc*0.65,lx-sc*1.15,cy+dir*sc*0.45,lx-sc*0.12,cy+dir*sc);ctx.bezierCurveTo(cx-sc*0.04,cy+dir*sc*0.55,cx,cy+dir*sc*0.25,cx,cy-dir*sc);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(cx,cy-dir*sc);ctx.bezierCurveTo(rx+sc*1.05,cy-dir*sc*0.65,rx+sc*1.15,cy+dir*sc*0.45,rx+sc*0.12,cy+dir*sc);ctx.bezierCurveTo(cx+sc*0.04,cy+dir*sc*0.55,cx,cy+dir*sc*0.25,cx,cy-dir*sc);ctx.stroke();
+  }
+  function bootCanvas(id,getCx,dir,getOriginY,getTrunkH,getMainLen,phaseOffset){
+    var canvas=document.getElementById(id);if(!canvas)return;
+    var ctx=canvas.getContext('2d'),W,H,paused=false;
+    function resize(){W=canvas.width=canvas.parentElement.offsetWidth;H=canvas.height=canvas.parentElement.offsetHeight;}
+    document.addEventListener('visibilitychange',function(){paused=document.hidden;if(!paused)requestAnimationFrame(draw);});
+    function draw(t){
+      if(paused)return;ctx.clearRect(0,0,W,H);
+      var mobile=W<960;canvas.style.opacity=mobile?'0.25':'0.7';
+      var breath=REDUCED?0.5:Math.sin((t+phaseOffset)*0.00075)*0.5+0.5;
+      drawTree(ctx,W,H,breath,dir,getCx(W,mobile),getOriginY(H),getTrunkH(H),getMainLen(H));
+      if(!REDUCED)requestAnimationFrame(draw);
+    }
+    resize();window.addEventListener('resize',resize);
+    if(REDUCED){requestAnimationFrame(function(t){draw(t);});}else{requestAnimationFrame(draw);}
+  }
+  function boot(){
+    bootCanvas('heroBg',function(W,mobile){return mobile?W*0.85:W*0.75;},1,function(H){return H*0.02;},function(H){return H*0.14;},function(H){return H*0.15;},0);
+    bootCanvas('footerBg',function(W,mobile){return mobile?W*0.82:W*0.72;},-1,function(H){return H;},function(H){return H*0.1;},function(H){return H*0.14;},3000);
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',boot);}else{boot();}
+})();
+</script>
+
+</body>
+</html>
