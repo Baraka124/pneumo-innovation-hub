@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-lang="en">    
+<html lang="en" data-lang="en">
 <head>
   <script>try{var _l=localStorage.getItem('huac_lang');if(_l&&(_l==='en'||_l==='es'))document.documentElement.dataset.lang=_l;}catch(e){}</script>
   <meta charset="UTF-8" />
@@ -879,140 +879,120 @@
     .partner-bg .sec-head p,
     .team-bg .sec-head p{color:rgba(255,255,255,.78);}
   </style>
+<style>
+      /* ── Design token overrides v2 ── */
+      :root{
+        --teal:#007A7A !important;
+        --teal-2:#009090 !important;
+        --accent:#007A7A !important;
+        --accent-2:#009090 !important;
+        --r-xs:2px !important;
+        --r-sm:3px !important;
+        --r-md:4px !important;   /* was 8px — removes the AI-rectangle look */
+        --r-lg:6px !important;
+        --r-xl:10px !important;
+        --navy:#07111F !important;   /* slightly darker */
+        --navy-2:#0D1B2E !important;
+        --surface-body:#F7F6F3 !important;
+      }
+      /* Button radius override — catches all variants */
+      .btn-primary,.btn-secondary,.btn-ghost,.btn-ghost-dark,.btn-outline,
+      .btn-primary-alt,.btn-text-link,.path-btn,.trial-btn,.form-trigger-btn,
+      .form-submit,.panel-nav-btn,.scroll-top,.btn-cta{
+        border-radius:var(--r-sm) !important;
+      }
+      /* Pill/tag shapes keep slightly more radius */
+      .team-tag,.cap-pill,.trial-phase,.trial-status,.persp-badge,
+      .stage-node,.tech-tag,.focus-tag{
+        border-radius:var(--r-xs) !important;
+      }
+</style>
 </head>
 <body>
-  <div id="progress-bar"></div>
+  <div id="pb" role="progressbar" aria-hidden="true" style="position:fixed;top:0;left:0;height:1.5px;width:0;background:#007A7A;z-index:3000;transition:width .08s linear;pointer-events:none;"></div>
 
-  <!-- HEADER -->
-    <!-- ═══ HEADER ═══ -->
-  <header class="header" id="header">
-    <div class="header-inner">
+<header class="hdr" id="hdr" style="position:fixed;top:0;left:0;right:0;height:var(--header-h,88px);background:rgba(7,17,31,.97);border-bottom:1px solid rgba(255,255,255,.08);z-index:900;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:background .2s,border-color .2s;">
+  <div style="display:flex;align-items:center;height:100%;max-width:var(--max-w,1440px);margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem);">
 
-      <a href="index.html" class="logo" aria-label="neumAC — Área Sanitaria de A Coruña y Cee">
-        <svg height="40" viewBox="0 0 248 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;flex-shrink:0;">
-          <defs>
-            <linearGradient id="nmg" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%"   stop-color="#00D4D4"/>
-              <stop offset="100%" stop-color="#4A9EE8"/>
-            </linearGradient>
-          </defs>
-          <text x="0" y="29"
-            font-family="'Trebuchet MS','Segoe UI',Arial,sans-serif"
-            font-size="24" font-weight="700"
-            fill="url(#nmg)" letter-spacing="-0.4">neumAC</text>
-          <line x1="100" y1="5" x2="100" y2="37"
-            stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
-          <text x="111" y="17"
-            font-family="'Segoe UI',Arial,sans-serif"
-            font-size="8" font-weight="700"
-            fill="rgba(255,255,255,0.58)" letter-spacing="0.35">ÁREA SANITARIA DE</text>
-          <text x="111" y="30"
-            font-family="'Segoe UI',Arial,sans-serif"
-            font-size="8" font-weight="700"
-            fill="rgba(255,255,255,0.58)" letter-spacing="0.35">A CORUÑA Y CEE</text>
-        </svg>
-      </a>
+    <a href="index.html" aria-label="neumAC R&I — Home" style="display:flex;align-items:center;gap:.75rem;text-decoration:none;flex-shrink:0;margin-right:2.5rem;">
+      <div style="width:32px;height:32px;border-radius:3px;background:#007A7A;display:flex;align-items:center;justify-content:center;flex-shrink:0;" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M5 18V9l7-5 7 5v9"/><path d="M9 18v-6h6v6"/></svg>
+      </div>
+      <div>
+        <div style="font-family:var(--ff-body,'DM Sans',sans-serif);font-size:.9375rem;font-weight:600;color:#fff;letter-spacing:-.01em;line-height:1;" id="hdrLogoName">neumAC R&amp;I</div>
+        <div style="font-family:var(--ff-mono,'DM Mono',monospace);font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);line-height:1.3;margin-top:2px;">CHUAC · INIBIC · SERGAS</div>
+      </div>
+    </a>
 
-      <div class="header-nav-spacer" aria-hidden="true"></div>
+    <nav style="display:flex;align-items:center;gap:0;flex:1;min-width:0;" aria-label="Primary navigation" id="hdrNav">
+      <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
+      <a href="clinical.html"><span lang="en">Research</span><span lang="es">Investigación</span></a>
+      <a href="innovation.html"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
+      <a href="news.html" class="current" aria-current="page"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
+    </nav>
 
-      <nav class="nav" aria-label="Primary navigation">
-          <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
-          <a href="clinical.html"><span lang="en">Clinical Research</span><span lang="es">Investigación Clínica</span></a>
-          <a href="innovation.html"><span lang="en">Innovation Hub</span><span lang="es">Centro de Innovación</span></a>
-          <a href="news.html" class="current" aria-current="page"><span lang="en">Perspectives</span><span lang="es">Perspectivas</span></a>
-          </nav>
-
-      <div class="header-right">
-        <button class="mob-toggle" id="mobToggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobDrawer">
-          <span></span><span></span><span></span>
+    <div style="display:flex;align-items:center;gap:.75rem;margin-left:auto;flex-shrink:0;">
+      <div style="position:relative;" id="langSw">
+        <button id="langBtn" aria-haspopup="listbox" aria-expanded="false" aria-label="Select language"
+          style="display:flex;align-items:center;gap:.3rem;padding:.4rem .6rem;border-radius:3px;font-family:var(--ff-mono,'DM Mono',monospace);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);background:transparent;border:1px solid rgba(255,255,255,.12);cursor:pointer;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="width:12px;height:12px;"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+          <span id="langLabel">EN</span>
         </button>
-        <div class="lang-sw" id="langSw">
-          <button class="lang-sw-btn" id="langBtn" aria-haspopup="listbox" aria-expanded="false" aria-label="Select language">
-            <svg class="ls-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-              <circle cx="12" cy="12" r="9"/>
-              <path d="M12 3c-2.5 3-4 5.5-4 9s1.5 6 4 9M12 3c2.5 3 4 5.5 4 9s-1.5 6-4 9M3 12h18"/>
-              <path d="M3.6 7.5h16.8M3.6 16.5h16.8"/>
-            </svg>
-            <span class="lang-sw-label" id="langLabel">EN</span>
-            <svg class="lang-sw-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
-              <path d="M6 9l6 6 6-6"/>
-            </svg>
-          </button>
-          <div class="lang-sw-panel" role="listbox" id="langPanel">
-            <button class="lang-opt active" role="option" data-lang="en" aria-selected="true">
-              <div class="lang-opt-flag flag-en" aria-hidden="true"></div>
-              <div class="lang-opt-info">
-                <span class="lang-opt-name">English</span>
-                <span class="lang-opt-code">EN</span>
-              </div>
-              <div class="lang-opt-tick" aria-hidden="true"></div>
-            </button>
-            <button class="lang-opt" role="option" data-lang="es" aria-selected="false">
-              <div class="lang-opt-flag flag-es" aria-hidden="true">
-                <div class="s1"></div><div class="s2"></div><div class="s3"></div>
-              </div>
-              <div class="lang-opt-info">
-                <span class="lang-opt-name">Español</span>
-                <span class="lang-opt-code">ES</span>
-              </div>
-              <div class="lang-opt-tick" aria-hidden="true"></div>
-            </button>
-          </div>
+        <div id="langPanel" role="listbox" style="position:absolute;top:calc(100% + 8px);right:0;background:#0D1B2E;border:1px solid rgba(255,255,255,.1);border-radius:4px;overflow:hidden;min-width:100px;z-index:200;opacity:0;pointer-events:none;transform:translateY(-6px);transition:opacity .15s,transform .15s;">
+          <button class="lang-opt active" data-lang="en" role="option" aria-selected="true" onclick="selectLang('en')" style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:.6rem 1rem;font-size:.8125rem;color:rgba(255,255,255,.6);background:none;border:none;cursor:pointer;text-align:left;">English <span class="lang-tick" style="width:5px;height:5px;border-radius:50%;background:#007A7A;opacity:0;"></span></button>
+          <button class="lang-opt" data-lang="es" role="option" aria-selected="false" onclick="selectLang('es')" style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:.6rem 1rem;font-size:.8125rem;color:rgba(255,255,255,.6);background:none;border:none;cursor:pointer;text-align:left;">Español <span class="lang-tick" style="width:5px;height:5px;border-radius:50%;background:#007A7A;opacity:0;"></span></button>
         </div>
       </div>
-
-    </div>
-  </header>
-
-  <!-- Mobile overlay & drawer -->
-  <div class="mob-overlay" id="mobOverlay" aria-hidden="true"></div>
-  <nav class="mob-drawer" id="mobDrawer" aria-label="Mobile navigation" aria-hidden="true">
-    <div class="mob-head">
-      <div class="mob-head-logo"><svg height="28" viewBox="0 0 100 28" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
-            <defs>
-              <linearGradient id="nmgm" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%"   stop-color="#00D4D4"/>
-                <stop offset="100%" stop-color="#4A9EE8"/>
-              </linearGradient>
-            </defs>
-            <text x="0" y="21"
-              font-family="'Trebuchet MS','Segoe UI',Arial,sans-serif"
-              font-size="18" font-weight="700"
-              fill="url(#nmgm)" letter-spacing="-0.3">neumAC</text>
-          </svg></div>
-        <span class="mob-head-name">neumAC R&amp;I</span>
-      </div>
-      <button class="mob-close" id="mobClose" aria-label="Close navigation">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:18px;height:18px;"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      <a href="#contact" style="display:inline-flex;align-items:center;gap:.4rem;padding:.5rem 1rem;font-size:.75rem;font-weight:600;letter-spacing:.02em;background:#007A7A;color:#fff;border:none;border-radius:3px;cursor:pointer;text-decoration:none;white-space:nowrap;transition:background .15s;">
+        <span lang="en">Contact</span><span lang="es">Contacto</span>
+      </a>
+      <button id="mobToggle" aria-label="Open navigation" aria-expanded="false"
+        style="display:none;width:40px;height:40px;background:transparent;border:1px solid rgba(255,255,255,.12);border-radius:3px;cursor:pointer;align-items:center;justify-content:center;flex-direction:column;gap:5px;"
+        class="mob-toggle-btn">
+        <span style="display:block;width:16px;height:1.5px;background:#fff;transition:all .25s;"></span>
+        <span style="display:block;width:16px;height:1.5px;background:#fff;transition:all .25s;"></span>
+        <span style="display:block;width:16px;height:1.5px;background:#fff;transition:all .25s;"></span>
       </button>
     </div>
-    <div class="mob-links">
-      <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
-      <a href="clinical.html"><span lang="en">Clinical Research</span><span lang="es">Investigación Clínica</span></a>
-      <a href="innovation.html"><span lang="en">Innovation Hub</span><span lang="es">Centro de Innovación</span></a>
-      <a href="news.html" class="current" aria-current="page"><span lang="en">Perspectives</span><span lang="es">Perspectivas</span></a>
-    </div>
-    <div class="mob-footer">
-      <a href="index.html#contact" class="mob-cta" onclick="closeMob()"><span lang="en">Contact Us</span><span lang="es">Contáctenos</span></a>
-      <div class="mob-lang" role="group" aria-label="Language">
-        <span class="mob-lang-lbl">Lang</span>
-        <button id="mobLangEn" class="active" onclick="selectLang('en')">EN</button>
-        <button id="mobLangEs" onclick="selectLang('es')">ES</button>
-      </div>
-    </div>
-  </nav>
+  </div>
+</header>
 
-  <!-- Scroll to top -->
-  <button class="scroll-top" id="scrollTop" aria-label="Scroll to top of page">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M12 19V5M5 12l7-7 7 7"/>
-    </svg>
-  </button>
+<style>
+  @media(max-width:900px){
+    #hdrNav{display:none !important;}
+    .mob-toggle-btn{display:flex !important;}
+  }
+  #hdr.scrolled{background:rgba(255,255,255,.97) !important;border-bottom-color:rgba(0,0,0,.06) !important;}
+  #hdr.scrolled #hdrLogoName{color:#111 !important;}
+  #hdr.scrolled #hdrNav a{color:rgba(0,0,0,.5) !important;}
+  #hdr.scrolled #hdrNav a.current{color:#111 !important;border-bottom-color:#007A7A !important;}
+  #hdr.scrolled #langBtn{color:rgba(0,0,0,.5) !important;border-color:rgba(0,0,0,.12) !important;}
+  #hdrNav a{padding:.5rem .875rem;font-size:.8125rem;font-weight:400;color:rgba(255,255,255,.62);text-decoration:none;white-space:nowrap;transition:color .15s;border-bottom:1.5px solid transparent;display:inline-block;}
+  #hdrNav a:hover{color:rgba(255,255,255,.92);}
+  #hdrNav a.current{color:#fff;border-bottom-color:#007A7A;}
+  #langSw.open #langPanel{opacity:1 !important;pointer-events:auto !important;transform:none !important;}
+  .lang-opt:hover{background:rgba(255,255,255,.05) !important;color:#fff !important;}
+  .lang-opt.active{color:#fff !important;font-weight:500 !important;}
+  .lang-opt.active .lang-tick{opacity:1 !important;}
+</style>
 
-  
+<div class="mob-overlay" id="mobOverlay" aria-hidden="true" style="position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1050;opacity:0;pointer-events:none;transition:opacity .28s;"></div>
+<nav id="mobDrawer" style="position:fixed;top:0;right:-100%;bottom:0;width:min(320px,90vw);background:#0D1B2E;border-left:1px solid rgba(255,255,255,.08);z-index:1100;transition:right .28s cubic-bezier(.4,0,.2,1);padding-top:var(--header-h,88px);overflow-y:auto;" aria-label="Mobile navigation">
+  <button id="mobClose" aria-label="Close navigation" style="position:absolute;top:1.25rem;right:1.25rem;width:32px;height:32px;background:rgba(255,255,255,.08);border:none;border-radius:3px;cursor:pointer;color:rgba(255,255,255,.6);font-size:1rem;display:flex;align-items:center;justify-content:center;">✕</button>
+  <div style="padding:1.5rem 1.25rem;display:flex;flex-direction:column;gap:.25rem;">
+    <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
+    <a href="clinical.html"><span lang="en">Research</span><span lang="es">Investigación</span></a>
+    <a href="innovation.html"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
+    <a href="news.html" class="current"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
+    <a href="#contact" onclick="closeMob()" style="margin-top:.75rem;background:#007A7A;color:#fff;text-align:center;font-weight:600;padding:.7rem .875rem;border-radius:3px;text-decoration:none;font-size:.9375rem;"><span lang="en">Get in touch</span><span lang="es">Contacto</span></a>
+  </div>
+  <div style="padding:1rem 1.25rem;border-top:1px solid rgba(255,255,255,.06);display:flex;gap:.5rem;">
+    <button id="mobLangEn" onclick="selectLang('en')" class="lang-opt active" data-lang="en" style="flex:1;border-radius:3px;padding:.6rem;background:none;border:none;cursor:pointer;color:rgba(255,255,255,.6);">EN</button>
+    <button id="mobLangEs" onclick="selectLang('es')" class="lang-opt" data-lang="es" style="flex:1;border-radius:3px;padding:.6rem;background:none;border:none;cursor:pointer;color:rgba(255,255,255,.6);">ES</button>
+  </div>
+</nav>
 
-  <!-- HERO -->
-  <section class="blog-hero">
+<section class="blog-hero">
     <!-- Bronchial tree background canvas -->
     <canvas id="newsBg" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
     <!-- Top: big type + stats shelf -->
@@ -1138,9 +1118,9 @@
         </div>
         <nav class="footer-nav" aria-label="Footer navigation">
           <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
-          <a href="clinical.html"><span lang="en">Clinical Research</span><span lang="es">Investigación Clínica</span></a>
-          <a href="innovation.html"><span lang="en">Innovation Hub</span><span lang="es">Centro de Innovación</span></a>
-          <a href="news.html"><span lang="en">Perspectives</span><span lang="es">Perspectivas</span></a>
+          <a href="clinical.html"><span lang="en">Research</span><span lang="es">Investigación</span></a>
+          <a href="innovation.html"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
+          <a href="news.html"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
           <a href="index.html#contact"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
         </nav>
         <div class="footer-right">
