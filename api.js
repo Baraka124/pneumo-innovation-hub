@@ -1000,10 +1000,6 @@ async function loadFeaturedStories() {
       return;
     }
 
-    // Split: first is the feature, next up to 4 are sidebar
-    const [feature, ...rest] = posts;
-    const sidebar = rest.slice(0, 4);
-
     const typeLabel = {
       publication: 'Publication', article: 'Article',
       highlight: 'Highlight', update: 'Update', photo_story: 'Photo Story'
@@ -1019,56 +1015,117 @@ async function loadFeaturedStories() {
       return dt.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
     }
 
-    // ── Main feature (left) ──────────────────
-    const hasImg = !!feature.featured_image_url;
-    const topArea = hasImg
-      ? `<div class="story-main-img">
-           <img src="${escHtml(feature.featured_image_url)}" alt="${escHtml(feature.title)}" loading="eager"/>
-         </div>`
-      : `<div class="story-main-typographic">
-           <canvas id="storyCanvas" aria-hidden="true"></canvas>
-           ${feature.journal_name ? `<div class="story-typographic-journal">${escHtml(feature.journal_name)}</div>` : ''}
-           <div class="story-typographic-title">${escHtml(feature.title)}</div>
-         </div>`;
-
-    const featureHTML = `
-      <div class="story-main">
-        ${topArea}
-        <div class="story-main-body">
-          <span class="story-type-pill ${typePill[feature.post_type] || 'pill-article'}">
-            ${typeLabel[feature.post_type] || feature.post_type}
-            ${feature.is_featured ? ' · Featured' : ''}
-          </span>
-          ${hasImg ? `<div class="story-main-title">${escHtml(feature.title)}</div>` : ''}
-          <div class="story-main-meta">
-            ${feature.author?.full_name ? `<span>${escHtml(feature.author.full_name)}</span><span class="story-meta-sep">·</span>` : ''}
-            ${feature.journal_name && !hasImg ? '' : feature.journal_name ? `<span style="color:var(--teal);font-weight:500;">${escHtml(feature.journal_name)}</span><span class="story-meta-sep">·</span>` : ''}
-            <span>${formatDate(feature.published_at)}</span>
-            ${feature.doi ? `<span class="story-meta-sep">·</span><a href="https://doi.org/${escHtml(feature.doi)}" target="_blank" rel="noopener">DOI</a>` : ''}
-          </div>
-        </div>
-      </div>`;
-
-    // ── Sidebar items (right) ────────────────
-    const sidebarHTML = `
-      <div class="story-sidebar">
-        ${sidebar.map(p => `
-          <a class="story-side-item" href="news.html" aria-label="${escHtml(p.title)}">
-            ${p.journal_name ? `<div class="story-side-journal">${escHtml(p.journal_name)}</div>` : ''}
-            <div class="story-side-title">${escHtml(p.title)}</div>
-            <div class="story-side-meta">${formatDate(p.published_at)}${p.author?.full_name ? ' · ' + escHtml(p.author.full_name) : ''}</div>
-          </a>`).join('')}
-      </div>`;
-
-    section.innerHTML = `<div class="story-layout">${featureHTML}${sidebarHTML}</div>`;
-
-    // Boot mini bronchial tree in typographic card if no image
-    if (!hasImg) {
-      const c = document.getElementById('storyCanvas');
-      if (c && window._bootMiniTree) window._bootMiniTree(c);
+    // Pick the feature post: prefer ones flagged is_featured (curated by an editor),
+    // but pick randomly among them rather than always the same one — and avoid
+    // repeating the same pick on consecutive rotations. Falls back to a random
+    // pick across all recent posts if none are flagged.
+    let lastFeatureId = null;
+    function pickFeature() {
+      const featuredPool = posts.filter(p => p.is_featured);
+      const pool = featuredPool.length ? featuredPool : posts;
+      if (pool.length === 1) return pool[0];
+      let pick;
+      do { pick = pool[Math.floor(Math.random() * pool.length)]; } while (pick.id === lastFeatureId);
+      lastFeatureId = pick.id;
+      return pick;
     }
 
-  } catch (err) {
+    // Decorative motif shown in place of a missing featured image — a static,
+    // CSS-animated branching pattern that always renders (no canvas/script dependency)
+    const MOTIF_SVG = `<div class="story-typographic-motif" aria-hidden="true"><svg viewBox="0 0 240 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g stroke="currentColor" stroke-linecap="round">
+        <path d="M40 320 L40 220" stroke-width="2.4" opacity="0.5"/>
+        <path d="M40 220 L20 150" stroke-width="1.8" opacity="0.45"/>
+        <path d="M40 220 L80 160" stroke-width="1.8" opacity="0.45"/>
+        <path d="M20 150 L0 95" stroke-width="1.2" opacity="0.4"/>
+        <path d="M20 150 L45 90" stroke-width="1.2" opacity="0.4"/>
+        <path d="M80 160 L60 100" stroke-width="1.2" opacity="0.4"/>
+        <path d="M80 160 L120 105" stroke-width="1.2" opacity="0.4"/>
+        <path d="M0 95 L-15 45" stroke-width="0.8" opacity="0.35"/>
+        <path d="M0 95 L20 40" stroke-width="0.8" opacity="0.35"/>
+        <path d="M45 90 L30 35" stroke-width="0.8" opacity="0.35"/>
+        <path d="M45 90 L70 38" stroke-width="0.8" opacity="0.35"/>
+        <path d="M60 100 L45 45" stroke-width="0.8" opacity="0.35"/>
+        <path d="M120 105 L105 50" stroke-width="0.8" opacity="0.35"/>
+        <path d="M120 105 L150 55" stroke-width="0.8" opacity="0.35"/>
+      </g>
+      <g fill="currentColor">
+        <circle cx="40" cy="220" r="2.4" opacity="0.4"/><circle cx="20" cy="150" r="2" opacity="0.4"/>
+        <circle cx="80" cy="160" r="2" opacity="0.4"/><circle cx="0" cy="95" r="1.6" opacity="0.35"/>
+        <circle cx="45" cy="90" r="1.6" opacity="0.35"/><circle cx="60" cy="100" r="1.6" opacity="0.35"/>
+        <circle cx="120" cy="105" r="1.6" opacity="0.35"/>
+      </g>
+    </svg></div>`;
+
+    function renderStory(feature, sidebar) {
+      const hasImg = !!feature.featured_image_url;
+      const topArea = hasImg
+        ? `<div class="story-main-img">
+             <img src="${escHtml(feature.featured_image_url)}" alt="${escHtml(feature.title)}" loading="eager"/>
+           </div>`
+        : `<div class="story-main-typographic">
+             ${MOTIF_SVG}
+             ${feature.journal_name ? `<div class="story-typographic-journal">${escHtml(feature.journal_name)}</div>` : ''}
+             <div class="story-typographic-title">${escHtml(feature.title)}</div>
+           </div>`;
+
+      const featureHTML = `
+        <div class="story-main">
+          ${topArea}
+          <div class="story-main-body">
+            <span class="story-type-pill ${typePill[feature.post_type] || 'pill-article'}">
+              ${typeLabel[feature.post_type] || feature.post_type}
+              ${feature.is_featured ? ' · Featured' : ''}
+            </span>
+            ${hasImg ? `<div class="story-main-title">${escHtml(feature.title)}</div>` : ''}
+            <div class="story-main-meta">
+              ${feature.author?.full_name ? `<span>${escHtml(feature.author.full_name)}</span><span class="story-meta-sep">·</span>` : ''}
+              ${feature.journal_name && !hasImg ? '' : feature.journal_name ? `<span style="color:var(--teal);font-weight:500;">${escHtml(feature.journal_name)}</span><span class="story-meta-sep">·</span>` : ''}
+              <span>${formatDate(feature.published_at)}</span>
+              ${feature.doi ? `<span class="story-meta-sep">·</span><a href="https://doi.org/${escHtml(feature.doi)}" target="_blank" rel="noopener">DOI</a>` : ''}
+            </div>
+          </div>
+        </div>`;
+
+      const sidebarHTML = `
+        <div class="story-sidebar">
+          ${sidebar.map(p => `
+            <a class="story-side-item" href="news.html" aria-label="${escHtml(p.title)}">
+              ${p.journal_name ? `<div class="story-side-journal">${escHtml(p.journal_name)}</div>` : ''}
+              <div class="story-side-title">${escHtml(p.title)}</div>
+              <div class="story-side-meta">${formatDate(p.published_at)}${p.author?.full_name ? ' · ' + escHtml(p.author.full_name) : ''}</div>
+            </a>`).join('')}
+        </div>`;
+
+      section.innerHTML = `<div class="story-layout" style="opacity:0;">${featureHTML}${sidebarHTML}</div>`;
+      requestAnimationFrame(() => {
+        const layout = section.querySelector('.story-layout');
+        if (layout) layout.style.opacity = '1';
+      });
+    }
+
+    function showRandomStory() {
+      const feature = pickFeature();
+      const sidebar = posts.filter(p => p.id !== feature.id).slice(0, 4);
+      renderStory(feature, sidebar);
+    }
+
+    showRandomStory();
+
+    // Rotate the feature periodically, same pattern as the news page spotlight,
+    // so the homepage doesn't always show the exact same story to every visitor.
+    setInterval(() => {
+      const layout = section.querySelector('.story-layout');
+      if (layout) {
+        layout.style.transition = 'opacity .35s ease';
+        layout.style.opacity = '0';
+        setTimeout(() => { showRandomStory(); }, 350);
+      } else {
+        showRandomStory();
+      }
+    }, 300000); /* ~5 minutes */
+
+  } catch (err) {  
     console.error('Story section load failed:', err);
     if (skeleton) skeleton.innerHTML = '<p style="color:var(--ink-3);font-size:.875rem;padding:2rem 0;">Unable to load recent posts.</p>';
   }
