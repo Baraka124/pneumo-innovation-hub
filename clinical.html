@@ -1864,12 +1864,12 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
           <h3 class="display sm" style="margin-bottom:1.375rem;"><span lang="en">Send a message</span><span lang="es">Enviar un mensaje</span></h3>
           <form id="researchForm" novalidate>
             <div class="form-grid">
-              <div class="form-group"><label><span lang="en">Organisation</span><span lang="es">Organización</span></label><input type="text" placeholder="Pharma Corp, University…" required /></div>
-              <div class="form-group"><label><span lang="en">Your Name</span><span lang="es">Su Nombre</span></label><input type="text" placeholder="Full name" required /></div>
-              <div class="form-group span-2"><label><span lang="en">Email Address</span><span lang="es">Correo Electrónico</span></label><input type="email" placeholder="your@email.com" required /></div>
+              <div class="form-group"><label><span lang="en">Organisation</span><span lang="es">Organización</span></label><input type="text" name="organisation" placeholder="Pharma Corp, University…" required /></div>
+              <div class="form-group"><label><span lang="en">Your Name</span><span lang="es">Su Nombre</span></label><input type="text" name="contact_name" placeholder="Full name" required /></div>
+              <div class="form-group span-2"><label><span lang="en">Email Address</span><span lang="es">Correo Electrónico</span></label><input type="email" name="email" placeholder="your@email.com" required /></div>
               <div class="form-group span-2">
                 <label><span lang="en">Research Line of Interest</span><span lang="es">Línea de Investigación</span></label>
-                <select>
+                <select name="area_of_interest">
                   <option value="">Select a line…</option>
                   <option value="01">01 — Transplantation, Hypertension &amp; Diffuse</option>
                   <option value="02">02 — Airway Diseases</option>
@@ -1882,7 +1882,7 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
               </div>
               <div class="form-group span-2">
                 <label><span lang="en">Nature of Inquiry</span><span lang="es">Tipo de Consulta</span></label>
-                <select>
+                <select name="secondary_topic">
                   <option value="">Select…</option>
                   <option>Sponsored clinical study — site qualification</option>
                   <option>Investigator-initiated study partnership</option>
@@ -1892,7 +1892,7 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
                   <option>Other</option>
                 </select>
               </div>
-              <div class="form-group span-2"><label><span lang="en">Message</span><span lang="es">Mensaje</span></label><textarea rows="4" placeholder="Please describe your inquiry or project in brief…"></textarea></div>
+              <div class="form-group span-2"><label><span lang="en">Message</span><span lang="es">Mensaje</span></label><textarea name="message" rows="4" placeholder="Please describe your inquiry or project in brief…"></textarea></div>
               <div class="form-group span-2" style="margin-bottom:0;">
                 <button type="submit" class="form-submit"><span lang="en">Submit Inquiry</span><span lang="es">Enviar Consulta</span>
                 </button>
@@ -1938,10 +1938,10 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
   <script>
     /* ── Scroll: header + progress bar + scroll-to-top ── */
     (function(){
-      var hdr=document.getElementById('header'),prg=document.getElementById('progress-bar'),stt=document.getElementById('scrollTop');
+      var hdr=document.getElementById('hdr'),prg=document.getElementById('progress-bar'),stt=document.getElementById('scrollTop');
       window.addEventListener('scroll',function(){
         var y=window.scrollY;
-        hdr.classList.toggle('scrolled',y>40);
+        if(hdr)hdr.classList.toggle('scrolled',y>40);
         if(prg){var tot=document.documentElement.scrollHeight-window.innerHeight;prg.style.width=(tot>0?(y/tot*100):0)+'%';}
         if(stt){var thr=Math.max(400,(document.documentElement.scrollHeight-window.innerHeight)*0.35);stt.classList.toggle('visible',y>thr);}
       },{passive:true});
@@ -2050,15 +2050,6 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
     },{threshold:.1,rootMargin:'0px 0px -40px 0px'});
     document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
   </script>
-  <script>
-    var _cf = document.getElementById('clinicalForm')||document.getElementById('contactForm');
-    if(_cf) _cf.addEventListener('submit',function(e){
-      e.preventDefault();
-      var s=document.getElementById('formSuccess');
-      if(s){s.classList.add('show');setTimeout(function(){s.classList.remove('show');},7000);}
-      e.target.reset();
-    });
-  </script>
 <script>
 (function(){
   var hdr=document.getElementById('hdr');
@@ -2076,6 +2067,8 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
   window.selectLang=function(l){if(_orig)_orig(l);syncLang(l);if(drawer)drawer.classList.remove('open');if(mob)mob.setAttribute('aria-expanded','false');};
 })();
 </script>
+<script src="animations.js" defer></script>
+<script src="api.js" defer></script>
 <div id="cookieBanner" role="dialog"
   style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9000;background:rgba(7,17,31,.97);border-top:1px solid rgba(255,255,255,.08);padding:1rem clamp(1.25rem,4vw,3rem);flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;backdrop-filter:blur(8px);">
   <p style="font-size:.8rem;color:rgba(255,255,255,.55);margin:0;max-width:680px;">
@@ -2087,4 +2080,4 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
     <span lang="en">Understood</span><span lang="es">Entendido</span>
   </button>
 </div>
-<script>if(!localStorage.getItem('cookieOk')){var c=document.getElementById('cookieBanner');if(c)c.style.display='flex';}</script>     
+<script>if(!localStorage.getItem('cookieOk')){var c=document.getElementById('cookieBanner');if(c)c.style.display='flex';}</script>
