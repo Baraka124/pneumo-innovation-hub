@@ -1477,7 +1477,6 @@ body { padding-top: calc(88px + 30px) !important; }
     </div>
   </div>
 </div>
-</div>
 
 <!-- ═══════════════════ CONTACT ════════════════════ -->
 <section class="section contact-section" id="contact">
@@ -1534,19 +1533,19 @@ body { padding-top: calc(88px + 30px) !important; }
           <div class="form-grid">
             <div>
               <label class="form-label"><span lang="en">Name</span><span lang="es">Nombre</span></label>
-              <input type="text" class="form-input" placeholder="Full name" required/>
+              <input type="text" class="form-input" name="contact_name" placeholder="Full name" required/>
             </div>
             <div>
               <label class="form-label"><span lang="en">Organisation</span><span lang="es">Organización</span></label>
-              <input type="text" class="form-input" placeholder="Institution / Company" required/>
+              <input type="text" class="form-input" name="organisation" placeholder="Institution / Company" required/>
             </div>
             <div class="fg-span2">
               <label class="form-label"><span lang="en">Email</span><span lang="es">Email</span></label>
-              <input type="email" class="form-input" placeholder="your@institution.edu" required/>
+              <input type="email" class="form-input" name="email" placeholder="your@institution.edu" required/>
             </div>
             <div class="fg-span2">
               <label class="form-label"><span lang="en">Area of interest</span><span lang="es">Área de interés</span></label>
-              <select class="form-select">
+              <select class="form-select" name="area_of_interest">
                 <option value=""><span lang="en">Select…</span></option>
                 <option>Clinical study sponsorship or site qualification</option>
                 <option>Investigator-initiated research collaboration</option>
@@ -1559,7 +1558,7 @@ body { padding-top: calc(88px + 30px) !important; }
             </div>
             <div class="fg-span2">
               <label class="form-label"><span lang="en">Message</span><span lang="es">Mensaje</span></label>
-              <textarea class="form-textarea" rows="3" placeholder="Tell us about your project or enquiry…"></textarea>
+              <textarea class="form-textarea" name="message" rows="3" placeholder="Tell us about your project or enquiry…"></textarea>
             </div>
             <div class="fg-span2">
               <button type="submit" class="form-submit"><span lang="en">Send message</span><span lang="es">Enviar mensaje</span></button>
@@ -1711,7 +1710,7 @@ body { padding-top: calc(88px + 30px) !important; }
   var hdr=document.getElementById('hdr'),pb=document.getElementById('pb'),stt=document.getElementById('scrollTop');
   window.addEventListener('scroll',function(){
     var y=window.scrollY,tot=document.documentElement.scrollHeight-window.innerHeight;
-    hdr.classList.toggle('light',y>60);
+    if(hdr)hdr.classList.toggle('light',y>60);
     if(pb){pb.style.width=(tot>0?(y/tot*100):0)+'%';}
     if(stt){stt.classList.toggle('visible',y>400);}
   },{passive:true});
@@ -1766,15 +1765,6 @@ var io=new IntersectionObserver(function(entries){
   entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
 },{threshold:.08,rootMargin:'0px 0px -32px 0px'});
 document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
-
-/* ── Contact form ── */
-var _cf=document.getElementById('contactForm');
-if(_cf)_cf.addEventListener('submit',function(e){
-  e.preventDefault();
-  var s=document.getElementById('formSuccess');
-  if(s){s.classList.add('show');setTimeout(function(){s.classList.remove('show');},7000);}
-  e.target.reset();
-});
 </script>
 
 <script>
