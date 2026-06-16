@@ -279,11 +279,12 @@
       position:relative;z-index:1;
     }
     .blog-hero-eyebrow{
-      font-family:var(--ff-mono);font-size:.625rem;letter-spacing:.2em;text-transform:uppercase;
-      color:var(--teal-2);margin-bottom:1rem;
-      display:flex;align-items:center;gap:.75rem;
+      font-family:var(--ff-mono);font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;
+      color:var(--teal-2);margin-bottom:1.25rem;
+      display:inline-flex;align-items:center;
+      padding:.3rem .75rem;border:1px solid rgba(0,179,179,.35);border-radius:100px;
+      background:rgba(0,179,179,.08);
     }
-    .blog-hero-eyebrow::before{content:'';width:24px;height:1px;background:var(--teal-2);}
     .blog-hero-h1{
       font-family:var(--ff-display);
       font-size:clamp(3rem,6vw,5rem);
@@ -344,7 +345,6 @@
       margin-bottom:.5rem;
       display:flex;align-items:center;gap:.5rem;
     }
-    .blog-hero-feature-badge::before{content:'';width:16px;height:1px;background:var(--teal-2);}
     .spotlight-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--teal-2);box-shadow:0 0 0 0 rgba(0,179,179,.6);animation:spotlightPulse 2.2s infinite;flex-shrink:0;}
     @keyframes spotlightPulse{0%{box-shadow:0 0 0 0 rgba(0,179,179,.55);}70%{box-shadow:0 0 0 6px rgba(0,179,179,0);}100%{box-shadow:0 0 0 0 rgba(0,179,179,0);}}
     .blog-hero-feature-title{
@@ -411,8 +411,7 @@
     .post-photo-scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,22,40,.88) 0%,rgba(10,22,40,.15) 55%,transparent 100%);transition:opacity .3s;}
     .post-item.is-photo:hover .post-photo-scrim{opacity:.92;}
     .post-photo-overlay{position:absolute;bottom:0;left:0;right:0;padding:1.5rem 2rem;}
-    .post-photo-badge{font-family:var(--ff-mono);font-size:.575rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.65);margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem;}
-    .post-photo-badge::before{content:'';width:14px;height:1px;background:var(--teal-2);}
+    .post-photo-badge{font-family:var(--ff-mono);font-size:.575rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.65);margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem;}
     .post-photo-title{font-family:var(--ff-display);font-size:clamp(1.25rem,2vw,1.625rem);font-weight:700;color:#fff;line-height:1.2;margin-bottom:.375rem;}
     .post-photo-meta{font-family:var(--ff-mono);font-size:.6rem;color:rgba(255,255,255,.45);display:flex;align-items:center;gap:.5rem;}
     .post-photo-hint{position:absolute;top:.875rem;right:.875rem;background:rgba(10,22,40,.6);border:1px solid rgba(255,255,255,.15);backdrop-filter:blur(6px);border-radius:99px;padding:.2rem .7rem;font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.65);}
