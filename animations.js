@@ -10,7 +10,7 @@
 
 (function() {
   'use strict';
-
+ 
   /* ── 1. STAT COUNTER ───────────────────────────────────────── */ 
   function parseStatValue(raw) {
     raw = (raw || '').trim();
