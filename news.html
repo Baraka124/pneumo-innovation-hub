@@ -1402,10 +1402,10 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
   <script>
     /* ── Scroll: header + progress bar + scroll-to-top ── */
     (function(){
-      var hdr=document.getElementById('header'),prg=document.getElementById('progress-bar'),stt=document.getElementById('scrollTop');
+      var hdr=document.getElementById('hdr'),prg=document.getElementById('progress-bar'),stt=document.getElementById('scrollTop');
       window.addEventListener('scroll',function(){
         var y=window.scrollY;
-        hdr.classList.toggle('scrolled',y>40);
+        if(hdr)hdr.classList.toggle('scrolled',y>40);
         if(prg){var tot=document.documentElement.scrollHeight-window.innerHeight;prg.style.width=(tot>0?(y/tot*100):0)+'%';}
         if(stt){var thr=Math.max(400,(document.documentElement.scrollHeight-window.innerHeight)*0.35);stt.classList.toggle('visible',y>thr);}
       },{passive:true});
