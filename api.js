@@ -851,7 +851,11 @@ document.addEventListener('keydown', function(e) {
 // ─────────────────────────────────────────────
 
 function initContactForm() {
-  const form = document.getElementById('contactForm');
+  // Different pages use different form ids (index uses 'contactForm',
+  // clinical uses 'researchForm', innovation uses 'innovForm') — check all of them.
+  const form = document.getElementById('contactForm')
+            || document.getElementById('researchForm')
+            || document.getElementById('innovForm');
   if (!form) return;
 
   form.addEventListener('submit', async function(e) {
@@ -861,24 +865,30 @@ function initContactForm() {
     const success = document.getElementById('formSuccess');
     const originalText = btn ? btn.innerHTML : '';
 
-    // Get field values
-    const inputs = form.querySelectorAll('input, select, textarea');
+    // Collect fields by their `name` attribute. This is robust to each page's
+    // own field order/layout, unlike reading by position (fields[0], fields[1]…),
+    // which silently scrambles data whenever a page's form differs from the
+    // original index.html layout this was written against.
     const data = {};
-    inputs.forEach(el => {
-      const label = el.closest('.form-group')?.querySelector('label')?.textContent?.trim().toLowerCase() || el.type;
-      if (el.name) {
-        data[el.name] = el.value;
-      }
+    form.querySelectorAll('[name]').forEach(el => {
+      data[el.name] = el.value;
     });
 
-    // Collect by position — matches form field order
-    const fields = form.querySelectorAll('input, select, textarea');
+    // Some pages (clinical, innovation) have a second dropdown — e.g. "Nature
+    // of Inquiry" or "Partnership Model" — that doesn't have its own slot in
+    // the backend's contact payload. Fold it into the free-text message
+    // instead of silently dropping it.
+    let message = data.message || '';
+    if (data.secondary_topic) {
+      message = `[${data.secondary_topic}]\n\n${message}`;
+    }
+
     const payload = {
-      name:             fields[0]?.value || '',
-      organisation:     fields[1]?.value || '',
-      email:            fields[2]?.value || '',
-      area_of_interest: fields[3]?.value || '',
-      message:          fields[4]?.value || ''
+      name:             data.contact_name || '',
+      organisation:     data.organisation || '',
+      email:            data.email || '',
+      area_of_interest: data.area_of_interest || '',
+      message:          message
     };
 
     if (!payload.name || !payload.email) return;
