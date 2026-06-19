@@ -956,6 +956,7 @@ document.addEventListener('DOMContentLoaded', () => {
       loadResearchLines();
       loadLiveStats();
       loadFeaturedStories();
+      loadInnovationSpotlight();
       initContactForm();
       break;
     case 'clinical':
@@ -1128,5 +1129,90 @@ async function loadFeaturedStories() {
   } catch (err) {  
     console.error('Story section load failed:', err);
     if (skeleton) skeleton.innerHTML = '<p style="color:var(--ink-3);font-size:.875rem;padding:2rem 0;">Unable to load recent posts.</p>';
+  }
+}
+
+// ─────────────────────────────────────────────
+// 7. HOMEPAGE INNOVATION SPOTLIGHT
+// /api/innovation-projects/website already only returns projects with
+// featured_in_website=true (the publish gate). Within that set, prefer
+// ones flagged is_featured (the homepage-spotlight pick, curated by an
+// editor in neumDesk), same two-tier pattern as the news story section.
+// ─────────────────────────────────────────────
+
+const STAGE_LABEL = {
+  'Idea': 'Concept', 'Prototipo': 'Prototype', 'Piloto': 'Pilot',
+  'Validación': 'Validation', 'Escalamiento': 'Scaling', 'Comercialización': 'Commercialisation'
+};
+
+async function loadInnovationSpotlight() {
+  const section = document.getElementById('spotlightSection');
+  const skeleton = document.getElementById('spotlightSkeleton');
+  if (!section) return;
+
+  try {
+    const { data } = await apiFetch('/api/innovation-projects/website');
+    const projects = data || [];
+
+    if (!projects.length) {
+      // No published projects — hide the whole section rather than show an empty card
+      const sec = document.getElementById('innovation-spotlight');
+      if (sec) sec.style.display = 'none';
+      return;
+    }
+
+    let lastPickId = null;
+    function pickSpotlight() {
+      const featuredPool = projects.filter(p => p.is_featured);
+      const pool = featuredPool.length ? featuredPool : projects;
+      if (pool.length === 1) return pool[0];
+      let pick;
+      do { pick = pool[Math.floor(Math.random() * pool.length)]; } while (pick.id === lastPickId);
+      lastPickId = pick.id;
+      return pick;
+    }
+
+    function renderSpotlight(p) {
+      const stageLabel = STAGE_LABEL[p.current_stage] || STAGE_LABEL[p.development_stage] || p.current_stage || '';
+      const html = `
+        <div class="spotlight-card" style="opacity:0;">
+          <span class="spotlight-stage-pill">
+            ${escHtml(p.category || 'Project')}${stageLabel ? ' · ' + escHtml(stageLabel) : ''}
+          </span>
+          <div class="spotlight-title">${escHtml(p.title)}</div>
+          ${p.description ? `<div class="spotlight-desc">${escHtml(p.description)}</div>` : ''}
+          <div class="spotlight-meta">
+            ${p.research_line?.name ? `<span>${escHtml(p.research_line.name)}</span><span>·</span>` : ''}
+            <a href="innovation.html">
+              <span lang="en">Learn more</span><span lang="es">Saber más</span>
+            </a>
+          </div>
+        </div>`;
+      section.innerHTML = html;
+      requestAnimationFrame(() => {
+        const card = section.querySelector('.spotlight-card');
+        if (card) card.style.opacity = '1';
+      });
+    }
+
+    function showRandomSpotlight() { renderSpotlight(pickSpotlight()); }
+
+    showRandomSpotlight();
+
+    // Rotate periodically, same pattern as the news story spotlight
+    setInterval(() => {
+      const card = section.querySelector('.spotlight-card');
+      if (card) {
+        card.style.transition = 'opacity .35s ease';
+        card.style.opacity = '0';
+        setTimeout(() => { showRandomSpotlight(); }, 350);
+      } else {
+        showRandomSpotlight();
+      }
+    }, 300000); /* ~5 minutes */
+
+  } catch (err) {
+    console.error('Innovation spotlight load failed:', err);
+    if (skeleton) skeleton.innerHTML = '<p style="color:var(--ink-3);font-size:.875rem;padding:2rem 0;">Unable to load projects.</p>';
   }
 }
