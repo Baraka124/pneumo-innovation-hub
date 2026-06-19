@@ -721,6 +721,23 @@ html.bar-dismissed body{padding-top:88px!important;}
       max-width:80%;
     }
     .story-main-body{padding:1.5rem 1.75rem;flex:1;display:flex;flex-direction:column;}
+
+    /* ── Innovation spotlight card ── */
+    .spotlight-card{
+      background:var(--white);border:1px solid var(--border-l);border-radius:var(--r-md);
+      padding:2rem 2.25rem;display:flex;flex-direction:column;gap:.875rem;
+      transition:opacity .35s ease;
+    }
+    .spotlight-stage-pill{
+      display:inline-flex;align-items:center;gap:.3rem;
+      font-family:var(--ff-mono);font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;
+      padding:.2rem .55rem;border-radius:var(--r-xs);width:fit-content;
+      background:rgba(0,122,122,.08);color:var(--teal);border:1px solid rgba(0,122,122,.2);
+    }
+    .spotlight-title{font-size:1.0625rem;font-weight:500;color:var(--ink);line-height:1.3;}
+    .spotlight-desc{font-size:.875rem;color:var(--ink-3);line-height:1.55;max-width:60ch;}
+    .spotlight-meta{display:flex;align-items:center;gap:.5rem;font-size:.75rem;color:var(--ink-3);margin-top:.25rem;}
+    .spotlight-meta a{color:var(--teal);font-weight:500;}
     .story-type-pill{
       display:inline-flex;align-items:center;gap:.3rem;
       font-family:var(--ff-mono);font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;
@@ -1541,6 +1558,37 @@ body { padding-top: calc(88px + 30px) !important; }
       </div>
     </div>
 
+  </div>
+</section>
+
+<!-- ═══════════════════ INNOVATION SPOTLIGHT ═════════════ -->
+<section class="section innovation-spotlight" id="innovation-spotlight" style="background:var(--surface);">
+  <div class="wrap">
+    <div class="from-dept-head reveal">
+      <div>
+        <div class="sec-kicker">
+          <span class="label"><span lang="en">Innovation</span><span lang="es">Innovación</span></span>
+        </div>
+        <h2 class="display-md" style="margin-top:.625rem;">
+          <span lang="en">In development</span>
+          <span lang="es">En desarrollo</span>
+        </h2>
+      </div>
+      <a href="innovation.html" class="btn-text reveal">
+        <span lang="en">All projects</span><span lang="es">Todos los proyectos</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:12px;height:12px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <!-- Spotlight card: injected by api.js loadInnovationSpotlight() -->
+    <div id="spotlightSection" class="reveal">
+      <div class="spotlight-card" id="spotlightSkeleton">
+        <div class="skel" style="height:14px;width:100px;margin-bottom:12px;"></div>
+        <div class="skel" style="height:20px;width:75%;margin-bottom:10px;"></div>
+        <div class="skel" style="height:14px;width:95%;margin-bottom:6px;"></div>
+        <div class="skel" style="height:14px;width:60%;"></div>
+      </div>
+    </div>
   </div>
 </section>
 
