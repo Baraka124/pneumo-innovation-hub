@@ -87,10 +87,11 @@ html.bar-dismissed body{padding-top:88px;}
 .hstat-num,.stat-num,.hstrip-num,.pstat-num,.blog-hero-stat-n,.hsr-n
 {color:#fff!important;-webkit-text-fill-color:#fff!important;background:none!important;-webkit-background-clip:unset!important;background-clip:unset!important;}
 .hstat-num sub{color:#009999!important;-webkit-text-fill-color:#009999!important;}
-.hsr-l{color:rgba(255,255,255,.5)!important;}
-.hero-stats{display:grid!important;grid-template-columns:1fr 1fr!important;border-radius:2px!important;}
-.hstat{padding:.75rem 1.125rem!important;border-bottom:1px solid rgba(255,255,255,.07)!important;border-right:1px solid rgba(255,255,255,.07)!important;flex-direction:column!important;align-items:flex-start!important;}
-.hstat:nth-child(even){border-right:none!important;}
+.hero-stats{display:grid!important;grid-template-columns:1fr 1fr!important;border-radius:0!important;}
+.hstat{padding:.85rem 0 .85rem 1.125rem!important;border-bottom:1px solid rgba(255,255,255,.1)!important;border-right:none!important;border-left:1px solid rgba(255,255,255,.1)!important;flex-direction:column!important;align-items:flex-start!important;}
+.hstat:nth-child(odd){border-left:none!important;}
+.hstat:nth-child(3),.hstat:nth-child(4){border-bottom:none!important;}
+.hstat:nth-child(5){grid-column:1/-1!important;border-left:none!important;border-top:1px solid rgba(255,255,255,.1)!important;border-bottom:none!important;padding-top:.85rem!important;}
 .hstat-num{font-size:1.625rem!important;line-height:1!important;}
 .hstat-label{font-size:var(--fs-label)!important;display:block!important;margin-bottom:.2rem!important;}
 .hero-stat-cta{grid-column:1/-1!important;border-top:1px solid rgba(255,255,255,.07)!important;}
@@ -149,14 +150,6 @@ html.bar-dismissed body{padding-top:88px;}
 .hstat-num sub{color:#009999!important;-webkit-text-fill-color:#009999!important;}
 .hstat-label{color:rgba(255,255,255,.72)!important;}
 
-/* STATS — compact 2-col */
-.hero-stats{display:grid!important;grid-template-columns:1fr 1fr!important;border-radius:2px!important;}
-.hstat{padding:.75rem 1.125rem!important;border-bottom:1px solid rgba(255,255,255,.07)!important;border-right:1px solid rgba(255,255,255,.07)!important;flex-direction:column!important;align-items:flex-start!important;}
-.hstat:nth-child(even){border-right:none!important;}
-.hstat-num{font-size:1.625rem!important;line-height:1!important;}
-.hstat-label{font-size:var(--fs-label)!important;display:block!important;margin-bottom:.2rem!important;}
-.hero-stat-cta{grid-column:1/-1!important;border-top:1px solid rgba(255,255,255,.07)!important;}
-
 /* LOGO */
 .hdr-logo-img{filter:brightness(0) invert(1)!important;opacity:.9!important;}
 .footer-logo-img{filter:brightness(0) invert(1)!important;opacity:.8!important;height:36px!important;width:auto!important;}
@@ -198,12 +191,17 @@ html.bar-dismissed body{padding-top:88px!important;}
 .hdr-nav a.current{color:#fff;background:rgba(255,255,255,.14);}
 .hdr-dd-trigger.current{color:#fff;background:rgba(255,255,255,.14);}
 .hdr-dd{position:relative;}
-.hdr-dd-trigger{display:inline-flex;align-items:center;gap:5px;padding:.55rem .9rem;font-family:var(--ff-body,'DM Sans',sans-serif);font-size:var(--fs-meta);font-weight:500;letter-spacing:.01em;color:rgba(255,255,255,.78);text-decoration:none;white-space:nowrap;border-radius:var(--r-sm);transition:background .15s,color .15s;cursor:pointer;border:none;background:transparent;}
-.hdr-dd-trigger:hover{color:#fff;background:rgba(255,255,255,.08);}
-.hdr-dd.open .hdr-dd-trigger{color:#fff;background:rgba(255,255,255,.08);}
-.hdr-dd-trigger svg{width:13px;height:13px;transition:transform .15s;}
-.hdr-dd.open .hdr-dd-trigger svg{transform:rotate(180deg);}
-.hdr-dd-panel{position:fixed;top:var(--hdr,88px);left:0;right:0;background:rgba(255,255,255,.06);border-top:1px solid rgba(255,255,255,.12);border-bottom:1px solid rgba(255,255,255,.08);opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .18s,transform .18s,visibility .18s;z-index:899;}
+.hdr-dd-trigger{display:inline-flex;align-items:center;border-radius:var(--r-sm);transition:background .15s;}
+.hdr-dd-trigger:hover{background:rgba(255,255,255,.08);}
+.hdr-dd-trigger a{display:inline-flex;align-items:center;padding:.55rem .55rem .55rem .9rem;font-family:var(--ff-body,'DM Sans',sans-serif);font-size:var(--fs-meta);font-weight:500;letter-spacing:.01em;color:rgba(255,255,255,.78);text-decoration:none;white-space:nowrap;transition:color .15s;}
+.hdr-dd-trigger:hover a,.hdr-dd-trigger a:hover{color:#fff;}
+.hdr-dd-chevron{display:inline-flex;align-items:center;justify-content:center;padding:.55rem .75rem .55rem .35rem;border:none;background:transparent;cursor:pointer;color:rgba(255,255,255,.6);transition:color .15s;}
+.hdr-dd-chevron:hover{color:#fff;}
+.hdr-dd-chevron svg{width:13px;height:13px;transition:transform .15s;}
+.hdr-dd.open .hdr-dd-chevron svg{transform:rotate(180deg);}
+.hdr-dd.open .hdr-dd-trigger{background:rgba(255,255,255,.08);}
+.hdr-dd.open .hdr-dd-trigger a{color:#fff;}
+.hdr-dd-panel{position:fixed;top:var(--hdr,88px);left:0;right:0;background:var(--navy-2);box-shadow:0 12px 28px rgba(0,20,40,.18);border-top:1px solid rgba(255,255,255,.12);border-bottom:1px solid rgba(255,255,255,.08);opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .18s,transform .18s,visibility .18s;z-index:899;}
 .hdr-dd.open .hdr-dd-panel{opacity:1;visibility:visible;transform:translateY(0);}
 .hdr-dd-panel-inner{max-width:1440px;margin:0 auto;padding:1.75rem clamp(1.25rem,4vw,3rem) 2rem;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.25rem 2.5rem;}
 .hdr-dd-item{display:block;text-decoration:none;padding:.6rem 0;border-bottom:1px solid transparent;transition:border-color .12s;}
@@ -276,7 +274,7 @@ html.bar-dismissed body{padding-top:88px!important;}
     .display-lg{font-family:var(--ff-display);font-weight:700;font-size:clamp(2rem,3.5vw,3rem);line-height:1.08;letter-spacing:-.025em;}
     .display-md{font-family:var(--ff-display);font-weight:700;font-size:clamp(1.375rem,2.2vw,1.875rem);line-height:1.15;letter-spacing:-.02em;}
     .label{font-family:var(--ff-mono);font-size:var(--fs-label);font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);}
-    .label.on-dark{color:rgba(255,255,255,.45);}
+    .label.on-dark{color:rgba(255,255,255,.65);}
 
     /* ── LAYOUT ── */
     .wrap{width:100%;max-width:var(--max);margin:0 auto;padding:0 var(--pad);}
@@ -288,7 +286,7 @@ html.bar-dismissed body{padding-top:88px!important;}
 
     /* ══ HERO ═══════════════════════════════════ */
     .hero{
-      background:var(--navy);
+      background:var(--navy-2);
       min-height:calc(100vh - var(--hdr));
       display:flex;align-items:center;
       padding:5rem 0 4rem;
@@ -1108,7 +1106,7 @@ body { padding-top: calc(88px + 30px) !important; }
 <header class="hdr" id="hdr"><div class="hdr-inner"><a href="index.html" class="hdr-logo" aria-label="neumACt R&amp;I"><img src="logo.svg" alt="neumACt R&I" class="hdr-logo-img" onerror="this.style.opacity='.3'"></a><nav class="hdr-nav" aria-label="Primary navigation">
       <a href="index.html" class="current" aria-current="page"><span lang="en">Home</span><span lang="es">Inicio</span></a>
       <div class="hdr-dd">
-        <a href="clinical.html" class="hdr-dd-trigger"><span lang="en">Research</span><span lang="es">Investigación</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></a>
+        <span class="hdr-dd-trigger"><a href="clinical.html"><span lang="en">Research</span><span lang="es">Investigación</span></a><button type="button" class="hdr-dd-chevron" aria-label="Show research lines" aria-expanded="false" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button></span>
         <div class="hdr-dd-panel"><div class="hdr-dd-panel-inner" id="hdrResearchLines"></div></div>
       </div>
       <a href="innovation.html"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
