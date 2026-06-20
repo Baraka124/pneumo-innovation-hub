@@ -72,10 +72,10 @@ html.bar-dismissed body{padding-top:88px;}
 .hstat-num,.stat-num,.hstrip-num,.pstat-num,.blog-hero-stat-n,.hsr-n
 {color:#fff!important;-webkit-text-fill-color:#fff!important;background:none!important;-webkit-background-clip:unset!important;background-clip:unset!important;}
 .hstat-num sub{color:#009999!important;-webkit-text-fill-color:#009999!important;}
-.hsr-l{color:rgba(255,255,255,.5)!important;}
-.hero-stats{display:grid!important;grid-template-columns:1fr 1fr!important;border-radius:2px!important;}
-.hstat{padding:.75rem 1.125rem!important;border-bottom:1px solid rgba(255,255,255,.07)!important;border-right:1px solid rgba(255,255,255,.07)!important;flex-direction:column!important;align-items:flex-start!important;}
-.hstat:nth-child(even){border-right:none!important;}
+.hero-stats{display:flex!important;gap:0!important;border-radius:0!important;}
+.hstat{padding:0 1.5rem!important;border-bottom:none!important;border-right:1px solid rgba(255,255,255,.12)!important;flex:1!important;flex-direction:column!important;align-items:flex-start!important;}
+.hstat:first-child{padding-left:0!important;}
+.hstat:last-child{border-right:none!important;padding-right:0!important;}
 .hstat-num{font-size:1.625rem!important;line-height:1!important;}
 .hstat-label{font-size:var(--fs-label)!important;display:block!important;margin-bottom:.2rem!important;}
 .hero-stat-cta{grid-column:1/-1!important;border-top:1px solid rgba(255,255,255,.07)!important;}
@@ -134,14 +134,6 @@ html.bar-dismissed body{padding-top:88px;}
 .hstat-num sub{color:#009999!important;-webkit-text-fill-color:#009999!important;}
 .hstat-label{color:rgba(255,255,255,.72)!important;}
 
-/* STATS — compact 2-col */
-.hero-stats{display:grid!important;grid-template-columns:1fr 1fr!important;border-radius:2px!important;}
-.hstat{padding:.75rem 1.125rem!important;border-bottom:1px solid rgba(255,255,255,.07)!important;border-right:1px solid rgba(255,255,255,.07)!important;flex-direction:column!important;align-items:flex-start!important;}
-.hstat:nth-child(even){border-right:none!important;}
-.hstat-num{font-size:1.625rem!important;line-height:1!important;}
-.hstat-label{font-size:var(--fs-label)!important;display:block!important;margin-bottom:.2rem!important;}
-.hero-stat-cta{grid-column:1/-1!important;border-top:1px solid rgba(255,255,255,.07)!important;}
-
 /* LOGO */
 .hdr-logo-img{filter:brightness(0) invert(1)!important;opacity:.9!important;}
 .footer-logo-img{filter:brightness(0) invert(1)!important;opacity:.8!important;height:36px!important;width:auto!important;}
@@ -183,12 +175,17 @@ html.bar-dismissed body{padding-top:88px!important;}
 .hdr-nav a.current{color:#fff;background:rgba(255,255,255,.14);}
 .hdr-dd-trigger.current{color:#fff;background:rgba(255,255,255,.14);}
 .hdr-dd{position:relative;}
-.hdr-dd-trigger{display:inline-flex;align-items:center;gap:5px;padding:.55rem .9rem;font-family:var(--ff-body,'DM Sans',sans-serif);font-size:var(--fs-meta);font-weight:500;letter-spacing:.01em;color:rgba(255,255,255,.78);text-decoration:none;white-space:nowrap;border-radius:var(--r-sm);transition:background .15s,color .15s;cursor:pointer;border:none;background:transparent;}
-.hdr-dd-trigger:hover{color:#fff;background:rgba(255,255,255,.08);}
-.hdr-dd.open .hdr-dd-trigger{color:#fff;background:rgba(255,255,255,.08);}
-.hdr-dd-trigger svg{width:13px;height:13px;transition:transform .15s;}
-.hdr-dd.open .hdr-dd-trigger svg{transform:rotate(180deg);}
-.hdr-dd-panel{position:fixed;top:var(--hdr,88px);left:0;right:0;background:rgba(255,255,255,.06);border-top:1px solid rgba(255,255,255,.12);border-bottom:1px solid rgba(255,255,255,.08);opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .18s,transform .18s,visibility .18s;z-index:899;}
+.hdr-dd-trigger{display:inline-flex;align-items:center;border-radius:var(--r-sm);transition:background .15s;}
+.hdr-dd-trigger:hover{background:rgba(255,255,255,.08);}
+.hdr-dd-trigger a{display:inline-flex;align-items:center;padding:.55rem .55rem .55rem .9rem;font-family:var(--ff-body,'DM Sans',sans-serif);font-size:var(--fs-meta);font-weight:500;letter-spacing:.01em;color:rgba(255,255,255,.78);text-decoration:none;white-space:nowrap;transition:color .15s;}
+.hdr-dd-trigger:hover a,.hdr-dd-trigger a:hover{color:#fff;}
+.hdr-dd-chevron{display:inline-flex;align-items:center;justify-content:center;padding:.55rem .75rem .55rem .35rem;border:none;background:transparent;cursor:pointer;color:rgba(255,255,255,.6);transition:color .15s;}
+.hdr-dd-chevron:hover{color:#fff;}
+.hdr-dd-chevron svg{width:13px;height:13px;transition:transform .15s;}
+.hdr-dd.open .hdr-dd-chevron svg{transform:rotate(180deg);}
+.hdr-dd.open .hdr-dd-trigger{background:rgba(255,255,255,.08);}
+.hdr-dd.open .hdr-dd-trigger a{color:#fff;}
+.hdr-dd-panel{position:fixed;top:var(--hdr,88px);left:0;right:0;background:var(--navy-2);box-shadow:0 12px 28px rgba(0,20,40,.18);border-top:1px solid rgba(255,255,255,.12);border-bottom:1px solid rgba(255,255,255,.08);opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .18s,transform .18s,visibility .18s;z-index:899;}
 .hdr-dd.open .hdr-dd-panel{opacity:1;visibility:visible;transform:translateY(0);}
 .hdr-dd-panel-inner{max-width:1440px;margin:0 auto;padding:1.75rem clamp(1.25rem,4vw,3rem) 2rem;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.25rem 2.5rem;}
 .hdr-dd-item{display:block;text-decoration:none;padding:.6rem 0;border-bottom:1px solid transparent;transition:border-color .12s;}
@@ -280,106 +277,13 @@ html.bar-dismissed body{padding-top:88px!important;}
     /* ── Progress bar ── */
     #progress-bar{position:fixed;top:0;left:0;width:0;height:2px;background:var(--accent-2);z-index:2000;transition:width .1s linear;}
 
-    /* removed */
-    /* removed */
-    /* removed */
-    /* removed */
-    /* removed */
-    /* removed */
-    /* removed */
-
-    /* ── Logo ── */
-    /* removed */
-    /* removed */
-    /* removed */
-    @media(min-width:1024px){/* removed */}
-    /* removed */
-    /* removed */
-    /* removed */
-    /* removed */
-
     /* ── Hamburger ── */
-    /* removed */
-    /* removed */
-    .mob-toggle span{width:16px;height:1.5px;background:#fff;transition:all .3s;transform-origin:center;display:block;}
     .mob-toggle:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);}
     .mob-toggle.open{border-color:rgba(0,179,179,.4);}
     .mob-toggle.open span:nth-child(1){transform:rotate(45deg) translate(4.5px,4.5px);}
     .mob-toggle.open span:nth-child(2){opacity:0;transform:scaleX(0);}
     .mob-toggle.open span:nth-child(3){transform:rotate(-45deg) translate(4.5px,-4.5px);}
 
-    /* ── Language switcher — dropdown ── */
-    /* removed */
-    /* removed */
-    /* removed */
-    /* removed */
-    /* removed */
-    /* removed */
-    /* removed */
-    /* removed */
-        /* removed */
-    /* removed */
-        /* removed */
-    /* removed */
-    /* removed */
-    /* removed */
-    .flag-en{background:#012169;}
-    .flag-es{display:flex;flex-direction:column;}
-    .flag-es .s1,.flag-es .s3{flex:1;background:#c60b1e;}
-    .flag-es .s2{flex:2;background:#ffc400;}
-    /* removed */
-    /* removed */
-    /* removed */
-    /* removed */
-    /* removed */
-    /* removed */
-
-    /* ── Mobile overlay + drawer ── */
-    /* removed-conflict */
-    /* removed-conflict */
-    .mob-drawer{
-      position:fixed;top:0;right:-300px;width:280px;max-width:88vw;
-      height:100%;height:100dvh;
-      background:var(--navy-2);z-index:950;
-      transition:right .32s cubic-bezier(.4,0,.2,1);
-      display:flex;flex-direction:column;
-      border-left:1px solid var(--rule-d);
-      overscroll-behavior:contain;
-    }
-    /* removed-conflict */
-    .mob-head{
-      padding:1.125rem 1.375rem;border-bottom:1px solid var(--rule-d);
-      display:flex;justify-content:space-between;align-items:center;flex-shrink:0;
-    }
-    .mob-head-logo{display:flex;align-items:center;gap:.625rem;}
-    .mob-head-mark{
-      width:34px;height:34px;
-      background:rgba(0,179,179,.1);border:1px solid rgba(0,179,179,.22);
-      border-radius:7px;display:flex;align-items:center;justify-content:center;
-    }
-    .mob-head-name{font-family:var(--ff-display);font-weight:700;font-size:.9375rem;color:rgba(255,255,255,.88);}
-    .mob-close{
-      background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
-      cursor:pointer;width:36px;height:36px;
-      display:flex;align-items:center;justify-content:center;
-      border-radius:7px;transition:background .2s;color:var(--text-on-dark-2);
-      -webkit-tap-highlight-color:transparent;
-    }
-    .mob-close:hover{background:rgba(255,255,255,.12);}
-    /* removed-conflict */
-    /* removed-conflict */
-    /* removed-conflict */
-    /* removed-conflict */
-    /* removed-conflict */
-    .mob-footer{padding:1.125rem 1.375rem;border-top:1px solid var(--rule-d);flex-shrink:0;}
-    .mob-cta{
-      display:block;padding:.875rem;text-align:center;
-      background:rgba(0,179,179,.12);border:1px solid rgba(0,179,179,.3);
-      color:var(--teal-2);font-weight:600;border-radius:var(--r-md);
-      transition:background .2s,color .2s;font-size:.9rem;margin-bottom:.875rem;
-      -webkit-tap-highlight-color:transparent;
-    }
-    .mob-cta:hover{background:rgba(0,179,179,.26);color:#fff;}
     .mob-lang{display:flex;align-items:center;gap:.625rem;padding:.4rem 0;}
     .mob-lang-lbl{font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-right:.2rem;}
     .mob-lang button{
@@ -393,59 +297,13 @@ html.bar-dismissed body{padding-top:88px!important;}
     }
     .mob-lang button.active{color:var(--teal-2);background:rgba(0,153,153,.18);border-color:rgba(0,153,153,.3);}
 
-    /* ── Scroll-to-top ── */
-    .scroll-top{
-      position:fixed;bottom:2rem;right:2rem;
-      width:46px;height:46px;
-      background:rgba(12,68,124,.9);
-      border:1px solid rgba(0,179,179,.28);border-radius:50%;
-      display:flex;align-items:center;justify-content:center;
-      cursor:pointer;
-      opacity:0;visibility:hidden;
-      transform:translateY(14px);
-      transition:opacity .35s,visibility .35s,transform .35s cubic-bezier(.4,0,.2,1),background .2s,border-color .2s;
-      z-index:800;
-      backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-      box-shadow:0 4px 20px rgba(0,0,0,.3),0 0 0 1px rgba(0,179,179,.07);
-      -webkit-tap-highlight-color:transparent;touch-action:manipulation;
-    }
-    .scroll-top.visible{opacity:1;visibility:visible;transform:translateY(0);}
-    .scroll-top:hover{
-      background:rgba(0,153,153,.18);border-color:rgba(0,179,179,.6);
-      box-shadow:0 6px 28px rgba(0,153,153,.18),0 0 0 1px rgba(0,179,179,.14);
-    }
-    .scroll-top svg{width:18px;height:18px;color:var(--teal-2);transition:transform .25s;}
-    .scroll-top:hover svg{}
-
     /* ── Responsive header ── */
-    /* Prevent overflow at ALL sizes */
-    /* removed */
-    /* Nav separator line: hide on tablet */
-    @media(max-width:1023px){
-      /* removed */
-      /* removed */
-    }
-    /* Ensure nav is truly hidden below 1024px */
-    /* removed */
-    }
     @media(max-width:768px){
       :root{--header-h:72px;}
-      .scroll-top{bottom:1.5rem;right:1.25rem;width:44px;height:44px;}
-      /* removed */
     }
     @media(max-width:480px){
       :root{--header-h:64px;}
-      /* removed */
-      /* Compact lang button — globe icon only, no label, no chevron */
-      /* removed */
-      /* removed */
-      /* removed */
-      /* removed */
-      /* Compact hamburger */
       .mob-toggle{width:40px;height:40px;}
-    }
-    @media(max-width:360px){
-      /* removed */
     }
 
     /* ── HERO ── */
@@ -814,8 +672,6 @@ html.bar-dismissed body{padding-top:88px!important;}
         .section{padding:7rem 0;}
     @media(min-width:1400px){.section{padding:9rem 0;}}
     @media(max-width:768px){.section{padding:4rem 0;}}
-      /* When mobile drawer is open, suppress lang dropdown */
-    body[style*="overflow: hidden"] /* removed */
     
   
     /* ── FORM — refined submit + fields ── */
@@ -1228,7 +1084,7 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
 <header class="hdr" id="hdr"><div class="hdr-inner"><a href="index.html" class="hdr-logo" aria-label="neumACt R&amp;I"><img src="logo.svg" alt="neumACt R&I" class="hdr-logo-img" onerror="this.style.opacity='.3'"></a><nav class="hdr-nav" aria-label="Primary navigation">
       <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
       <div class="hdr-dd">
-        <a href="clinical.html" class="hdr-dd-trigger"><span lang="en">Research</span><span lang="es">Investigación</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></a>
+        <span class="hdr-dd-trigger"><a href="clinical.html"><span lang="en">Research</span><span lang="es">Investigación</span></a><button type="button" class="hdr-dd-chevron" aria-label="Show research lines" aria-expanded="false" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button></span>
         <div class="hdr-dd-panel"><div class="hdr-dd-panel-inner" id="hdrResearchLines"></div></div>
       </div>
       <a href="innovation.html"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
@@ -1723,10 +1579,6 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
           lines[key].count++;
         }
       });
-
-      /* Debug — log what we got */
-      console.log('[news] _all count:', _all.length, '| types:', _all.map(function(p){ return p.post_type; }));
-      console.log('[news] counts:', JSON.stringify(counts));
 
       /* Update hero stats (articles + updates + publications shown in hero) */
       ['sbArticles','sb2Articles'].forEach(function(id){ var el=document.getElementById(id); if(el) el.textContent=counts.article||'0'; });
