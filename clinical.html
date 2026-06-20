@@ -205,15 +205,16 @@ html.bar-dismissed body{padding-top:88px!important;}
 .hdr-dd.open .hdr-dd-trigger{color:#fff;background:rgba(255,255,255,.08);}
 .hdr-dd-trigger svg{width:13px;height:13px;transition:transform .15s;}
 .hdr-dd.open .hdr-dd-trigger svg{transform:rotate(180deg);}
-.hdr-dd-menu{position:absolute;top:calc(100% + 8px);left:0;width:280px;background:#fff;border-radius:var(--r-md);border:0.5px solid var(--border-l);padding:6px;box-shadow:0 8px 24px rgba(0,0,0,.12);opacity:0;visibility:hidden;transform:translateY(-4px);transition:opacity .15s,transform .15s,visibility .15s;}
-.hdr-dd.open .hdr-dd-menu{opacity:1;visibility:visible;transform:translateY(0);}
-.hdr-dd-item{display:flex;gap:9px;align-items:baseline;padding:.5rem .6rem;border-radius:var(--r-sm);text-decoration:none;transition:background .12s;}
-.hdr-dd-item:hover{background:var(--blue-50);}
-.hdr-dd-num{font-family:var(--ff-mono);font-size:var(--fs-label);color:var(--navy-2);font-weight:600;flex-shrink:0;}
-.hdr-dd-name{font-size:var(--fs-meta);color:var(--ink);}
-.hdr-dd-divider{border-top:0.5px solid var(--border-l);margin:5px 4px;}
-.hdr-dd-all{display:block;padding:.5rem .6rem;border-radius:var(--r-sm);text-decoration:none;font-size:var(--fs-label);color:var(--ink-3);transition:background .12s;}
-.hdr-dd-all:hover{background:var(--surface);}
+.hdr-dd-panel{position:fixed;top:var(--hdr,88px);left:0;right:0;background:rgba(255,255,255,.06);border-top:1px solid rgba(255,255,255,.12);border-bottom:1px solid rgba(255,255,255,.08);opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .18s,transform .18s,visibility .18s;z-index:899;}
+.hdr-dd.open .hdr-dd-panel{opacity:1;visibility:visible;transform:translateY(0);}
+.hdr-dd-panel-inner{max-width:1440px;margin:0 auto;padding:1.75rem clamp(1.25rem,4vw,3rem) 2rem;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.25rem 2.5rem;}
+.hdr-dd-item{display:block;text-decoration:none;padding:.6rem 0;border-bottom:1px solid transparent;transition:border-color .12s;}
+.hdr-dd-item:hover{border-bottom-color:rgba(255,255,255,.3);}
+.hdr-dd-num{display:block;font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.08em;color:rgba(255,255,255,.4);margin-bottom:2px;}
+.hdr-dd-name{font-size:var(--fs-body-sm);color:#fff;line-height:1.4;}
+.hdr-dd-divider{display:none;}
+.hdr-dd-all{display:block;grid-column:1/-1;margin-top:.5rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,.1);text-decoration:none;font-size:var(--fs-label);color:rgba(255,255,255,.55);transition:color .12s;}
+.hdr-dd-all:hover{color:#fff;}
 .hdr-right{display:flex;align-items:center;gap:.875rem;margin-left:auto;flex-shrink:0;}
 .lang-toggle{display:flex;align-items:center;background:rgba(255,255,255,.12);border-radius:var(--r-sm);padding:2px;flex-shrink:0;}
 .lt-btn{padding:.3rem .65rem;font-family:var(--ff-mono,'DM Mono',monospace);font-size:var(--fs-label);font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.7);background:transparent;border:none;cursor:pointer;transition:color .15s,background .15s;line-height:1;border-radius:calc(var(--r-sm) - 2px);}
@@ -1168,15 +1169,6 @@ html.bar-dismissed body{padding-top:88px!important;}
     .footer-contact a:hover{color:var(--teal-2);}
     @media(max-width:900px){.footer-right{align-items:flex-start;}}
   
-    /* ══ LANGUAGE TOGGLE ═══════════════════════════════════ */
-    .lang-toggle{display:flex;align-items:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:100px;padding:2px;gap:0;}
-    .hdr.light .lang-toggle{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.1);}
-    .lt-btn{font-family:var(--ff-mono,monospace);font-size:var(--fs-label);font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .65rem;border-radius:100px;border:none;cursor:pointer;color:rgba(255,255,255,.4);background:transparent;transition:background .18s,color .18s;line-height:1;}
-    .hdr.light 
-    .lt-btn--active,.lt-btn[aria-pressed="true"]{background:var(--teal,#007A7A)!important;color:#fff!important;}
-    .lt-divider{width:1px;height:12px;background:rgba(255,255,255,.12);}
-    .hdr.light .lt-divider{background:rgba(0,0,0,.1);}
-    /* removed */
 
 /* Logo — white background pill so composite logo reads on dark header */
 .hdr-logo {
@@ -1456,7 +1448,7 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
       <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
       <div class="hdr-dd">
         <a href="clinical.html" class="hdr-dd-trigger current" aria-current="page"><span lang="en">Research</span><span lang="es">Investigación</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></a>
-        <div class="hdr-dd-menu" id="hdrResearchLines"></div>
+        <div class="hdr-dd-panel"><div class="hdr-dd-panel-inner" id="hdrResearchLines"></div></div>
       </div>
       <a href="innovation.html"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
       <a href="news.html"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
