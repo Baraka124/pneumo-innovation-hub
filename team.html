@@ -89,11 +89,6 @@ html.bar-dismissed body{padding-top:88px;}
 .affil-ph{display:flex;align-items:center;justify-content:center;height:32px;min-width:80px;border:1px dashed rgba(255,255,255,.2);border-radius:2px;padding:0 .75rem;background:rgba(255,255,255,.03);}
 .affil-ph span{font-family:var(--ff-mono,'DM Mono',monospace);font-size:var(--fs-label);letter-spacing:.08em;color:rgba(255,255,255,.35);white-space:nowrap;}
 .affil-ph-main{height:40px;min-width:140px;}
-.lead-avatar{width:88px!important;height:88px!important;border-radius:50%!important;background:linear-gradient(135deg,#005F5F 0%,#007A7A 50%,#4A9EE8 100%)!important;box-shadow:0 2px 12px rgba(0,122,122,.25)!important;}
-.lead-initials{font-family:'DM Sans',sans-serif!important;font-size:1.5rem!important;font-weight:700!important;color:rgba(255,255,255,.95)!important;letter-spacing:.02em!important;}
-.lead-avatar::after{display:none!important;content:none!important;}
-.lead-line-num{display:none!important;}
-.lead-line-pill{background:rgba(0,122,122,.08)!important;border:1px solid rgba(0,122,122,.2)!important;color:var(--teal,#007A7A)!important;font-weight:600!important;}
 .story-typographic-journal{font-family:var(--ff-display,'Fraunces',serif)!important;font-style:italic!important;font-size:.8125rem!important;font-weight:500!important;letter-spacing:0!important;text-transform:none!important;color:rgba(255,255,255,.92)!important;background:none!important;border:none!important;border-radius:0!important;padding:0 0 .5rem 0!important;margin-bottom:.65rem!important;display:inline-block!important;position:relative;z-index:1;}
 .story-typographic-journal::after{content:'';position:absolute;bottom:0;left:0;width:28px;height:1.5px;background:var(--teal-2,#00B3B3);}
 
@@ -135,12 +130,6 @@ html.bar-dismissed body{padding-top:88px;}
 .hstat-label{color:rgba(255,255,255,.72)!important;}
 
 /* STATS — compact 2-col */
-.hero-stats{display:grid!important;grid-template-columns:1fr 1fr!important;border-radius:2px!important;}
-.hstat{padding:.75rem 1.125rem!important;border-bottom:1px solid rgba(255,255,255,.07)!important;border-right:1px solid rgba(255,255,255,.07)!important;flex-direction:column!important;align-items:flex-start!important;}
-.hstat:nth-child(even){border-right:none!important;}
-.hstat-num{font-size:1.625rem!important;line-height:1!important;}
-.hstat-label{font-size:var(--fs-label)!important;display:block!important;margin-bottom:.2rem!important;}
-.hero-stat-cta{grid-column:1/-1!important;border-top:1px solid rgba(255,255,255,.07)!important;}
 
 /* LOGO */
 .hdr-logo-img{filter:brightness(0) invert(1)!important;opacity:.9!important;}
@@ -183,12 +172,17 @@ html.bar-dismissed body{padding-top:88px!important;}
 .hdr-nav a.current{color:#fff;background:rgba(255,255,255,.14);}
 .hdr-dd-trigger.current{color:#fff;background:rgba(255,255,255,.14);}
 .hdr-dd{position:relative;}
-.hdr-dd-trigger{display:inline-flex;align-items:center;gap:5px;padding:.55rem .9rem;font-family:var(--ff-body,'DM Sans',sans-serif);font-size:var(--fs-meta);font-weight:500;letter-spacing:.01em;color:rgba(255,255,255,.78);text-decoration:none;white-space:nowrap;border-radius:var(--r-sm);transition:background .15s,color .15s;cursor:pointer;border:none;background:transparent;}
-.hdr-dd-trigger:hover{color:#fff;background:rgba(255,255,255,.08);}
-.hdr-dd.open .hdr-dd-trigger{color:#fff;background:rgba(255,255,255,.08);}
-.hdr-dd-trigger svg{width:13px;height:13px;transition:transform .15s;}
-.hdr-dd.open .hdr-dd-trigger svg{transform:rotate(180deg);}
-.hdr-dd-panel{position:fixed;top:var(--hdr,88px);left:0;right:0;background:rgba(255,255,255,.06);border-top:1px solid rgba(255,255,255,.12);border-bottom:1px solid rgba(255,255,255,.08);opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .18s,transform .18s,visibility .18s;z-index:899;}
+.hdr-dd-trigger{display:inline-flex;align-items:center;border-radius:var(--r-sm);transition:background .15s;}
+.hdr-dd-trigger:hover{background:rgba(255,255,255,.08);}
+.hdr-dd-trigger a{display:inline-flex;align-items:center;padding:.55rem .55rem .55rem .9rem;font-family:var(--ff-body,'DM Sans',sans-serif);font-size:var(--fs-meta);font-weight:500;letter-spacing:.01em;color:rgba(255,255,255,.78);text-decoration:none;white-space:nowrap;transition:color .15s;}
+.hdr-dd-trigger:hover a,.hdr-dd-trigger a:hover{color:#fff;}
+.hdr-dd-chevron{display:inline-flex;align-items:center;justify-content:center;padding:.55rem .75rem .55rem .35rem;border:none;background:transparent;cursor:pointer;color:rgba(255,255,255,.6);transition:color .15s;}
+.hdr-dd-chevron:hover{color:#fff;}
+.hdr-dd-chevron svg{width:13px;height:13px;transition:transform .15s;}
+.hdr-dd.open .hdr-dd-chevron svg{transform:rotate(180deg);}
+.hdr-dd.open .hdr-dd-trigger{background:rgba(255,255,255,.08);}
+.hdr-dd.open .hdr-dd-trigger a{color:#fff;}
+.hdr-dd-panel{position:fixed;top:var(--hdr,88px);left:0;right:0;background:var(--navy-2);box-shadow:0 12px 28px rgba(0,20,40,.18);border-top:1px solid rgba(255,255,255,.12);border-bottom:1px solid rgba(255,255,255,.08);opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .18s,transform .18s,visibility .18s;z-index:899;}
 .hdr-dd.open .hdr-dd-panel{opacity:1;visibility:visible;transform:translateY(0);}
 .hdr-dd-panel-inner{max-width:1440px;margin:0 auto;padding:1.75rem clamp(1.25rem,4vw,3rem) 2rem;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.25rem 2.5rem;}
 .hdr-dd-item{display:block;text-decoration:none;padding:.6rem 0;border-bottom:1px solid transparent;transition:border-color .12s;}
@@ -259,7 +253,7 @@ html.bar-dismissed body{padding-top:88px!important;}
 
     /* ══ HERO — minimal, editorial ══ */
     .hero{
-      background:var(--navy);
+      background:var(--navy-2);
       padding:5rem 0 4rem;
       border-bottom:1px solid var(--border-d);
       position:relative;overflow:hidden;
@@ -269,7 +263,7 @@ html.bar-dismissed body{padding-top:88px!important;}
     .hero-kicker{display:flex;align-items:center;gap:.625rem;margin-bottom:1.75rem;}
     .hero-kicker-line{display:none;}
     .label{font-family:var(--ff-mono);font-size:var(--fs-label);font-weight:500;letter-spacing:.14em;text-transform:uppercase;}
-    .label.on-dark{color:rgba(255,255,255,.45);}
+    .label.on-dark{color:rgba(255,255,255,.65);}
     .hero-h1{
       font-family:var(--ff-display);font-size:clamp(2.5rem,5vw,4rem);font-weight:700;
       color:#fff; text-shadow: 0 2px 40px rgba(0,0,0,.3);line-height:1.05;letter-spacing:-.03em;margin-bottom:1.25rem;
@@ -322,43 +316,36 @@ html.bar-dismissed body{padding-top:88px!important;}
     .lead-row:first-child{border-top:none;}
     @media(max-width:768px){.lead-row{grid-template-columns:1fr;gap:1.5rem;}}
 
-    /* Left: visual identity */
+    /* Left: visual identity
+       Circular mark, soft teal→blue gradient — reads as a deliberate
+       identity badge now, and accepts a real photo later with zero
+       layout change (the photo just fills the same circle). */
     .lead-visual{display:flex;flex-direction:column;align-items:flex-start;gap:1rem;}
     .lead-avatar{
-      width:120px;height:120px;
-      border-radius:var(--r-sm);
-      background:var(--navy);
+      width:96px;height:96px;
+      border-radius:50%;
+      background:linear-gradient(135deg,#005F5F 0%,#007A7A 55%,#3D8FD6 100%);
+      box-shadow:0 1px 2px rgba(0,40,40,.08),0 6px 20px rgba(0,95,95,.18);
       display:flex;align-items:center;justify-content:center;
       position:relative;overflow:hidden;flex-shrink:0;
     }
     .lead-avatar img{width:100%;height:100%;object-fit:cover;}
     .lead-initials{
-      font-family:var(--ff-display);font-size:2.25rem;font-weight:700;
-      color:rgba(255,255,255,.35);letter-spacing:-.03em;
-    }
-    /* Subtle line accent behind initials */
-    .lead-avatar::after{
-      content:attr(data-line);
-      position:absolute;bottom:8px;right:10px;
-      font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;
-      color:rgba(255,255,255,.18);font-weight:600;
+      font-family:'DM Sans',sans-serif;font-size:1.625rem;font-weight:700;
+      color:rgba(255,255,255,.96);letter-spacing:.01em;
     }
     .lead-line-pill{
       display:inline-flex;align-items:center;gap:.4rem;
-      font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.12em;text-transform:uppercase;
-      padding:.275rem .625rem;border-radius:var(--r-xs);
-      background:var(--teal-lt);color:var(--teal);
-      border:1px solid rgba(0,122,122,.18);
+      font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;
+      padding:.3rem .7rem;border-radius:100px;
+      background:rgba(0,122,122,.08);color:var(--teal);
+      border:1px solid rgba(0,122,122,.18);font-weight:600;
     }
-    .lead-line-num{
-      font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;
-      padding:.2rem .45rem;border-radius:var(--r-xs);
-      background:var(--teal);color:#fff;font-weight:600;
-    }
+    .lead-line-num{display:none;}
     .lead-affil-pill{
       display:inline-flex;align-items:center;gap:.3rem;
       font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;
-      padding:.275rem .625rem;border-radius:var(--r-xs);
+      padding:.275rem .625rem;border-radius:100px;
       background:rgba(245,158,11,.08);color:#92400e;
       border:1px solid rgba(245,158,11,.2);
     }
@@ -417,14 +404,14 @@ html.bar-dismissed body{padding-top:88px!important;}
     .tm-role{font-size:.75rem;color:var(--ink-3);}
     .tm-spec{font-size:var(--fs-label);color:var(--ink-4);margin-top:.2rem;font-family:var(--ff-mono);letter-spacing:.03em;}
 
-    /* ══ LIVE CONTEXT SIGNALS ══ */
+    /* ══ LIVE CONTEXT SIGNALS ══
+       No box, no fill — a thin top rule and generous spacing do the
+       separating, consistent with "no boxes" above. */
     .lead-context{
-      margin:1rem 0;
-      display:flex;flex-direction:column;gap:.5rem;
-      padding:1rem 1.125rem;
-      background:var(--surface);
-      border-left:2px solid var(--teal);
-      border-radius:0 var(--r-sm) var(--r-sm) 0;
+      margin:1.125rem 0;
+      display:flex;flex-direction:column;gap:.625rem;
+      padding-top:1rem;
+      border-top:1px solid var(--border-l);
     }
     .lead-signal{
       display:flex;align-items:center;gap:.5rem;
@@ -443,11 +430,10 @@ html.bar-dismissed body{padding-top:88px!important;}
     }
     .ls-link:hover{color:#006666;}
 
-    /* Latest publication preview */
+    /* Latest publication preview — same rule treatment, no top border
+       of its own since it now sits inside the rule-bounded context block */
     .lead-pub{
       display:flex;align-items:baseline;gap:.625rem;flex-wrap:wrap;
-      padding-top:.5rem;margin-top:.25rem;
-      border-top:1px solid var(--border-l);
     }
     .lp-journal{
       font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;
@@ -862,7 +848,7 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
 <header class="hdr" id="hdr"><div class="hdr-inner"><a href="index.html" class="hdr-logo" aria-label="neumACt R&amp;I"><img src="logo.svg" alt="neumACt R&I" class="hdr-logo-img" onerror="this.style.opacity='.3'"></a><nav class="hdr-nav" aria-label="Primary navigation">
       <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
       <div class="hdr-dd">
-        <a href="clinical.html" class="hdr-dd-trigger"><span lang="en">Research</span><span lang="es">Investigación</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></a>
+        <span class="hdr-dd-trigger"><a href="clinical.html"><span lang="en">Research</span><span lang="es">Investigación</span></a><button type="button" class="hdr-dd-chevron" aria-label="Show research lines" aria-expanded="false" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button></span>
         <div class="hdr-dd-panel"><div class="hdr-dd-panel-inner" id="hdrResearchLines"></div></div>
       </div>
       <a href="innovation.html"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
