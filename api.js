@@ -127,6 +127,7 @@ const PAGE = (() => {
   if (p.startsWith('innovation')) return 'innovation';
   if (p.startsWith('news'))       return 'news';
   if (p.startsWith('team'))       return 'team';
+  if (p.startsWith('line'))       return 'line';
   return 'index';
 })();
 
@@ -165,7 +166,7 @@ async function loadResearchLines() {
         const trialBadge = line.active_trials > 0
           ? `<span class="line-tag">${line.active_trials} active</span>` : '';
         return `
-          <a href="clinical.html#research-lines" class="line-card">
+          <a href="line.html?id=${line.id}" class="line-card">
             <div class="line-num">${num}</div>
             <div class="line-body">
               <div class="line-title">${escHtml(displayName)}</div>
@@ -242,6 +243,7 @@ async function loadResearchLines() {
             <div class="line-body-inner">
               ${line.description  ? `<p class="line-desc">${escHtml(line.description)}</p>` : ''}
               ${line.capabilities ? `<p class="line-desc" style="margin-top:.5rem;">${escHtml(line.capabilities)}</p>` : ''}
+              <a href="line.html?id=${line.id}" class="btn-text" style="display:inline-flex;margin-top:.875rem;"><span lang="en">View full line page</span><span lang="es">Ver página completa de la línea</span> →</a>
             </div>
           </div>
         </div>`
@@ -481,7 +483,11 @@ async function loadTeamLeads() {
   try {
     const { data } = await apiFetch('/api/team/website');
     const leads = (data||[]).filter(m => m.coordinates_line)
-      .sort((a,b) => (a.coordinates_line?.line_number||99) - (b.coordinates_line?.line_number||99));
+      .sort((a,b) => {
+        if (a.is_chief_of_department && !b.is_chief_of_department) return -1;
+        if (!a.is_chief_of_department && b.is_chief_of_department) return 1;
+        return (a.coordinates_line?.line_number||99) - (b.coordinates_line?.line_number||99);
+      });
     if (!leads.length) { grid.innerHTML = '<p class="state-empty">Research lead profiles coming soon.</p>'; return; }
     grid.innerHTML = leads.map((m,i) => {
       const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
@@ -499,6 +505,7 @@ async function loadTeamLeads() {
       ].filter(Boolean).join('');
       const tags = expertise.map(t=>`<span class="lead-tag">${escHtml(t)}</span>`).join('');
       const piTag = m.can_be_pi ? `<span class="lead-tag pi"><span lang="en">Principal Investigator</span><span lang="es">IP</span></span>` : '';
+      const chiefTag = m.is_chief_of_department ? `<span class="lead-tag pi"><span lang="en">Department Chief</span><span lang="es">Jefe de Servicio</span></span>` : '';
 
       // Contextual live signals — not a duplicate of other pages, just counts + one highlight
       const trialSignal = m.recruiting_trials > 0
@@ -555,7 +562,7 @@ async function loadTeamLeads() {
               ${partnerSignal}
               ${pubSignal}
             </div>` : ''}
-          ${(tags||piTag) ? `<div class="lead-tags">${piTag}${tags}</div>` : ''}
+          ${(tags||piTag||chiefTag) ? `<div class="lead-tags">${chiefTag}${piTag}${tags}</div>` : ''}
         </div>
       </div>`;
     }).join('');
@@ -738,6 +745,15 @@ async function loadLiveStats() {
       const teamRes = await apiFetch('/api/team/website');
       const memberCount = teamRes.data?.length || 0;
       if (memberCount > 0) _setStat('statMembers', memberCount);
+    } catch { /* keep static fallback */ }
+
+    // Publication count — limit=30 caps what the API actually returns, so
+    // a count >=30 means there are more we haven't fetched; show "30+"
+    // rather than silently understating the real total.
+    try {
+      const pubsRes = await apiFetch('/api/news/website?type=publication&limit=30');
+      const pubCount = pubsRes.data?.length || 0;
+      if (pubCount > 0) _setStat('statPubs', pubCount >= 30 ? '30+' : pubCount);
     } catch { /* keep static fallback */ }
 
   } catch (err) {
@@ -950,7 +966,97 @@ if (!document.getElementById('api-spin-style')) {
 // INIT
 // ─────────────────────────────────────────────
 
+// ─────────────────────────────────────────────
+// 0. HEADER — RESEARCH LINES DROPDOWN
+// Runs on every page (the header is shared). Lightweight — only
+// line_number + short_name, no images/bios/trial counts needed here.
+// ─────────────────────────────────────────────
+
+async function loadHeaderResearchDropdown() {
+  const menu = document.getElementById('hdrResearchLines');
+  if (!menu) return;
+  try {
+    const { data } = await apiFetch('/api/research-lines/website');
+    const lines = data || [];
+    if (!lines.length) { menu.innerHTML = ''; return; }
+    menu.innerHTML = lines.map(l => `
+      <a class="hdr-dd-item" href="line.html?id=${l.id}">
+        <span class="hdr-dd-num">L${String(l.line_number).padStart(2,'0')}</span>
+        <span class="hdr-dd-name">${escHtml(l.short_name || l.name)}</span>
+      </a>`).join('')
+      + `<div class="hdr-dd-divider"></div>
+         <a class="hdr-dd-all" href="clinical.html#research-lines">
+           <span lang="en">View all ${lines.length} lines</span><span lang="es">Ver las ${lines.length} líneas</span> →
+         </a>`;
+  } catch (err) {
+    console.error('Header research dropdown failed:', err);
+  }
+}
+
+// Click-to-toggle dropdown (replaces hover, which doesn't work on touch and
+// reads ambiguously — hovering shows the open state without any deliberate
+// action having happened). Closes on outside click, Escape, or selecting
+// an item.
+function initHeaderDropdown() {
+  const dd = document.querySelector('.hdr-dd');
+  if (!dd) return;
+  const trigger = dd.querySelector('.hdr-dd-trigger');
+  if (!trigger) return;
+
+  function close() { dd.classList.remove('open'); trigger.setAttribute('aria-expanded', 'false'); }
+  function open() { dd.classList.add('open'); trigger.setAttribute('aria-expanded', 'true'); }
+
+  trigger.setAttribute('aria-expanded', 'false');
+  trigger.setAttribute('aria-haspopup', 'true');
+
+  trigger.addEventListener('click', (e) => {
+    e.preventDefault();
+    dd.classList.contains('open') ? close() : open();
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!dd.contains(e.target)) close();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') close();
+  });
+
+  dd.querySelectorAll('.hdr-dd-item, .hdr-dd-all').forEach(item => {
+    item.addEventListener('click', close);
+  });
+}
+
+// ─────────────────────────────────────────────
+// 5b. CONTACT FORM TRIGGER TOGGLE
+// Used by the form-trigger card on clinical.html and innovation.html —
+// expands/collapses the form body and flips aria-expanded. Called via
+// inline onclick="openContactForm('id','id')" in the HTML, so it must be
+// global. Was referenced but never defined — this was throwing
+// "openContactForm is not defined" on every click.
+// ─────────────────────────────────────────────
+
+window.openContactForm = function(triggerId, bodyId) {
+  const trigger = document.getElementById(triggerId);
+  const body = document.getElementById(bodyId);
+  if (!trigger || !body) return;
+
+  const isOpen = body.classList.contains('open');
+  if (isOpen) {
+    body.classList.remove('open');
+    body.style.maxHeight = '0';
+    trigger.setAttribute('aria-expanded', 'false');
+  } else {
+    body.classList.add('open');
+    body.style.maxHeight = body.scrollHeight + 'px';
+    trigger.setAttribute('aria-expanded', 'true');
+    setTimeout(() => { body.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 150);
+  }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
+  loadHeaderResearchDropdown();
+  initHeaderDropdown();
   switch (PAGE) {
     case 'index':
       loadResearchLines();
@@ -977,6 +1083,9 @@ document.addEventListener('DOMContentLoaded', () => {
       loadTeamGroup();
       loadPublicationStrip();
       loadOpportunities();
+      break;
+    case 'line':
+      loadLineDetail();
       break;
   }
 });
@@ -1016,23 +1125,13 @@ async function loadFeaturedStories() {
       return dt.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
     }
 
-    // Pick the feature post: prefer ones flagged is_featured (curated by an editor),
-    // but pick randomly among them rather than always the same one — and avoid
-    // repeating the same pick on consecutive rotations. Falls back to a random
-    // pick across all recent posts if none are flagged.
-    let lastFeatureId = null;
-    function pickFeature() {
-      const featuredPool = posts.filter(p => p.is_featured);
-      const pool = featuredPool.length ? featuredPool : posts;
-      if (pool.length === 1) return pool[0];
-      let pick;
-      do { pick = pool[Math.floor(Math.random() * pool.length)]; } while (pick.id === lastFeatureId);
-      lastFeatureId = pick.id;
-      return pick;
-    }
+    // Hero candidate pool: featured posts first, top up to 4 with recent posts.
+    // The hero never auto-rotates — publication titles take real reading time,
+    // so the visitor drives this via dot indicators, not a timer.
+    const featuredPool = posts.filter(p => p.is_featured);
+    const heroPool = (featuredPool.length ? featuredPool : posts).slice(0, 4);
+    let activeHeroIdx = 0;
 
-    // Decorative motif shown in place of a missing featured image — a static,
-    // CSS-animated branching pattern that always renders (no canvas/script dependency)
     const MOTIF_SVG = `<div class="story-typographic-motif" aria-hidden="true"><svg viewBox="0 0 240 320" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g stroke="currentColor" stroke-linecap="round">
         <path d="M40 320 L40 220" stroke-width="2.4" opacity="0.5"/>
@@ -1058,7 +1157,7 @@ async function loadFeaturedStories() {
       </g>
     </svg></div>`;
 
-    function renderStory(feature, sidebar) {
+    function renderHero(feature) {
       const hasImg = !!feature.featured_image_url;
       const topArea = hasImg
         ? `<div class="story-main-img">
@@ -1070,7 +1169,13 @@ async function loadFeaturedStories() {
              <div class="story-typographic-title">${escHtml(feature.title)}</div>
            </div>`;
 
-      const featureHTML = `
+      const dotsHTML = heroPool.length > 1
+        ? `<div class="story-dots" role="tablist" aria-label="More featured stories">
+             ${heroPool.map((_, i) => `<button class="story-dot${i === activeHeroIdx ? ' active' : ''}" role="tab" aria-selected="${i === activeHeroIdx}" aria-label="Story ${i + 1} of ${heroPool.length}" data-idx="${i}"></button>`).join('')}
+           </div>`
+        : '';
+
+      return `
         <div class="story-main">
           ${topArea}
           <div class="story-main-body">
@@ -1085,46 +1190,84 @@ async function loadFeaturedStories() {
               <span>${formatDate(feature.published_at)}</span>
               ${feature.doi ? `<span class="story-meta-sep">·</span><a href="https://doi.org/${escHtml(feature.doi)}" target="_blank" rel="noopener">DOI</a>` : ''}
             </div>
+            ${dotsHTML}
           </div>
         </div>`;
+    }
 
-      const sidebarHTML = `
+    // Sidebar: always shows the same 4 non-hero posts (so content stays put while
+    // reading), but a thin progress sliver auto-advances which item is "in focus" —
+    // visible motion without ever changing what's on screen mid-read.
+    function renderSidebar() {
+      const sidebarPosts = posts.filter(p => !heroPool.some(h => h.id === p.id)).slice(0, 4);
+      return `
         <div class="story-sidebar">
-          ${sidebar.map(p => `
-            <a class="story-side-item" href="news.html" aria-label="${escHtml(p.title)}">
+          ${sidebarPosts.map((p, i) => `
+            <a class="story-side-item" href="news.html" aria-label="${escHtml(p.title)}" data-side-idx="${i}">
+              <div class="story-side-progress"><span></span></div>
               ${p.journal_name ? `<div class="story-side-journal">${escHtml(p.journal_name)}</div>` : ''}
               <div class="story-side-title">${escHtml(p.title)}</div>
               <div class="story-side-meta">${formatDate(p.published_at)}${p.author?.full_name ? ' · ' + escHtml(p.author.full_name) : ''}</div>
             </a>`).join('')}
         </div>`;
+    }
 
-      section.innerHTML = `<div class="story-layout" style="opacity:0;">${featureHTML}${sidebarHTML}</div>`;
+    let sidebarTimer = null;
+    let activeSideIdx = 0;
+
+    function runSidebarProgress() {
+      const items = section.querySelectorAll('.story-side-item');
+      if (!items.length) return;
+      items.forEach((item, i) => {
+        item.classList.toggle('in-focus', i === activeSideIdx);
+        const bar = item.querySelector('.story-side-progress > span');
+        if (bar) {
+          bar.style.transition = 'none';
+          bar.style.width = i === activeSideIdx ? '0%' : (i < activeSideIdx ? '100%' : '0%');
+        }
+      });
       requestAnimationFrame(() => {
-        const layout = section.querySelector('.story-layout');
-        if (layout) layout.style.opacity = '1';
+        const activeBar = section.querySelector(`.story-side-item[data-side-idx="${activeSideIdx}"] .story-side-progress > span`);
+        if (activeBar) {
+          activeBar.style.transition = 'width 6.5s linear';
+          activeBar.style.width = '100%';
+        }
+      });
+      clearTimeout(sidebarTimer);
+      sidebarTimer = setTimeout(() => {
+        activeSideIdx = (activeSideIdx + 1) % items.length;
+        runSidebarProgress();
+      }, 6500);
+    }
+
+    function render() {
+      const layout = `<div class="story-layout" style="opacity:0;">${renderHero(heroPool[activeHeroIdx])}${renderSidebar()}</div>`;
+      section.innerHTML = layout;
+      requestAnimationFrame(() => {
+        const l = section.querySelector('.story-layout');
+        if (l) l.style.opacity = '1';
+      });
+      activeSideIdx = 0;
+      runSidebarProgress();
+
+      section.querySelectorAll('.story-dot').forEach(dot => {
+        dot.addEventListener('click', () => {
+          const idx = parseInt(dot.dataset.idx, 10);
+          if (idx === activeHeroIdx) return;
+          const l = section.querySelector('.story-layout');
+          if (l) {
+            l.style.transition = 'opacity .3s ease';
+            l.style.opacity = '0';
+            setTimeout(() => { activeHeroIdx = idx; render(); }, 300);
+          } else {
+            activeHeroIdx = idx;
+            render();
+          }
+        });
       });
     }
 
-    function showRandomStory() {
-      const feature = pickFeature();
-      const sidebar = posts.filter(p => p.id !== feature.id).slice(0, 4);
-      renderStory(feature, sidebar);
-    }
-
-    showRandomStory();
-
-    // Rotate the feature periodically, same pattern as the news page spotlight,
-    // so the homepage doesn't always show the exact same story to every visitor.
-    setInterval(() => {
-      const layout = section.querySelector('.story-layout');
-      if (layout) {
-        layout.style.transition = 'opacity .35s ease';
-        layout.style.opacity = '0';
-        setTimeout(() => { showRandomStory(); }, 350);
-      } else {
-        showRandomStory();
-      }
-    }, 300000); /* ~5 minutes */
+    render();
 
   } catch (err) {  
     console.error('Story section load failed:', err);
@@ -1161,19 +1304,18 @@ async function loadInnovationSpotlight() {
       return;
     }
 
-    let lastPickId = null;
-    function pickSpotlight() {
-      const featuredPool = projects.filter(p => p.is_featured);
-      const pool = featuredPool.length ? featuredPool : projects;
-      if (pool.length === 1) return pool[0];
-      let pick;
-      do { pick = pool[Math.floor(Math.random() * pool.length)]; } while (pick.id === lastPickId);
-      lastPickId = pick.id;
-      return pick;
-    }
+    const featuredPool = projects.filter(p => p.is_featured);
+    const spotlightPool = (featuredPool.length ? featuredPool : projects).slice(0, 4);
+    let activeSpotlightIdx = 0;
 
-    function renderSpotlight(p) {
+    function renderSpotlight() {
+      const p = spotlightPool[activeSpotlightIdx];
       const stageLabel = STAGE_LABEL[p.current_stage] || STAGE_LABEL[p.development_stage] || p.current_stage || '';
+      const dotsHTML = spotlightPool.length > 1
+        ? `<div class="story-dots" role="tablist" aria-label="More projects">
+             ${spotlightPool.map((_, i) => `<button class="story-dot${i === activeSpotlightIdx ? ' active' : ''}" role="tab" aria-selected="${i === activeSpotlightIdx}" aria-label="Project ${i + 1} of ${spotlightPool.length}" data-idx="${i}"></button>`).join('')}
+           </div>`
+        : '';
       const html = `
         <div class="spotlight-card" style="opacity:0;">
           <span class="spotlight-stage-pill">
@@ -1187,32 +1329,186 @@ async function loadInnovationSpotlight() {
               <span lang="en">Learn more</span><span lang="es">Saber más</span>
             </a>
           </div>
+          ${dotsHTML}
         </div>`;
       section.innerHTML = html;
       requestAnimationFrame(() => {
         const card = section.querySelector('.spotlight-card');
         if (card) card.style.opacity = '1';
       });
+
+      section.querySelectorAll('.story-dot').forEach(dot => {
+        dot.addEventListener('click', () => {
+          const idx = parseInt(dot.dataset.idx, 10);
+          if (idx === activeSpotlightIdx) return;
+          const card = section.querySelector('.spotlight-card');
+          if (card) {
+            card.style.transition = 'opacity .3s ease';
+            card.style.opacity = '0';
+            setTimeout(() => { activeSpotlightIdx = idx; renderSpotlight(); }, 300);
+          } else {
+            activeSpotlightIdx = idx;
+            renderSpotlight();
+          }
+        });
+      });
     }
 
-    function showRandomSpotlight() { renderSpotlight(pickSpotlight()); }
-
-    showRandomSpotlight();
-
-    // Rotate periodically, same pattern as the news story spotlight
-    setInterval(() => {
-      const card = section.querySelector('.spotlight-card');
-      if (card) {
-        card.style.transition = 'opacity .35s ease';
-        card.style.opacity = '0';
-        setTimeout(() => { showRandomSpotlight(); }, 350);
-      } else {
-        showRandomSpotlight();
-      }
-    }, 300000); /* ~5 minutes */
+    renderSpotlight();
 
   } catch (err) {
     console.error('Innovation spotlight load failed:', err);
     if (skeleton) skeleton.innerHTML = '<p style="color:var(--ink-3);font-size:.875rem;padding:2rem 0;">Unable to load projects.</p>';
+  }
+}
+
+// ─────────────────────────────────────────────
+// 8. RESEARCH LINE DETAIL PAGE (line.html?id=<uuid>)
+// One template, data-driven — see /api/research-lines/:id/website.
+// Trials and publications are NOT fetched from that endpoint; they reuse
+// the existing /api/clinical-trials/website?line=:id and
+// /api/news/website?line=:id calls, same data source as clinical.html
+// and news.html, so there's one source of truth.
+// "About this line" only renders if a coordinator has actually written
+// deep_content — an empty section is worse than no section.
+// ─────────────────────────────────────────────
+
+async function loadLineDetail() {
+  const params = new URLSearchParams(location.search);
+  const lineId = params.get('id');
+  const loadingEl   = document.getElementById('lineLoadingState');
+  const notFoundEl  = document.getElementById('lineNotFound');
+  const heroEl      = document.getElementById('lineHero');
+
+  if (!lineId) {
+    if (loadingEl) loadingEl.style.display = 'none';
+    if (notFoundEl) notFoundEl.style.display = '';
+    return;
+  }
+
+  try {
+    const { data: line } = await apiFetch(`/api/research-lines/${lineId}/website`);
+    if (!line) throw new Error('not found');
+
+    if (loadingEl) loadingEl.style.display = 'none';
+    if (heroEl) heroEl.style.display = '';
+
+    // Page title / description, since this is one template for six lines
+    const titleText = `${line.short_name || line.name} | neumACt R&I`;
+    document.title = titleText;
+    const titleTag = document.getElementById('pageTitle');
+    if (titleTag) titleTag.textContent = titleText;
+    const descTag = document.getElementById('pageDescription');
+    if (descTag && line.description) descTag.setAttribute('content', line.description);
+
+    // Hero
+    const eyebrowEl = document.getElementById('lineEyebrow');
+    if (eyebrowEl) {
+      eyebrowEl.innerHTML = `<span lang="en">Research line ${String(line.line_number).padStart(2,'0')}</span><span lang="es">Línea de investigación ${String(line.line_number).padStart(2,'0')}</span>`;
+    }
+    const titleEl = document.getElementById('lineTitle');
+    if (titleEl) titleEl.textContent = line.name || line.short_name;
+
+    const pillsEl = document.getElementById('lineStatPills');
+    if (pillsEl) {
+      const pills = [];
+      if (line.active_trials > 0) {
+        pills.push(`<span class="hstat-label" style="background:rgba(255,255,255,.12);color:#fff;padding:.4rem .8rem;border-radius:var(--r-sm);font-size:var(--fs-label);"><span lang="en">${line.active_trials} recruiting ${line.active_trials===1?'trial':'trials'}</span><span lang="es">${line.active_trials} ${line.active_trials===1?'ensayo':'ensayos'} en reclutamiento</span></span>`);
+      }
+      if (line.active_projects > 0) {
+        pills.push(`<span class="hstat-label" style="background:rgba(255,255,255,.12);color:#fff;padding:.4rem .8rem;border-radius:var(--r-sm);font-size:var(--fs-label);"><span lang="en">${line.active_projects} active ${line.active_projects===1?'project':'projects'}</span><span lang="es">${line.active_projects} ${line.active_projects===1?'proyecto':'proyectos'} activo${line.active_projects===1?'':'s'}</span></span>`);
+      }
+      pillsEl.innerHTML = pills.join('');
+    }
+
+    // Coordinator strip — reuses the chief/PI badge logic established on team.html
+    const coordSection = document.getElementById('lineCoordinatorSection');
+    const coordCard = document.getElementById('lineCoordinatorCard');
+    if (line.coordinator && coordSection && coordCard) {
+      const c = line.coordinator;
+      const initials = (c.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
+      const avatar = c.public_photo_url
+        ? `<img src="${escHtml(c.public_photo_url)}" alt="${escHtml(c.full_name)}" style="width:48px;height:48px;border-radius:8px;object-fit:cover;flex-shrink:0;">`
+        : `<div style="width:48px;height:48px;border-radius:8px;background:var(--navy-2);display:flex;align-items:center;justify-content:center;font-weight:500;font-size:15px;color:#fff;flex-shrink:0;">${escHtml(initials)}</div>`;
+      const chiefBadge = c.is_chief_of_department
+        ? `<span class="hstat-label" style="background:var(--blue-50);color:var(--navy-2);padding:.3rem .7rem;border-radius:var(--r-sm);font-size:var(--fs-label);flex-shrink:0;"><span lang="en">Department Chief</span><span lang="es">Jefe de Servicio</span></span>`
+        : c.can_be_pi
+          ? `<span class="hstat-label" style="background:var(--blue-50);color:var(--navy-2);padding:.3rem .7rem;border-radius:var(--r-sm);font-size:var(--fs-label);flex-shrink:0;"><span lang="en">Principal Investigator</span><span lang="es">IP</span></span>`
+          : '';
+      coordCard.innerHTML = `
+        ${avatar}
+        <div style="flex:1;min-width:0;">
+          <p style="font-weight:500;font-size:var(--fs-body-sm);margin:0;">${escHtml(c.title ? c.title + ' ' + c.full_name : c.full_name)}</p>
+          <p style="font-size:var(--fs-label);color:var(--ink-3);margin:2px 0 0;"><span lang="en">Line coordinator</span><span lang="es">Coordinador de la línea</span>${c.specialization ? ' · ' + escHtml(c.specialization) : ''}</p>
+        </div>
+        ${chiefBadge}`;
+      coordSection.style.display = '';
+    }
+
+    // About this line — only if a coordinator has actually written it
+    const aboutSection = document.getElementById('lineAboutSection');
+    const aboutContent = document.getElementById('lineAboutContent');
+    if (line.deep_content && aboutSection && aboutContent) {
+      aboutContent.innerHTML = line.deep_content.split(/\n\n+/).map(p => `<p style="margin-bottom:1.25rem;">${escHtml(p)}</p>`).join('');
+      aboutSection.style.display = '';
+    }
+
+    // Active trials — reuses the existing public trials endpoint, filtered by line
+    const trialsSection = document.getElementById('lineTrialsSection');
+    const trialsList = document.getElementById('lineTrialsList');
+    try {
+      const { data: trials } = await apiFetch(`/api/clinical-trials/website?line=${lineId}`);
+      const activeTrials = (trials || []).filter(t => ['Reclutando','Activo','Active','Recruiting'].includes(t.status));
+      if (activeTrials.length && trialsSection && trialsList) {
+        trialsList.innerHTML = activeTrials.slice(0, 6).map((t, i) => `
+          <a href="clinical.html#research-lines" class="lt-trial-row" style="${i > 0 ? 'border-top:1px solid var(--border-l);' : ''}">
+            <span class="lt-trial-phase">${escHtml(t.phase || 'Clinical study')}</span>
+            <span class="lt-trial-title">${escHtml(t.title || t.protocol_id || '—')}</span>
+            <svg class="lt-trial-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>`).join('');
+        trialsSection.style.display = '';
+      }
+    } catch (err) { console.error('Line trials load failed:', err); }
+
+    // Team on this line — derived from trial/project investigators server-side
+    const teamSection = document.getElementById('lineTeamSection');
+    const teamChips = document.getElementById('lineTeamChips');
+    if (line.team && line.team.length && teamSection && teamChips) {
+      teamChips.innerHTML = line.team.map(m => {
+        const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
+        const avatar = m.public_photo_url
+          ? `<img src="${escHtml(m.public_photo_url)}" alt="" style="width:24px;height:24px;border-radius:50%;object-fit:cover;flex-shrink:0;">`
+          : `<div style="width:24px;height:24px;border-radius:50%;background:var(--blue-100);flex-shrink:0;"></div>`;
+        return `<div style="display:flex;align-items:center;gap:8px;border:1px solid var(--border-l);border-radius:20px;padding:5px 12px 5px 5px;">
+          ${avatar}<span style="font-size:var(--fs-meta);">${escHtml(m.title ? m.title + ' ' + m.full_name : m.full_name)}</span>
+        </div>`;
+      }).join('');
+      teamSection.style.display = '';
+    }
+
+    // Recent publications for this line
+    const pubsSection = document.getElementById('linePubsSection');
+    const pubsList = document.getElementById('linePubsList');
+    try {
+      const { data: pubs } = await apiFetch(`/api/news/website?type=publication&line=${lineId}&limit=5`);
+      if (pubs && pubs.length && pubsSection && pubsList) {
+        pubsList.innerHTML = pubs.map((p, i) => {
+          const year = p.published_at ? new Date(p.published_at).getFullYear() : '';
+          return `<div style="padding:1rem 0;${i > 0 ? 'border-top:1px solid var(--border-l);' : ''}">
+            <div style="display:flex;justify-content:space-between;gap:8px;margin-bottom:4px;">
+              ${p.journal_name ? `<span style="font-size:var(--fs-label);color:var(--navy-2);font-weight:500;">${escHtml(p.journal_name)}</span>` : '<span></span>'}
+              <span style="font-size:var(--fs-label);color:var(--ink-4);">${year}</span>
+            </div>
+            <p style="font-size:var(--fs-meta);margin:0;">${escHtml(p.title)}</p>
+          </div>`;
+        }).join('');
+        pubsSection.style.display = '';
+      }
+    } catch (err) { console.error('Line publications load failed:', err); }
+
+  } catch (err) {
+    console.error('Research line load failed:', err.message);
+    if (loadingEl) loadingEl.style.display = 'none';
+    if (notFoundEl) notFoundEl.style.display = '';
   }
 }
