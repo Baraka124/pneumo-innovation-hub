@@ -555,7 +555,13 @@ html.bar-dismissed body{padding-top:88px!important;}
     .trials-count-bar strong{color:var(--teal);}
     .trials-wrap{border:1px solid var(--mid-grey);border-radius:var(--r-lg);overflow:hidden;}
     .trials-scroll{overflow-x:auto;}
-    table.trials{width:100%;border-collapse:collapse;min-width:760px;}
+    table.trials{width:100%;border-collapse:collapse;min-width:760px;table-layout:fixed;}
+    table.trials th:nth-child(1),table.trials td:nth-child(1){width:13%;}
+    table.trials th:nth-child(2),table.trials td:nth-child(2){width:30%;}
+    table.trials th:nth-child(3),table.trials td:nth-child(3){width:19%;}
+    table.trials th:nth-child(4),table.trials td:nth-child(4){width:10%;}
+    table.trials th:nth-child(5),table.trials td:nth-child(5){width:13%;}
+    table.trials th:nth-child(6),table.trials td:nth-child(6){width:15%;}
     .trials thead{background:var(--white);border-bottom:2px solid var(--rule-l);}
     .trials th{padding:1rem 1.25rem;text-align:left;font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;color:var(--text-on-light-3);border-bottom:2px solid var(--mid-grey);white-space:nowrap;font-weight:600;}
     .trials td{padding:1.1rem 1.25rem;border-bottom:1px solid var(--rule-l);vertical-align:middle;font-size:.9rem;color:var(--text-on-light-2);}
@@ -1311,9 +1317,9 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
         </div>
         <!-- Right stats panel -->
         <div class="hero-stats reveal reveal-d2" style="margin-bottom:3rem;">
-          <div class="hstat"><div class="hstat-num">6</div><div class="hstat-label"><span lang="en">Specialized Research Lines</span><span lang="es">Líneas de Investigación</span></div></div>
-          <div class="hstat"><div class="hstat-num">13+</div><div class="hstat-label"><span lang="en">Active &amp; Recruiting Studies</span><span lang="es">Ensayos Activos y Reclutando</span></div></div>
-          <div class="hstat"><div class="hstat-num">6</div><div class="hstat-label"><span lang="en">Specialist Coordinators</span><span lang="es">Coordinadores Especialistas</span></div></div>
+          <div class="hstat"><div class="hstat-num" data-counter="6">6</div><div class="hstat-label"><span lang="en">Specialized Research Lines</span><span lang="es">Líneas de Investigación</span></div></div>
+          <div class="hstat"><div class="hstat-num" data-counter="13+">13+</div><div class="hstat-label"><span lang="en">Active &amp; Recruiting Studies</span><span lang="es">Ensayos Activos y Reclutando</span></div></div>
+          <div class="hstat"><div class="hstat-num" data-counter="6">6</div><div class="hstat-label"><span lang="en">Specialist Coordinators</span><span lang="es">Coordinadores Especialistas</span></div></div>
           <div class="hstat"><div class="hstat-num">GCP</div><div class="hstat-label"><span lang="en">INIBIC · Good Clinical Practice</span><span lang="es">INIBIC · Cumplimiento GCP</span></div></div>
         </div>
       </div>
@@ -1957,11 +1963,12 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
       });
     });
 
-    /* ── Reveal observer ── */
-    var io=new IntersectionObserver(function(entries){
-      entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+    /* ── Reveal observer — exposed globally so api.js can observe
+       dynamically injected elements ── */
+    window._revealObserver=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');window._revealObserver.unobserve(e.target);}});
     },{threshold:.1,rootMargin:'0px 0px -40px 0px'});
-    document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+    document.querySelectorAll('.reveal').forEach(function(el){window._revealObserver.observe(el);});
   </script>
 <script>
 (function(){
@@ -1993,4 +2000,4 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
     <span lang="en">Understood</span><span lang="es">Entendido</span>
   </button>
 </div>
-<script>if(!localStorage.getItem('cookieOk')){var c=document.getElementById('cookieBanner');if(c)c.style.display='flex';}</script>
+<script>if(!localStorage.getItem('cookieOk')){var c=document.getElementById('cookieBanner');if(c)c.style.display='flex';}</script>  
