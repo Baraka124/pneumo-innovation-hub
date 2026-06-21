@@ -1,4 +1,4 @@
-<!DOCTYPE html>   
+<!DOCTYPE html>  
 <html lang="en" data-lang="en">          
 <head>
   <script>try{var _l=localStorage.getItem('huac_lang');if(_l&&(_l==='en'||_l==='es'))document.documentElement.dataset.lang=_l;}catch(e){}</script>
@@ -44,7 +44,6 @@
 }
 
 
-.trials-wrap{border:1px solid var(--rule-l,#E5E2DC)!important;border-radius:2px!important;}
 .trials tbody tr:hover td{background:rgba(0,122,122,.025)!important;}
 
 
@@ -60,23 +59,9 @@ html.bar-dismissed body{padding-top:88px;}
 .team-bg .btn-text:hover,.partner-bg .btn-text:hover,.focus-bg .btn-text:hover
 {color: #00e0e0 !important;border-bottom-color: rgba(0,224,224,.5) !important;}
 
-.hero h1,.hero h2,.hero .display,.contact-bg h1,.contact-bg h2,.contact-bg .display,
-.team-bg h1,.team-bg h2,.team-bg .display,.partner-bg h2,.partner-bg .display,
-.paths-section h2,.focus-bg h2,.blog-hero h1,.blog-hero h2,.blog-hero .display
-{color:#fff!important;}
-.contact-bg p,.contact-bg .sec-head p,.team-bg p,.partner-bg p,.focus-bg p,.blog-hero p,.hero .hero-desc,
-.paths-section p,.paths-section .sec-body
-{color:rgba(255,255,255,.8)!important;}
-.hero-cred,.team-role,.team-bio,.cinfo-label,.hstat-label,.footer-col ul a,.footer-col address
-{color:rgba(255,255,255,.72)!important;}
-.cinfo-value{color:rgba(255,255,255,.9)!important;}
-.lines-bg h2,.lines-bg .display,.trials-bg h2,.trials-bg .display,.pipeline-bg h2,.projects-bg h2,.cap-bg h2
-{color:var(--ink,#1A1A1A)!important;}
-.lines-bg p,.trials-bg p,.pipeline-bg p,.projects-bg p,.cap-bg p
-{color:var(--text-on-light-2,#404040)!important;}
-.hstat-num,.stat-num,.hstrip-num,.pstat-num,.blog-hero-stat-n,.hsr-n
-{color:#fff!important;-webkit-text-fill-color:#fff!important;background:none!important;-webkit-background-clip:unset!important;background-clip:unset!important;}
-.hstat-num sub{color:#009999!important;-webkit-text-fill-color:#009999!important;}
+/* Heading/body color rules removed here — fully superseded by the
+   "DARK BG" block below. Redesigned cross-rule hero-stats and the
+   unique story-typographic-journal rules kept. */
 .hero-stats{display:flex!important;gap:0!important;border-radius:0!important;}
 .hstat{padding:0 1.5rem!important;border-bottom:none!important;border-right:1px solid rgba(255,255,255,.12)!important;flex:1!important;flex-direction:column!important;align-items:flex-start!important;}
 .hstat:first-child{padding-left:0!important;}
@@ -84,21 +69,6 @@ html.bar-dismissed body{padding-top:88px;}
 .hstat-num{font-size:1.625rem!important;line-height:1!important;}
 .hstat-label{font-size:var(--fs-label)!important;display:block!important;margin-bottom:.2rem!important;}
 .hero-stat-cta{grid-column:1/-1!important;border-top:1px solid rgba(255,255,255,.07)!important;}
-.footer-logo-img{filter:brightness(0) invert(1)!important;opacity:.8!important;height:36px!important;width:auto!important;}
-.affil-section{background:rgba(255,255,255,.025);border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07);}
-.affil-logo-item{display:block;opacity:.55;transition:opacity .2s;}
-.affil-logo-item:hover{opacity:.85;}
-.affil-img{display:block;width:auto;filter:brightness(0) invert(1);object-fit:contain;height:32px;}
-.affil-img-main{height:40px;max-width:260px;}
-.affil-img-inibic{height:28px;max-width:180px;}
-.affil-ph{display:flex;align-items:center;justify-content:center;height:32px;min-width:80px;border:1px dashed rgba(255,255,255,.2);border-radius:2px;padding:0 .75rem;background:rgba(255,255,255,.03);}
-.affil-ph span{font-family:var(--ff-mono,'DM Mono',monospace);font-size:var(--fs-label);letter-spacing:.08em;color:rgba(255,255,255,.35);white-space:nowrap;}
-.affil-ph-main{height:40px;min-width:140px;}
-.lead-avatar{width:88px!important;height:88px!important;border-radius:50%!important;background:linear-gradient(135deg,#005F5F 0%,#007A7A 50%,#4A9EE8 100%)!important;box-shadow:0 2px 12px rgba(0,122,122,.25)!important;}
-.lead-initials{font-family:'DM Sans',sans-serif!important;font-size:1.5rem!important;font-weight:700!important;color:rgba(255,255,255,.95)!important;letter-spacing:.02em!important;}
-.lead-avatar::after{display:none!important;content:none!important;}
-.lead-line-num{display:none!important;}
-.lead-line-pill{background:rgba(0,122,122,.08)!important;border:1px solid rgba(0,122,122,.2)!important;color:var(--teal,#007A7A)!important;font-weight:600!important;}
 .story-typographic-journal{font-family:var(--ff-display,'Fraunces',serif)!important;font-style:italic!important;font-size:.8125rem!important;font-weight:500!important;letter-spacing:0!important;text-transform:none!important;color:rgba(255,255,255,.92)!important;background:none!important;border:none!important;border-radius:0!important;padding:0 0 .5rem 0!important;margin-bottom:.65rem!important;display:inline-block!important;position:relative;z-index:1;}
 .story-typographic-journal::after{content:'';position:absolute;bottom:0;left:0;width:28px;height:1.5px;background:var(--teal-2,#00B3B3);}
 
@@ -1171,6 +1141,14 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
   a[href^="#"]::after,a[href^="javascript"]::after{content:"";}
 }
 
+
+/* Loading skeleton shimmer — referenced by setLoading() in api.js on
+   every page, but the CSS itself never actually existed anywhere in
+   this file. Every loading-state shimmer site-wide was rendering as
+   an invisible, unstyled box until now. */
+.api-skeleton{background:linear-gradient(90deg,var(--surface) 25%,var(--white) 37%,var(--surface) 63%);background-size:400% 100%;animation:skeletonShimmer 1.4s ease infinite;border-radius:4px;}
+.api-skeleton-dark{background:linear-gradient(90deg,rgba(255,255,255,.06) 25%,rgba(255,255,255,.12) 37%,rgba(255,255,255,.06) 63%);background-size:400% 100%;animation:skeletonShimmer 1.4s ease infinite;border-radius:4px;}
+@keyframes skeletonShimmer{0%{background-position:100% 50%;}100%{background-position:0 50%;}}
 </style>
 
   <!-- neumAC Design System — buttons, pills, team grid -->
@@ -1364,120 +1342,99 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
 
       <!-- api.js injects into this container (id="researchLinesList") -->
       <div id="researchLinesList">
-
-        <!-- LINE 01 -->
-        <div class="line-card reveal" id="line-01">
-          <div class="line-head" onclick="toggleLine('line-01')">
-            <div class="line-num">01</div>
-            <div class="line-meta">
-              <div class="line-coordinator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:11px;height:11px;"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><span lang="en">Coordinator:</span><span lang="es">Coordinadora:</span> <strong>Dra. Pilar Sanjuán</strong></div>
-              <h3 class="line-title"><span lang="en">Transplantation, Hypertension &amp; Diffuse Pulmonary Disease</span><span lang="es">Trasplante, Hipertensión y Enfermedad Difusa Pulmonar</span></h3>
-            </div>
+      <!-- Real fallback: a calm loading skeleton, not full prose that
+           could go stale or look authoritative if the API call fails.
+           loadResearchLines() replaces this; setError() handles real
+           failures with an actual error state, not a fake-looking card. -->
+      <div class="line-card">
+        <div class="line-head">
+          <div class="api-skeleton" style="width:32px;height:32px;border-radius:6px;flex-shrink:0;"></div>
+          <div class="line-meta" style="flex:1;">
+            <div class="api-skeleton" style="width:140px;height:11px;margin-bottom:8px;"></div>
+            <div class="api-skeleton" style="width:70%;height:18px;"></div>
           </div>
-          <div class="line-tags-preview"><span class="ltag">Lung Transplantation</span><span class="ltag">PAH</span><span class="ltag">ILD / IPF</span><span class="ltag">Immunosuppression</span></div>
-          <div class="line-expand-toggle" onclick="toggleLine('line-01')">
-            <span class="toggle-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="width:13px;height:13px;"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/></svg><span lang="en">Research scope &amp; capabilities</span><span lang="es">Alcance y capacidades</span></span>
-            <div class="toggle-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
-          </div>
-          <div class="line-body"><div class="line-body-inner">
-            <p class="line-desc"><span lang="en">Integral study of advanced pulmonary diseases including pulmonary hypertension, diffuse interstitial diseases and lung transplantation. The group develops prospective clinical registries and promotes research into biomarkers, prognostic factors and long-term outcomes, with special emphasis on survival, complications and chronic allograft dysfunction, including re-transplant strategies. Active participation in national and international networks and multicentre collaborative projects. CHUAC is the regional reference centre for lung transplantation, pulmonary arterial hypertension and diffuse interstitial lung diseases, with 1,000 lung transplants performed — a milestone reached in May 2026.</span><span lang="es">Estudio integral de las enfermedades pulmonares avanzadas: hipertensión pulmonar, enfermedades intersticiales difusas y trasplante pulmonar. Registros clínicos prospectivos, biomarcadores, factores pronósticos y resultados a largo plazo, con especial énfasis en la supervivencia, complicaciones y disfunción crónica del injerto, incluyendo estrategias de retrasplante. El CHUAC es centro de referencia autonómica para el trasplante pulmonar, la HTP y las EPID, con 1.000 trasplantes pulmonares realizados — hito alcanzado en mayo de 2026.</span></p>
-          </div></div>
         </div>
-
-        <!-- LINE 02 -->
-        <div class="line-card reveal reveal-d1" id="line-02">
-          <div class="line-head" onclick="toggleLine('line-02')">
-            <div class="line-num">02</div>
-            <div class="line-meta">
-              <div class="line-coordinator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:11px;height:11px;"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><span lang="en">Coordinator:</span><span lang="es">Coordinadora:</span> <strong>Dra. Marina Blanco Aparicio</strong></div>
-              <h3 class="line-title"><span lang="en">Airway Diseases</span><span lang="es">Enfermedades de la Vía Aérea</span></h3>
-            </div>
-          </div>
-          <div class="line-tags-preview"><span class="ltag">COPD</span><span class="ltag">Asthma</span><span class="ltag">Bronchiectasis</span><span class="ltag">Biologics</span></div>
-          <div class="line-expand-toggle" onclick="toggleLine('line-02')">
-            <span class="toggle-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="width:13px;height:13px;"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/></svg><span lang="en">Research scope &amp; capabilities</span><span lang="es">Alcance y capacidades</span></span>
-            <div class="toggle-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
-          </div>
-          <div class="line-body"><div class="line-body-inner">
-            <p class="line-desc"><span lang="en">Characterisation, stratification and management of airway diseases including asthma, COPD, bronchiectasis and cystic fibrosis. Research in treatable traits, personalised medicine and advanced therapies, together with development of innovative tools for clinical follow-up including telemedicine. Active participation in multicentre registries and national and international collaborative studies. Key projects include CATARS-VAC (Complex Airway Unit), TUCUVI-LOLA (AI conversational follow-up in severe asthma), Inhalo+ (inhaler technique educational videos) and Videoinhaler (remote post-discharge monitoring).</span><span lang="es">Caracterización, estratificación y manejo de las enfermedades de la vía aérea: asma, EPOC, bronquiectasias y fibrosis quística. Investigación en rasgos tratables, medicina personalizada y terapias avanzadas, así como desarrollo de herramientas innovadoras para el seguimiento clínico, incluyendo telemedicina. Proyectos clave: CATARS-VAC (Unidad de Vía Aérea Compleja), TUCUVI-LOLA (seguimiento con IA conversacional en asma grave), Inhalo+ y Videoinhaler.</span></p>
-          </div></div>
+        <div class="line-tags-preview">
+          <div class="api-skeleton" style="width:90px;height:22px;display:inline-block;border-radius:100px;"></div>
+          <div class="api-skeleton" style="width:70px;height:22px;display:inline-block;border-radius:100px;"></div>
+          <div class="api-skeleton" style="width:100px;height:22px;display:inline-block;border-radius:100px;"></div>
         </div>
+      </div>
 
-        <!-- LINE 03 -->
-        <div class="line-card reveal reveal-d1" id="line-03">
-          <div class="line-head" onclick="toggleLine('line-03')">
-            <div class="line-num">03</div>
-            <div class="line-meta">
-              <div class="line-coordinator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:11px;height:11px;"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><span lang="en">Coordinator:</span><span lang="es">Coordinador:</span> <strong>Dr. Rachid Tazi</strong></div>
-              <h3 class="line-title"><span lang="en">Interventional Pneumology &amp; Lung Cancer</span><span lang="es">Neumología Intervencionista y Cáncer de Pulmón</span></h3>
-            </div>
+      <div class="line-card">
+        <div class="line-head">
+          <div class="api-skeleton" style="width:32px;height:32px;border-radius:6px;flex-shrink:0;"></div>
+          <div class="line-meta" style="flex:1;">
+            <div class="api-skeleton" style="width:140px;height:11px;margin-bottom:8px;"></div>
+            <div class="api-skeleton" style="width:70%;height:18px;"></div>
           </div>
-          <div class="line-tags-preview"><span class="ltag">Lung Cancer</span><span class="ltag">EBUS / Bronchoscopy</span><span class="ltag">Immunotherapy</span><span class="ltag">Targeted Therapy</span></div>
-          <div class="line-expand-toggle" onclick="toggleLine('line-03')">
-            <span class="toggle-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="width:13px;height:13px;"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/></svg><span lang="en">Research scope &amp; capabilities</span><span lang="es">Alcance y capacidades</span></span>
-            <div class="toggle-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
-          </div>
-          <div class="line-body"><div class="line-body-inner">
-            <p class="line-desc"><span lang="en">Development and optimisation of advanced diagnostic and therapeutic bronchoscopic techniques and their application in lung cancer diagnosis and staging. Promotes technological innovation, clinical outcome evaluation and participation in clinical trials, together with development of prospective registries to improve procedure quality and safety. Active in EBUS-TBNA, cryobiopsy, indwelling pleural catheters for malignant effusions, and airway stenting.</span><span lang="es">Desarrollo y optimización de técnicas diagnósticas y terapéuticas avanzadas en neumología intervencionista y su aplicación en el diagnóstico y estadificación del cáncer de pulmón. Innovación tecnológica, evaluación de resultados clínicos y participación en ensayos clínicos. Activo en EBUS-TBNA, criobiopsia, catéteres pleurales permanentes y prótesis endobronquiales.</span></p>
-          </div></div>
         </div>
+        <div class="line-tags-preview">
+          <div class="api-skeleton" style="width:90px;height:22px;display:inline-block;border-radius:100px;"></div>
+          <div class="api-skeleton" style="width:70px;height:22px;display:inline-block;border-radius:100px;"></div>
+          <div class="api-skeleton" style="width:100px;height:22px;display:inline-block;border-radius:100px;"></div>
+        </div>
+      </div>
 
-        <!-- LINE 04 -->
-        <div class="line-card reveal reveal-d2" id="line-04">
-          <div class="line-head" onclick="toggleLine('line-04')">
-            <div class="line-num">04</div>
-            <div class="line-meta">
-              <div class="line-coordinator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:11px;height:11px;"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><span lang="en">Coordinator:</span><span lang="es">Coordinadora:</span> <strong>Dra. Angélica Consuegra</strong></div>
-              <h3 class="line-title"><span lang="en">Respiratory Failure, Critical Care &amp; Sleep Medicine</span><span lang="es">Insuficiencia Respiratoria, Cuidados Críticos y Medicina del Sueño</span></h3>
-            </div>
+      <div class="line-card">
+        <div class="line-head">
+          <div class="api-skeleton" style="width:32px;height:32px;border-radius:6px;flex-shrink:0;"></div>
+          <div class="line-meta" style="flex:1;">
+            <div class="api-skeleton" style="width:140px;height:11px;margin-bottom:8px;"></div>
+            <div class="api-skeleton" style="width:70%;height:18px;"></div>
           </div>
-          <div class="line-tags-preview"><span class="ltag">UCRI</span><span class="ltag">Chronic NIV</span><span class="ltag">Oxygen Therapy</span><span class="ltag">Sleep Medicine</span></div>
-          <div class="line-expand-toggle" onclick="toggleLine('line-04')">
-            <span class="toggle-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="width:13px;height:13px;"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/></svg><span lang="en">Research scope &amp; capabilities</span><span lang="es">Alcance y capacidades</span></span>
-            <div class="toggle-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
-          </div>
-          <div class="line-body"><div class="line-body-inner">
-            <p class="line-desc"><span lang="en">Study of acute and chronic respiratory failure, including ventilatory support strategies and sleep-disordered breathing. Research into prognostic factors, therapeutic optimisation and new diagnostic tools, with special interest in lung ultrasound and the multidisciplinary approach to the complex patient. Studies include servo-ventilation therapy, COVID-19 outcomes (RECOVID), and systematic lung ultrasonography in hospitalised patients.</span><span lang="es">Estudio de la insuficiencia respiratoria aguda y crónica, estrategias de soporte ventilatorio y trastornos respiratorios del sueño. Factores pronósticos, optimización terapéutica y nuevas herramientas diagnósticas, con especial interés en la ecografía pulmonar y el abordaje multidisciplinar del paciente complejo.</span></p>
-          </div></div>
         </div>
+        <div class="line-tags-preview">
+          <div class="api-skeleton" style="width:90px;height:22px;display:inline-block;border-radius:100px;"></div>
+          <div class="api-skeleton" style="width:70px;height:22px;display:inline-block;border-radius:100px;"></div>
+          <div class="api-skeleton" style="width:100px;height:22px;display:inline-block;border-radius:100px;"></div>
+        </div>
+      </div>
 
-        <!-- LINE 05 -->
-        <div class="line-card reveal reveal-d2" id="line-05">
-          <div class="line-head" onclick="toggleLine('line-05')">
-            <div class="line-num">05</div>
-            <div class="line-meta">
-              <div class="line-coordinator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:11px;height:11px;"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><span lang="en">Coordinator:</span><span lang="es">Coordinadora:</span> <strong>Dra. María Delgado Roel</strong></div>
-              <h3 class="line-title"><span lang="en">Innovation in Thoracic Surgery</span><span lang="es">Innovación en Cirugía Torácica</span></h3>
-            </div>
+      <div class="line-card">
+        <div class="line-head">
+          <div class="api-skeleton" style="width:32px;height:32px;border-radius:6px;flex-shrink:0;"></div>
+          <div class="line-meta" style="flex:1;">
+            <div class="api-skeleton" style="width:140px;height:11px;margin-bottom:8px;"></div>
+            <div class="api-skeleton" style="width:70%;height:18px;"></div>
           </div>
-          <div class="line-tags-preview"><span class="ltag">VATS / RATS</span><span class="ltag">Lung Resection</span><span class="ltag">Thoracic Oncology</span><span class="ltag">ERATS</span></div>
-          <div class="line-expand-toggle" onclick="toggleLine('line-05')">
-            <span class="toggle-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="width:13px;height:13px;"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/></svg><span lang="en">Research scope &amp; capabilities</span><span lang="es">Alcance y capacidades</span></span>
-            <div class="toggle-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
-          </div>
-          <div class="line-body"><div class="line-body-inner">
-            <p class="line-desc"><span lang="en">Evaluation and improvement of thoracic surgical techniques, with special focus on minimally invasive and robotic approaches (VATS and RATS). Clinical outcomes, complications and functional recovery are analysed, promoting process standardisation, collaborative networks and prospective registries for complex pathologies. The Thoracic Surgery Service of CHUAC acts as surgical reference for the health areas of Lugo and Ferrol.</span><span lang="es">Evaluación y mejora de las técnicas quirúrgicas torácicas, con especial atención a los abordajes mínimamente invasivos y robóticos (VATS y RATS). Se analizan resultados clínicos, complicaciones y recuperación funcional, promoviendo la estandarización de procesos y la participación en redes colaborativas. El Servicio de Cirugía Torácica del CHUAC actúa como referente quirúrgico para las áreas sanitarias de Lugo y Ferrol.</span></p>
-          </div></div>
         </div>
+        <div class="line-tags-preview">
+          <div class="api-skeleton" style="width:90px;height:22px;display:inline-block;border-radius:100px;"></div>
+          <div class="api-skeleton" style="width:70px;height:22px;display:inline-block;border-radius:100px;"></div>
+          <div class="api-skeleton" style="width:100px;height:22px;display:inline-block;border-radius:100px;"></div>
+        </div>
+      </div>
 
-        <!-- LINE 06 -->
-        <div class="line-card reveal reveal-d3" id="line-06">
-          <div class="line-head" onclick="toggleLine('line-06')">
-            <div class="line-num">06</div>
-            <div class="line-meta">
-              <div class="line-coordinator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:11px;height:11px;"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><span lang="en">Coordinator:</span><span lang="es">Coordinador:</span> <strong>Dr. Pedro Jorge Marcos Rodríguez</strong></div>
-              <h3 class="line-title"><span lang="en">Personalized Respiratory Medicine, Management &amp; Clinical Innovation</span><span lang="es">Medicina Respiratoria Personalizada, Gestión e Innovación Clínica</span></h3>
-            </div>
+      <div class="line-card">
+        <div class="line-head">
+          <div class="api-skeleton" style="width:32px;height:32px;border-radius:6px;flex-shrink:0;"></div>
+          <div class="line-meta" style="flex:1;">
+            <div class="api-skeleton" style="width:140px;height:11px;margin-bottom:8px;"></div>
+            <div class="api-skeleton" style="width:70%;height:18px;"></div>
           </div>
-          <div class="line-tags-preview"><span class="ltag">Precision Medicine</span><span class="ltag">AI / Digital Health</span><span class="ltag">Rare Diseases</span><span class="ltag">Telemonitoring</span></div>
-          <div class="line-expand-toggle" onclick="toggleLine('line-06')">
-            <span class="toggle-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="width:13px;height:13px;"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/></svg><span lang="en">Research scope &amp; capabilities</span><span lang="es">Alcance y capacidades</span></span>
-            <div class="toggle-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
-          </div>
-          <div class="line-body"><div class="line-body-inner">
-            <p class="line-desc"><span lang="en">Integrating research in personalised medicine, rare respiratory diseases, genetics and clinical innovation. The line promotes development of AI-based predictive models, application of new technologies in clinical practice, and telemonitoring of chronic patients. It drives large clinical and genomic database generation and participation in international registries, advancing towards a more precise, predictive and patient-centred respiratory medicine.</span><span lang="es">Integra la investigación en medicina personalizada, enfermedades raras respiratorias, genética e innovación clínica. Promueve el desarrollo de modelos predictivos basados en IA, la aplicación de nuevas tecnologías en la práctica clínica y la telemonitorización de pacientes crónicos. Impulsa la generación de grandes bases de datos clínicas y genómicas y la participación en registros internacionales.</span></p>
-          </div></div>
         </div>
+        <div class="line-tags-preview">
+          <div class="api-skeleton" style="width:90px;height:22px;display:inline-block;border-radius:100px;"></div>
+          <div class="api-skeleton" style="width:70px;height:22px;display:inline-block;border-radius:100px;"></div>
+          <div class="api-skeleton" style="width:100px;height:22px;display:inline-block;border-radius:100px;"></div>
+        </div>
+      </div>
+
+      <div class="line-card">
+        <div class="line-head">
+          <div class="api-skeleton" style="width:32px;height:32px;border-radius:6px;flex-shrink:0;"></div>
+          <div class="line-meta" style="flex:1;">
+            <div class="api-skeleton" style="width:140px;height:11px;margin-bottom:8px;"></div>
+            <div class="api-skeleton" style="width:70%;height:18px;"></div>
+          </div>
+        </div>
+        <div class="line-tags-preview">
+          <div class="api-skeleton" style="width:90px;height:22px;display:inline-block;border-radius:100px;"></div>
+          <div class="api-skeleton" style="width:70px;height:22px;display:inline-block;border-radius:100px;"></div>
+          <div class="api-skeleton" style="width:100px;height:22px;display:inline-block;border-radius:100px;"></div>
+        </div>
+      </div>
 
       </div><!-- /#researchLinesList -->
     </div>
@@ -1605,74 +1562,63 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
       </div>
       <!-- TEAM GRID — populated by api.js loadTeam() from /api/team/website -->
       <div id="teamGrid">
-        <!-- Skeleton while loading -->
-        <div class="team-card-api" style="opacity:.4;">
-          <div class="tca-avatar">—</div>
-          <div style="flex:1;display:flex;flex-direction:column;gap:.375rem;">
-            <div style="height:14px;width:60%;background:rgba(0,0,0,.06);border-radius:2px;"></div>
-            <div style="height:11px;width:40%;background:rgba(0,0,0,.04);border-radius:2px;"></div>
-          </div>
-        </div>
-        <div class="team-card-api" style="opacity:.4;">
-          <div class="tca-avatar">—</div>
-          <div style="flex:1;display:flex;flex-direction:column;gap:.375rem;">
-            <div style="height:14px;width:55%;background:rgba(0,0,0,.06);border-radius:2px;"></div>
-            <div style="height:11px;width:35%;background:rgba(0,0,0,.04);border-radius:2px;"></div>
-          </div>
+      <!-- Real fallback: calm skeleton, not 6 cards of real names/bios
+           that could go stale if the API call fails. loadTeam() replaces
+           this on success; setError() handles genuine failures. -->
+      <div class="team-card">
+        <div class="api-skeleton" style="width:48px;height:48px;border-radius:50%;margin-bottom:.75rem;"></div>
+        <div class="team-body">
+          <div class="api-skeleton" style="width:65%;height:15px;margin-bottom:8px;"></div>
+          <div class="api-skeleton" style="width:45%;height:11px;margin-bottom:10px;"></div>
+          <div class="api-skeleton" style="width:100%;height:11px;margin-bottom:5px;"></div>
+          <div class="api-skeleton" style="width:80%;height:11px;"></div>
         </div>
       </div>
-      <!-- End team-grid -->
-      <div class="team-card reveal" style="display:none;"><!-- legacy placeholder --><div class="team-avatar">PS</div>
-        <div class="team-card reveal reveal-d1">
-          <div class="team-avatar">MB</div>
-          <div class="team-body">
-            <div class="team-name">Dra. Marina Blanco Aparicio</div>
-            <div class="team-role"><span lang="en">Line 02 · Coordinator</span><span lang="es">Línea 02 · Coordinadora</span></div>
-            <span class="team-line-tag">Enfermedades de la Vía Aérea</span>
-            <p class="team-bio">Responsable de la Línea 2 de Investigación (neumACt – INIBIC). Especialista en asma grave, EPOC, bronquiectasias y fibrosis quística. Coordinadora del Circuito de Vía Aérea Compleja (UVAC) del CHUAC. Autora de más de 30 publicaciones en revistas de alto impacto y participante activa en la elaboración de guías GEMA/SEPAR.</p>
-            <div class="team-expertise"><span class="team-tag">Severe Asthma</span><span class="team-tag">COPD</span><span class="team-tag">Biologics</span></div>
-          </div>
+      <div class="team-card">
+        <div class="api-skeleton" style="width:48px;height:48px;border-radius:50%;margin-bottom:.75rem;"></div>
+        <div class="team-body">
+          <div class="api-skeleton" style="width:65%;height:15px;margin-bottom:8px;"></div>
+          <div class="api-skeleton" style="width:45%;height:11px;margin-bottom:10px;"></div>
+          <div class="api-skeleton" style="width:100%;height:11px;margin-bottom:5px;"></div>
+          <div class="api-skeleton" style="width:80%;height:11px;"></div>
         </div>
-        <div class="team-card reveal reveal-d1">
-          <div class="team-avatar">RT</div>
-          <div class="team-body">
-            <div class="team-name">Dr. Rachid Tazi Mezalek</div>
-            <div class="team-role"><span lang="en">Line 03 · Coordinator</span><span lang="es">Línea 03 · Coordinador</span></div>
-            <span class="team-line-tag">Neumología Intervencionista y Cáncer de Pulmón</span>
-            <p class="team-bio">Responsable de la Línea 3 de Investigación (neumACt – INIBIC). Especialista en neumología intervencionista y oncología torácica. Experto en EBUS-TBNA, criobiopsia transbronquial, catéteres pleurales permanentes y prótesis endobronquiales. Investigador en estudios multicéntricos de broncoscopia intervencionista.</p>
-            <div class="team-expertise"><span class="team-tag">EBUS</span><span class="team-tag">Lung Cancer</span><span class="team-tag">Bronchoscopy</span></div>
-          </div>
+      </div>
+      <div class="team-card">
+        <div class="api-skeleton" style="width:48px;height:48px;border-radius:50%;margin-bottom:.75rem;"></div>
+        <div class="team-body">
+          <div class="api-skeleton" style="width:65%;height:15px;margin-bottom:8px;"></div>
+          <div class="api-skeleton" style="width:45%;height:11px;margin-bottom:10px;"></div>
+          <div class="api-skeleton" style="width:100%;height:11px;margin-bottom:5px;"></div>
+          <div class="api-skeleton" style="width:80%;height:11px;"></div>
         </div>
-        <div class="team-card reveal reveal-d2">
-          <div class="team-avatar">AC</div>
-          <div class="team-body">
-            <div class="team-name">Dra. Angélica Consuegra Vanegas</div>
-            <div class="team-role"><span lang="en">Line 04 · Coordinator</span><span lang="es">Línea 04 · Coordinadora</span></div>
-            <span class="team-line-tag">Insuficiencia Respiratoria, Cuidados Críticos y Medicina del Sueño</span>
-            <p class="team-bio">Responsable de la Línea 4 de Investigación (neumACt – INIBIC). Especialista en insuficiencia respiratoria aguda y crónica, ventilación no invasiva, oxigenoterapia domiciliaria y medicina del sueño. Investigadora en estudios multicéntricos sobre soporte ventilatorio y pronóstico en pacientes críticos respiratorios.</p>
-            <div class="team-expertise"><span class="team-tag">NIV</span><span class="team-tag">Critical Care</span><span class="team-tag">Sleep Medicine</span></div>
-          </div>
+      </div>
+      <div class="team-card">
+        <div class="api-skeleton" style="width:48px;height:48px;border-radius:50%;margin-bottom:.75rem;"></div>
+        <div class="team-body">
+          <div class="api-skeleton" style="width:65%;height:15px;margin-bottom:8px;"></div>
+          <div class="api-skeleton" style="width:45%;height:11px;margin-bottom:10px;"></div>
+          <div class="api-skeleton" style="width:100%;height:11px;margin-bottom:5px;"></div>
+          <div class="api-skeleton" style="width:80%;height:11px;"></div>
         </div>
-        <div class="team-card reveal reveal-d2">
-          <div class="team-avatar">MD</div>
-          <div class="team-body">
-            <div class="team-name">Dra. María Delgado Roel</div>
-            <div class="team-role"><span lang="en">Line 05 · Coordinator</span><span lang="es">Línea 05 · Coordinadora</span></div>
-            <span class="team-line-tag">Innovación en Cirugía Torácica</span>
-            <p class="team-bio">Responsable de la Línea 5 de Investigación (neumACt – INIBIC). Cirujana torácica especializada en técnicas mínimamente invasivas (VATS y RATS). El Servicio de Cirugía Torácica del CHUAC actúa como referente quirúrgico para las áreas sanitarias de Lugo y Ferrol. Investigadora principal en estudios multicéntricos europeos de cirugía robótica torácica.</p>
-            <div class="team-expertise"><span class="team-tag">VATS / RATS</span><span class="team-tag">Thoracic Oncology</span><span class="team-tag">ERATS</span></div>
-          </div>
+      </div>
+      <div class="team-card">
+        <div class="api-skeleton" style="width:48px;height:48px;border-radius:50%;margin-bottom:.75rem;"></div>
+        <div class="team-body">
+          <div class="api-skeleton" style="width:65%;height:15px;margin-bottom:8px;"></div>
+          <div class="api-skeleton" style="width:45%;height:11px;margin-bottom:10px;"></div>
+          <div class="api-skeleton" style="width:100%;height:11px;margin-bottom:5px;"></div>
+          <div class="api-skeleton" style="width:80%;height:11px;"></div>
         </div>
-        <div class="team-card reveal reveal-d3">
-          <div class="team-avatar">PM</div>
-          <div class="team-body">
-            <div class="team-name">Dr. Pedro Jorge Marcos Rodríguez</div>
-            <div class="team-role"><span lang="en">Line 06 · Coordinator · Group PI</span><span lang="es">Línea 06 · Coordinador · IP del Grupo</span></div>
-            <span class="team-line-tag">Medicina Respiratoria Personalizada, Gestión e Innovación Clínica</span>
-            <p class="team-bio">Jefe del Servicio de Neumología del CHUAC e Investigador Principal del grupo neumACt – INIBIC. Doctor en Medicina por la Universidade de A Coruña (2015). Investigador en medicina personalizada, enfermedades raras respiratorias, inteligencia artificial aplicada a la clínica y gestión sanitaria. Colaborador en el proyecto europeo DALi Lab (Horizonte Europa) e IP en el registro EARCO sobre déficit de Alfa-1 Antitripsina.</p>
-            <div class="team-expertise"><span class="team-tag">Precision Medicine</span><span class="team-tag">AI / Digital Health</span><span class="team-tag">Rare Diseases</span></div>
-          </div>
+      </div>
+      <div class="team-card">
+        <div class="api-skeleton" style="width:48px;height:48px;border-radius:50%;margin-bottom:.75rem;"></div>
+        <div class="team-body">
+          <div class="api-skeleton" style="width:65%;height:15px;margin-bottom:8px;"></div>
+          <div class="api-skeleton" style="width:45%;height:11px;margin-bottom:10px;"></div>
+          <div class="api-skeleton" style="width:100%;height:11px;margin-bottom:5px;"></div>
+          <div class="api-skeleton" style="width:80%;height:11px;"></div>
         </div>
+      </div>
       </div>
       </div>
   </section>
