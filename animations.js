@@ -61,7 +61,7 @@
   function initStagger() {
     // Apply staggered delays to siblings within stagger containers
     const containers = document.querySelectorAll(
-      '.partner-list, .partner-row, .team-grid, .projects-grid, .pipeline-stages, .partner-models, .cap-grid, .blog-feed'
+      '.partner-list, .partner-row, .team-grid, .projects-grid, .pipeline-stages, .partner-models, .cap-grid, .blog-feed, .lines-grid, .leads-list'
     );
     containers.forEach(container => {
       const items = container.querySelectorAll(':scope > .reveal, :scope > .partner-row, :scope > .post-item');
