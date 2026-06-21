@@ -13,7 +13,7 @@
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="neumACt R&I"/>
   <meta property="og:title" content="neumACt R&I — Precision Respiratory Medicine"/>
-  <meta property="og:description" content="Six specialist research lines. 15+ active clinical studies. 1,000 lung transplants — milestone achieved May 2026. CHUAC · INIBIC · SERGAS."/>
+  <meta property="og:description" content="Six specialist research lines. 13+ active clinical studies. 1,000 lung transplants — milestone achieved May 2026. CHUAC · INIBIC · SERGAS."/>
   <meta property="og:image" content="https://neumact.org/og-home.jpg"/>
   <meta name="twitter:card" content="summary_large_image"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -70,50 +70,16 @@ html.bar-dismissed body{padding-top:88px;}
 .team-bg .btn-text:hover,.partner-bg .btn-text:hover,.focus-bg .btn-text:hover
 {color: #00e0e0 !important;border-bottom-color: rgba(0,224,224,.5) !important;}
 
-.hero h1,.hero h2,.hero .display,.contact-bg h1,.contact-bg h2,.contact-bg .display,
-.team-bg h1,.team-bg h2,.team-bg .display,.partner-bg h2,.partner-bg .display,
-.paths-section h2,.focus-bg h2,.blog-hero h1,.blog-hero h2,.blog-hero .display
-{color:#fff!important;}
-.contact-bg p,.contact-bg .sec-head p,.team-bg p,.partner-bg p,.focus-bg p,.blog-hero p,.hero .hero-desc,
-.paths-section p,.paths-section .sec-body
-{color:rgba(255,255,255,.8)!important;}
-.hero-cred,.team-role,.team-bio,.cinfo-label,.hstat-label,.footer-col ul a,.footer-col address
-{color:rgba(255,255,255,.72)!important;}
-.cinfo-value{color:rgba(255,255,255,.9)!important;}
-.lines-bg h2,.lines-bg .display,.trials-bg h2,.trials-bg .display,.pipeline-bg h2,.projects-bg h2,.cap-bg h2
-{color:var(--ink,#1A1A1A)!important;}
-.lines-bg p,.trials-bg p,.pipeline-bg p,.projects-bg p,.cap-bg p
-{color:var(--text-on-light-2,#404040)!important;}
-.hstat-num,.stat-num,.hstrip-num,.pstat-num,.blog-hero-stat-n,.hsr-n
-{color:#fff!important;-webkit-text-fill-color:#fff!important;background:none!important;-webkit-background-clip:unset!important;background-clip:unset!important;}
-.hstat-num sub{color:#009999!important;-webkit-text-fill-color:#009999!important;}
-.hero-stats{display:grid!important;grid-template-columns:1fr 1fr!important;border-radius:0!important;}
-.hstat{padding:.85rem 0 .85rem 1.125rem!important;border-bottom:1px solid rgba(255,255,255,.1)!important;border-right:none!important;border-left:1px solid rgba(255,255,255,.1)!important;flex-direction:column!important;align-items:flex-start!important;}
-.hstat:nth-child(odd){border-left:none!important;}
-.hstat:nth-child(3),.hstat:nth-child(4){border-bottom:none!important;}
-.hstat:nth-child(5){grid-column:1/-1!important;border-left:none!important;border-top:1px solid rgba(255,255,255,.1)!important;border-bottom:none!important;padding-top:.85rem!important;}
-.hstat-num{font-size:1.625rem!important;line-height:1!important;}
-.hstat-label{font-size:var(--fs-label)!important;display:block!important;margin-bottom:.2rem!important;}
-.hero-stat-cta{grid-column:1/-1!important;border-top:1px solid rgba(255,255,255,.07)!important;}
-.footer-logo-img{filter:brightness(0) invert(1)!important;opacity:.8!important;height:36px!important;width:auto!important;}
-.affil-section{background:rgba(255,255,255,.025);border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07);}
-.affil-logo-item{display:block;opacity:.55;transition:opacity .2s;}
-.affil-logo-item:hover{opacity:.85;}
-.affil-img{display:block;width:auto;filter:brightness(0) invert(1);object-fit:contain;height:32px;}
-.affil-img-main{height:40px;max-width:260px;}
-.affil-img-inibic{height:28px;max-width:180px;}
-.affil-ph{display:flex;align-items:center;justify-content:center;height:32px;min-width:80px;border:1px dashed rgba(255,255,255,.2);border-radius:2px;padding:0 .75rem;background:rgba(255,255,255,.03);}
-.affil-ph span{font-family:var(--ff-mono,'DM Mono',monospace);font-size:var(--fs-label);letter-spacing:.08em;color:rgba(255,255,255,.35);white-space:nowrap;}
-.affil-ph-main{height:40px;min-width:140px;}
-.lead-avatar{width:88px!important;height:88px!important;border-radius:50%!important;background:linear-gradient(135deg,#005F5F 0%,#007A7A 50%,#4A9EE8 100%)!important;box-shadow:0 2px 12px rgba(0,122,122,.25)!important;}
-.lead-initials{font-family:'DM Sans',sans-serif!important;font-size:1.5rem!important;font-weight:700!important;color:rgba(255,255,255,.95)!important;letter-spacing:.02em!important;}
-.lead-avatar::after{display:none!important;content:none!important;}
-.lead-line-num{display:none!important;}
-.lead-line-pill{background:rgba(0,122,122,.08)!important;border:1px solid rgba(0,122,122,.2)!important;color:var(--teal,#007A7A)!important;font-weight:600!important;}
-.story-typographic-journal{font-family:var(--ff-display,'Fraunces',serif)!important;font-style:italic!important;font-size:.8125rem!important;font-weight:500!important;letter-spacing:0!important;text-transform:none!important;color:rgba(255,255,255,.92)!important;background:none!important;border:none!important;border-radius:0!important;padding:0 0 .5rem 0!important;margin-bottom:.65rem!important;display:inline-block!important;position:relative;z-index:1;}
+/* Everything else in this area (heading/body color on dark/light
+   backgrounds, stat styling, affiliation placeholders, dead lead-avatar
+   override) was a first pass fully superseded by the more complete
+   "DARK BG" block below — removed rather than left as silent duplicate
+   weight. .story-typographic-journal was ALSO duplicated further below
+   (line ~497, the base pill-badge version) — consolidated here into the
+   later, more considered italic-serif treatment; the old pill version
+   removed. */
+.story-typographic-journal{font-family:var(--ff-display,'Fraunces',serif);font-style:italic;font-size:.8125rem;font-weight:500;letter-spacing:0;text-transform:none;color:rgba(255,255,255,.92);background:none;border:none;border-radius:0;padding:0 0 .5rem 0;margin-bottom:.65rem;display:inline-block;position:relative;z-index:1;}
 .story-typographic-journal::after{content:'';position:absolute;bottom:0;left:0;width:28px;height:1.5px;background:var(--teal-2,#00B3B3);}
-
-
 
 /* DARK BG — all headings white */
 .hero h1,.hero h2,.hero h3,.hero .display,.hero .display-xl,.hero .display-lg,.hero .display-md,.hero .display-sm,
@@ -531,13 +497,8 @@ html.bar-dismissed body{padding-top:88px!important;}
     }
     @keyframes storyMotifBreathe{0%,100%{opacity:.4;}50%{opacity:.62;}}
     .story-typographic-motif svg{width:100%;height:100%;}
-    .story-typographic-journal{
-      font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;
-      color:var(--teal-2);margin-bottom:.75rem;position:relative;z-index:1;
-      display:inline-flex;align-items:center;
-      padding:.25rem .6rem;border-radius:100px;
-      background:rgba(0,179,179,.14);
-    }
+    /* .story-typographic-journal consolidated near the top of this file
+       (the italic-serif treatment) — this pill-badge version removed. */
     .story-typographic-title{
       font-family:var(--ff-display);font-size:var(--fs-hero-title);font-weight:700;
       color:#fff;line-height:1.2;letter-spacing:-.02em;position:relative;z-index:1;
@@ -1052,6 +1013,14 @@ body { padding-top: calc(88px + 30px) !important; }
   body { padding-top: calc(88px + 28px) !important; }
 }
 
+
+/* Loading skeleton shimmer — referenced by setLoading() in api.js on
+   every page, but the CSS itself never actually existed anywhere in
+   this file. Every loading-state shimmer site-wide was rendering as
+   an invisible, unstyled box until now. */
+.api-skeleton{background:linear-gradient(90deg,var(--surface) 25%,var(--white) 37%,var(--surface) 63%);background-size:400% 100%;animation:skeletonShimmer 1.4s ease infinite;border-radius:4px;}
+.api-skeleton-dark{background:linear-gradient(90deg,rgba(255,255,255,.06) 25%,rgba(255,255,255,.12) 37%,rgba(255,255,255,.06) 63%);background-size:400% 100%;animation:skeletonShimmer 1.4s ease infinite;border-radius:4px;}
+@keyframes skeletonShimmer{0%{background-position:100% 50%;}100%{background-position:0 50%;}}
 </style>
 <script type="application/ld+json">
 {
@@ -1061,7 +1030,7 @@ body { padding-top: calc(88px + 30px) !important; }
   "alternateName": ["neumACt R&I", "neumAC Research & Innovation"],
   "url": "https://neumact.org",
   "logo": "https://neumact.org/og-home.jpg",
-  "description": "Clinical research department specialising in respiratory medicine. Six research lines spanning transplantation, airway disease, interventional pneumology, critical care, thoracic surgery, and precision medicine. INIBIC-accredited. Regional reference centre for Galicia.",
+  "description": "Clinical research department specialising in respiratory medicine. Six research lines spanning transplantation, airway disease, interventional pneumology, critical care, thoracic surgery, and precision medicine. INIBIC-accredited. Regional reference centre for lung transplantation and pulmonary hypertension.",
   "parentOrganization": {
     "@type": "Hospital",
     "name": "Hospital Universitario A Coruña (CHUAC)",
@@ -1146,8 +1115,8 @@ body { padding-top: calc(88px + 30px) !important; }
 
         
         <p class="hero-desc reveal reveal-d2">
-          <span lang="en">The Servicio de Neumología at CHUAC runs six research lines spanning the full spectrum of respiratory disease — from transplantation and pulmonary hypertension to interventional bronchoscopy, thoracic surgery, sleep medicine, and precision phenotyping. <strong>1,000 lung transplants performed</strong> — a national reference milestone, May 2026. Regional reference centre for Galicia. INIBIC-accredited. 15+ active recruiting studies.</span>
-          <span lang="es">Seis líneas especializadas. <strong>1.000 trasplantes pulmonares</strong> realizados en el CHUAC — hito alcanzado en mayo de 2026. Más de 15 estudios activos en reclutamiento sobre EPOC, asma, EPI, cáncer de pulmón, hipertensión pulmonar, insuficiencia respiratoria, trastornos respiratorios del sueño y cirugía torácica.</span>
+          <span lang="en">The Servicio de Neumología at CHUAC runs six research lines spanning the full spectrum of respiratory disease — from transplantation and pulmonary hypertension to interventional bronchoscopy, thoracic surgery, sleep medicine, and precision phenotyping. <strong>1,000 lung transplants performed</strong> — a national reference milestone, May 2026. Regional reference centre for lung transplantation and pulmonary hypertension. INIBIC-accredited. 13+ active recruiting studies.</span>
+          <span lang="es">Seis líneas especializadas. <strong>1.000 trasplantes pulmonares</strong> realizados en el CHUAC — hito alcanzado en mayo de 2026. Más de 13 estudios activos en reclutamiento sobre EPOC, asma, EPI, cáncer de pulmón, hipertensión pulmonar, insuficiencia respiratoria, trastornos respiratorios del sueño y cirugía torácica.</span>
         </p>
 
         <div class="hero-actions reveal reveal-d2">
