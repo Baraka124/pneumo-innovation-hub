@@ -307,14 +307,16 @@ async function loadTrials(filters = {}) {
     tbody.innerHTML = trials.map(t => {
       window._trialData[t.id] = t;
       const statusClass = STATUS_CLASS[t.status] || 'active';
-      const line = t.research_line;
-      const lineLabel = line ? `L${String(line.line_number).padStart(2,'0')} · ${line.short_name || line.name}` : '—';
-      const lineFullName = line ? line.name : '';
+      const allLines = [t.research_line, ...(t.additional_lines || [])].filter(Boolean);
+      const lineCell = allLines.length
+        ? allLines.slice(0, 2).map(l => `<span class="trial-line-tag" title="${escHtml(l.name)}" style="margin-right:4px;">L${String(l.line_number).padStart(2,'0')} · ${escHtml(l.short_name || l.name)}</span>`).join('') +
+          (allLines.length > 2 ? `<span class="trial-line-tag" title="${escHtml(allLines.slice(2).map(l => l.name).join(', '))}">+${allLines.length - 2}</span>` : '')
+        : '<span class="trial-line-tag">—</span>';
       return `
         <tr onclick="openTrialModal('${t.id}')" style="cursor:pointer;" title="Click for details">
           <td><span class="trial-protocol">${escHtml(t.protocol_id)}</span></td>
           <td><span class="trial-title">${escHtml(t.title)}</span></td>
-          <td><span class="trial-line-tag" title="${escHtml(lineFullName)}">${escHtml(lineLabel)}</span></td>
+          <td>${lineCell}</td>
           <td><span class="phase-badge">${escHtml(t.phase)}</span></td>
           <td>
             <span class="status-badge ${statusClass}">
@@ -1448,10 +1450,12 @@ async function loadLineDetail() {
       ).join('<span style="color:rgba(255,255,255,.3);margin:0 -.05rem;">·</span>');
     }
 
-    // Coordinator strip — reuses the chief/PI badge logic established on team.html
-    const coordSection = document.getElementById('lineCoordinatorSection');
+    // Coordinator — first, visually distinguished row in the merged
+    // "People" section (larger avatar, chief/PI badge), not a separate
+    // bordered card with its own design language.
+    const peopleSection = document.getElementById('linePeopleSection');
     const coordCard = document.getElementById('lineCoordinatorCard');
-    if (line.coordinator && coordSection && coordCard) {
+    if (line.coordinator && peopleSection && coordCard) {
       const c = line.coordinator;
       const initials = (c.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
       const avatar = c.public_photo_url
@@ -1463,13 +1467,15 @@ async function loadLineDetail() {
           ? `<span class="hstat-label" style="background:var(--blue-50);color:var(--navy-2);padding:.3rem .7rem;border-radius:var(--r-sm);font-size:var(--fs-label);flex-shrink:0;"><span lang="en">Principal Investigator</span><span lang="es">IP</span></span>`
           : '';
       coordCard.innerHTML = `
-        ${avatar}
-        <div style="flex:1;min-width:0;">
-          <p style="font-weight:500;font-size:var(--fs-body-sm);margin:0;">${escHtml(c.title ? c.title + ' ' + c.full_name : c.full_name)}</p>
-          <p style="font-size:var(--fs-label);color:var(--ink-3);margin:2px 0 0;"><span lang="en">Line coordinator</span><span lang="es">Coordinador de la línea</span>${c.specialization ? ' · ' + escHtml(c.specialization) : ''}</p>
-        </div>
-        ${chiefBadge}`;
-      coordSection.style.display = '';
+        <div style="display:flex;gap:1rem;align-items:center;padding-bottom:1.25rem;border-bottom:1px solid var(--border-l);">
+          ${avatar}
+          <div style="flex:1;min-width:0;">
+            <p style="font-weight:500;font-size:var(--fs-body-sm);margin:0;">${escHtml(c.title ? c.title + ' ' + c.full_name : c.full_name)}</p>
+            <p style="font-size:var(--fs-label);color:var(--ink-3);margin:2px 0 0;"><span lang="en">Line coordinator</span><span lang="es">Coordinador de la línea</span>${c.specialization ? ' · ' + escHtml(c.specialization) : ''}</p>
+          </div>
+          ${chiefBadge}
+        </div>`;
+      peopleSection.style.display = '';
     }
 
     // About this line — description/capabilities/keywords are real,
@@ -1532,11 +1538,13 @@ async function loadLineDetail() {
       }
     } catch (err) { console.error('Line trials load failed:', err); }
 
-    // Team on this line — derived from trial/project investigators server-side
-    const teamSection = document.getElementById('lineTeamSection');
+    // Team on this line — derived from trial/project investigators and
+    // explicit research_line_members, server-side. Coordinator excluded
+    // here since they're already shown, distinguished, just above.
     const teamChips = document.getElementById('lineTeamChips');
-    if (line.team && line.team.length && teamSection && teamChips) {
-      teamChips.innerHTML = line.team.map((m, i) => {
+    if (line.team && line.team.length && peopleSection && teamChips) {
+      const teamWithoutCoordinator = line.team.filter(m => m.id !== line.coordinator?.id);
+      teamChips.innerHTML = teamWithoutCoordinator.map((m, i) => {
         const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
         const avatar = m.public_photo_url
           ? `<img src="${escHtml(m.public_photo_url)}" alt="" style="width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0;">`
@@ -1552,7 +1560,7 @@ async function loadLineDetail() {
           </div>
         </div>`;
       }).join('');
-      teamSection.style.display = '';
+      peopleSection.style.display = '';
     }
 
     // Recent publications for this line
@@ -1573,7 +1581,7 @@ async function loadLineDetail() {
         }).join('');
         pubsSection.style.display = '';
       }
-    } catch (err) { console.error('Line publications load failed:', err); }
+    } catch (err) { console.error('Line publications load failed:', err); }   
 
   } catch (err) {
     console.error('Research line load failed:', err.message);
