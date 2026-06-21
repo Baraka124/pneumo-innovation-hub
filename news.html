@@ -1377,11 +1377,12 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
       });
     });
 
-    /* ── Reveal observer ── */
-    var io=new IntersectionObserver(function(entries){
-      entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+    /* ── Reveal observer — exposed globally so api.js can observe
+       dynamically injected elements ── */
+    window._revealObserver=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');window._revealObserver.unobserve(e.target);}});
     },{threshold:.1,rootMargin:'0px 0px -40px 0px'});
-    document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+    document.querySelectorAll('.reveal').forEach(function(el){window._revealObserver.observe(el);});
   </script>
 
   <script>
