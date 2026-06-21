@@ -179,7 +179,9 @@ html.bar-dismissed body{padding-top:88px!important;}
 .hdr-dd-trigger:hover{background:rgba(255,255,255,.08);}
 .hdr-dd-trigger a{display:inline-flex;align-items:center;padding:.55rem .55rem .55rem .9rem;font-family:var(--ff-body,'DM Sans',sans-serif);font-size:var(--fs-meta);font-weight:500;letter-spacing:.01em;color:rgba(255,255,255,.78);text-decoration:none;white-space:nowrap;transition:color .15s;}
 .hdr-dd-trigger:hover a,.hdr-dd-trigger a:hover{color:#fff;}
-.hdr-dd-chevron{display:inline-flex;align-items:center;justify-content:center;padding:.55rem .75rem .55rem .35rem;border:none;background:transparent;cursor:pointer;color:rgba(255,255,255,.6);transition:color .15s;}
+.hdr-dd-chevron{display:inline-flex;align-items:center;justify-content:center;padding:.55rem .75rem .55rem .35rem;border:none;background:transparent;cursor:pointer;color:rgba(255,255,255,.6);transition:color .15s;position:relative;}
+.hdr-dd-chevron::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:1px;height:16px;background:rgba(255,255,255,.18);opacity:0;transition:opacity .15s;}
+.hdr-dd-trigger:hover .hdr-dd-chevron::before,.hdr-dd.open .hdr-dd-chevron::before{opacity:1;}
 .hdr-dd-chevron:hover{color:#fff;}
 .hdr-dd-chevron svg{width:13px;height:13px;transition:transform .15s;}
 .hdr-dd.open .hdr-dd-chevron svg{transform:rotate(180deg);}
@@ -376,8 +378,6 @@ html.bar-dismissed body{padding-top:88px!important;}
       padding:1.5rem clamp(1.5rem,4vw,5rem);
       opacity:1;transition:opacity .35s ease;
     }
-    .blog-hero-feature.spotlight-fade .blog-hero-feature-over{opacity:0;}
-    .blog-hero-feature.spotlight-fade img{opacity:0;}
     .blog-hero-feature-inner{max-width:560px;}
     .blog-hero-feature-badge{
       font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.14em;
@@ -385,8 +385,6 @@ html.bar-dismissed body{padding-top:88px!important;}
       margin-bottom:.5rem;
       display:flex;align-items:center;gap:.5rem;
     }
-    .spotlight-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--teal-2);box-shadow:0 0 0 0 rgba(0,179,179,.6);animation:spotlightPulse 2.2s infinite;flex-shrink:0;}
-    @keyframes spotlightPulse{0%{box-shadow:0 0 0 0 rgba(0,179,179,.55);}70%{box-shadow:0 0 0 6px rgba(0,179,179,0);}100%{box-shadow:0 0 0 0 rgba(0,179,179,0);}}
     .blog-hero-feature-title{
       font-family:var(--ff-display);font-size:clamp(1.25rem,2.5vw,1.75rem);
       font-weight:700;color:#fff;line-height:1.2;margin-bottom:.375rem;
@@ -395,6 +393,10 @@ html.bar-dismissed body{padding-top:88px!important;}
       font-family:var(--ff-mono);font-size:var(--fs-label);
       color:rgba(255,255,255,.4);letter-spacing:.04em;
     }
+    .story-dots{display:flex;gap:7px;margin-top:1rem;}
+    .story-dot{width:7px;height:7px;border-radius:50%;border:none;background:rgba(255,255,255,.3);cursor:pointer;padding:0;transition:background .2s,transform .15s;}
+    .story-dot:hover{transform:scale(1.2);}
+    .story-dot.active{background:#fff;}
     @media(max-width:640px){
       .blog-hero-h1{font-size:2.75rem;}
       .blog-hero-feature{height:180px;}
@@ -1090,12 +1092,14 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
       <a href="innovation.html"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
       <a href="news.html" class="current" aria-current="page"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
       <a href="team.html"><span lang="en">Team</span><span lang="es">Equipo</span></a>
-    </nav><div class="hdr-right"><div class="lang-toggle" role="group" aria-label="Language"><button class="lt-btn lt-btn--active" data-lang="en" id="ltBtnEn" onclick="selectLang('en')" aria-pressed="true">EN</button><button class="lt-btn" data-lang="es" id="ltBtnEs" onclick="selectLang('es')" aria-pressed="false">ES</button></div><a href="index.html#contact" class="hdr-contact"><span lang="en">Contact</span><span lang="es">Contacto</span></a><button class="mob-toggle" id="mobToggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobDrawer"><span></span><span></span><span></span></button></div></div></header><div class="mob-overlay" id="mobOverlay"></div><nav class="mob-drawer" id="mobDrawer" aria-label="Mobile navigation"><div class="mob-drawer-nav">
+    <a href="index.html#contact"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
+    </nav><div class="hdr-right"><div class="lang-toggle" role="group" aria-label="Language"><button class="lt-btn lt-btn--active" data-lang="en" id="ltBtnEn" onclick="selectLang('en')" aria-pressed="true">EN</button><button class="lt-btn" data-lang="es" id="ltBtnEs" onclick="selectLang('es')" aria-pressed="false">ES</button></div><button class="mob-toggle" id="mobToggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobDrawer"><span></span><span></span><span></span></button></div></div></header><div class="mob-overlay" id="mobOverlay"></div><nav class="mob-drawer" id="mobDrawer" aria-label="Mobile navigation"><div class="mob-drawer-nav">
       <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
       <a href="clinical.html"><span lang="en">Research</span><span lang="es">Investigación</span></a>
       <a href="innovation.html"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
       <a href="news.html" class="current" aria-current="page"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
       <a href="team.html"><span lang="en">Team</span><span lang="es">Equipo</span></a>
+    <a href="index.html#contact"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
     </div><div class="mob-lang"><button class="lt-btn lt-btn--active" data-lang="en" onclick="selectLang('en')" aria-pressed="true">EN</button><button class="lt-btn" data-lang="es" onclick="selectLang('es')" aria-pressed="false">ES</button></div></nav>
 <div id="pb" role="progressbar" aria-hidden="true"></div>
 <section class="blog-hero">
@@ -1111,6 +1115,10 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
           <span lang="en">Scientific<br>output from<br><em>neumACt R&amp;I.</em></span>
           <span lang="es">Notas de<br>Investigación,<br><em>Compartidas.</em></span>
         </h1>
+        <p class="reveal reveal-d2" style="font-size:1.0625rem;color:rgba(255,255,255,.68);max-width:480px;line-height:1.7;margin-top:1.25rem;">
+          <span lang="en">Findings from this group are made openly available, so the work can be read, checked, and built on by others.</span>
+          <span lang="es">Los resultados de este grupo se publican en acceso abierto, para que el trabajo pueda leerse, verificarse y servir de base a otros.</span>
+        </p>
         <!-- Stat shelf -->
         <div class="blog-hero-shelf reveal reveal-d2">
           <div class="blog-hero-shelf-stat">
@@ -1144,6 +1152,7 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
             <span lang="en">Loading spotlight…</span><span lang="es">Cargando…</span>
           </div>
           <div class="blog-hero-feature-meta" id="heroLatestMeta"></div>
+          <div class="story-dots" id="heroLatestDots" role="tablist" aria-label="More featured stories"></div>
         </div>
       </div>
     </div>
@@ -1176,6 +1185,14 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
 
   <!-- ARTICLE READER (injected, hidden by default) -->
   <div id="articleReader"></div>
+
+  <!-- PUBLICATION HIGHLIGHTS — curated, distinct from the full chronological
+       feed below. Pulls from the same is_featured publications already
+       used for the hero spotlight pool, just shown as a static list here. -->
+  <div class="container" id="pubHighlightsWrap" style="display:none;padding-top:2.5rem;">
+    <p class="eyebrow" style="margin-bottom:1.25rem;"><span lang="en">Highlighted publications</span><span lang="es">Publicaciones destacadas</span></p>
+    <div id="pubHighlightsList" style="border-top:1px solid var(--border-l);"></div>
+  </div>
 
   <!-- MAIN CONTENT -->
   <div class="container">
@@ -1683,20 +1700,44 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
 
       populateSidebar();
       populateHeroSpotlight();
+      populatePubHighlights();
       renderFeed();
     };
 
-    /* ── Hero spotlight: shows a random post, rotates every ~5 min ── */
-    var spotlightTimer = null;
-    var spotlightLastIdx = -1;
+    /* ── Publication highlights — curated, not the full feed ── */
+    function populatePubHighlights(){
+      var wrap = document.getElementById('pubHighlightsWrap');
+      var list = document.getElementById('pubHighlightsList');
+      if(!wrap || !list) return;
+      var pubs = _all.filter(function(p){ return p.post_type === 'publication' && p.is_featured; }).slice(0, 5);
+      if(!pubs.length){ wrap.style.display = 'none'; return; }
+      list.innerHTML = pubs.map(function(p, i){
+        var year = p.published_at ? new Date(p.published_at).getFullYear() : '';
+        return '<a href="#" class="pub-hl-row" data-idx="'+i+'" style="display:flex;align-items:baseline;gap:.875rem;padding:1rem 0;'+(i>0?'border-top:1px solid var(--border-l);':'')+'text-decoration:none;color:inherit;">'+
+          '<span style="font-family:var(--ff-mono);font-size:var(--fs-label);color:var(--ink-4);flex-shrink:0;white-space:nowrap;">'+esc(p.journal_name||'')+(year?' · '+year:'')+'</span>'+
+          '<span style="font-size:var(--fs-meta);flex:1;">'+esc(p.title||'')+'</span>'+
+          '</a>';
+      }).join('');
+      list.querySelectorAll('.pub-hl-row').forEach(function(row){
+        row.addEventListener('click', function(e){
+          e.preventDefault();
+          openPost(pubs[parseInt(row.dataset.idx, 10)]);
+        });
+      });
+      wrap.style.display = '';
+    }
 
-    function pickSpotlightPost(){
-      if(!_all.length) return null;
-      if(_all.length === 1) return _all[0];
-      var idx;
-      do { idx = Math.floor(Math.random() * _all.length); } while(idx === spotlightLastIdx);
-      spotlightLastIdx = idx;
-      return _all[idx];
+    /* ── Hero spotlight: up to 4 featured-first candidates, no
+       auto-rotate — post titles take real reading time, same reasoning
+       as index.html's hero. User clicks a dot to move between them. */
+    var spotlightPool = [];
+    var activeSpotlightIdx = 0;
+
+    function buildSpotlightPool(){
+      if(!_all.length) return [];
+      var featured = _all.filter(function(p){ return p.is_featured; });
+      var rest = _all.filter(function(p){ return !p.is_featured; });
+      return featured.concat(rest).slice(0, 4);
     }
 
     function renderSpotlight(p){
@@ -1707,10 +1748,8 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
       var meta = document.getElementById('heroLatestMeta');
       if(!card || !p) return;
 
-      /* Badge — "Spotlight" + type, with a pulsing dot to signal it rotates */
       if(badge){
         badge.innerHTML =
-          '<span class="spotlight-dot" aria-hidden="true"></span>'+
           '<span lang="en">Spotlight · '+esc(typeLabel(p.post_type||'article'))+'</span>'+
           '<span lang="es">Destacado · '+esc(typeLabel(p.post_type||'article'))+'</span>';
       }
@@ -1721,7 +1760,6 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
         var metaTxt = fmtDate(p.published_at||p.created_at)+(p.author?' · '+esc(p.author.full_name):'')+(p.research_line?' · L'+p.research_line.line_number:'');
         meta.textContent = metaTxt;
       }
-      /* Replace image (or fall back to gradient placeholder) */
       imgEl.innerHTML = p.featured_image_url
         ? '<img src="'+esc(p.featured_image_url)+'" alt="'+esc(p.title||'')+'" loading="lazy">'
         : '<div class="blog-hero-feature-ph"></div>';
@@ -1730,20 +1768,29 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
       card.style.cursor = 'pointer';
     }
 
-    function populateHeroSpotlight(){
-      if(!_all.length) return;
-      renderSpotlight(pickSpotlightPost());
+    function renderSpotlightDots(){
+      var dotsEl = document.getElementById('heroLatestDots');
+      if(!dotsEl) return;
+      if(spotlightPool.length < 2){ dotsEl.innerHTML=''; return; }
+      dotsEl.innerHTML = spotlightPool.map(function(_, i){
+        return '<button class="story-dot'+(i===activeSpotlightIdx?' active':'')+'" role="tab" aria-selected="'+(i===activeSpotlightIdx)+'" aria-label="Story '+(i+1)+' of '+spotlightPool.length+'" data-idx="'+i+'"></button>';
+      }).join('');
+      dotsEl.querySelectorAll('.story-dot').forEach(function(dot){
+        dot.addEventListener('click', function(e){
+          e.stopPropagation();
+          activeSpotlightIdx = parseInt(dot.dataset.idx, 10);
+          renderSpotlight(spotlightPool[activeSpotlightIdx]);
+          renderSpotlightDots();
+        });
+      });
+    }
 
-      if(spotlightTimer) clearInterval(spotlightTimer);
-      spotlightTimer = setInterval(function(){
-        var card = document.getElementById('heroLatest');
-        if(!card) return;
-        card.classList.add('spotlight-fade');
-        setTimeout(function(){
-          renderSpotlight(pickSpotlightPost());
-          card.classList.remove('spotlight-fade');
-        }, 350); /* matches CSS fade-out duration */
-      }, 300000); /* ~5 minutes */
+    function populateHeroSpotlight(){
+      spotlightPool = buildSpotlightPool();
+      if(!spotlightPool.length) return;
+      activeSpotlightIdx = 0;
+      renderSpotlight(spotlightPool[0]);
+      renderSpotlightDots();
     }
 
     /* Fallback: if api.js already ran before this script */
