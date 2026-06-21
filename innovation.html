@@ -181,7 +181,9 @@ html.bar-dismissed body{padding-top:88px!important;}
 .hdr-dd-trigger:hover{background:rgba(255,255,255,.08);}
 .hdr-dd-trigger a{display:inline-flex;align-items:center;padding:.55rem .55rem .55rem .9rem;font-family:var(--ff-body,'DM Sans',sans-serif);font-size:var(--fs-meta);font-weight:500;letter-spacing:.01em;color:rgba(255,255,255,.78);text-decoration:none;white-space:nowrap;transition:color .15s;}
 .hdr-dd-trigger:hover a,.hdr-dd-trigger a:hover{color:#fff;}
-.hdr-dd-chevron{display:inline-flex;align-items:center;justify-content:center;padding:.55rem .75rem .55rem .35rem;border:none;background:transparent;cursor:pointer;color:rgba(255,255,255,.6);transition:color .15s;}
+.hdr-dd-chevron{display:inline-flex;align-items:center;justify-content:center;padding:.55rem .75rem .55rem .35rem;border:none;background:transparent;cursor:pointer;color:rgba(255,255,255,.6);transition:color .15s;position:relative;}
+.hdr-dd-chevron::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:1px;height:16px;background:rgba(255,255,255,.18);opacity:0;transition:opacity .15s;}
+.hdr-dd-trigger:hover .hdr-dd-chevron::before,.hdr-dd.open .hdr-dd-chevron::before{opacity:1;}
 .hdr-dd-chevron:hover{color:#fff;}
 .hdr-dd-chevron svg{width:13px;height:13px;transition:transform .15s;}
 .hdr-dd.open .hdr-dd-chevron svg{transform:rotate(180deg);}
@@ -1368,12 +1370,14 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
       <a href="innovation.html" class="current" aria-current="page"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
       <a href="news.html"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
       <a href="team.html"><span lang="en">Team</span><span lang="es">Equipo</span></a>
-    </nav><div class="hdr-right"><div class="lang-toggle" role="group" aria-label="Language"><button class="lt-btn lt-btn--active" data-lang="en" id="ltBtnEn" onclick="selectLang('en')" aria-pressed="true">EN</button><button class="lt-btn" data-lang="es" id="ltBtnEs" onclick="selectLang('es')" aria-pressed="false">ES</button></div><a href="index.html#contact" class="hdr-contact"><span lang="en">Contact</span><span lang="es">Contacto</span></a><button class="mob-toggle" id="mobToggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobDrawer"><span></span><span></span><span></span></button></div></div></header><div class="mob-overlay" id="mobOverlay"></div><nav class="mob-drawer" id="mobDrawer" aria-label="Mobile navigation"><div class="mob-drawer-nav">
+    <a href="index.html#contact"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
+    </nav><div class="hdr-right"><div class="lang-toggle" role="group" aria-label="Language"><button class="lt-btn lt-btn--active" data-lang="en" id="ltBtnEn" onclick="selectLang('en')" aria-pressed="true">EN</button><button class="lt-btn" data-lang="es" id="ltBtnEs" onclick="selectLang('es')" aria-pressed="false">ES</button></div><button class="mob-toggle" id="mobToggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobDrawer"><span></span><span></span><span></span></button></div></div></header><div class="mob-overlay" id="mobOverlay"></div><nav class="mob-drawer" id="mobDrawer" aria-label="Mobile navigation"><div class="mob-drawer-nav">
       <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
       <a href="clinical.html"><span lang="en">Research</span><span lang="es">Investigación</span></a>
       <a href="innovation.html" class="current" aria-current="page"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
       <a href="news.html"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
       <a href="team.html"><span lang="en">Team</span><span lang="es">Equipo</span></a>
+    <a href="index.html#contact"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
     </div><div class="mob-lang"><button class="lt-btn lt-btn--active" data-lang="en" onclick="selectLang('en')" aria-pressed="true">EN</button><button class="lt-btn" data-lang="es" onclick="selectLang('es')" aria-pressed="false">ES</button></div></nav>
 <div id="pb" role="progressbar" aria-hidden="true"></div>
 <section class="hero" id="top">
@@ -1656,13 +1660,13 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
       <div class="sec-head reveal">
         <p class="label"><span lang="en">Contact</span><span lang="es">Contáctenos</span></p>
         <h2 class="display lg"><span lang="en">Enquiries</span><span lang="es">Contacto</span></h2>
-        <p style="max-width:540px;"><span lang="en">Whether you have a specific project proposal or are simply exploring what's possible — our innovation team responds within 2 business days.</span><span lang="es">Ya sea que tenga una propuesta específica o esté explorando posibilidades, nuestro equipo le responderá en el plazo de dos días hábiles.</span></p>
+        <p style="max-width:540px;"><span lang="en">Whether you have a specific project proposal or are simply exploring what's possible.</span><span lang="es">Ya sea que tenga una propuesta específica o esté explorando posibilidades.</span></p>
       </div>
       <div class="contact-layout">
         <div class="contact-info-list reveal">
           <p style="font-size:.9rem;line-height:1.75;color:var(--text-on-dark-2);max-width:380px;">
-            <span lang="en">Our team responds within 2 business days. For urgent enquiries about active trials or partnership opportunities, contact us directly.</span>
-            <span lang="es">Nuestro equipo responde en un plazo de dos días hábiles. Para consultas urgentes sobre ensayos activos u oportunidades de colaboración, contáctenos directamente.</span>
+            <span lang="en">For urgent enquiries about active trials or partnership opportunities, contact us directly.</span>
+            <span lang="es">Para consultas urgentes sobre ensayos activos u oportunidades de colaboración, contáctenos directamente.</span>
           </p>
           <div style="margin-top:1.5rem;display:flex;flex-direction:column;gap:.625rem;">
             <a href="/cdn-cgi/l/email-protection#741a1101191b17150611340711061315075a1107" style="color:var(--teal-2);font-size:.9rem;text-decoration:none;"><span class="__cf_email__" data-cfemail="8de3e8f8e0e2eeecffe8cdfee8ffeaecfea3e8fe">[email&#160;protected]</span></a>
@@ -1722,7 +1726,7 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
               </div>
             </div>
           </form>
-          <div class="form-success" id="formSuccess"><span lang="en">Received! Our innovation team will respond within 2 business days.</span><span lang="es">¡Recibido! Nuestro equipo de innovación responderá en 2 días hábiles.</span></div>
+          <div class="form-success" id="formSuccess"><span lang="en">Received! Our innovation team will be in touch.</span><span lang="es">¡Recibido! Nuestro equipo de innovación se pondrá en contacto.</span></div>
         </div>
       </div>
     </div>
