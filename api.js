@@ -513,39 +513,33 @@ async function loadTeamLeads() {
         m.can_be_pi ? `<span lang="en">Principal Investigator</span><span lang="es">IP</span>` : '',
       ].filter(Boolean).join(' · ');
 
-      const pubCount = m.publication_count || (m.latest_pub ? 1 : 0);
-      const activeCount = m.recruiting_trials || m.active_trials || 0;
-
-      const statRow = `<div class="lead-stats">
-        <div class="lead-stat">
-          <span class="lead-stat-num">${activeCount || '—'}</span>
-          <span class="lead-stat-label"><span lang="en">${activeCount === 1 ? 'Active study' : 'Active studies'}</span><span lang="es">${activeCount === 1 ? 'Estudio activo' : 'Estudios activos'}</span></span>
-        </div>
-        <div class="lead-stat">
-          <span class="lead-stat-num">${pubCount || '—'}</span>
-          <span class="lead-stat-label"><span lang="en">${pubCount === 1 ? 'Publication' : 'Publications'}</span><span lang="es">${pubCount === 1 ? 'Publicación' : 'Publicaciones'}</span></span>
-        </div>
-        <div class="lead-stat">
-          <span class="lead-stat-num">L${lineNum}</span>
-          <span class="lead-stat-label"><span lang="en">Line coordinated</span><span lang="es">Línea coordinada</span></span>
-        </div>
-      </div>`;
+      // Publication list — the genuine variable-depth element. Someone
+      // with 6 papers gets a real list with overflow; someone with 1
+      // gets exactly that, no padding, no invented stat tiles.
+      // Note: deliberately NOT showing a trial/study count here — that
+      // figure was derived from the coordinator's *line*, not personal
+      // PI/co-investigator involvement (which isn't recorded in the
+      // database yet), so it would overstate what's actually verified.
+      const pubs = m.recent_pubs || [];
+      const pubCount = m.publication_count || pubs.length;
+      const pubList = pubs.length
+        ? `<div class="lead-pubs">
+             <p class="lead-pubs-label"><span lang="en">${pubCount} ${pubCount === 1 ? 'publication' : 'publications'}</span><span lang="es">${pubCount} ${pubCount === 1 ? 'publicación' : 'publicaciones'}</span></p>
+             ${pubs.map(p => `
+               <div class="lead-pub-row">
+                 <span class="lp-year">${p.year || ''}</span>
+                 <span class="lp-title-inline">${escHtml(p.title)}</span>
+                 ${p.doi ? `<a href="https://doi.org/${escHtml(p.doi)}" target="_blank" rel="noopener" class="lp-doi-inline">DOI →</a>` : ''}
+               </div>`).join('')}
+             ${pubCount > pubs.length ? `<a href="news.html" class="ls-link" style="display:inline-block;margin-top:.5rem;"><span lang="en">+${pubCount - pubs.length} more →</span><span lang="es">+${pubCount - pubs.length} más →</span></a>` : ''}
+           </div>`
+        : '';
 
       const partnerNote = m.seeking_partner
         ? `<a href="innovation.html" class="ls-link" style="display:inline-flex;align-items:center;gap:.4rem;margin-top:.625rem;">
              <span class="ls-dot" style="background:#d97706;"></span>
              <span lang="en">Seeking innovation partner</span><span lang="es">Buscando socio innovador</span> →
            </a>`
-        : '';
-
-      const pubSignal = m.latest_pub
-        ? `<div class="lead-pub">
-             <span class="lp-journal">${escHtml(m.latest_pub.journal)} ${m.latest_pub.year || ''}</span>
-             <span class="lp-title">${escHtml(m.latest_pub.title)}</span>
-             ${m.latest_pub.doi
-               ? `<a href="https://doi.org/${escHtml(m.latest_pub.doi)}" target="_blank" rel="noopener" class="lp-doi">DOI →</a>`
-               : `<a href="news.html" class="lp-doi"><span lang="en">All publications</span><span lang="es">Publicaciones</span> →</a>`}
-           </div>`
         : '';
       const delayClass = i > 0 ? ` reveal-d${Math.min(i,3)}` : '';
       return `<div class="lead-row reveal${delayClass}">
@@ -559,8 +553,7 @@ async function loadTeamLeads() {
           ${lineName ? `<div class="lead-line-name">${escHtml(lineName)}</div>` : ''}
           ${m.public_bio ? `<p class="lead-bio">${escHtml(trimBioRolePrefix(m.public_bio))}</p>` : ''}
           ${tags ? `<div class="lead-tags">${tags}</div>` : ''}
-          ${statRow}
-          ${pubSignal}
+          ${pubList}
           ${partnerNote}
         </div>
       </div>`;
@@ -592,14 +585,17 @@ async function loadTeamGroup() {
   } catch(err) { console.error('Team group load failed:',err); }
 }
 
-// Legacy loadTeam() — used by clinical.html #teamGrid
+// Legacy loadTeam() — used by clinical.html #teamGrid.
+// Excludes line coordinators — they already get a full profile card
+// via loadTeamLeads() above this section; showing them again here in
+// a flatter card was straight duplication, same person twice on one page.
 async function loadTeam() {
   if (PAGE === 'team') return;
   const grid = document.getElementById('teamGrid');
   if (!grid) return;
   try {
     const { data } = await apiFetch('/api/team/website');
-    const members = data || [];
+    const members = (data || []).filter(m => !m.coordinates_line);
     if (!members.length) { grid.innerHTML='<p style="padding:2rem;color:#6B6B6B;font-size:.875rem;">Team information coming soon.</p>'; return; }
     grid.innerHTML = members.map(m => {
       const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
