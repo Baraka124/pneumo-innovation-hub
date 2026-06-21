@@ -166,7 +166,7 @@ async function loadResearchLines() {
         const trialBadge = line.active_trials > 0
           ? `<span class="line-tag">${line.active_trials} active</span>` : '';
         return `
-          <a href="line.html?id=${line.id}" class="line-card">
+          <a href="line.html?id=${line.id}" class="line-card reveal">
             <div class="line-num">${num}</div>
             <div class="line-body">
               <div class="line-title">${escHtml(displayName)}</div>
@@ -182,6 +182,7 @@ async function loadResearchLines() {
             </div>
           </a>`;
       }).join('');
+      if (window._revealObserver) indexGrid.querySelectorAll('.reveal').forEach(el => window._revealObserver.observe(el));
 
       // Update stat counters
       _setStat('statLines', data.length);
@@ -306,12 +307,14 @@ async function loadTrials(filters = {}) {
     tbody.innerHTML = trials.map(t => {
       window._trialData[t.id] = t;
       const statusClass = STATUS_CLASS[t.status] || 'active';
-      const lineName    = t.research_line?.name || '—';
+      const line = t.research_line;
+      const lineLabel = line ? `L${String(line.line_number).padStart(2,'0')} · ${line.short_name || line.name}` : '—';
+      const lineFullName = line ? line.name : '';
       return `
         <tr onclick="openTrialModal('${t.id}')" style="cursor:pointer;" title="Click for details">
           <td><span class="trial-protocol">${escHtml(t.protocol_id)}</span></td>
           <td><span class="trial-title">${escHtml(t.title)}</span></td>
-          <td><span class="trial-line-tag">${escHtml(lineName)}</span></td>
+          <td><span class="trial-line-tag" title="${escHtml(lineFullName)}">${escHtml(lineLabel)}</span></td>
           <td><span class="phase-badge">${escHtml(t.phase)}</span></td>
           <td>
             <span class="status-badge ${statusClass}">
@@ -498,42 +501,41 @@ async function loadTeamLeads() {
       const avatarArea = m.public_photo_url
         ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:100%;height:100%;object-fit:cover;"/>`
         : `<span class="lead-initials">${initials}</span>`;
-      const pills = [
-        lineNum ? `<span class="lead-line-num">L${lineNum}</span>` : '',
-        lineName ? `<span class="lead-line-pill">${escHtml(lineName)}</span>` : '',
-        isAffiliated ? `<span class="lead-affil-pill">${escHtml(m.primary_dept_name||'Affiliated')}</span>` : '',
-      ].filter(Boolean).join('');
+
+      // Research-focus tags only — role/seniority (Chief, PI) moved to the
+      // name area as plain text, since "JEFE DE SERVICIO" is a title, not
+      // a topic, and competing for attention with real expertise tags
+      // diluted both.
       const tags = expertise.map(t=>`<span class="lead-tag">${escHtml(t)}</span>`).join('');
-      const piTag = m.can_be_pi ? `<span class="lead-tag pi"><span lang="en">Principal Investigator</span><span lang="es">IP</span></span>` : '';
-      const chiefTag = m.is_chief_of_department ? `<span class="lead-tag pi"><span lang="en">Department Chief</span><span lang="es">Jefe de Servicio</span></span>` : '';
 
-      // Contextual live signals — not a duplicate of other pages, just counts + one highlight
-      const trialSignal = m.recruiting_trials > 0
-        ? `<div class="lead-signal lead-signal--recruiting">
-             <span class="ls-dot"></span>
-             <span lang="en">${m.recruiting_trials} recruiting ${m.recruiting_trials === 1 ? 'study' : 'studies'}</span>
-             <span lang="es">${m.recruiting_trials} ${m.recruiting_trials === 1 ? 'estudio' : 'estudios'} en reclutamiento</span>
-             <a href="clinical.html" class="ls-link">
-               <span lang="en">View trials</span><span lang="es">Ver ensayos</span> →
-             </a>
-           </div>`
-        : m.active_trials > 0
-          ? `<div class="lead-signal lead-signal--active">
-               <span class="ls-dot"></span>
-               <span lang="en">${m.active_trials} active ${m.active_trials === 1 ? 'study' : 'studies'}</span>
-               <span lang="es">${m.active_trials} ${m.active_trials === 1 ? 'estudio' : 'estudios'} activo${m.active_trials === 1 ? '' : 's'}</span>
-             </div>`
-          : '';
+      const roleLine = [
+        m.is_chief_of_department ? `<span lang="en">Department Chief</span><span lang="es">Jefe de Servicio</span>` : '',
+        m.can_be_pi ? `<span lang="en">Principal Investigator</span><span lang="es">IP</span>` : '',
+      ].filter(Boolean).join(' · ');
 
-      const partnerSignal = m.seeking_partner
-        ? `<div class="lead-signal lead-signal--partner">
-             <span class="ls-dot"></span>
-             <span lang="en">Seeking innovation partner</span>
-             <span lang="es">Buscando socio innovador</span>
-             <a href="innovation.html" class="ls-link">
-               <span lang="en">View projects</span><span lang="es">Ver proyectos</span> →
-             </a>
-           </div>`
+      const pubCount = m.publication_count || (m.latest_pub ? 1 : 0);
+      const activeCount = m.recruiting_trials || m.active_trials || 0;
+
+      const statRow = `<div class="lead-stats">
+        <div class="lead-stat">
+          <span class="lead-stat-num">${activeCount || '—'}</span>
+          <span class="lead-stat-label"><span lang="en">${activeCount === 1 ? 'Active study' : 'Active studies'}</span><span lang="es">${activeCount === 1 ? 'Estudio activo' : 'Estudios activos'}</span></span>
+        </div>
+        <div class="lead-stat">
+          <span class="lead-stat-num">${pubCount || '—'}</span>
+          <span class="lead-stat-label"><span lang="en">${pubCount === 1 ? 'Publication' : 'Publications'}</span><span lang="es">${pubCount === 1 ? 'Publicación' : 'Publicaciones'}</span></span>
+        </div>
+        <div class="lead-stat">
+          <span class="lead-stat-num">L${lineNum}</span>
+          <span class="lead-stat-label"><span lang="en">Line coordinated</span><span lang="es">Línea coordinada</span></span>
+        </div>
+      </div>`;
+
+      const partnerNote = m.seeking_partner
+        ? `<a href="innovation.html" class="ls-link" style="display:inline-flex;align-items:center;gap:.4rem;margin-top:.625rem;">
+             <span class="ls-dot" style="background:#d97706;"></span>
+             <span lang="en">Seeking innovation partner</span><span lang="es">Buscando socio innovador</span> →
+           </a>`
         : '';
 
       const pubSignal = m.latest_pub
@@ -549,20 +551,17 @@ async function loadTeamLeads() {
       return `<div class="lead-row reveal${delayClass}">
         <div class="lead-visual">
           <div class="lead-avatar" data-line="L${lineNum}" aria-hidden="true">${avatarArea}</div>
-          ${pills ? `<div style="display:flex;flex-wrap:wrap;gap:.375rem;">${pills}</div>` : ''}
+          ${lineNum ? `<span class="lead-line-num">L${lineNum}</span>` : ''}
         </div>
         <div class="lead-copy">
           <div class="lead-name">${escHtml(m.display_name || m.full_name)}</div>
-          ${m.specialization ? `<div class="lead-spec">${escHtml(m.specialization)}${isAffiliated?' · '+escHtml(m.primary_dept_name||'External'):' · Neumología, CHUAC'}</div>` : ''}
+          <div class="lead-spec">${roleLine ? roleLine + ' · ' : ''}${m.specialization ? escHtml(m.specialization) : ''}${isAffiliated?' · '+escHtml(m.primary_dept_name||'External'):' · Neumología, CHUAC'}</div>
           ${lineName ? `<div class="lead-line-name">${escHtml(lineName)}</div>` : ''}
-          ${m.public_bio ? `<p class="lead-bio">${escHtml(m.public_bio)}</p>` : ''}
-          ${(trialSignal || partnerSignal || pubSignal) ? `
-            <div class="lead-context">
-              ${trialSignal}
-              ${partnerSignal}
-              ${pubSignal}
-            </div>` : ''}
-          ${(tags||piTag||chiefTag) ? `<div class="lead-tags">${chiefTag}${piTag}${tags}</div>` : ''}
+          ${m.public_bio ? `<p class="lead-bio">${escHtml(trimBioRolePrefix(m.public_bio))}</p>` : ''}
+          ${tags ? `<div class="lead-tags">${tags}</div>` : ''}
+          ${statRow}
+          ${pubSignal}
+          ${partnerNote}
         </div>
       </div>`;
     }).join('');
@@ -612,7 +611,7 @@ async function loadTeam() {
           <div class="tca-name">${escHtml(m.display_name || m.full_name)}</div>
           ${m.specialization ? `<div class="tca-spec">${escHtml(m.specialization)}</div>` : ''}
           <div style="display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.375rem;">${lineTag}${affiliTag}</div>
-          ${m.public_bio ? `<p class="tca-bio">${escHtml(m.public_bio)}</p>` : ''}
+          ${m.public_bio ? `<p class="tca-bio">${escHtml(trimBioRolePrefix(m.public_bio))}</p>` : ''}
         </div>
       </div>`;
     }).join('');
@@ -764,7 +763,17 @@ async function loadLiveStats() {
 /** Update any element with id matching statId */
 function _setStat(id, value) {
   const el = document.getElementById(id);
-  if (el) el.textContent = value;
+  if (!el) return;
+  el.dataset.counter = value;
+  // If the element is already on screen by the time live data arrives,
+  // animate to the real number now rather than leaving it static —
+  // the IntersectionObserver in animations.js only fires once on first
+  // entry, which may have already happened with the static fallback value.
+  if (window._animateCounter) {
+    window._animateCounter(el, value);
+  } else {
+    el.textContent = value;
+  }
 }
 
 // ─────────────────────────────────────────────
@@ -779,6 +788,25 @@ function escHtml(str) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
+}
+
+// Every bio in the database opens with a role/affiliation sentence
+// ("Head of Research Line N (neumACt – INIBIC)...", "Head of the
+// Pulmonology Department at CHUAC and Principal Investigator of...")
+// that's now redundant — role and line are shown as structured fields
+// above the bio. Strips that one leading sentence if it matches the
+// pattern; leaves the bio untouched otherwise, so this never mangles
+// a bio that doesn't follow the convention.
+function trimBioRolePrefix(bio) {
+  if (!bio) return bio;
+  const sentences = bio.split(/(?<=[.!?])\s+/);
+  if (sentences.length < 2) return bio;
+  const first = sentences[0];
+  const rolePattern = /^(Head of|Jefe de|Principal Investigator|Coordinator of|Coordinador[a]? de)/i;
+  if (rolePattern.test(first)) {
+    return sentences.slice(1).join(' ');
+  }
+  return bio;
 }
 
 function _fadeInRows(selector) {
@@ -984,8 +1012,7 @@ async function loadHeaderResearchDropdown() {
         <span class="hdr-dd-num">L${String(l.line_number).padStart(2,'0')}</span>
         <span class="hdr-dd-name">${escHtml(l.short_name || l.name)}</span>
       </a>`).join('')
-      + `<div class="hdr-dd-divider"></div>
-         <a class="hdr-dd-all" href="clinical.html#research-lines">
+      + `<a class="hdr-dd-all" href="clinical.html#research-lines">
            <span lang="en">View all ${lines.length} lines</span><span lang="es">Ver las ${lines.length} líneas</span> →
          </a>`;
   } catch (err) {
@@ -1000,16 +1027,13 @@ async function loadHeaderResearchDropdown() {
 function initHeaderDropdown() {
   const dd = document.querySelector('.hdr-dd');
   if (!dd) return;
-  const trigger = dd.querySelector('.hdr-dd-trigger');
-  if (!trigger) return;
+  const chevron = dd.querySelector('.hdr-dd-chevron');
+  if (!chevron) return;
 
-  function close() { dd.classList.remove('open'); trigger.setAttribute('aria-expanded', 'false'); }
-  function open() { dd.classList.add('open'); trigger.setAttribute('aria-expanded', 'true'); }
+  function close() { dd.classList.remove('open'); chevron.setAttribute('aria-expanded', 'false'); }
+  function open() { dd.classList.add('open'); chevron.setAttribute('aria-expanded', 'true'); }
 
-  trigger.setAttribute('aria-expanded', 'false');
-  trigger.setAttribute('aria-haspopup', 'true');
-
-  trigger.addEventListener('click', (e) => {
+  chevron.addEventListener('click', (e) => {
     e.preventDefault();
     dd.classList.contains('open') ? close() : open();
   });
@@ -1022,8 +1046,8 @@ function initHeaderDropdown() {
     if (e.key === 'Escape') close();
   });
 
-  dd.querySelectorAll('.hdr-dd-item, .hdr-dd-all').forEach(item => {
-    item.addEventListener('click', close);
+  dd.addEventListener('click', (e) => {
+    if (e.target.closest('.hdr-dd-item, .hdr-dd-all')) close();
   });
 }
 
@@ -1421,6 +1445,13 @@ async function loadLineDetail() {
       pillsEl.innerHTML = pills.join('');
     }
 
+    const keywordsEl = document.getElementById('lineKeywords');
+    if (keywordsEl && line.keywords && line.keywords.length) {
+      keywordsEl.innerHTML = line.keywords.map(k =>
+        `<span style="font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.07em;text-transform:uppercase;color:rgba(255,255,255,.65);">${escHtml(k)}</span>`
+      ).join('<span style="color:rgba(255,255,255,.3);margin:0 -.05rem;">·</span>');
+    }
+
     // Coordinator strip — reuses the chief/PI badge logic established on team.html
     const coordSection = document.getElementById('lineCoordinatorSection');
     const coordCard = document.getElementById('lineCoordinatorCard');
@@ -1428,8 +1459,8 @@ async function loadLineDetail() {
       const c = line.coordinator;
       const initials = (c.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
       const avatar = c.public_photo_url
-        ? `<img src="${escHtml(c.public_photo_url)}" alt="${escHtml(c.full_name)}" style="width:48px;height:48px;border-radius:8px;object-fit:cover;flex-shrink:0;">`
-        : `<div style="width:48px;height:48px;border-radius:8px;background:var(--navy-2);display:flex;align-items:center;justify-content:center;font-weight:500;font-size:15px;color:#fff;flex-shrink:0;">${escHtml(initials)}</div>`;
+        ? `<img src="${escHtml(c.public_photo_url)}" alt="${escHtml(c.full_name)}" style="width:56px;height:56px;border-radius:50%;object-fit:cover;flex-shrink:0;">`
+        : `<div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#005F5F 0%,#007A7A 55%,#3D8FD6 100%);box-shadow:0 1px 2px rgba(0,40,40,.08),0 4px 14px rgba(0,95,95,.16);display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-weight:700;font-size:16px;color:rgba(255,255,255,.96);flex-shrink:0;">${escHtml(initials)}</div>`;
       const chiefBadge = c.is_chief_of_department
         ? `<span class="hstat-label" style="background:var(--blue-50);color:var(--navy-2);padding:.3rem .7rem;border-radius:var(--r-sm);font-size:var(--fs-label);flex-shrink:0;"><span lang="en">Department Chief</span><span lang="es">Jefe de Servicio</span></span>`
         : c.can_be_pi
@@ -1445,12 +1476,47 @@ async function loadLineDetail() {
       coordSection.style.display = '';
     }
 
-    // About this line — only if a coordinator has actually written it
+    // About this line — description/capabilities/keywords are real,
+    // populated fields on every line, so this renders unconditionally.
+    // deep_content (long-form, written by a coordinator) is additional,
+    // optional substance — shown as a second block only once it exists,
+    // not the only thing gating this section.
     const aboutSection = document.getElementById('lineAboutSection');
     const aboutContent = document.getElementById('lineAboutContent');
-    if (line.deep_content && aboutSection && aboutContent) {
-      aboutContent.innerHTML = line.deep_content.split(/\n\n+/).map(p => `<p style="margin-bottom:1.25rem;">${escHtml(p)}</p>`).join('');
-      aboutSection.style.display = '';
+    if (aboutSection && aboutContent) {
+      let html = '';
+      if (line.description) {
+        html += `<p style="margin-bottom:1.5rem;">${escHtml(line.description)}</p>`;
+      }
+      if (line.capabilities) {
+        const caps = line.capabilities.split(',').map(c => c.trim()).filter(Boolean);
+        if (caps.length) {
+          html += `<div style="display:flex;flex-wrap:wrap;gap:.4rem .25rem;margin-bottom:${line.deep_content ? '2rem' : '0'};">
+            ${caps.map(c => `<span class="ltag">${escHtml(c)}</span>`).join('')}
+          </div>`;
+        }
+      }
+      if (line.deep_content) {
+        html += `<div style="border-top:1px solid var(--border-l);padding-top:1.5rem;">
+          ${line.deep_content.split(/\n\n+/).map(p => `<p style="margin-bottom:1.25rem;">${escHtml(p)}</p>`).join('')}
+        </div>`;
+      }
+      if (html) {
+        aboutContent.innerHTML = html;
+        aboutSection.style.display = '';
+      }
+    }
+
+    // Track record — discrete, asserted facts about this line's standing.
+    // Only renders if populated; this is content someone has to actually
+    // write and stand behind, not something derivable from other fields.
+    const trackSection = document.getElementById('lineTrackRecordSection');
+    const trackList = document.getElementById('lineTrackRecordList');
+    if (trackSection && trackList && line.track_record && line.track_record.length) {
+      trackList.innerHTML = line.track_record.map(item =>
+        `<li class="ltr-item"><span class="ltr-mark">—</span><span>${escHtml(item)}</span></li>`
+      ).join('');
+      trackSection.style.display = '';
     }
 
     // Active trials — reuses the existing public trials endpoint, filtered by line
@@ -1474,13 +1540,20 @@ async function loadLineDetail() {
     const teamSection = document.getElementById('lineTeamSection');
     const teamChips = document.getElementById('lineTeamChips');
     if (line.team && line.team.length && teamSection && teamChips) {
-      teamChips.innerHTML = line.team.map(m => {
+      teamChips.innerHTML = line.team.map((m, i) => {
         const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
         const avatar = m.public_photo_url
-          ? `<img src="${escHtml(m.public_photo_url)}" alt="" style="width:24px;height:24px;border-radius:50%;object-fit:cover;flex-shrink:0;">`
-          : `<div style="width:24px;height:24px;border-radius:50%;background:var(--blue-100);flex-shrink:0;"></div>`;
-        return `<div style="display:flex;align-items:center;gap:8px;border:1px solid var(--border-l);border-radius:20px;padding:5px 12px 5px 5px;">
-          ${avatar}<span style="font-size:var(--fs-meta);">${escHtml(m.title ? m.title + ' ' + m.full_name : m.full_name)}</span>
+          ? `<img src="${escHtml(m.public_photo_url)}" alt="" style="width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0;">`
+          : `<div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#085041 0%,#0F6E56 55%,#185FA5 100%);display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-weight:700;font-size:14px;color:rgba(255,255,255,.96);flex-shrink:0;">${escHtml(initials)}</div>`;
+        const roleLine = m.role_on_line
+          ? escHtml(m.role_on_line)
+          : (m.is_chief_of_department ? 'Department Chief' : m.can_be_pi ? 'Principal Investigator' : (m.specialization || ''));
+        return `<div style="display:flex;align-items:center;gap:.875rem;padding:.875rem 0;${i > 0 ? 'border-top:1px solid var(--border-l);' : ''}">
+          ${avatar}
+          <div style="min-width:0;">
+            <div style="font-size:var(--fs-body-sm);font-weight:500;">${escHtml(m.title ? m.title + ' ' + m.full_name : m.full_name)}</div>
+            ${roleLine ? `<div style="font-size:var(--fs-label);color:var(--ink-3);margin-top:1px;">${roleLine}</div>` : ''}
+          </div>
         </div>`;
       }).join('');
       teamSection.style.display = '';
