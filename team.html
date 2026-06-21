@@ -320,7 +320,7 @@ html.bar-dismissed body{padding-top:88px!important;}
        Circular mark, soft teal→blue gradient — reads as a deliberate
        identity badge now, and accepts a real photo later with zero
        layout change (the photo just fills the same circle). */
-    .lead-visual{display:flex;flex-direction:column;align-items:flex-start;gap:1rem;}
+    .lead-visual{display:flex;flex-direction:column;align-items:center;gap:.625rem;}
     .lead-avatar{
       width:96px;height:96px;
       border-radius:50%;
@@ -334,21 +334,24 @@ html.bar-dismissed body{padding-top:88px!important;}
       font-family:'DM Sans',sans-serif;font-size:1.625rem;font-weight:700;
       color:rgba(255,255,255,.96);letter-spacing:.01em;
     }
-    .lead-line-pill{
-      display:inline-flex;align-items:center;gap:.4rem;
-      font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;
-      padding:.3rem .7rem;border-radius:100px;
-      background:rgba(0,122,122,.08);color:var(--teal);
-      border:1px solid rgba(0,122,122,.18);font-weight:600;
+    .lead-line-num{
+      font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.08em;
+      color:var(--ink-4);
     }
-    .lead-line-num{display:none;}
-    .lead-affil-pill{
-      display:inline-flex;align-items:center;gap:.3rem;
-      font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;
-      padding:.275rem .625rem;border-radius:100px;
-      background:rgba(245,158,11,.08);color:#92400e;
-      border:1px solid rgba(245,158,11,.2);
+
+    /* Stat row — replaces the old bullet-point "signal" lines, which read
+       like console output. Same facts (active studies, publications,
+       line coordinated), framed as a proper profile metric row instead. */
+    .lead-stats{
+      display:flex;gap:1.75rem;margin-top:1.25rem;padding-top:1rem;
+      border-top:1px solid var(--border-l);
     }
+    .lead-stat{display:flex;flex-direction:column;}
+    .lead-stat-num{
+      font-family:var(--ff-display);font-size:1.25rem;font-weight:700;
+      color:var(--ink);line-height:1.1;
+    }
+    .lead-stat-label{font-size:var(--fs-label);color:var(--ink-3);margin-top:.2rem;}
 
     /* Right: editorial copy */
     .lead-copy{}
@@ -404,25 +407,11 @@ html.bar-dismissed body{padding-top:88px!important;}
     .tm-role{font-size:.75rem;color:var(--ink-3);}
     .tm-spec{font-size:var(--fs-label);color:var(--ink-4);margin-top:.2rem;font-family:var(--ff-mono);letter-spacing:.03em;}
 
-    /* ══ LIVE CONTEXT SIGNALS ══
-       No box, no fill — a thin top rule and generous spacing do the
-       separating, consistent with "no boxes" above. */
-    .lead-context{
-      margin:1.125rem 0;
-      display:flex;flex-direction:column;gap:.625rem;
-      padding-top:1rem;
-      border-top:1px solid var(--border-l);
-    }
-    .lead-signal{
-      display:flex;align-items:center;gap:.5rem;
-      font-size:.8125rem;color:var(--ink-2);flex-wrap:wrap;
-    }
+    /* ls-dot / ls-link — used by the "seeking partner" note, which sets
+       its own dot color inline since there's only one variant now. */
     .ls-dot{
       width:6px;height:6px;border-radius:50%;flex-shrink:0;
     }
-    .lead-signal--recruiting .ls-dot{background:#16a34a;}
-    .lead-signal--active .ls-dot{background:var(--teal);}
-    .lead-signal--partner .ls-dot{background:#d97706;}
     .ls-link{
       font-size:.75rem;color:var(--teal);text-decoration:none;
       border-bottom:1px solid rgba(0,122,122,.25);padding-bottom:1px;
@@ -430,10 +419,10 @@ html.bar-dismissed body{padding-top:88px!important;}
     }
     .ls-link:hover{color:#006666;}
 
-    /* Latest publication preview — same rule treatment, no top border
-       of its own since it now sits inside the rule-bounded context block */
+    /* Latest publication preview */
     .lead-pub{
       display:flex;align-items:baseline;gap:.625rem;flex-wrap:wrap;
+      margin-top:.875rem;
     }
     .lp-journal{
       font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;
@@ -881,15 +870,15 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
 
       <div class="hero-stats-row reveal reveal-d3">
         <div class="hsr-item">
-          <div class="hsr-n" id="statMembers">23</div>
+          <div class="hsr-n" id="statMembers" data-counter="23">23</div>
           <div class="hsr-l"><span lang="en">Clinician-investigators</span><span lang="es">Investigadores clínicos</span></div>
         </div>
         <div class="hsr-item">
-          <div class="hsr-n" id="statLines">6</div>
+          <div class="hsr-n" id="statLines" data-counter="6">6</div>
           <div class="hsr-l"><span lang="en">Research lines</span><span lang="es">Líneas de investigación</span></div>
         </div>
         <div class="hsr-item">
-          <div class="hsr-n" id="statTrials">13<span style="font-size:.55em;color:var(--teal);font-style:normal;">+</span></div>
+          <div class="hsr-n" id="statTrials" data-counter="13+">13+</div>
           <div class="hsr-l"><span lang="en">Active studies</span><span lang="es">Estudios activos</span></div>
         </div>
         <div class="hsr-item">
