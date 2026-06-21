@@ -176,7 +176,9 @@ html.bar-dismissed body{padding-top:88px!important;}
 .hdr-dd-trigger:hover{background:rgba(255,255,255,.08);}
 .hdr-dd-trigger a{display:inline-flex;align-items:center;padding:.55rem .55rem .55rem .9rem;font-family:var(--ff-body,'DM Sans',sans-serif);font-size:var(--fs-meta);font-weight:500;letter-spacing:.01em;color:rgba(255,255,255,.78);text-decoration:none;white-space:nowrap;transition:color .15s;}
 .hdr-dd-trigger:hover a,.hdr-dd-trigger a:hover{color:#fff;}
-.hdr-dd-chevron{display:inline-flex;align-items:center;justify-content:center;padding:.55rem .75rem .55rem .35rem;border:none;background:transparent;cursor:pointer;color:rgba(255,255,255,.6);transition:color .15s;}
+.hdr-dd-chevron{display:inline-flex;align-items:center;justify-content:center;padding:.55rem .75rem .55rem .35rem;border:none;background:transparent;cursor:pointer;color:rgba(255,255,255,.6);transition:color .15s;position:relative;}
+.hdr-dd-chevron::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:1px;height:16px;background:rgba(255,255,255,.18);opacity:0;transition:opacity .15s;}
+.hdr-dd-trigger:hover .hdr-dd-chevron::before,.hdr-dd.open .hdr-dd-chevron::before{opacity:1;}
 .hdr-dd-chevron:hover{color:#fff;}
 .hdr-dd-chevron svg{width:13px;height:13px;transition:transform .15s;}
 .hdr-dd.open .hdr-dd-chevron svg{transform:rotate(180deg);}
@@ -339,19 +341,19 @@ html.bar-dismissed body{padding-top:88px!important;}
       color:var(--ink-4);
     }
 
-    /* Stat row — replaces the old bullet-point "signal" lines, which read
-       like console output. Same facts (active studies, publications,
-       line coordinated), framed as a proper profile metric row instead. */
-    .lead-stats{
-      display:flex;gap:1.75rem;margin-top:1.25rem;padding-top:1rem;
-      border-top:1px solid var(--border-l);
+    /* Publication list — the genuine variable-depth element of this
+       card. Replaces the earlier stat-row, which included a trial
+       count that turned out to be line-level, not personal, data. */
+    .lead-pubs{margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--border-l);}
+    .lead-pubs-label{
+      font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;
+      color:var(--ink-3);margin-bottom:.625rem;
     }
-    .lead-stat{display:flex;flex-direction:column;}
-    .lead-stat-num{
-      font-family:var(--ff-display);font-size:1.25rem;font-weight:700;
-      color:var(--ink);line-height:1.1;
-    }
-    .lead-stat-label{font-size:var(--fs-label);color:var(--ink-3);margin-top:.2rem;}
+    .lead-pub-row{display:flex;align-items:baseline;gap:.625rem;padding:.4rem 0;font-size:.875rem;}
+    .lp-year{font-family:var(--ff-mono);font-size:var(--fs-label);color:var(--ink-4);flex-shrink:0;width:2.5em;}
+    .lp-title-inline{color:var(--ink-2);flex:1;}
+    .lp-doi-inline{font-size:var(--fs-label);color:var(--teal);text-decoration:none;white-space:nowrap;flex-shrink:0;}
+    .lp-doi-inline:hover{color:#006666;}
 
     /* Right: editorial copy */
     .lead-copy{}
@@ -418,26 +420,6 @@ html.bar-dismissed body{padding-top:88px!important;}
       margin-left:.25rem;transition:color .15s;
     }
     .ls-link:hover{color:#006666;}
-
-    /* Latest publication preview */
-    .lead-pub{
-      display:flex;align-items:baseline;gap:.625rem;flex-wrap:wrap;
-      margin-top:.875rem;
-    }
-    .lp-journal{
-      font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;
-      text-transform:uppercase;color:var(--teal);font-weight:500;flex-shrink:0;
-    }
-    .lp-title{
-      font-size:.8125rem;color:var(--ink-3);line-height:1.4;flex:1;min-width:0;
-      display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;
-    }
-    .lp-doi{
-      font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;
-      color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(0,122,122,.25);
-      flex-shrink:0;transition:color .15s;
-    }
-    .lp-doi:hover{color:#006666;}
 
     /* ══ PUBLICATIONS STRIP ═════════════════════
        Horizontal scroll — journal index style.
@@ -843,12 +825,14 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
       <a href="innovation.html"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
       <a href="news.html"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
       <a href="team.html" class="current" aria-current="page"><span lang="en">Team</span><span lang="es">Equipo</span></a>
-    </nav><div class="hdr-right"><div class="lang-toggle" role="group" aria-label="Language"><button class="lt-btn lt-btn--active" data-lang="en" id="ltBtnEn" onclick="selectLang('en')" aria-pressed="true">EN</button><button class="lt-btn" data-lang="es" id="ltBtnEs" onclick="selectLang('es')" aria-pressed="false">ES</button></div><a href="index.html#contact" class="hdr-contact"><span lang="en">Contact</span><span lang="es">Contacto</span></a><button class="mob-toggle" id="mobToggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobDrawer"><span></span><span></span><span></span></button></div></div></header><div class="mob-overlay" id="mobOverlay"></div><nav class="mob-drawer" id="mobDrawer" aria-label="Mobile navigation"><div class="mob-drawer-nav">
+    <a href="index.html#contact"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
+    </nav><div class="hdr-right"><div class="lang-toggle" role="group" aria-label="Language"><button class="lt-btn lt-btn--active" data-lang="en" id="ltBtnEn" onclick="selectLang('en')" aria-pressed="true">EN</button><button class="lt-btn" data-lang="es" id="ltBtnEs" onclick="selectLang('es')" aria-pressed="false">ES</button></div><button class="mob-toggle" id="mobToggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobDrawer"><span></span><span></span><span></span></button></div></div></header><div class="mob-overlay" id="mobOverlay"></div><nav class="mob-drawer" id="mobDrawer" aria-label="Mobile navigation"><div class="mob-drawer-nav">
       <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
       <a href="clinical.html"><span lang="en">Research</span><span lang="es">Investigación</span></a>
       <a href="innovation.html"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
       <a href="news.html"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
       <a href="team.html" class="current" aria-current="page"><span lang="en">Team</span><span lang="es">Equipo</span></a>
+    <a href="index.html#contact"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
     </div><div class="mob-lang"><button class="lt-btn lt-btn--active" data-lang="en" onclick="selectLang('en')" aria-pressed="true">EN</button><button class="lt-btn" data-lang="es" onclick="selectLang('es')" aria-pressed="false">ES</button></div></nav>
 <div id="pb" role="progressbar" aria-hidden="true"></div>
 <!-- ═══ HERO ═══════════════════════════════════════════ -->
