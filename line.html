@@ -1281,6 +1281,9 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
     .lt-trial-phase{display:inline-flex;align-items:center;padding:.22rem .55rem;border-radius:3px;font-size:var(--fs-label);font-family:var(--ff-mono);letter-spacing:.05em;border:1px solid rgba(0,153,153,.15);color:var(--teal-2);background:rgba(0,153,153,.06);white-space:nowrap;flex-shrink:0;}
     .lt-trial-title{flex:1;font-size:var(--fs-meta);min-width:0;}
     .lt-trial-arrow{width:16px;height:16px;color:var(--ink-4);flex-shrink:0;}
+    .ltr-item{display:flex;gap:.875rem;padding:1rem 0;border-top:1px solid var(--border-l);font-size:1.0625rem;line-height:1.6;color:var(--ink-2);}
+    .ltr-item:first-child{border-top:none;padding-top:0;}
+    .ltr-mark{color:var(--teal);flex-shrink:0;font-weight:600;}
     .btn-text{display:inline-flex;align-items:center;gap:.35rem;font-size:var(--fs-meta);font-weight:500;color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(0,122,122,.25);padding-bottom:1px;transition:color .15s,border-color .15s;}
     .btn-text:hover{color:#006666;border-bottom-color:rgba(0,102,102,.5);}
   </style>
@@ -1324,6 +1327,7 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
       <p class="eyebrow" id="lineEyebrow" style="margin-bottom:1rem;"></p>
       <h1 class="display lg" id="lineTitle" style="color:#fff;max-width:46rem;margin-bottom:1.25rem;"></h1>
       <div id="lineStatPills" style="display:flex;gap:.625rem;flex-wrap:wrap;"></div>
+      <div id="lineKeywords" style="display:flex;flex-wrap:wrap;gap:.4rem .25rem;margin-top:1.5rem;"></div>
     </div>
   </div>
 </section>
@@ -1341,6 +1345,13 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
   </div>
 </section>
 
+<section style="background:var(--white);padding:3.5rem 0;display:none;" id="lineTrackRecordSection">
+  <div class="wrap" style="max-width:1100px;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem);">
+    <p class="eyebrow" style="margin-bottom:1.25rem;"><span lang="en">Track record</span><span lang="es">Trayectoria</span></p>
+    <ul id="lineTrackRecordList" style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0;max-width:70ch;"></ul>
+  </div>
+</section>
+
 <section style="background:var(--white);padding:3.5rem 0;display:none;" id="lineTrialsSection">
   <div class="wrap" style="max-width:1100px;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem);">
     <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:.75rem;">
@@ -1354,7 +1365,7 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
 <section style="background:var(--surface);padding:3.5rem 0;display:none;" id="lineTeamSection">
   <div class="wrap" style="max-width:1100px;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem);">
     <p class="eyebrow" style="margin-bottom:1.5rem;"><span lang="en">Team on this line</span><span lang="es">Equipo de esta línea</span></p>
-    <div id="lineTeamChips" style="display:flex;gap:.625rem;flex-wrap:wrap;"></div>
+    <div id="lineTeamChips" style="display:flex;flex-direction:column;max-width:560px;"></div>
   </div>
 </section>
 
@@ -1530,11 +1541,12 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
       });
     });
 
-    /* ── Reveal observer ── */
-    var io=new IntersectionObserver(function(entries){
-      entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+    /* ── Reveal observer — exposed globally so api.js can observe
+       dynamically injected elements ── */
+    window._revealObserver=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');window._revealObserver.unobserve(e.target);}});
     },{threshold:.1,rootMargin:'0px 0px -40px 0px'});
-    document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+    document.querySelectorAll('.reveal').forEach(function(el){window._revealObserver.observe(el);});
   </script>
 <script>
 (function(){
