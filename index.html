@@ -1170,15 +1170,15 @@ body { padding-top: calc(88px + 30px) !important; }
         <div class="hero-stats">
           <div class="hstat">
             <span class="hstat-label"><span lang="en">Research Lines</span><span lang="es">Líneas de Investigación</span></span>
-            <span class="hstat-num" id="statLines">6</span>
+            <span class="hstat-num" id="statLines" data-counter="6">6</span>
           </div>
           <div class="hstat">
             <span class="hstat-label"><span lang="en">Active Studies</span><span lang="es">Estudios Activos</span></span>
-            <span class="hstat-num" id="statTrials">13<sub>+</sub></span>
+            <span class="hstat-num" id="statTrials" data-counter="13+">13+</span>
           </div>
           <div class="hstat">
             <span class="hstat-label"><span lang="en">Clinician-Investigators</span><span lang="es">Investigadores Clínicos</span></span>
-            <span class="hstat-num" id="statMembers">23</span>
+            <span class="hstat-num" id="statMembers" data-counter="23">23</span>
           </div>
           <div class="hstat">
             <span class="hstat-label milestone-label"><span lang="en">Lung Transplants</span><span lang="es">Trasplantes Pulmonares</span></span>
@@ -1186,7 +1186,7 @@ body { padding-top: calc(88px + 30px) !important; }
           </div>
           <div class="hstat">
             <span class="hstat-label"><span lang="en">Publications</span><span lang="es">Publicaciones</span></span>
-            <span class="hstat-num" id="statPubs">27</span>
+            <span class="hstat-num" id="statPubs" data-counter="27">27</span>
           </div>
           <div class="hero-stat-cta">
             <a href="clinical.html" class="hstat-btn">
@@ -1717,11 +1717,12 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){
   });
 });
 
-/* ── Reveal observer ── */
-var io=new IntersectionObserver(function(entries){
-  entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+/* ── Reveal observer — exposed globally so api.js can observe
+   dynamically injected elements (research line cards, etc.) ── */
+window._revealObserver=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');window._revealObserver.unobserve(e.target);}});
 },{threshold:.08,rootMargin:'0px 0px -32px 0px'});
-document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+document.querySelectorAll('.reveal').forEach(function(el){window._revealObserver.observe(el);});
 </script>
 
 <script>
