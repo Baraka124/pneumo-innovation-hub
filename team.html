@@ -83,7 +83,7 @@ html.bar-dismissed body{padding-top:88px;}
 .affil-section{background:rgba(255,255,255,.025);border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07);}
 .affil-logo-item{display:block;opacity:.55;transition:opacity .2s;}
 .affil-logo-item:hover{opacity:.85;}
-.affil-img{display:block;width:auto;filter:brightness(0) invert(1);object-fit:contain;height:32px;}
+/* .affil-img: unused in markup, same destructive invert pattern removed. */
 .affil-img-main{height:40px;max-width:260px;}
 .affil-img-inibic{height:28px;max-width:180px;}
 .affil-ph{display:flex;align-items:center;justify-content:center;height:32px;min-width:80px;border:1px dashed rgba(255,255,255,.2);border-radius:2px;padding:0 .75rem;background:rgba(255,255,255,.03);}
@@ -139,7 +139,7 @@ html.bar-dismissed body{padding-top:88px;}
 .affil-section{background:rgba(255,255,255,.025);border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07);}
 .affil-logo-item{display:block;opacity:.55;transition:opacity .2s;}
 .affil-logo-item:hover{opacity:.85;}
-.affil-img{display:block;width:auto;filter:brightness(0) invert(1);object-fit:contain;height:32px;}
+/* .affil-img: unused in markup, same destructive invert pattern removed. */
 .affil-img-main{height:40px;max-width:260px;}
 .affil-img-inibic{height:28px;max-width:180px;}
 .affil-ph{display:flex;align-items:center;justify-content:center;height:32px;min-width:80px;border:1px dashed rgba(255,255,255,.2);border-radius:2px;padding:0 .75rem;background:rgba(255,255,255,.03);}
@@ -481,13 +481,6 @@ html.bar-dismissed body{padding-top:88px!important;}
     .pub-strip-nav{
       display:flex;align-items:center;gap:.625rem;margin-top:1rem;
     }
-    .psn-btn{
-      width:32px;height:32px;border-radius:var(--r-sm);
-      background:rgba(255,255,255,.06);border:1px solid var(--border-d);
-      display:flex;align-items:center;justify-content:center;
-      cursor:pointer;color:rgba(255,255,255,.5);transition:background .15s,color .15s;
-    }
-    .psn-btn:hover{background:rgba(255,255,255,.1);color:#fff;}
     .psn-btn svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;}
     .psn-count{font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;color:rgba(255,255,255,.3);}
 
@@ -550,6 +543,10 @@ html.bar-dismissed body{padding-top:88px!important;}
     .cs-label{font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:.625rem;}
     .cs-heading{font-family:var(--ff-display);font-size:clamp(1.25rem,2vw,1.625rem);font-weight:700;color:#fff;letter-spacing:-.02em;line-height:1.2;}
     .cs-sub{font-size:.875rem;color:rgba(255,255,255,.45);margin-top:.5rem;line-height:1.6;max-width:400px;}
+    .btn-cta-solid{display:inline-flex;align-items:center;gap:.5rem;background:#fff;color:var(--navy-2);font-weight:600;padding:.7rem 1.5rem;border-radius:var(--r-md);font-size:.875rem;text-decoration:none;border:none;cursor:pointer;transition:background .18s;}
+    .btn-cta-solid:hover{background:rgba(255,255,255,.88);}
+    .hero-text-link{font-size:.9375rem;font-weight:500;color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.35);padding-bottom:2px;transition:border-color .15s,color .15s;}
+    .hero-text-link:hover{border-color:#fff;color:var(--teal-2);}
     .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.625rem 1.25rem;font-size:var(--fs-meta);font-weight:500;letter-spacing:.01em;border-radius:var(--r-md);cursor:pointer;text-decoration:none;white-space:nowrap;transition:background .15s,color .15s,border-color .15s;border:1px solid transparent;}
     .btn-primary{background:#fff;color:var(--navy-2);border-color:#fff;}
     .btn-primary:hover{background:rgba(255,255,255,.88);}
@@ -598,15 +595,9 @@ html.bar-dismissed body{padding-top:88px!important;}
       cursor: default; pointer-events: none;
     }
     /* ══ AFFILIATION STRIP ════════════════════════════════ */
-    .affil-strip {
-      background: var(--navy-2);
-      border-top: 1px solid var(--border-d);
-      padding: 1.25rem 0;
-    }
-    .affil-inner {
-      display: flex; align-items: center;
-      gap: 2rem; flex-wrap: wrap;
-    }
+    /* .affil-strip and .affil-inner are redefined later in this file
+       and that later version wins — removed here to avoid two
+       competing definitions. */
     .affil-label {
       font-family: var(--ff-mono); font-size: .5rem;
       letter-spacing: .14em; text-transform: uppercase;
@@ -740,8 +731,11 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
 
 /* Affiliation logos — ensure visibility on dark strip */
 .affil-logo-link img {
-  filter: brightness(0) invert(1);
-  opacity: .55;
+  filter: none;
+  opacity: 1;
+  background: #fff;
+  padding: .5rem .75rem;
+  border-radius: var(--r-sm, 6px);
   transition: opacity .2s;
 }
 .affil-logo-link:hover img { opacity: .85; }
@@ -1036,13 +1030,13 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
           <span lang="es">Patrocinio de estudios clínicos, colaboración académica, validación de tecnología o codesarrollo de innovación. Cada responsable gestiona su ámbito. Contáctenos para encontrar al interlocutor adecuado.</span>
         </p>
       </div>
-      <div style="display:flex;flex-direction:column;gap:.75rem;flex-shrink:0;">
-        <a href="index.html#contact" class="btn btn-primary">
+      <div style="display:flex;flex-direction:column;gap:.875rem;flex-shrink:0;align-items:flex-start;">
+        <a href="index.html#contact" class="btn-cta-solid">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:13px;height:13px;"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
           <span lang="en">Get in touch</span><span lang="es">Contactar</span>
         </a>
-        <a href="clinical.html" class="btn btn-ghost">
-          <span lang="en">Research programme</span><span lang="es">Programa de investigación</span>
+        <a href="clinical.html" class="hero-text-link">
+          <span lang="en">Research programme</span><span lang="es">Programa de investigación</span> →
         </a>
       </div>
     </div>
@@ -1372,4 +1366,4 @@ if(!localStorage.getItem('cookieOk')){
 })();
 </script>
 </body>
-</html>  
+</html>
