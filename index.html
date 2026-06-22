@@ -124,7 +124,8 @@ html.bar-dismissed body{padding-top:88px;}
 .affil-section{background:rgba(255,255,255,.025);border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07);}
 .affil-logo-item{display:block;opacity:.55;transition:opacity .2s;}
 .affil-logo-item:hover{opacity:.85;}
-.affil-img{display:block;width:auto;filter:brightness(0) invert(1);object-fit:contain;height:32px;}
+/* .affil-img: unused in markup, removed — same destructive invert
+   pattern as the real affiliation logos fixed elsewhere in this file. */
 .affil-img-main{height:40px;max-width:260px;}
 .affil-img-inibic{height:28px;max-width:180px;}
 .affil-ph{display:flex;align-items:center;justify-content:center;height:32px;min-width:80px;border:1px dashed rgba(255,255,255,.2);border-radius:2px;padding:0 .75rem;background:rgba(255,255,255,.03);}
@@ -763,15 +764,9 @@ html.bar-dismissed body{padding-top:88px!important;}
     }
 
     /* ══ AFFILIATION STRIP ════════════════════════════════ */
-    .affil-strip {
-      background: var(--navy-2);
-      border-top: 1px solid var(--border-d);
-      padding: 1.25rem 0;
-    }
-    .affil-inner {
-      display: flex; align-items: center;
-      gap: 2rem; flex-wrap: wrap;
-    }
+    /* .affil-strip and .affil-inner are redefined later in this file
+       (near the logo-fix block) and that later version wins — removed
+       here to avoid two competing definitions. */
     .affil-label {
       font-family: var(--ff-mono); font-size: .5rem;
       letter-spacing: .14em; text-transform: uppercase;
@@ -908,10 +903,19 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
 .psn-nav-group { display: flex; align-items: center; gap: .5rem; }
 .psn-count { font-family: var(--ff-mono,'DM Mono',monospace); font-size: .55rem; letter-spacing: .1em; color: rgba(255,255,255,.25); }
 
-/* Affiliation logos — ensure visibility on dark strip */
+/* Affiliation logos — these are real, multi-color JPEGs with white
+   backgrounds, not flat-color marks. brightness(0) invert(1) only works
+   on a logo that's already one color with true alpha transparency;
+   forcing it on a white-background photo crushes the background to
+   black and destroys the original color, which is exactly the empty
+   dark rectangle this was meant to prevent. A light card behind each
+   logo shows the real artwork correctly instead. */
 .affil-logo-link img {
-  filter: brightness(0) invert(1);
-  opacity: .55;
+  filter: none;
+  opacity: 1;
+  background: #fff;
+  padding: .5rem .75rem;
+  border-radius: var(--r-sm, 6px);
   transition: opacity .2s;
 }
 .affil-logo-link:hover img { opacity: .85; }
