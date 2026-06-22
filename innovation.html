@@ -395,6 +395,8 @@ html.bar-dismissed body{padding-top:88px!important;}
 
     /* ═══ INNOVATION PAGE STYLES ═══ */
 .hero{background:var(--navy-2);border-bottom:1px solid var(--rule-d);position:relative;overflow:hidden;padding:5rem 0 4rem;}
+.hero-text-link{font-size:.9375rem;font-weight:500;color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.35);padding-bottom:2px;transition:border-color .15s,color .15s;}
+.hero-text-link:hover{border-color:#fff;color:var(--teal-2);}
     .hero::before{content:'';position:absolute;inset:0;}
     .hero::after{content:'';position:absolute;width:600px;height:500px;background:radial-gradient(circle,rgba(124,111,207,0.1) 0%,transparent 70%);top:-100px;right:-150px;pointer-events:none;}
     .hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1fr;gap:3rem;}
@@ -1365,14 +1367,12 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
             <span lang="en">Innovation at the Servicio de Neumología is driven by clinical need — problems encountered daily in the treatment of patients with respiratory disease. Tools are developed with the clinicians who will use them, evaluated within the Fundación Galega de Investigación Biomédica (INIBIC) framework, and measured by their impact on diagnosis and patient outcomes.</span>
             <span lang="es">La innovación en el Servicio de Neumología parte de la necesidad clínica — problemas encontrados a diario en el tratamiento de pacientes con enfermedades respiratorias. Las herramientas se desarrollan con los clínicos que las usarán, se evalúan dentro del marco de la Fundación Galega de Investigación Biomédica (INIBIC) y se miden por su impacto en el diagnóstico y los resultados de los pacientes.</span>
           </p>
-          <div class="hero-actions reveal reveal-d3">
-            <a href="#projects" class="btn-violet">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="3" width="6" height="6"/><rect x="9" y="3" width="6" height="6"/><rect x="16" y="3" width="6" height="6"/><rect x="2" y="11" width="6" height="6"/><rect x="9" y="11" width="6" height="6"/></svg>
-              <span lang="en">Active Projects</span><span lang="es">Proyectos Activos</span>
+          <div class="hero-actions reveal reveal-d3" style="display:flex;gap:1.75rem;align-items:center;">
+            <a href="#projects" class="hero-text-link">
+              <span lang="en">Active Projects</span><span lang="es">Proyectos Activos</span> →
             </a>
-            <a href="#contact" class="btn-ghost">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-              <span lang="en">Enquire</span><span lang="es">Contactar</span>
+            <a href="#contact" class="hero-text-link">
+              <span lang="en">Enquire</span><span lang="es">Contactar</span> →
             </a>
           </div>
         </div>
