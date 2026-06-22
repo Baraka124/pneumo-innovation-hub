@@ -584,7 +584,7 @@ async function loadTeamGroup() {
         </div>
       </div>`;
     }).join('');
-  } catch(err) { console.error('Team group load failed:',err); }
+  } catch(err) { console.error('Team group load failed:',err); if (grid) grid.innerHTML = '<p class="state-empty">Unable to load team list.</p>'; }
 }
 
 // Legacy loadTeam() — used by clinical.html #teamGrid.
@@ -1581,7 +1581,7 @@ async function loadLineDetail() {
         }).join('');
         pubsSection.style.display = '';
       }
-    } catch (err) { console.error('Line publications load failed:', err); }   
+    } catch (err) { console.error('Line publications load failed:', err); }
 
   } catch (err) {
     console.error('Research line load failed:', err.message);
