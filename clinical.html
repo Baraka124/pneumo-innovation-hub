@@ -272,6 +272,8 @@ html.bar-dismissed body{padding-top:88px!important;}
     .btn-ghost:hover{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.06);}
     .btn-ghost-dark{display:inline-flex;align-items:center;gap:.5rem;border:1.5px solid var(--rule-l);color:var(--ink-2);padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;font-weight:500;transition:background .18s,border-color .18s,color .18s;}
     .btn-ghost-dark:hover{border-color:var(--accent);color:var(--accent);}
+    .hero-text-link{font-size:.9375rem;font-weight:500;color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.35);padding-bottom:2px;transition:border-color .15s,color .15s;}
+    .hero-text-link:hover{border-color:#fff;color:var(--teal-2);}
     .btn-outline{display:inline-flex;align-items:center;gap:.5rem;border:1.5px solid currentColor;color:var(--text-on-dark);padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;font-weight:500;transition:background .18s,border-color .18s,color .18s;opacity:.7;}
     .btn-outline:hover{opacity:1;background:rgba(255,255,255,.06);}
     .btn-violet{display:inline-flex;align-items:center;gap:.5rem;background:var(--teal-2);color:#fff;font-weight:600;padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;transition:background .18s,border-color .18s,color .18s;border:none;cursor:pointer;}
@@ -528,12 +530,12 @@ html.bar-dismissed body{padding-top:88px!important;}
     .trials-wrap{border:1px solid var(--mid-grey);border-radius:var(--r-lg);overflow:hidden;}
     .trials-scroll{overflow-x:auto;}
     table.trials{width:100%;border-collapse:collapse;min-width:760px;table-layout:fixed;}
-    table.trials th:nth-child(1),table.trials td:nth-child(1){width:13%;}
-    table.trials th:nth-child(2),table.trials td:nth-child(2){width:30%;}
-    table.trials th:nth-child(3),table.trials td:nth-child(3){width:19%;}
-    table.trials th:nth-child(4),table.trials td:nth-child(4){width:10%;}
+    table.trials th:nth-child(1),table.trials td:nth-child(1){width:11%;}
+    table.trials th:nth-child(2),table.trials td:nth-child(2){width:27%;}
+    table.trials th:nth-child(3),table.trials td:nth-child(3){width:24%;}
+    table.trials th:nth-child(4),table.trials td:nth-child(4){width:8%;}
     table.trials th:nth-child(5),table.trials td:nth-child(5){width:13%;}
-    table.trials th:nth-child(6),table.trials td:nth-child(6){width:15%;}
+    table.trials th:nth-child(6),table.trials td:nth-child(6){width:17%;}
     .trials thead{background:var(--white);border-bottom:2px solid var(--rule-l);}
     .trials th{padding:1rem 1.25rem;text-align:left;font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;color:var(--text-on-light-3);border-bottom:2px solid var(--mid-grey);white-space:nowrap;font-weight:600;}
     .trials td{padding:1.1rem 1.25rem;border-bottom:1px solid var(--rule-l);vertical-align:middle;font-size:.9rem;color:var(--text-on-light-2);}
@@ -542,7 +544,7 @@ html.bar-dismissed body{padding-top:88px!important;}
     .trials tbody tr:hover td{background:var(--off-white);}
     .trial-protocol{font-family:var(--ff-mono);font-size:.75rem;color:var(--text-on-light-3);white-space:nowrap;}
     .trial-title{color:var(--text-on-light);font-weight:500;font-size:1.0625rem;line-height:1.4;}
-    .trial-line-tag{display:inline-block;padding:.2rem .5rem;border-radius:3px;font-size:.7rem;font-family:var(--ff-mono);border:1px solid var(--rule-l);color:var(--text-on-light-3);white-space:nowrap;background:var(--off-white);}
+    .trial-line-tag{display:inline-block;padding:.2rem .5rem;border-radius:3px;font-size:.7rem;font-family:var(--ff-mono);border:1px solid var(--rule-l);color:var(--text-on-light-3);white-space:normal;line-height:1.4;background:var(--off-white);max-width:100%;}
     .phase-badge{display:inline-flex;align-items:center;padding:.22rem .55rem;border-radius:3px;font-size:var(--fs-label);font-family:var(--ff-mono);letter-spacing:.05em;border:1px solid rgba(0,153,153,.15);color:var(--teal-2);background:rgba(0,153,153,.06);white-space:nowrap;}
     .status-badge{display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .65rem;border-radius:20px;font-size:var(--fs-label);font-weight:600;white-space:nowrap;}
     .status-badge::before{content:'';width:5px;height:5px;border-radius:50%;flex-shrink:0;}
@@ -1286,14 +1288,12 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
             <span lang="en">The Servicio de Neumología at CHUAC covers the full spectrum of pulmonary and thoracic medicine — from lung transplantation and pulmonary arterial hypertension to interventional pneumology, thoracic surgery, sleep medicine, and precision phenotyping. Active clinical trials in all areas, within the Fundación Galega de Investigación Biomédica (INIBIC) framework.</span>
             <span lang="es">El Servicio de Neumología del CHUAC cubre el espectro completo de la medicina pulmonar y torácica — desde el trasplante pulmonar y la hipertensión arterial pulmonar hasta la neumología intervencionista, la cirugía torácica, la medicina del sueño y la fenotipificación de precisión. Ensayos clínicos activos en todas las áreas, dentro del marco de la Fundación Galega de Investigación Biomédica (INIBIC).</span>
           </p>
-          <div class="hero-actions reveal reveal-d3">
-            <a href="#research-lines" class="btn-primary">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><rect x="3" y="10" width="5" height="11"/><rect x="9.5" y="4" width="5" height="17"/><rect x="16" y="7" width="5" height="14"/></svg>
-              <span lang="en">Research Lines</span><span lang="es">Ver Líneas</span>
+          <div class="hero-actions reveal reveal-d3" style="display:flex;gap:1.75rem;align-items:center;">
+            <a href="#research-lines" class="hero-text-link">
+              <span lang="en">Research Lines</span><span lang="es">Ver Líneas</span> →
             </a>
-            <a href="#clinical-studies" class="btn-ghost">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
-              <span lang="en">Active Studies</span><span lang="es">Estudios Activos</span>
+            <a href="#clinical-studies" class="hero-text-link">
+              <span lang="en">Active Studies</span><span lang="es">Estudios Activos</span> →
             </a>
           </div>
         </div>
