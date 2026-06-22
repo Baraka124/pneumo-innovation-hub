@@ -115,7 +115,7 @@ html.bar-dismissed body{padding-top:88px;}
 .affil-section{background:rgba(255,255,255,.025);border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07);}
 .affil-logo-item{display:block;opacity:.55;transition:opacity .2s;}
 .affil-logo-item:hover{opacity:.85;}
-.affil-img{display:block;width:auto;filter:brightness(0) invert(1);object-fit:contain;height:32px;}
+/* .affil-img: unused in markup, same destructive invert pattern removed. */
 .affil-img-main{height:40px;max-width:260px;}
 .affil-img-inibic{height:28px;max-width:180px;}
 .affil-ph{display:flex;align-items:center;justify-content:center;height:32px;min-width:80px;border:1px dashed rgba(255,255,255,.2);border-radius:2px;padding:0 .75rem;background:rgba(255,255,255,.03);}
@@ -882,8 +882,11 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
 
 /* Affiliation logos — ensure visibility on dark strip */
 .affil-logo-link img {
-  filter: brightness(0) invert(1);
-  opacity: .55;
+  filter: none;
+  opacity: 1;
+  background: #fff;
+  padding: .5rem .75rem;
+  border-radius: var(--r-sm, 6px);
   transition: opacity .2s;
 }
 .affil-logo-link:hover img { opacity: .85; }
@@ -967,7 +970,7 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
     /* ── Buttons: one system, two variants ── */
     .btn-primary,.btn-secondary,.btn-primary-alt,.btn-ghost,
     .btn-ghost-dark,.btn-outline,.btn-outline-dark,.btn-violet,.btn-gold,.btn-cta,
-    .form-trigger-btn,.path-btn,.cta-pill,.hstat-btn,.psn-btn,
+    .form-trigger-btn,.path-btn,.cta-pill,.hstat-btn,
     a[class*="btn-"],button[class*="btn-"] {
       display:inline-flex;align-items:center;gap:.5rem;
       font-family:var(--ff-body);font-size:var(--fs-meta);font-weight:500;
@@ -982,11 +985,11 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
     .form-trigger-btn:hover,.btn-cta:hover,.hstat-btn:hover {
       background:rgba(255,255,255,.88);
     }
-    .btn-secondary,.btn-ghost,.btn-ghost-dark,.btn-outline,.btn-outline-dark,.path-btn,.psn-btn {
+    .btn-secondary,.btn-ghost,.btn-ghost-dark,.btn-outline,.btn-outline-dark,.path-btn {
       background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.35);
     }
     .btn-secondary:hover,.btn-ghost:hover,.btn-ghost-dark:hover,.btn-outline:hover,
-    .btn-outline-dark:hover,.path-btn:hover,.psn-btn:hover {
+    .btn-outline-dark:hover,.path-btn:hover {
       background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.55);
     }
     /* On light backgrounds, primary flips to filled-blue, secondary to outlined-blue */
@@ -1918,4 +1921,4 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
     <span lang="en">Understood</span><span lang="es">Entendido</span>
   </button>
 </div>
-<script>if(!localStorage.getItem('cookieOk')){var c=document.getElementById('cookieBanner');if(c)c.style.display='flex';}</script>   
+<script>if(!localStorage.getItem('cookieOk')){var c=document.getElementById('cookieBanner');if(c)c.style.display='flex';}</script>
