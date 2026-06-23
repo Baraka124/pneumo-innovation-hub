@@ -1462,7 +1462,12 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
     function buildPost(p){
       var type   = p.post_type || 'article';
       var date   = fmtDate(p.published_at || p.created_at);
-      var author = p.author ? p.author.full_name : '';
+      // Publications already show the real academic author list via
+      // authors_text (e.g. "Gonzalez-Rivas D, Manolache V, et al.").
+      // p.author is whoever curated/submitted the post in neumDesk, not
+      // necessarily a paper author — showing both was redundant at best
+      // and actively misleading at worst, since the two names can differ.
+      var author = (p.author && type !== 'publication') ? p.author.full_name : '';
       var line   = p.research_line ? 'L'+p.research_line.line_number+' — '+p.research_line.name : '';
       var sep    = '<span class="post-meta-sep"></span>';
 
@@ -1623,9 +1628,13 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
     function openPost(p){
       if(!reader) return;
       var type   = p.post_type || 'article';
-      var author = p.author ? p.author.full_name : (p.authors_text || '');
-      var date   = p.published_at || p.created_at;
       var isPub  = type === 'publication';
+      // Publications show their real author list via authors_text in the
+      // dedicated pub block below — p.author is the curator who submitted
+      // the post, not necessarily a paper author, so showing it in the
+      // byline too was redundant and could read as a wrong/extra name.
+      var author = isPub ? '' : (p.author ? p.author.full_name : '');
+      var date   = p.published_at || p.created_at;
 
       var pubBlock = '';
       if(isPub){
@@ -1759,7 +1768,7 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
         title.innerHTML = '<span lang="en">'+esc(p.title||'Untitled')+'</span><span lang="es">'+esc(p.title||'Untitled')+'</span>';
       }
       if(meta){
-        var metaTxt = fmtDate(p.published_at||p.created_at)+(p.author?' · '+esc(p.author.full_name):'')+(p.research_line?' · L'+p.research_line.line_number:'');
+        var metaTxt = fmtDate(p.published_at||p.created_at)+((p.author && p.post_type !== 'publication')?' · '+esc(p.author.full_name):'')+(p.research_line?' · L'+p.research_line.line_number:'');
         meta.textContent = metaTxt;
       }
       imgEl.innerHTML = p.featured_image_url
@@ -1921,7 +1930,7 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
       if(REDUCED){
         requestAnimationFrame(function(t){ draw(t); });
       } else {
-        requestAnimationFrame(draw);   
+        requestAnimationFrame(draw);
       }
     }
 
