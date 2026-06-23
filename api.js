@@ -519,7 +519,9 @@ async function loadTeamLeads() {
 
       const roleLine = [
         m.is_chief_of_department ? `<span lang="en">Department Chief</span><span lang="es">Jefe de Servicio</span>` : '',
-        m.can_be_pi ? `<span lang="en">Principal Investigator</span><span lang="es">Investigador Principal</span>` : '',
+        m.id === 'c290a7e5-7bea-4652-a0ef-251fbc73184d'
+          ? `<span lang="en">Principal Investigator, neumACt</span><span lang="es">Investigador Principal, neumACt</span>`
+          : (m.can_be_pi ? `<span lang="en">Principal Investigator</span><span lang="es">Investigador Principal</span>` : ''),
       ].filter(Boolean).join(' · ');
 
       // Publication list — the genuine variable-depth element. Someone
@@ -1476,7 +1478,9 @@ async function loadLineDetail() {
       // had that second, equally true fact shown at all.
       const roleBadges = [
         c.is_chief_of_department ? `<span class="hstat-label" style="background:var(--blue-50);color:var(--navy-2);padding:.3rem .7rem;border-radius:var(--r-sm);font-size:var(--fs-label);"><span lang="en">Department Chief</span><span lang="es">Jefe de Servicio</span></span>` : '',
-        c.can_be_pi ? `<span class="hstat-label" style="background:var(--blue-50);color:var(--navy-2);padding:.3rem .7rem;border-radius:var(--r-sm);font-size:var(--fs-label);"><span lang="en">Principal Investigator</span><span lang="es">Investigador Principal</span></span>` : '',
+        c.id === 'c290a7e5-7bea-4652-a0ef-251fbc73184d'
+          ? `<span class="hstat-label" style="background:var(--blue-50);color:var(--navy-2);padding:.3rem .7rem;border-radius:var(--r-sm);font-size:var(--fs-label);"><span lang="en">Principal Investigator, neumACt</span><span lang="es">Investigador Principal, neumACt</span></span>`
+          : (c.can_be_pi ? `<span class="hstat-label" style="background:var(--blue-50);color:var(--navy-2);padding:.3rem .7rem;border-radius:var(--r-sm);font-size:var(--fs-label);"><span lang="en">Principal Investigator</span><span lang="es">Investigador Principal</span></span>` : ''),
       ].filter(Boolean).join('');
 
       coordCard.innerHTML = `
@@ -1486,7 +1490,7 @@ async function loadLineDetail() {
             <div style="flex:1;min-width:0;">
               <p style="font-weight:500;font-size:var(--fs-body-sm);margin:0;">${escHtml(c.title ? c.title + ' ' + c.full_name : c.full_name)}</p>
               <p style="font-size:var(--fs-label);color:var(--ink-3);margin:2px 0 0;">
-                <span lang="en">Coordinator, this line</span><span lang="es">Coordinador de esta línea</span>${c.specialization ? ' · ' + escHtml(c.specialization) : ''}
+                <span lang="en">Coordinator, this line</span><span lang="es">Coordinador de esta línea</span>${c.specialization ? ' · ' + (c.id === 'c290a7e5-7bea-4652-a0ef-251fbc73184d' ? '<span lang="en">Pulmonologist</span><span lang="es">Neumólogo</span>' : escHtml(c.specialization)) : ''}
               </p>
               <p style="font-size:var(--fs-label);color:var(--ink-4);margin:2px 0 0;">
                 <span lang="en">Servicio de Neumología, CHUAC</span><span lang="es">Servicio de Neumología, CHUAC</span>
@@ -1596,6 +1600,7 @@ async function loadLineDetail() {
           : `style="background:linear-gradient(135deg,#085041 0%,#0F6E56 55%,#185FA5 100%);"`;
         const roleText = m.role_on_line ? escHtml(m.role_on_line)
           : m.is_chief_of_department ? '<span lang="en">Department Chief</span><span lang="es">Jefe de Servicio</span>'
+          : m.id === 'c290a7e5-7bea-4652-a0ef-251fbc73184d' ? '<span lang="en">Principal Investigator, neumACt</span><span lang="es">Investigador Principal, neumACt</span>'
           : m.can_be_pi ? '<span lang="en">Principal Investigator</span><span lang="es">Investigador Principal</span>'
           : (m.specialization ? escHtml(m.specialization) : '');
         return `<div class="line-team-card" ${photoFill}>
