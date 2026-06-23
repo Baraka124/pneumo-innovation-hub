@@ -177,14 +177,14 @@ html.bar-dismissed body{padding-top:88px!important;}
 .hdr-dd-trigger a{display:inline-flex;align-items:center;padding:.55rem .55rem .55rem .9rem;font-family:var(--ff-body,'DM Sans',sans-serif);font-size:var(--fs-meta);font-weight:500;letter-spacing:.01em;color:rgba(255,255,255,.78);text-decoration:none;white-space:nowrap;transition:color .15s;}
 .hdr-dd-trigger:hover a,.hdr-dd-trigger a:hover{color:#fff;}
 .hdr-dd-chevron{display:inline-flex;align-items:center;justify-content:center;padding:.55rem .75rem .55rem .35rem;border:none;background:transparent;cursor:pointer;color:rgba(255,255,255,.6);transition:color .15s;position:relative;}
-.hdr-dd-chevron::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:1px;height:16px;background:rgba(255,255,255,.18);opacity:0;transition:opacity .15s;}
-.hdr-dd-trigger:hover .hdr-dd-chevron::before,.hdr-dd.open .hdr-dd-chevron::before{opacity:1;}
+.hdr-dd-chevron::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:1px;height:16px;background:rgba(255,255,255,.18);transition:background .15s;}
+.hdr-dd-trigger:hover .hdr-dd-chevron::before,.hdr-dd.open .hdr-dd-chevron::before{background:rgba(255,255,255,.4);}
 .hdr-dd-chevron:hover{color:#fff;}
 .hdr-dd-chevron svg{width:13px;height:13px;transition:transform .15s;}
 .hdr-dd.open .hdr-dd-chevron svg{transform:rotate(180deg);}
 .hdr-dd.open .hdr-dd-trigger{background:rgba(255,255,255,.08);}
 .hdr-dd.open .hdr-dd-trigger a{color:#fff;}
-.hdr-dd-panel{position:fixed;top:var(--hdr,88px);left:0;right:0;background:var(--navy-2);box-shadow:0 12px 28px rgba(0,20,40,.18);border-top:1px solid rgba(255,255,255,.12);border-bottom:1px solid rgba(255,255,255,.08);opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .18s,transform .18s,visibility .18s;z-index:899;}
+.hdr-dd-panel{position:fixed;top:var(--hdr,88px);left:0;right:0;background:var(--navy-2);box-shadow:0 12px 28px rgba(0,20,40,.18);border-top:1px solid rgba(255,255,255,.12);border-bottom:1px solid rgba(255,255,255,.08);opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .18s,transform .18s,visibility .18s;z-index:950;}
 .hdr-dd.open .hdr-dd-panel{opacity:1;visibility:visible;transform:translateY(0);}
 .hdr-dd-panel-inner{max-width:1440px;margin:0 auto;padding:1.75rem clamp(1.25rem,4vw,3rem) 2rem;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.25rem 2.5rem;}
 .hdr-dd-item{display:block;text-decoration:none;padding:.6rem 0;border-bottom:1px solid transparent;transition:border-color .12s;}
@@ -702,10 +702,10 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
 .footer-address{font-size:.8rem;color:rgba(255,255,255,.32);line-height:1.75;font-style:normal;}
 .footer-address strong{display:block;color:rgba(255,255,255,.52);font-weight:500;margin-bottom:.25rem;}
 .footer-bottom-bar{max-width:1440px;margin:3rem auto 0;padding:1.25rem clamp(1.25rem,4vw,3rem);border-top:1px solid rgba(255,255,255,.05);display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
-.footer-copy{font-size:var(--fs-label);color:rgba(255,255,255,.18);line-height:1.5;}
+.footer-copy{font-size:var(--fs-label);color:rgba(255,255,255,.45);line-height:1.5;}
 .footer-certs{display:flex;align-items:center;gap:1.5rem;}
-.footer-certs span{font-family:var(--ff-mono,'DM Mono',monospace);font-size:var(--fs-label);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.18);}
-@media(max-width:720px){.footer-grid{grid-template-columns:1fr 1fr;}.footer-col-brand{grid-column:1/-1;}}
+.footer-certs span{font-family:var(--ff-mono,'DM Mono',monospace);font-size:var(--fs-label);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45);}
+@media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr;}.footer-col-brand{grid-column:1/-1;}}
 @media(max-width:480px){.footer-grid{grid-template-columns:1fr;}.footer-bottom-bar{flex-direction:column;align-items:flex-start;}}
 
 /* Publication nav — spread prev/next, minimal style */
@@ -1366,4 +1366,4 @@ if(!localStorage.getItem('cookieOk')){
 })();
 </script>
 </body>
-</html>
+</html>  
