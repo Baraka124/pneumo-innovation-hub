@@ -1096,6 +1096,20 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
   gap: 2.5rem;
   flex-wrap: wrap;
 }
+.affil-label {
+  font-family: var(--ff-mono); font-size: .6875rem;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(255,255,255,.5); white-space: nowrap; flex-shrink: 0;
+}
+.affil-logos { display: flex; align-items: center; gap: 1.75rem; }
+.affil-logo-link { display: flex; align-items: center; }
+.affil-logo-link img {
+  filter: none; opacity: 1; background: #fff;
+  padding: .5rem .75rem; border-radius: var(--r-sm, 6px);
+  transition: opacity .2s;
+}
+.affil-logo-link:hover img { opacity: .85; }
+.affil-sep { width: 1px; height: 28px; background: rgba(255,255,255,.1); }
 
 /* ── Subtle visual depth — Crick-style section backgrounds ── */
 .hero { position: relative; }
@@ -1953,4 +1967,4 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
     <span lang="en">Understood</span><span lang="es">Entendido</span>
   </button>
 </div>
-<script>if(!localStorage.getItem('cookieOk')){var c=document.getElementById('cookieBanner');if(c)c.style.display='flex';}</script>
+<script>if(!localStorage.getItem('cookieOk')){var c=document.getElementById('cookieBanner');if(c)c.style.display='flex';}</script>  
