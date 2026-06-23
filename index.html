@@ -163,14 +163,14 @@ html.bar-dismissed body{padding-top:88px!important;}
 .hdr-dd-trigger a{display:inline-flex;align-items:center;padding:.55rem .55rem .55rem .9rem;font-family:var(--ff-body,'DM Sans',sans-serif);font-size:var(--fs-meta);font-weight:500;letter-spacing:.01em;color:rgba(255,255,255,.78);text-decoration:none;white-space:nowrap;transition:color .15s;}
 .hdr-dd-trigger:hover a,.hdr-dd-trigger a:hover{color:#fff;}
 .hdr-dd-chevron{display:inline-flex;align-items:center;justify-content:center;padding:.55rem .75rem .55rem .35rem;border:none;background:transparent;cursor:pointer;color:rgba(255,255,255,.6);transition:color .15s;position:relative;}
-.hdr-dd-chevron::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:1px;height:16px;background:rgba(255,255,255,.18);opacity:0;transition:opacity .15s;}
-.hdr-dd-trigger:hover .hdr-dd-chevron::before,.hdr-dd.open .hdr-dd-chevron::before{opacity:1;}
+.hdr-dd-chevron::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:1px;height:16px;background:rgba(255,255,255,.18);transition:background .15s;}
+.hdr-dd-trigger:hover .hdr-dd-chevron::before,.hdr-dd.open .hdr-dd-chevron::before{background:rgba(255,255,255,.4);}
 .hdr-dd-chevron:hover{color:#fff;}
 .hdr-dd-chevron svg{width:13px;height:13px;transition:transform .15s;}
 .hdr-dd.open .hdr-dd-chevron svg{transform:rotate(180deg);}
 .hdr-dd.open .hdr-dd-trigger{background:rgba(255,255,255,.08);}
 .hdr-dd.open .hdr-dd-trigger a{color:#fff;}
-.hdr-dd-panel{position:fixed;top:var(--hdr,88px);left:0;right:0;background:var(--navy-2);box-shadow:0 12px 28px rgba(0,20,40,.18);border-top:1px solid rgba(255,255,255,.12);border-bottom:1px solid rgba(255,255,255,.08);opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .18s,transform .18s,visibility .18s;z-index:899;}
+.hdr-dd-panel{position:fixed;top:var(--hdr,88px);left:0;right:0;background:var(--navy-2);box-shadow:0 12px 28px rgba(0,20,40,.18);border-top:1px solid rgba(255,255,255,.12);border-bottom:1px solid rgba(255,255,255,.08);opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .18s,transform .18s,visibility .18s;z-index:950;}
 .hdr-dd.open .hdr-dd-panel{opacity:1;visibility:visible;transform:translateY(0);}
 .hdr-dd-panel-inner{max-width:1440px;margin:0 auto;padding:1.75rem clamp(1.25rem,4vw,3rem) 2rem;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.25rem 2.5rem;}
 .hdr-dd-item{display:block;text-decoration:none;padding:.6rem 0;border-bottom:1px solid transparent;transition:border-color .12s;}
@@ -585,14 +585,14 @@ html.bar-dismissed body{padding-top:88px!important;}
       border:1px solid var(--border-d);border-radius:var(--r-md);overflow:hidden;
       margin-top:2.5rem;
     }
-    @media(max-width:720px){.paths-grid{grid-template-columns:1fr;}}
+    @media(max-width:768px){.paths-grid{grid-template-columns:1fr;}}
     .path-card{
       padding:2.25rem 2.5rem;
       border-right:1px solid var(--border-d);
       position:relative;overflow:hidden;
     }
     .path-card:last-child{border-right:none;}
-    @media(max-width:720px){.path-card{border-right:none;border-bottom:1px solid var(--border-d);}.path-card:last-child{border-bottom:none;}}
+    @media(max-width:768px){.path-card{border-right:none;border-bottom:1px solid var(--border-d);}.path-card:last-child{border-bottom:none;}}
     .path-accent{width:2px;height:3rem;background:var(--teal);margin-bottom:1.5rem;}
     .path-eyebrow{font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:.625rem;}
     .path-h3{font-family:var(--ff-display);font-size:1.375rem;font-weight:700;color:#fff;line-height:1.2;letter-spacing:-.02em;margin-bottom:1rem;}
@@ -650,7 +650,7 @@ html.bar-dismissed body{padding-top:88px!important;}
     .contact-inner{
       display:grid;grid-template-columns:1fr 480px;gap:4rem;align-items:start;
     }
-    @media(max-width:900px){.contact-inner{grid-template-columns:1fr;gap:2.5rem;}}
+    @media(max-width:860px){.contact-inner{grid-template-columns:1fr;gap:2.5rem;}}
     .cinfo-list{display:flex;flex-direction:column;gap:1.25rem;}
     .cinfo{display:flex;align-items:flex-start;gap:.875rem;}
     .cinfo-icon{
@@ -876,10 +876,10 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
 .footer-address{font-size:.8rem;color:rgba(255,255,255,.32);line-height:1.75;font-style:normal;}
 .footer-address strong{display:block;color:rgba(255,255,255,.52);font-weight:500;margin-bottom:.25rem;}
 .footer-bottom-bar{max-width:1440px;margin:3rem auto 0;padding:1.25rem clamp(1.25rem,4vw,3rem);border-top:1px solid rgba(255,255,255,.05);display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
-.footer-copy{font-size:var(--fs-label);color:rgba(255,255,255,.18);line-height:1.5;}
+.footer-copy{font-size:var(--fs-label);color:rgba(255,255,255,.45);line-height:1.5;}
 .footer-certs{display:flex;align-items:center;gap:1.5rem;}
-.footer-certs span{font-family:var(--ff-mono,'DM Mono',monospace);font-size:var(--fs-label);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.18);}
-@media(max-width:720px){.footer-grid{grid-template-columns:1fr 1fr;}.footer-col-brand{grid-column:1/-1;}}
+.footer-certs span{font-family:var(--ff-mono,'DM Mono',monospace);font-size:var(--fs-label);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45);}
+@media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr;}.footer-col-brand{grid-column:1/-1;}}
 @media(max-width:480px){.footer-grid{grid-template-columns:1fr;}.footer-bottom-bar{flex-direction:column;align-items:flex-start;}}
 
 /* Publication nav — spread prev/next, minimal style */
@@ -1027,6 +1027,22 @@ body { padding-top: calc(88px + 30px) !important; }
 .api-skeleton{background:linear-gradient(90deg,var(--surface) 25%,var(--white) 37%,var(--surface) 63%);background-size:400% 100%;animation:skeletonShimmer 1.4s ease infinite;border-radius:4px;}
 .api-skeleton-dark{background:linear-gradient(90deg,rgba(255,255,255,.06) 25%,rgba(255,255,255,.12) 37%,rgba(255,255,255,.06) 63%);background-size:400% 100%;animation:skeletonShimmer 1.4s ease infinite;border-radius:4px;}
 @keyframes skeletonShimmer{0%{background-position:100% 50%;}100%{background-position:0 50%;}}
+/* Networks & Standards — replaces the old 6-card grid, which used
+   #007A7A teal labels on navy-2 background at 1.91:1 contrast (fails
+   WCAG AA badly) and felt dense with every description always visible.
+   This is one quiet row; descriptions expand on click, contrast fixed
+   throughout. */
+.netstd-row{border-top:1px solid rgba(255,255,255,.08);}
+.netstd-item{
+  width:100%;display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  padding:1.125rem 0;background:none;border:none;border-bottom:1px solid rgba(255,255,255,.08);
+  cursor:pointer;text-align:left;
+}
+.netstd-name{font-size:.9375rem;font-weight:500;color:#fff;}
+.netstd-chevron{width:14px;height:14px;color:rgba(255,255,255,.5);flex-shrink:0;transition:transform .2s;}
+.netstd-item[aria-expanded="true"] .netstd-chevron{transform:rotate(180deg);}
+.netstd-detail{max-height:0;overflow:hidden;transition:max-height .25s ease;border-bottom:1px solid rgba(255,255,255,.08);}
+.netstd-detail p{font-size:.875rem;color:rgba(255,255,255,.65);line-height:1.65;margin:0;padding:0 0 1.125rem;max-width:42rem;}
 </style>
 <script type="application/ld+json">
 {
@@ -1552,78 +1568,54 @@ body { padding-top: calc(88px + 30px) !important; }
       <span lang="es">Toda la investigación clínica del grupo se realiza bajo marcos internacionales reconocidos: estándares regulatorios, éticos y de calidad compartidos con los principales centros europeos de neumología.</span>
     </p>
 
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06);">
+    <div class="netstd-row" role="list">
 
-      <div style="background:var(--navy-2);padding:2rem 1.75rem;">
-        <div style="font-family:var(--ff-mono,'DM Mono',monospace);font-size:var(--fs-label);letter-spacing:.15em;text-transform:uppercase;color:#007A7A;margin-bottom:.75rem;">ERS</div>
-        <div style="font-size:.875rem;font-weight:600;color:#fff;margin-bottom:.5rem;">
-          <span lang="en">European Respiratory Society</span>
-          <span lang="es">Sociedad Respiratoria Europea</span>
-        </div>
-        <p style="font-size:.8rem;color:rgba(255,255,255,.42);line-height:1.6;margin:0;">
-          <span lang="en">Member institution. Trial protocols aligned with ERS clinical research standards.</span>
-          <span lang="es">Institución miembro. Protocolos alineados con los estándares ERS.</span>
-        </p>
+      <button class="netstd-item" type="button" aria-expanded="false" data-target="netstd-1" role="listitem">
+        <span class="netstd-name"><span lang="en">ERS — European Respiratory Society</span><span lang="es">ERS — Sociedad Respiratoria Europea</span></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="netstd-chevron"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="netstd-detail" id="netstd-1">
+        <p><span lang="en">Member institution. Trial protocols aligned with ERS clinical research standards.</span><span lang="es">Institución miembro. Protocolos alineados con los estándares ERS.</span></p>
       </div>
 
-      <div style="background:var(--navy-2);padding:2rem 1.75rem;">
-        <div style="font-family:var(--ff-mono,'DM Mono',monospace);font-size:var(--fs-label);letter-spacing:.15em;text-transform:uppercase;color:#007A7A;margin-bottom:.75rem;">SEPAR</div>
-        <div style="font-size:.875rem;font-weight:600;color:#fff;margin-bottom:.5rem;">
-          <span lang="en">Spanish Society of Pulmonology</span>
-          <span lang="es">Sociedad Española de Neumología</span>
-        </div>
-        <p style="font-size:.8rem;color:rgba(255,255,255,.42);line-height:1.6;margin:0;">
-          <span lang="en">National reference network. Investigator-initiated study coordination.</span>
-          <span lang="es">Red de referencia nacional. Coordinación de estudios iniciados por investigador.</span>
-        </p>
+      <button class="netstd-item" type="button" aria-expanded="false" data-target="netstd-2" role="listitem">
+        <span class="netstd-name"><span lang="en">SEPAR — Spanish Society of Pulmonology</span><span lang="es">SEPAR — Sociedad Española de Neumología</span></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="netstd-chevron"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="netstd-detail" id="netstd-2">
+        <p><span lang="en">National reference network. Investigator-initiated study coordination.</span><span lang="es">Red de referencia nacional. Coordinación de estudios iniciados por investigador.</span></p>
       </div>
 
-      <div style="background:var(--navy-2);padding:2rem 1.75rem;">
-        <div style="font-family:var(--ff-mono,'DM Mono',monospace);font-size:var(--fs-label);letter-spacing:.15em;text-transform:uppercase;color:#007A7A;margin-bottom:.75rem;">GCP · ICH E6</div>
-        <div style="font-size:.875rem;font-weight:600;color:#fff;margin-bottom:.5rem;">
-          <span lang="en">Good Clinical Practice</span>
-          <span lang="es">Buenas Prácticas Clínicas</span>
-        </div>
-        <p style="font-size:.8rem;color:rgba(255,255,255,.42);line-height:1.6;margin:0;">
-          <span lang="en">All clinical trials conducted under ICH E6(R2) GCP. INIBIC quality framework. AEMPS-registered.</span>
-          <span lang="es">Todos los ensayos bajo ICH E6(R2) GCP. Marco de calidad INIBIC. Registro AEMPS.</span>
-        </p>
+      <button class="netstd-item" type="button" aria-expanded="false" data-target="netstd-3" role="listitem">
+        <span class="netstd-name"><span lang="en">ICH E6(R2) GCP — Good Clinical Practice</span><span lang="es">ICH E6(R2) GCP — Buenas Prácticas Clínicas</span></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="netstd-chevron"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="netstd-detail" id="netstd-3">
+        <p><span lang="en">All clinical trials conducted under ICH E6(R2) GCP. INIBIC quality framework. AEMPS-registered.</span><span lang="es">Todos los ensayos bajo ICH E6(R2) GCP. Marco de calidad INIBIC. Registro AEMPS.</span></p>
       </div>
 
-      <div style="background:var(--navy-2);padding:2rem 1.75rem;">
-        <div style="font-family:var(--ff-mono,'DM Mono',monospace);font-size:var(--fs-label);letter-spacing:.15em;text-transform:uppercase;color:#007A7A;margin-bottom:.75rem;">CE MDR · SaMD</div>
-        <div style="font-size:.875rem;font-weight:600;color:#fff;margin-bottom:.5rem;">
-          <span lang="en">Medical Device Regulation</span>
-          <span lang="es">Reglamento de Dispositivos Médicos</span>
-        </div>
-        <p style="font-size:.8rem;color:rgba(255,255,255,.42);line-height:1.6;margin:0;">
-          <span lang="en">CE MDR 2017/745 validation pathway. Clinical evidence generation for medical devices and SaMD.</span>
-          <span lang="es">Vía de validación CE MDR 2017/745. Generación de evidencia clínica para dispositivos médicos y SaMD.</span>
-        </p>
+      <button class="netstd-item" type="button" aria-expanded="false" data-target="netstd-4" role="listitem">
+        <span class="netstd-name"><span lang="en">CE MDR 2017/745 — Medical Device Regulation</span><span lang="es">CE MDR 2017/745 — Reglamento de Dispositivos Médicos</span></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="netstd-chevron"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="netstd-detail" id="netstd-4">
+        <p><span lang="en">CE MDR 2017/745 validation pathway. Clinical evidence generation for medical devices and SaMD.</span><span lang="es">Vía de validación CE MDR 2017/745. Generación de evidencia clínica para dispositivos médicos y SaMD.</span></p>
       </div>
 
-      <div style="background:var(--navy-2);padding:2rem 1.75rem;">
-        <div style="font-family:var(--ff-mono,'DM Mono',monospace);font-size:var(--fs-label);letter-spacing:.15em;text-transform:uppercase;color:#007A7A;margin-bottom:.75rem;">INIBIC</div>
-        <div style="font-size:.875rem;font-weight:600;color:#fff;margin-bottom:.5rem;">
-          <span lang="en">Biomedical Research Institute</span>
-          <span lang="es">Instituto de Investigación Biomédica</span>
-        </div>
-        <p style="font-size:.8rem;color:rgba(255,255,255,.42);line-height:1.6;margin:0;">
-          <span lang="en">ISCIII-accredited biomedical research institute. Ethics committee, pharmacovigilance unit, data management.</span>
-          <span lang="es">Instituto acreditado por el ISCIII. Comité de ética, unidad de farmacovigilancia, gestión de datos.</span>
-        </p>
+      <button class="netstd-item" type="button" aria-expanded="false" data-target="netstd-5" role="listitem">
+        <span class="netstd-name"><span lang="en">INIBIC — Biomedical Research Institute</span><span lang="es">INIBIC — Instituto de Investigación Biomédica</span></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="netstd-chevron"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="netstd-detail" id="netstd-5">
+        <p><span lang="en">ISCIII-accredited biomedical research institute. Ethics committee, pharmacovigilance unit, data management.</span><span lang="es">Instituto acreditado por el ISCIII. Comité de ética, unidad de farmacovigilancia, gestión de datos.</span></p>
       </div>
 
-      <div style="background:var(--navy-2);padding:2rem 1.75rem;">
-        <div style="font-family:var(--ff-mono,'DM Mono',monospace);font-size:var(--fs-label);letter-spacing:.15em;text-transform:uppercase;color:#007A7A;margin-bottom:.75rem;">SERGAS</div>
-        <div style="font-size:.875rem;font-weight:600;color:#fff;margin-bottom:.5rem;">
-          <span lang="en">Galician Public Health Network</span>
-          <span lang="es">Red Sanitaria Pública de Galicia</span>
-        </div>
-        <p style="font-size:.8rem;color:rgba(255,255,255,.42);line-height:1.6;margin:0;">
-          <span lang="en">SERGAS integration enables multicentre expansion across Galicia's public hospital network.</span>
-          <span lang="es">La integración SERGAS permite la expansión multicentro a través de la red hospitalaria pública gallega.</span>
-        </p>
+      <button class="netstd-item" type="button" aria-expanded="false" data-target="netstd-6" role="listitem">
+        <span class="netstd-name"><span lang="en">SERGAS — Galician Public Health Network</span><span lang="es">SERGAS — Red Sanitaria Pública de Galicia</span></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="netstd-chevron"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="netstd-detail" id="netstd-6">
+        <p><span lang="en">SERGAS integration enables multicentre expansion across Galicia's public hospital network.</span><span lang="es">La integración SERGAS permite la expansión multicentro a través de la red hospitalaria pública gallega.</span></p>
       </div>
 
     </div>
@@ -1773,6 +1765,17 @@ document.querySelectorAll('.reveal').forEach(function(el){window._revealObserver
   }
   if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',boot);}else{boot();}
 })();
+
+document.addEventListener('DOMContentLoaded', function(){
+  document.querySelectorAll('.netstd-item').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var detail = document.getElementById(btn.dataset.target);
+      var isOpen = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+      if (detail) detail.style.maxHeight = isOpen ? '0' : detail.scrollHeight + 'px';
+    });
+  });
+});
 </script>
 
 <script>
@@ -1929,4 +1932,4 @@ function dismissLatestBar(){var bar=document.getElementById('latestBar');if(!bar
 })();
 </script>
 </body>
-</html>
+</html>   
