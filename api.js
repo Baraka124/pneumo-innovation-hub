@@ -1091,7 +1091,7 @@ document.addEventListener('DOMContentLoaded', () => {
       loadResearchLines();
       loadLiveStats();
       loadFeaturedStories();
-      loadInnovationSpotlight();   
+      loadInnovationSpotlight();
       initContactForm();
       break;
     case 'clinical':
@@ -1527,6 +1527,26 @@ async function loadLineDetail() {
         aboutContent.innerHTML = html;
         aboutSection.style.display = '';
       }
+
+      // Quick-facts panel — sits beside the About text, breaking the
+      // full-width band rhythm. Uses only real, already-fetched counts;
+      // no invented "established" date or similar, since that's not
+      // a real field anywhere in this data.
+      const factsEl = document.getElementById('lineQuickFacts');
+      if (factsEl) {
+        const facts = [
+          { num: line.total_trials || 0, labelEn: line.total_trials === 1 ? 'Clinical trial' : 'Clinical trials', labelEs: line.total_trials === 1 ? 'Ensayo clínico' : 'Ensayos clínicos' },
+          { num: line.total_projects || 0, labelEn: line.total_projects === 1 ? 'Innovation project' : 'Innovation projects', labelEs: line.total_projects === 1 ? 'Proyecto de innovación' : 'Proyectos de innovación' },
+        ].filter(f => f.num > 0);
+        if (facts.length) {
+          factsEl.innerHTML = facts.map((f, i) => `
+            <div style="${i > 0 ? 'border-top:1px solid var(--border-l);margin-top:1rem;padding-top:1rem;' : ''}">
+              <p style="font-family:var(--ff-display);font-size:1.75rem;font-weight:700;margin:0;line-height:1;">${f.num}</p>
+              <p style="font-size:var(--fs-label);color:var(--ink-3);margin-top:.25rem;"><span lang="en">${f.labelEn}</span><span lang="es">${f.labelEs}</span></p>
+            </div>`).join('');
+          factsEl.style.display = '';
+        }
+      }
     }
 
     // Track record — discrete, asserted facts about this line's standing.
@@ -1561,28 +1581,28 @@ async function loadLineDetail() {
     // Team on this line — derived from trial/project investigators and
     // explicit research_line_members, server-side. Coordinator excluded
     // here since they're already shown, distinguished, just above.
+    // Full-bleed photo cards: the photo fills the whole card, the name
+    // overlays directly on it like a real photo credit, rather than a
+    // small circular avatar sitting beside a block of text. A real
+    // photo drops in with zero markup change — gradient+initials is
+    // just today's fallback for this same card shape, not the design.
     const teamChips = document.getElementById('lineTeamChips');
     if (line.team && line.team.length && peopleSection && teamChips) {
       const teamWithoutCoordinator = line.team.filter(m => m.id !== line.coordinator?.id);
-      teamChips.innerHTML = teamWithoutCoordinator.map((m, i) => {
+      teamChips.innerHTML = teamWithoutCoordinator.map((m) => {
         const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
-        const avatar = m.public_photo_url
-          ? `<img src="${escHtml(m.public_photo_url)}" alt="" style="width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0;">`
-          : `<div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#085041 0%,#0F6E56 55%,#185FA5 100%);display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-weight:700;font-size:14px;color:rgba(255,255,255,.96);flex-shrink:0;">${escHtml(initials)}</div>`;
-        // role_on_line (their specific contribution here) and institutional
-        // roles (chief/PI, which apply regardless of this line) are
-        // independent facts — show role_on_line first if it exists, then
-        // any institutional roles as well, not as a fallback alternative.
-        const lines = [
-          m.role_on_line ? escHtml(m.role_on_line) : (m.specialization ? escHtml(m.specialization) : ''),
-          m.is_chief_of_department ? '<span lang="en">Department Chief</span><span lang="es">Jefe de Servicio</span>' : '',
-          m.can_be_pi ? '<span lang="en">Principal Investigator</span><span lang="es">Investigador Principal</span>' : '',
-        ].filter(Boolean);
-        return `<div style="display:flex;align-items:center;gap:.875rem;padding:.875rem 0;${i > 0 ? 'border-top:1px solid var(--border-l);' : ''}">
-          ${avatar}
-          <div style="min-width:0;">
-            <div style="font-size:var(--fs-body-sm);font-weight:500;">${escHtml(m.title ? m.title + ' ' + m.full_name : m.full_name)}</div>
-            ${lines.map(l => `<div style="font-size:var(--fs-label);color:var(--ink-3);margin-top:1px;">${l}</div>`).join('')}
+        const photoFill = m.public_photo_url
+          ? `style="background-image:url('${escHtml(m.public_photo_url)}');background-size:cover;background-position:center;"`
+          : `style="background:linear-gradient(135deg,#085041 0%,#0F6E56 55%,#185FA5 100%);"`;
+        const roleText = m.role_on_line ? escHtml(m.role_on_line)
+          : m.is_chief_of_department ? '<span lang="en">Department Chief</span><span lang="es">Jefe de Servicio</span>'
+          : m.can_be_pi ? '<span lang="en">Principal Investigator</span><span lang="es">Investigador Principal</span>'
+          : (m.specialization ? escHtml(m.specialization) : '');
+        return `<div class="line-team-card" ${photoFill}>
+          ${!m.public_photo_url ? `<span class="line-team-initials">${escHtml(initials)}</span>` : ''}
+          <div class="line-team-overlay">
+            <p class="line-team-name">${escHtml(m.title ? m.title + ' ' + m.full_name : m.full_name)}</p>
+            ${roleText ? `<p class="line-team-role">${roleText}</p>` : ''}
           </div>
         </div>`;
       }).join('');
