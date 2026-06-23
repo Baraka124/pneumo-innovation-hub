@@ -165,14 +165,21 @@ async function loadResearchLines() {
         const displayName = line.short_name || line.name;
         const trialBadge = line.active_trials > 0
           ? `<span class="line-tag">${line.active_trials} active</span>` : '';
+        const coord = line.coordinator;
+        let coordBlock = '';
+        if (coord?.full_name) {
+          const initials = coord.full_name.split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
+          const avatar = coord.public_photo_url
+            ? `<img src="${escHtml(coord.public_photo_url)}" alt="" style="width:22px;height:22px;border-radius:50%;object-fit:cover;flex-shrink:0;">`
+            : `<span style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#085041 0%,#0F6E56 55%,#185FA5 100%);display:inline-flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-weight:700;font-size:8px;color:rgba(255,255,255,.96);flex-shrink:0;">${escHtml(initials)}</span>`;
+          coordBlock = `<div class="line-coord" style="display:flex;align-items:center;gap:.5rem;">${avatar}<span>${escHtml(coord.full_name)}</span></div>`;
+        }
         return `
           <a href="line.html?id=${line.id}" class="line-card reveal">
             <div class="line-num">${num}</div>
             <div class="line-body">
               <div class="line-title">${escHtml(displayName)}</div>
-              ${line.coordinator?.full_name
-                ? `<div class="line-coord">${escHtml(line.coordinator.full_name)}</div>`
-                : ''}
+              ${coordBlock}
               ${trialBadge ? `<div class="line-meta">${trialBadge}</div>` : ''}
             </div>
             <div class="line-arrow">
@@ -512,7 +519,7 @@ async function loadTeamLeads() {
 
       const roleLine = [
         m.is_chief_of_department ? `<span lang="en">Department Chief</span><span lang="es">Jefe de Servicio</span>` : '',
-        m.can_be_pi ? `<span lang="en">Principal Investigator</span><span lang="es">IP</span>` : '',
+        m.can_be_pi ? `<span lang="en">Principal Investigator</span><span lang="es">Investigador Principal</span>` : '',
       ].filter(Boolean).join(' · ');
 
       // Publication list — the genuine variable-depth element. Someone
@@ -1084,7 +1091,7 @@ document.addEventListener('DOMContentLoaded', () => {
       loadResearchLines();
       loadLiveStats();
       loadFeaturedStories();
-      loadInnovationSpotlight();
+      loadInnovationSpotlight();   
       initContactForm();
       break;
     case 'clinical':
@@ -1461,19 +1468,32 @@ async function loadLineDetail() {
       const avatar = c.public_photo_url
         ? `<img src="${escHtml(c.public_photo_url)}" alt="${escHtml(c.full_name)}" style="width:56px;height:56px;border-radius:50%;object-fit:cover;flex-shrink:0;">`
         : `<div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#005F5F 0%,#007A7A 55%,#3D8FD6 100%);box-shadow:0 1px 2px rgba(0,40,40,.08),0 4px 14px rgba(0,95,95,.16);display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-weight:700;font-size:16px;color:rgba(255,255,255,.96);flex-shrink:0;">${escHtml(initials)}</div>`;
-      const chiefBadge = c.is_chief_of_department
-        ? `<span class="hstat-label" style="background:var(--blue-50);color:var(--navy-2);padding:.3rem .7rem;border-radius:var(--r-sm);font-size:var(--fs-label);flex-shrink:0;"><span lang="en">Department Chief</span><span lang="es">Jefe de Servicio</span></span>`
-        : c.can_be_pi
-          ? `<span class="hstat-label" style="background:var(--blue-50);color:var(--navy-2);padding:.3rem .7rem;border-radius:var(--r-sm);font-size:var(--fs-label);flex-shrink:0;"><span lang="en">Principal Investigator</span><span lang="es">IP</span></span>`
-          : '';
+
+      // Every real role this person holds gets its own badge — these are
+      // independent facts (chief, PI, and line coordinator are not
+      // mutually exclusive), not a single slot picking the "best" one.
+      // Previously an if/else-if meant a chief who was also a PI never
+      // had that second, equally true fact shown at all.
+      const roleBadges = [
+        c.is_chief_of_department ? `<span class="hstat-label" style="background:var(--blue-50);color:var(--navy-2);padding:.3rem .7rem;border-radius:var(--r-sm);font-size:var(--fs-label);"><span lang="en">Department Chief</span><span lang="es">Jefe de Servicio</span></span>` : '',
+        c.can_be_pi ? `<span class="hstat-label" style="background:var(--blue-50);color:var(--navy-2);padding:.3rem .7rem;border-radius:var(--r-sm);font-size:var(--fs-label);"><span lang="en">Principal Investigator</span><span lang="es">Investigador Principal</span></span>` : '',
+      ].filter(Boolean).join('');
+
       coordCard.innerHTML = `
-        <div style="display:flex;gap:1rem;align-items:center;padding-bottom:1.25rem;border-bottom:1px solid var(--border-l);">
-          ${avatar}
-          <div style="flex:1;min-width:0;">
-            <p style="font-weight:500;font-size:var(--fs-body-sm);margin:0;">${escHtml(c.title ? c.title + ' ' + c.full_name : c.full_name)}</p>
-            <p style="font-size:var(--fs-label);color:var(--ink-3);margin:2px 0 0;"><span lang="en">Line coordinator</span><span lang="es">Coordinador de la línea</span>${c.specialization ? ' · ' + escHtml(c.specialization) : ''}</p>
+        <div style="display:flex;flex-direction:column;gap:.5rem;padding-bottom:1.25rem;border-bottom:1px solid var(--border-l);">
+          <div style="display:flex;gap:1rem;align-items:flex-start;">
+            ${avatar}
+            <div style="flex:1;min-width:0;">
+              <p style="font-weight:500;font-size:var(--fs-body-sm);margin:0;">${escHtml(c.title ? c.title + ' ' + c.full_name : c.full_name)}</p>
+              <p style="font-size:var(--fs-label);color:var(--ink-3);margin:2px 0 0;">
+                <span lang="en">Coordinator, this line</span><span lang="es">Coordinador de esta línea</span>${c.specialization ? ' · ' + escHtml(c.specialization) : ''}
+              </p>
+              <p style="font-size:var(--fs-label);color:var(--ink-4);margin:2px 0 0;">
+                <span lang="en">Servicio de Neumología, CHUAC</span><span lang="es">Servicio de Neumología, CHUAC</span>
+              </p>
+            </div>
           </div>
-          ${chiefBadge}
+          ${roleBadges ? `<div style="display:flex;gap:.5rem;flex-wrap:wrap;padding-left:calc(56px + 1rem);">${roleBadges}</div>` : ''}
         </div>`;
       peopleSection.style.display = '';
     }
@@ -1549,14 +1569,20 @@ async function loadLineDetail() {
         const avatar = m.public_photo_url
           ? `<img src="${escHtml(m.public_photo_url)}" alt="" style="width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0;">`
           : `<div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#085041 0%,#0F6E56 55%,#185FA5 100%);display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-weight:700;font-size:14px;color:rgba(255,255,255,.96);flex-shrink:0;">${escHtml(initials)}</div>`;
-        const roleLine = m.role_on_line
-          ? escHtml(m.role_on_line)
-          : (m.is_chief_of_department ? 'Department Chief' : m.can_be_pi ? 'Principal Investigator' : (m.specialization || ''));
+        // role_on_line (their specific contribution here) and institutional
+        // roles (chief/PI, which apply regardless of this line) are
+        // independent facts — show role_on_line first if it exists, then
+        // any institutional roles as well, not as a fallback alternative.
+        const lines = [
+          m.role_on_line ? escHtml(m.role_on_line) : (m.specialization ? escHtml(m.specialization) : ''),
+          m.is_chief_of_department ? '<span lang="en">Department Chief</span><span lang="es">Jefe de Servicio</span>' : '',
+          m.can_be_pi ? '<span lang="en">Principal Investigator</span><span lang="es">Investigador Principal</span>' : '',
+        ].filter(Boolean);
         return `<div style="display:flex;align-items:center;gap:.875rem;padding:.875rem 0;${i > 0 ? 'border-top:1px solid var(--border-l);' : ''}">
           ${avatar}
           <div style="min-width:0;">
             <div style="font-size:var(--fs-body-sm);font-weight:500;">${escHtml(m.title ? m.title + ' ' + m.full_name : m.full_name)}</div>
-            ${roleLine ? `<div style="font-size:var(--fs-label);color:var(--ink-3);margin-top:1px;">${roleLine}</div>` : ''}
+            ${lines.map(l => `<div style="font-size:var(--fs-label);color:var(--ink-3);margin-top:1px;">${l}</div>`).join('')}
           </div>
         </div>`;
       }).join('');
