@@ -580,12 +580,13 @@ async function loadTeamGroup() {
     const { data } = await apiFetch('/api/team/website');
     const group = (data||[]).filter(m => !m.coordinates_line);
     if (!group.length) { grid.style.display='none'; return; }
+    window._teamGroupData = group; // for the click-to-expand profile modal
     const roleLabel = { attending_physician:'Attending Physician', medical_resident:'Resident', fellow:'Fellow', nurse_practitioner:'Nurse Practitioner', studies_coordinator:'Studies Coordinator', data_manager:'Data Manager', labtech:'Lab Technician', biomedical_engineer:'Biomedical Engineer', administrator:'Administrator' };
     grid.innerHTML = group.map(m => {
       const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
       const role = roleLabel[m.staff_type] || m.staff_type;
-      return `<div class="team-member">
-        <div class="tm-avatar">${m.public_photo_url ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:36px;height:36px;object-fit:cover;border-radius:2px;"/>` : initials}</div>
+      return `<div class="team-member" onclick="openProfileModal('${escHtml(m.id)}')" style="cursor:pointer;">
+        <div class="tm-avatar">${m.public_photo_url ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"/>` : initials}</div>
         <div style="min-width:0;">
           <div class="tm-name">${escHtml(m.display_name || m.full_name)}</div>
           <div class="tm-role">${escHtml(role)}</div>
@@ -595,6 +596,44 @@ async function loadTeamGroup() {
     }).join('');
   } catch(err) { console.error('Team group load failed:',err); if (grid) grid.innerHTML = '<p class="state-empty">Unable to load team list.</p>'; }
 }
+
+// Click-to-expand profile modal — shared by team.html's team-member cards.
+// Looks up the already-fetched record by ID rather than a second request.
+function openProfileModal(staffId) {
+  const m = (window._teamGroupData || []).find(x => x.id === staffId);
+  if (!m) return;
+  const overlay = document.getElementById('profileModalOverlay');
+  const content = document.getElementById('profileModalContent');
+  if (!overlay || !content) return;
+  const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
+  const roleLabel = { attending_physician:'Attending Physician', medical_resident:'Resident', fellow:'Fellow', nurse_practitioner:'Nurse Practitioner', studies_coordinator:'Studies Coordinator', data_manager:'Data Manager', labtech:'Lab Technician', biomedical_engineer:'Biomedical Engineer', administrator:'Administrator' };
+  const role = roleLabel[m.staff_type] || m.staff_type;
+  const avatar = m.public_photo_url
+    ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:72px;height:72px;border-radius:50%;object-fit:cover;flex-shrink:0;">`
+    : `<div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#085041 0%,#0F6E56 55%,#185FA5 100%);display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-weight:700;font-size:22px;color:rgba(255,255,255,.96);flex-shrink:0;">${escHtml(initials)}</div>`;
+  content.innerHTML = `
+    <div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:1.25rem;">
+      ${avatar}
+      <div>
+        <p style="font-weight:600;font-size:1.0625rem;margin:0;">${escHtml(m.display_name || m.full_name)}</p>
+        <p style="font-size:.875rem;color:var(--ink-3);margin:2px 0 0;">${escHtml(role)}</p>
+        ${m.specialization ? `<p style="font-size:.8125rem;color:var(--ink-4);margin:2px 0 0;font-family:var(--ff-mono);">${escHtml(m.specialization)}</p>` : ''}
+      </div>
+    </div>
+    ${m.public_bio
+      ? `<p style="font-size:.9375rem;line-height:1.65;color:var(--ink-2);margin:0;">${escHtml(m.public_bio)}</p>`
+      : `<p style="font-size:.875rem;color:var(--ink-4);font-style:italic;margin:0;border-top:1px dashed var(--border-l);padding-top:1rem;">Bio not yet added.</p>`}
+  `;
+  overlay.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closeProfileModal() {
+  const overlay = document.getElementById('profileModalOverlay');
+  if (overlay) overlay.style.display = 'none';
+  document.body.style.overflow = '';
+}
+window.openProfileModal = openProfileModal;
+window.closeProfileModal = closeProfileModal;
 
 // Legacy loadTeam() — used by clinical.html #teamGrid.
 // Excludes line coordinators — they already get a full profile card
@@ -1468,8 +1507,8 @@ async function loadLineDetail() {
       const c = line.coordinator;
       const initials = (c.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
       const avatar = c.public_photo_url
-        ? `<img src="${escHtml(c.public_photo_url)}" alt="${escHtml(c.full_name)}" style="width:56px;height:56px;border-radius:50%;object-fit:cover;flex-shrink:0;">`
-        : `<div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#005F5F 0%,#007A7A 55%,#3D8FD6 100%);box-shadow:0 1px 2px rgba(0,40,40,.08),0 4px 14px rgba(0,95,95,.16);display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-weight:700;font-size:16px;color:rgba(255,255,255,.96);flex-shrink:0;">${escHtml(initials)}</div>`;
+        ? `<div style="width:96px;height:96px;border-radius:50%;box-shadow:0 1px 2px rgba(0,40,40,.08),0 6px 20px rgba(0,95,95,.18);overflow:hidden;flex-shrink:0;"><img src="${escHtml(c.public_photo_url)}" alt="${escHtml(c.full_name)}" style="width:100%;height:100%;object-fit:cover;"></div>`
+        : `<div style="width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,#005F5F 0%,#007A7A 55%,#3D8FD6 100%);box-shadow:0 1px 2px rgba(0,40,40,.08),0 6px 20px rgba(0,95,95,.18);display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-weight:700;font-size:1.625rem;color:rgba(255,255,255,.96);flex-shrink:0;">${escHtml(initials)}</div>`;
 
       // Every real role this person holds gets its own badge — these are
       // independent facts (chief, PI, and line coordinator are not
