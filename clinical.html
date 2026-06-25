@@ -527,8 +527,11 @@ html.bar-dismissed body{padding-top:88px!important;}
     .trials-count-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:.875rem;flex-wrap:wrap;gap:.75rem;}
     .trials-count-bar span{font-size:.875rem;color:var(--text-on-light-2);font-family:var(--ff-mono);}
     .trials-count-bar strong{color:var(--teal);}
-    .trials-wrap{border:1px solid var(--mid-grey);border-radius:var(--r-lg);overflow:hidden;}
-    .trials-scroll{overflow-x:auto;}
+    .trials-wrap{border:1px solid var(--mid-grey);border-radius:var(--r-lg);overflow:hidden;position:relative;}
+    .trials-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;}
+    @media(max-width:768px){
+      .trials-wrap::after{content:'';position:absolute;top:0;right:0;bottom:0;width:24px;background:linear-gradient(to right,transparent,rgba(255,255,255,.9));pointer-events:none;}
+    }
     table.trials{width:100%;border-collapse:collapse;min-width:760px;table-layout:fixed;}
     table.trials th:nth-child(1),table.trials td:nth-child(1){width:11%;}
     table.trials th:nth-child(2),table.trials td:nth-child(2){width:27%;}
