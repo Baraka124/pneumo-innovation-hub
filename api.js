@@ -1462,6 +1462,8 @@ async function loadLineDetail() {
 
     if (loadingEl) loadingEl.style.display = 'none';
     if (heroEl) heroEl.style.display = '';
+    const collabEl = document.getElementById('lineCollabSection');
+    if (collabEl) collabEl.style.display = '';
 
     // Page title / description, since this is one template for six lines
     const titleText = `${line.short_name || line.name} | neumACt R&I`;
