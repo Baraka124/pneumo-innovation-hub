@@ -1360,6 +1360,7 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
     function setLang(l){
       if(!l||!(l==='en'||l==='es'))return;
       document.documentElement.dataset.lang=l;
+      document.documentElement.lang=l;
       try{localStorage.setItem('huac_lang',l);}catch(e){}
     }
     function selectLang(l){
@@ -1510,7 +1511,7 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
         _postIndex++;
         var numStr = String(_postIndex).padStart(2,'0');
         var thumb = p.featured_image_url
-          ? '<div class="post-article-thumb"><img src="'+esc(p.featured_image_url)+'" alt="" loading="lazy"></div>'
+          ? '<div class="post-article-thumb"><img src="'+esc(p.featured_image_url)+'" alt="'+esc(p.title||'')+'" loading="lazy"></div>'
           : '';
         el.innerHTML =
           '<div class="post-item-num">'+numStr+'</div>'+
@@ -1948,4 +1949,4 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
     <span lang="en">Understood</span><span lang="es">Entendido</span>
   </button>
 </div>
-<script>if(!localStorage.getItem('cookieOk')){var c=document.getElementById('cookieBanner');if(c)c.style.display='flex';}</script>  
+<script>if(!localStorage.getItem('cookieOk')){var c=document.getElementById('cookieBanner');if(c)c.style.display='flex';}</script>
