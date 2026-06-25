@@ -508,7 +508,7 @@ async function loadTeamLeads() {
       const expertise = _getExpertise(m.id);
       const isAffiliated = m.is_external;
       const avatarArea = m.public_photo_url
-        ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:100%;height:100%;object-fit:cover;"/>`
+        ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:100%;height:100%;object-fit:cover;" loading="lazy"/>`
         : `<span class="lead-initials">${initials}</span>`;
 
       // Research-focus tags only — role/seniority (Chief, PI) moved to the
@@ -586,7 +586,7 @@ async function loadTeamGroup() {
       const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
       const role = roleLabel[m.staff_type] || m.staff_type;
       return `<div class="team-member" onclick="openProfileModal('${escHtml(m.id)}')" style="cursor:pointer;">
-        <div class="tm-avatar">${m.public_photo_url ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"/>` : initials}</div>
+        <div class="tm-avatar">${m.public_photo_url ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" loading="lazy"/>` : initials}</div>
         <div style="min-width:0;">
           <div class="tm-name">${escHtml(m.display_name || m.full_name)}</div>
           <div class="tm-role">${escHtml(role)}</div>
@@ -609,7 +609,7 @@ function openProfileModal(staffId) {
   const roleLabel = { attending_physician:'Attending Physician', medical_resident:'Resident', fellow:'Fellow', nurse_practitioner:'Nurse Practitioner', studies_coordinator:'Studies Coordinator', data_manager:'Data Manager', labtech:'Lab Technician', biomedical_engineer:'Biomedical Engineer', administrator:'Administrator' };
   const role = roleLabel[m.staff_type] || m.staff_type;
   const avatar = m.public_photo_url
-    ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:72px;height:72px;border-radius:50%;object-fit:cover;flex-shrink:0;">`
+    ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:72px;height:72px;border-radius:50%;object-fit:cover;flex-shrink:0;" loading="lazy">`
     : `<div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#085041 0%,#0F6E56 55%,#185FA5 100%);display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-weight:700;font-size:22px;color:rgba(255,255,255,.96);flex-shrink:0;">${escHtml(initials)}</div>`;
   content.innerHTML = `
     <div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:1.25rem;">
@@ -652,7 +652,7 @@ async function loadTeam() {
       const lineTag = m.coordinates_line ? `<span class="tca-line">L${String(m.coordinates_line.line_number).padStart(2,'0')} — ${escHtml(m.coordinates_line.name)}</span>` : '';
       const affiliTag = m.is_external ? `<span class="tca-affil">${escHtml(m.primary_dept_name||'Affiliated')}</span>` : '';
       return `<div class="team-card-api">
-        <div class="tca-avatar">${m.public_photo_url ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:40px;height:40px;object-fit:cover;border-radius:3px;">` : initials}</div>
+        <div class="tca-avatar">${m.public_photo_url ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:40px;height:40px;object-fit:cover;border-radius:3px;" loading="lazy">` : initials}</div>
         <div style="flex:1;min-width:0;">
           <div class="tca-name">${escHtml(m.display_name || m.full_name)}</div>
           ${m.specialization ? `<div class="tca-spec">${escHtml(m.specialization)}</div>` : ''}
@@ -940,6 +940,24 @@ document.addEventListener('keydown', function(e) {
 });
 // ─────────────────────────────────────────────
 
+// Shows a brief, visible validation message above the submit button —
+// previously a missing name/email silently did nothing at all, since
+// novalidate suppressed the browser's own warning and there was no
+// fallback message of any kind.
+function showFormError(form, text) {
+  let el = form.querySelector('.form-error-msg');
+  if (!el) {
+    el = document.createElement('div');
+    el.className = 'form-error-msg';
+    el.style.cssText = 'padding:.625rem .875rem;margin-top:.75rem;border-radius:6px;background:rgba(220,38,38,.08);border:1px solid rgba(220,38,38,.25);color:#b91c1c;font-size:.8125rem;';
+    const submitBtn = form.querySelector('button[type="submit"]');
+    if (submitBtn) submitBtn.insertAdjacentElement('beforebegin', el);
+    else form.appendChild(el);
+  }
+  el.textContent = text;
+  el.style.display = '';
+}
+
 function initContactForm() {
   // Different pages use different form ids (index uses 'contactForm',
   // clinical uses 'researchForm', innovation uses 'innovForm') — check all of them.
@@ -947,6 +965,17 @@ function initContactForm() {
             || document.getElementById('researchForm')
             || document.getElementById('innovForm');
   if (!form) return;
+
+  // Pre-fill context when arriving from a specific line.html page's
+  // "Get in touch" link, instead of every line funneling to the exact
+  // same blank, generic form with no record of which line prompted it.
+  const lineParam = new URLSearchParams(window.location.search).get('line');
+  if (lineParam) {
+    const msgField = form.querySelector('[name="message"]');
+    if (msgField && !msgField.value) {
+      msgField.value = `Regarding: ${lineParam}\n\n`;
+    }
+  }
 
   form.addEventListener('submit', async function(e) {
     e.preventDefault();
@@ -981,7 +1010,10 @@ function initContactForm() {
       message:          message
     };
 
-    if (!payload.name || !payload.email) return;
+    if (!payload.name || !payload.email) {
+      showFormError(form, 'Please fill in your name and email before sending.');
+      return;
+    }
 
     // Loading state
     if (btn) {
@@ -1378,6 +1410,16 @@ async function loadInnovationSpotlight() {
     const spotlightPool = (featuredPool.length ? featuredPool : projects).slice(0, 4);
     let activeSpotlightIdx = 0;
 
+    // Real count for the homepage "Partnering with us" section — built
+    // from data already fetched here rather than a second request.
+    const seekingCount = projects.filter(p => p.partner_found === false).length;
+    const seekingEl = document.getElementById('seekingPartnerCount');
+    if (seekingEl) {
+      seekingEl.innerHTML = seekingCount > 0
+        ? `<span lang="en">${seekingCount} open innovation project${seekingCount === 1 ? '' : 's'}</span><span lang="es">${seekingCount} proyecto${seekingCount === 1 ? '' : 's'} de innovación abierto${seekingCount === 1 ? '' : 's'}</span>`
+        : `<span lang="en">Open innovation projects</span><span lang="es">Proyectos de innovación abiertos</span>`;
+    }
+
     function renderSpotlight() {
       const p = spotlightPool[activeSpotlightIdx];
       const stageLabel = STAGE_LABEL[p.current_stage] || STAGE_LABEL[p.development_stage] || p.current_stage || '';
@@ -1473,6 +1515,23 @@ async function loadLineDetail() {
     const descTag = document.getElementById('pageDescription');
     if (descTag && line.description) descTag.setAttribute('content', line.description);
 
+    // Canonical + JSON-LD — previously static and identical across all six
+    // line pages, which tells search engines to treat five of the six as
+    // duplicates of whichever one they happened to crawl first.
+    const canonicalTag = document.getElementById('canonicalLink');
+    if (canonicalTag) canonicalTag.setAttribute('href', `https://neumact.org/line.html?id=${lineId}`);
+    const jsonLdTag = document.getElementById('lineJsonLd');
+    if (jsonLdTag) {
+      jsonLdTag.textContent = JSON.stringify({
+        '@context': 'https://schema.org', '@type': 'WebPage',
+        name: titleText,
+        description: line.description || `Research line ${line.line_number} at neumACt R&I.`,
+        isPartOf: { '@type': 'WebSite', url: 'https://neumact.org', name: 'neumACt R&I' }
+      });
+    }
+    const collabLink = document.getElementById('lineCollabLink');
+    if (collabLink) collabLink.setAttribute('href', `index.html?line=${encodeURIComponent(line.short_name || line.name)}#contact`);
+
     // Hero
     const eyebrowEl = document.getElementById('lineEyebrow');
     if (eyebrowEl) {
@@ -1509,7 +1568,7 @@ async function loadLineDetail() {
       const c = line.coordinator;
       const initials = (c.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
       const avatar = c.public_photo_url
-        ? `<div style="width:96px;height:96px;border-radius:50%;box-shadow:0 1px 2px rgba(0,40,40,.08),0 6px 20px rgba(0,95,95,.18);overflow:hidden;flex-shrink:0;"><img src="${escHtml(c.public_photo_url)}" alt="${escHtml(c.full_name)}" style="width:100%;height:100%;object-fit:cover;"></div>`
+        ? `<div style="width:96px;height:96px;border-radius:50%;box-shadow:0 1px 2px rgba(0,40,40,.08),0 6px 20px rgba(0,95,95,.18);overflow:hidden;flex-shrink:0;"><img src="${escHtml(c.public_photo_url)}" alt="${escHtml(c.full_name)}" style="width:100%;height:100%;object-fit:cover;" loading="lazy"></div>`
         : `<div style="width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,#005F5F 0%,#007A7A 55%,#3D8FD6 100%);box-shadow:0 1px 2px rgba(0,40,40,.08),0 6px 20px rgba(0,95,95,.18);display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-weight:700;font-size:1.625rem;color:rgba(255,255,255,.96);flex-shrink:0;">${escHtml(initials)}</div>`;
 
       // Every real role this person holds gets its own badge — these are
@@ -1643,7 +1702,7 @@ async function loadLineDetail() {
       teamChips.innerHTML = teamWithoutCoordinator.map((m, i) => {
         const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
         const avatarInner = m.public_photo_url
-          ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:100%;height:100%;object-fit:cover;">`
+          ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:100%;height:100%;object-fit:cover;" loading="lazy">`
           : escHtml(initials);
         const avatarStyle = m.public_photo_url ? '' : 'background:linear-gradient(135deg,#085041 0%,#0F6E56 55%,#185FA5 100%);';
         const detailId = `lineTeamDetail-${i}`;
