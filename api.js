@@ -1518,10 +1518,10 @@ async function loadLineDetail() {
       // Previously an if/else-if meant a chief who was also a PI never
       // had that second, equally true fact shown at all.
       const roleBadges = [
-        c.is_chief_of_department ? `<span class="hstat-label" style="background:var(--blue-50);color:var(--navy-2);padding:.3rem .7rem;border-radius:var(--r-sm);font-size:var(--fs-label);"><span lang="en">Department Chief</span><span lang="es">Jefe de Servicio</span></span>` : '',
+        c.is_chief_of_department ? `<span class="role-badge" style="background:var(--blue-50);color:var(--navy-2);padding:.3rem .7rem;border-radius:var(--r-sm);font-size:var(--fs-label);"><span lang="en">Department Chief</span><span lang="es">Jefe de Servicio</span></span>` : '',
         c.id === 'c290a7e5-7bea-4652-a0ef-251fbc73184d'
-          ? `<span class="hstat-label" style="background:var(--blue-50);color:var(--navy-2);padding:.3rem .7rem;border-radius:var(--r-sm);font-size:var(--fs-label);"><span lang="en">Principal Investigator, neumACt</span><span lang="es">Investigador Principal, neumACt</span></span>`
-          : (c.can_be_pi ? `<span class="hstat-label" style="background:var(--blue-50);color:var(--navy-2);padding:.3rem .7rem;border-radius:var(--r-sm);font-size:var(--fs-label);"><span lang="en">Principal Investigator</span><span lang="es">Investigador Principal</span></span>` : ''),
+          ? `<span class="role-badge" style="background:var(--blue-50);color:var(--navy-2);padding:.3rem .7rem;border-radius:var(--r-sm);font-size:var(--fs-label);"><span lang="en">Principal Investigator, neumACt</span><span lang="es">Investigador Principal, neumACt</span></span>`
+          : (c.can_be_pi ? `<span class="role-badge" style="background:var(--blue-50);color:var(--navy-2);padding:.3rem .7rem;border-radius:var(--r-sm);font-size:var(--fs-label);"><span lang="en">Principal Investigator</span><span lang="es">Investigador Principal</span></span>` : ''),
       ].filter(Boolean).join('');
 
       coordCard.innerHTML = `
@@ -1634,24 +1634,47 @@ async function loadLineDetail() {
     const teamChips = document.getElementById('lineTeamChips');
     if (line.team && line.team.length && peopleSection && teamChips) {
       const teamWithoutCoordinator = line.team.filter(m => m.id !== line.coordinator?.id);
-      teamChips.innerHTML = teamWithoutCoordinator.map((m) => {
+      const roleTextFor = (m) => m.role_on_line ? escHtml(m.role_on_line)
+        : m.is_chief_of_department ? '<span lang="en">Department Chief</span><span lang="es">Jefe de Servicio</span>'
+        : m.id === 'c290a7e5-7bea-4652-a0ef-251fbc73184d' ? '<span lang="en">Principal Investigator, neumACt</span><span lang="es">Investigador Principal, neumACt</span>'
+        : m.can_be_pi ? '<span lang="en">Principal Investigator</span><span lang="es">Investigador Principal</span>'
+        : (m.specialization ? escHtml(m.specialization) : '');
+
+      if (teamWithoutCoordinator.length === 1) {
+        // A single team member in the photo-grid tile design looks
+        // orphaned — a narrow card alone in a sea of empty grid space.
+        // The same compact row used for the coordinator reads as a
+        // complete, intentional entry instead.
+        const m = teamWithoutCoordinator[0];
         const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
-        const photoFill = m.public_photo_url
-          ? `style="background-image:url('${escHtml(m.public_photo_url)}');background-size:cover;background-position:center;"`
-          : `style="background:linear-gradient(135deg,#085041 0%,#0F6E56 55%,#185FA5 100%);"`;
-        const roleText = m.role_on_line ? escHtml(m.role_on_line)
-          : m.is_chief_of_department ? '<span lang="en">Department Chief</span><span lang="es">Jefe de Servicio</span>'
-          : m.id === 'c290a7e5-7bea-4652-a0ef-251fbc73184d' ? '<span lang="en">Principal Investigator, neumACt</span><span lang="es">Investigador Principal, neumACt</span>'
-          : m.can_be_pi ? '<span lang="en">Principal Investigator</span><span lang="es">Investigador Principal</span>'
-          : (m.specialization ? escHtml(m.specialization) : '');
-        return `<div class="line-team-card" ${photoFill}>
-          ${!m.public_photo_url ? `<span class="line-team-initials">${escHtml(initials)}</span>` : ''}
-          <div class="line-team-overlay">
-            <p class="line-team-name">${escHtml(m.title ? m.title + ' ' + m.full_name : m.full_name)}</p>
-            ${roleText ? `<p class="line-team-role">${roleText}</p>` : ''}
+        const avatar = m.public_photo_url
+          ? `<div style="width:64px;height:64px;border-radius:50%;box-shadow:0 1px 2px rgba(0,40,40,.08),0 4px 14px rgba(0,95,95,.16);overflow:hidden;flex-shrink:0;"><img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:100%;height:100%;object-fit:cover;"></div>`
+          : `<div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#085041 0%,#0F6E56 55%,#185FA5 100%);box-shadow:0 1px 2px rgba(0,40,40,.08),0 4px 14px rgba(0,95,95,.16);display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-weight:700;font-size:1.125rem;color:rgba(255,255,255,.96);flex-shrink:0;">${escHtml(initials)}</div>`;
+        teamChips.innerHTML = `<div style="display:flex;gap:1rem;align-items:center;">
+          ${avatar}
+          <div>
+            <p style="font-weight:500;font-size:var(--fs-body-sm);margin:0;">${escHtml(m.title ? m.title + ' ' + m.full_name : m.full_name)}</p>
+            ${roleTextFor(m) ? `<p style="font-size:var(--fs-label);color:var(--ink-3);margin:2px 0 0;">${roleTextFor(m)}</p>` : ''}
           </div>
         </div>`;
-      }).join('');
+        teamChips.style.display = '';
+      } else {
+        teamChips.style.display = 'grid';
+        teamChips.innerHTML = teamWithoutCoordinator.map((m) => {
+          const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
+          const photoFill = m.public_photo_url
+            ? `style="background-image:url('${escHtml(m.public_photo_url)}');background-size:cover;background-position:center;"`
+            : `style="background:linear-gradient(135deg,#085041 0%,#0F6E56 55%,#185FA5 100%);"`;
+          const roleText = roleTextFor(m);
+          return `<div class="line-team-card" ${photoFill}>
+            ${!m.public_photo_url ? `<span class="line-team-initials">${escHtml(initials)}</span>` : ''}
+            <div class="line-team-overlay">
+              <p class="line-team-name">${escHtml(m.title ? m.title + ' ' + m.full_name : m.full_name)}</p>
+              ${roleText ? `<p class="line-team-role">${roleText}</p>` : ''}
+            </div>
+          </div>`;
+        }).join('');
+      }
       peopleSection.style.display = '';
     }
 
