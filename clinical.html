@@ -1569,76 +1569,9 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
     </div>
   </section>
 
-  <!-- TEAM -->
-  <section class="section team-bg" id="team">
-    <div class="container">
-      <div class="sec-head reveal">
-        <p class="eyebrow"><span lang="en">Research Coordinators</span><span lang="es">Coordinadores de Investigación</span></p>
-        <h2 class="display lg" style="letter-spacing:-.025em;"><span lang="en">Physician-investigators</span><span lang="es">Investigadores</span></h2>
-        <p><span lang="en">Each research line is directed by a clinician-scientist with extensive clinical study experience — your primary contact for collaboration discussions within their domain.</span><span lang="es">Cada línea está dirigida por un médico-científico con amplia experiencia en ensayos, su contacto principal para discusiones de colaboración.</span></p>
-      </div>
-      <!-- TEAM GRID — populated by api.js loadTeam() from /api/team/website -->
-      <div id="teamGrid">
-      <!-- Real fallback: calm skeleton, not 6 cards of real names/bios
-           that could go stale if the API call fails. loadTeam() replaces
-           this on success; setError() handles genuine failures. -->
-      <div class="team-card">
-        <div class="api-skeleton" style="width:48px;height:48px;border-radius:50%;margin-bottom:.75rem;"></div>
-        <div class="team-body">
-          <div class="api-skeleton" style="width:65%;height:15px;margin-bottom:8px;"></div>
-          <div class="api-skeleton" style="width:45%;height:11px;margin-bottom:10px;"></div>
-          <div class="api-skeleton" style="width:100%;height:11px;margin-bottom:5px;"></div>
-          <div class="api-skeleton" style="width:80%;height:11px;"></div>
-        </div>
-      </div>
-      <div class="team-card">
-        <div class="api-skeleton" style="width:48px;height:48px;border-radius:50%;margin-bottom:.75rem;"></div>
-        <div class="team-body">
-          <div class="api-skeleton" style="width:65%;height:15px;margin-bottom:8px;"></div>
-          <div class="api-skeleton" style="width:45%;height:11px;margin-bottom:10px;"></div>
-          <div class="api-skeleton" style="width:100%;height:11px;margin-bottom:5px;"></div>
-          <div class="api-skeleton" style="width:80%;height:11px;"></div>
-        </div>
-      </div>
-      <div class="team-card">
-        <div class="api-skeleton" style="width:48px;height:48px;border-radius:50%;margin-bottom:.75rem;"></div>
-        <div class="team-body">
-          <div class="api-skeleton" style="width:65%;height:15px;margin-bottom:8px;"></div>
-          <div class="api-skeleton" style="width:45%;height:11px;margin-bottom:10px;"></div>
-          <div class="api-skeleton" style="width:100%;height:11px;margin-bottom:5px;"></div>
-          <div class="api-skeleton" style="width:80%;height:11px;"></div>
-        </div>
-      </div>
-      <div class="team-card">
-        <div class="api-skeleton" style="width:48px;height:48px;border-radius:50%;margin-bottom:.75rem;"></div>
-        <div class="team-body">
-          <div class="api-skeleton" style="width:65%;height:15px;margin-bottom:8px;"></div>
-          <div class="api-skeleton" style="width:45%;height:11px;margin-bottom:10px;"></div>
-          <div class="api-skeleton" style="width:100%;height:11px;margin-bottom:5px;"></div>
-          <div class="api-skeleton" style="width:80%;height:11px;"></div>
-        </div>
-      </div>
-      <div class="team-card">
-        <div class="api-skeleton" style="width:48px;height:48px;border-radius:50%;margin-bottom:.75rem;"></div>
-        <div class="team-body">
-          <div class="api-skeleton" style="width:65%;height:15px;margin-bottom:8px;"></div>
-          <div class="api-skeleton" style="width:45%;height:11px;margin-bottom:10px;"></div>
-          <div class="api-skeleton" style="width:100%;height:11px;margin-bottom:5px;"></div>
-          <div class="api-skeleton" style="width:80%;height:11px;"></div>
-        </div>
-      </div>
-      <div class="team-card">
-        <div class="api-skeleton" style="width:48px;height:48px;border-radius:50%;margin-bottom:.75rem;"></div>
-        <div class="team-body">
-          <div class="api-skeleton" style="width:65%;height:15px;margin-bottom:8px;"></div>
-          <div class="api-skeleton" style="width:45%;height:11px;margin-bottom:10px;"></div>
-          <div class="api-skeleton" style="width:100%;height:11px;margin-bottom:5px;"></div>
-          <div class="api-skeleton" style="width:80%;height:11px;"></div>
-        </div>
-      </div>
-      </div>
-      </div>
-  </section>
+  <!-- Section removed: duplicated the same coordinator names/specializations
+       already shown properly on team.html and on each coordinator's own
+       line.html hero. No unique value here, only repetition. -->
 
   <!-- TRIAL DETAIL MODAL -->
   <div id="trialModal" style="display:none;position:fixed;inset:0;z-index:2000;align-items:center;justify-content:center;padding:1rem;">
@@ -1967,4 +1900,4 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
     <span lang="en">Understood</span><span lang="es">Entendido</span>
   </button>
 </div>
-<script>if(!localStorage.getItem('cookieOk')){var c=document.getElementById('cookieBanner');if(c)c.style.display='flex';}</script>  
+<script>if(!localStorage.getItem('cookieOk')){var c=document.getElementById('cookieBanner');if(c)c.style.display='flex';}</script>
