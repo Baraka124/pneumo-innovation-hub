@@ -381,6 +381,8 @@ html.bar-dismissed body{padding-top:88px!important;}
 
     /* ── HERO ── */
     .hero{background:var(--navy-2);border-bottom:1px solid var(--rule-d);position:relative;overflow:hidden;padding:5rem 0 0;}
+    .hero-text-link{font-size:.9375rem;font-weight:500;color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.35);padding-bottom:2px;transition:border-color .15s,color .15s;}
+    .hero-text-link:hover{border-color:#fff;color:var(--teal-2);}
     .hero .eyebrow{color:rgba(255,255,255,.65);}
     .hero::before{content:'';position:absolute;inset:0;}
     .hero::after{content:'';position:absolute;width:500px;height:500px;background:radial-gradient(circle,var(--teal-dim) 0%,transparent 70%);top:-150px;right:-100px;pointer-events:none;}
@@ -1366,6 +1368,24 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
   </div>
 </section>
 
+<section style="background:var(--navy-2);padding:4rem 0;display:none;" id="lineCollabSection">
+  <div class="wrap" style="max-width:1100px;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem);display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;">
+    <div style="max-width:560px;">
+      <p style="font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.5);margin:0 0 .75rem;">
+        <span lang="en">Collaborate</span><span lang="es">Colaborar</span>
+      </p>
+      <h2 style="font-family:var(--ff-display);font-size:clamp(1.5rem,3vw,2rem);font-weight:500;color:#fff;margin:0 0 .75rem;line-height:1.2;">
+        <span lang="en">Interested in this line's work?</span><span lang="es">¿Te interesa el trabajo de esta línea?</span>
+      </h2>
+      <p style="font-size:.9375rem;color:rgba(255,255,255,.65);margin:0;line-height:1.6;">
+        <span lang="en">Reach out for collaboration, referrals, or to discuss an active study.</span><span lang="es">Contacta para colaboración, derivaciones, o para hablar sobre un estudio activo.</span>
+      </p>
+    </div>
+    <a href="index.html#contact" class="hero-text-link" style="flex-shrink:0;">
+      <span lang="en">Get in touch</span><span lang="es">Contactar</span> →
+    </a>
+  </div>
+</section>
 
 <footer class="site-footer">
   <div class="footer-grid">
