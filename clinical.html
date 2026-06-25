@@ -1161,6 +1161,11 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
   body{background:#fff!important;color:#000!important;font-size:11pt;padding-top:0!important;}
   a[href]::after{content:" ("attr(href)")";font-size:8pt;color:#555;}
   a[href^="#"]::after,a[href^="javascript"]::after{content:"";}
+  /* A printed page can't scroll — min-width:760px on the trials table
+     would otherwise silently clip the Sponsor column off the right edge
+     of the paper instead of wrapping or shrinking to fit. */
+  table.trials{min-width:0!important;table-layout:auto!important;font-size:8pt;}
+  .trials-scroll{overflow-x:visible!important;}
 }
 
 
@@ -1640,7 +1645,7 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
           <div class="form-body" id="clinBody">
             <div class="form-card dark" style="margin-top:.75rem;">
           <h3 class="display sm" style="margin-bottom:1.375rem;"><span lang="en">Send a message</span><span lang="es">Enviar un mensaje</span></h3>
-          <form id="researchForm" novalidate>
+          <form id="researchForm">
             <div class="form-grid">
               <div class="form-group"><label><span lang="en">Organisation</span><span lang="es">Organización</span></label><input type="text" name="organisation" placeholder="Pharma Corp, University…" required /></div>
               <div class="form-group"><label><span lang="en">Your Name</span><span lang="es">Su Nombre</span></label><input type="text" name="contact_name" placeholder="Full name" required /></div>
@@ -1816,6 +1821,7 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
     function setLang(l){
       if(!l||!(l==='en'||l==='es'))return;
       document.documentElement.dataset.lang=l;
+      document.documentElement.lang=l;
       try{localStorage.setItem('huac_lang',l);}catch(e){}
     }
     function selectLang(l){
@@ -1903,4 +1909,4 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
     <span lang="en">Understood</span><span lang="es">Entendido</span>
   </button>
 </div>
-<script>if(!localStorage.getItem('cookieOk')){var c=document.getElementById('cookieBanner');if(c)c.style.display='flex';}</script>
+<script>if(!localStorage.getItem('cookieOk')){var c=document.getElementById('cookieBanner');if(c)c.style.display='flex';}</script>  
