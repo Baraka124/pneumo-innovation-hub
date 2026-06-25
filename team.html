@@ -1108,7 +1108,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeMob();
 var _lsw=document.getElementById('langSw'),_lbt=document.getElementById('langBtn'),_lbl=document.getElementById('langLabel');
 function openLang(){if(!_lsw)return;_lsw.classList.add('open');if(_lbt)_lbt.setAttribute('aria-expanded','true');}
 function closeLang(){if(!_lsw)return;_lsw.classList.remove('open');if(_lbt)_lbt.setAttribute('aria-expanded','false');}
-function setLang(l){if(l!=='en'&&l!=='es')return;document.documentElement.dataset.lang=l;try{localStorage.setItem('huac_lang',l);}catch(e){}}
+function setLang(l){if(l!=='en'&&l!=='es')return;document.documentElement.dataset.lang=l;document.documentElement.lang=l;try{localStorage.setItem('huac_lang',l);}catch(e){}}
 function selectLang(l){
   setLang(l);
   document.querySelectorAll('.lang-opt').forEach(function(o){var a=o.dataset.lang===l;o.classList.toggle('active',a);o.setAttribute('aria-selected',String(a));});
