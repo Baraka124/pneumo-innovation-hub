@@ -9,7 +9,7 @@
     <link rel="alternate" hreflang="es" href="https://neumact.org/line.html"/>
   <link rel="alternate" hreflang="en" href="https://neumact.org/line.html"/>
   <link rel="alternate" hreflang="x-default" href="https://neumact.org/line.html"/>
-  <link rel="canonical" href="https://neumact.org/line.html"/>
+  <link rel="canonical" href="https://neumact.org/line.html" id="canonicalLink"/>
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="neumACt R&I"/> 
   <meta property="og:url" content="https://neumact.org/line.html"/>
@@ -1275,7 +1275,7 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
     .btn-text:hover{color:#006666;border-bottom-color:rgba(0,102,102,.5);}
   </style>
 
-<script type="application/ld+json">
+<script type="application/ld+json" id="lineJsonLd">
 {"@context":"https://schema.org","@type":"WebPage","name":"neumACt R&I — Research","description":"Clinical research programme — six active lines covering transplantation, airway disease, interventional pneumology, critical care, thoracic surgery, and precision medicine.","isPartOf":{"@type":"WebSite","url":"https://neumact.org","name":"neumACt R&I"}}
 </script>
 </head>
@@ -1385,7 +1385,7 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
         <span lang="en">Reach out for collaboration, referrals, or to discuss an active study.</span><span lang="es">Contacta para colaboración, derivaciones, o para hablar sobre un estudio activo.</span>
       </p>
     </div>
-    <a href="index.html#contact" class="hero-text-link" style="flex-shrink:0;">
+    <a href="index.html#contact" class="hero-text-link" style="flex-shrink:0;" id="lineCollabLink">
       <span lang="en">Get in touch</span><span lang="es">Contactar</span> →
     </a>
   </div>
@@ -1502,6 +1502,7 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
     function setLang(l){
       if(!l||!(l==='en'||l==='es'))return;
       document.documentElement.dataset.lang=l;
+      document.documentElement.lang=l;
       try{localStorage.setItem('huac_lang',l);}catch(e){}
     }
     function selectLang(l){
@@ -1589,4 +1590,4 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
     <span lang="en">Understood</span><span lang="es">Entendido</span>
   </button>
 </div>
-<script>if(!localStorage.getItem('cookieOk')){var c=document.getElementById('cookieBanner');if(c)c.style.display='flex';}</script>  
+<script>if(!localStorage.getItem('cookieOk')){var c=document.getElementById('cookieBanner');if(c)c.style.display='flex';}</script> 
