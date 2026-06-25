@@ -1,1592 +1,1699 @@
-<!DOCTYPE html>  
-<html lang="en" data-lang="en">          
-<head>
-  <script>try{var _l=localStorage.getItem('huac_lang');if(_l&&(_l==='en'||_l==='es'))document.documentElement.dataset.lang=_l;}catch(e){}</script>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-  <title id="pageTitle">Research line | neumACt R&I · CHUAC · INIBIC</title>
-  <meta name="description" id="pageDescription" content="A specialist research line at the Servicio de Neumología, CHUAC — coordinator, active trials, and team." />
-    <link rel="alternate" hreflang="es" href="https://neumact.org/line.html"/>
-  <link rel="alternate" hreflang="en" href="https://neumact.org/line.html"/>
-  <link rel="alternate" hreflang="x-default" href="https://neumact.org/line.html"/>
-  <link rel="canonical" href="https://neumact.org/line.html"/>
-  <meta property="og:type" content="website"/>
-  <meta property="og:site_name" content="neumACt R&I"/> 
-  <meta property="og:url" content="https://neumact.org/line.html"/>
-  <meta property="og:title" content="Research line | neumACt R&I"/>
-  <meta property="og:description" content="A specialist research line at the Servicio de Neumología, CHUAC."/>
-  <meta property="og:image" content="https://neumact.org/og-clinical.jpg"/>
-  <meta name="twitter:card" content="summary_large_image"/>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <style>
+/**
+ * neumAC R&I — Website Data Layer
+ * api.js — shared script loaded by all pages
+ *  
+ * Architecture:
+ *   Website → Railway backend (public endpoints, no auth)
+ *   App     → Railway backend (authenticated endpoints)
+ *   Both    → same Supabase DB (one source of truth)
+ *
+ * Public endpoints:
+ *   GET /api/research-lines/website
+ *   GET /api/clinical-trials/website?line=&phase=&status=&search= 
+ *   GET /api/innovation-projects/website
+ *   GET /api/news/website?type=&line=
+ */
 
-/* View trial / View project links — stronger resting state */
-.opp-link{
-  color:#006666!important;
-  font-weight:600!important;
-  border-bottom:1.5px solid rgba(0,102,102,.4)!important;
-}
-.opp-link:hover{
-  color:#004d4d!important;
-  border-bottom-color:rgba(0,77,77,.6)!important;
+const API_BASE = 'https://neumac-manage-back-end-production.up.railway.app';
+
+// ─────────────────────────────────────────────
+// HELPERS
+// ─────────────────────────────────────────────
+
+async function apiFetch(path) {
+  const res = await fetch(`${API_BASE}${path}`);
+  if (!res.ok) throw new Error(`API ${res.status}: ${path}`);
+  return res.json();
 }
 
-/* 1,000 lung transplant milestone — celebratory but restrained */
-.milestone-num{
-  color:#E8B84B!important;
-  -webkit-text-fill-color:#E8B84B!important;
-  position:relative;
-}
-.milestone-label{
-  color:rgba(232,184,75,.75)!important;
-}
-
-
-.trials tbody tr:hover td{background:rgba(0,122,122,.025)!important;}
-
-
-body{padding-top:88px;}
-@media(max-width:860px){body{padding-top:72px;}}
-html.bar-dismissed body{padding-top:88px;}
-@media(max-width:860px){html.bar-dismissed body{padding-top:72px;}}
-
-.paths-section .btn-text,.hero .btn-text,.contact-bg .btn-text,.team-bg .btn-text,
-.partner-bg .btn-text,.focus-bg .btn-text,section[id] .btn-text:not(.on-dark)
-{color: rgba(0,200,200,.9) !important;border-bottom-color: rgba(0,179,179,.3) !important;}
-.paths-section .btn-text:hover,.hero .btn-text:hover,.contact-bg .btn-text:hover,
-.team-bg .btn-text:hover,.partner-bg .btn-text:hover,.focus-bg .btn-text:hover
-{color: #00e0e0 !important;border-bottom-color: rgba(0,224,224,.5) !important;}
-
-/* Everything else removed here — fully superseded by the "DARK BG"
-   block below. The boxed-cell .hero-stats/.hstat here was the old stat
-   design; no markup in this file even uses it. story-typographic-journal
-   kept; it's not duplicated below. */
-.story-typographic-journal{font-family:var(--ff-display,'Fraunces',serif)!important;font-style:italic!important;font-size:.8125rem!important;font-weight:500!important;letter-spacing:0!important;text-transform:none!important;color:rgba(255,255,255,.92)!important;background:none!important;border:none!important;border-radius:0!important;padding:0 0 .5rem 0!important;margin-bottom:.65rem!important;display:inline-block!important;position:relative;z-index:1;}
-.story-typographic-journal::after{content:'';position:absolute;bottom:0;left:0;width:28px;height:1.5px;background:var(--teal-2,#00B3B3);}
-
-
-
-/* DARK BG — all headings white */
-.hero h1,.hero h2,.hero h3,.hero .display,.hero .display-xl,.hero .display-lg,.hero .display-md,.hero .display-sm,
-.contact-bg h1,.contact-bg h2,.contact-bg h3,.contact-bg .display,.contact-bg .display-lg,.contact-bg .display-md,.contact-bg .display-xl,
-.team-bg h1,.team-bg h2,.team-bg h3,.team-bg .display,
-.partner-bg h1,.partner-bg h2,.partner-bg h3,.partner-bg .display,
-.paths-section h2,.paths-section .display,
-.focus-bg h2,.focus-bg .display,
-.blog-hero h1,.blog-hero h2,.blog-hero .display
-{color:#fff!important;}
-
-/* DARK BG — body text readable */
-.contact-bg p,.contact-bg .sec-head p,.team-bg p,.partner-bg p,.paths-section p,.focus-bg p,.blog-hero p,.hero .hero-desc
-{color:rgba(255,255,255,.8)!important;}
-
-/* DARK BG — secondary minimum .65 */
-.contact-bg .label,.team-bg .label,.partner-bg .label
-{color:rgba(0,153,153,.9)!important;}
-.hero-cred,.team-role,.team-bio,.team-line-tag,.cinfo-label,.hstat-label,.footer-col ul a,.footer-col address
-{color:rgba(255,255,255,.72)!important;}
-.cinfo-value{color:rgba(255,255,255,.9)!important;}
-
-/* LIGHT BG — headings dark */
-.lines-bg h2,.lines-bg .display,.trials-bg h2,.trials-bg .display,.pipeline-bg h2,.pipeline-bg .display,.projects-bg h2,.projects-bg .display,.cap-bg h2,.cap-bg .display,.partners-strip h2,.partners-strip .display
-{color:var(--ink,#1A1A1A)!important;}
-.lines-bg p,.lines-bg .sec-head p,.trials-bg p,.trials-bg .sec-head p,.pipeline-bg p,.projects-bg p,.cap-bg p
-{color:var(--text-on-light-2,#404040)!important;}
-.lines-bg .eyebrow,.lines-bg .label,.trials-bg .label,.trials-bg .eyebrow,.pipeline-bg .label,.projects-bg .label
-{color:var(--accent,#009999)!important;}
-
-/* STATS — pure white */
-.hstat-num,.stat-num,.hstrip-num,.pstat-num,.blog-hero-stat-n
-{color:#fff!important;-webkit-text-fill-color:#fff!important;background:none!important;-webkit-background-clip:unset!important;background-clip:unset!important;}
-.hstat-num sub{color:#009999!important;-webkit-text-fill-color:#009999!important;}
-.hstat-label{color:rgba(255,255,255,.72)!important;}
-
-/* STATS — compact 2-col */
-
-/* LOGO */
-.hdr-logo-img{filter:brightness(0) invert(1)!important;opacity:.9!important;}
-.footer-logo-img{filter:brightness(0) invert(1)!important;opacity:.8!important;height:36px!important;width:auto!important;}
-
-/* AFFIL PLACEHOLDERS */
-.affil-section{background:rgba(255,255,255,.025);border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07);}
-.affil-logo-item{display:block;opacity:.55;transition:opacity .2s;}
-.affil-logo-item:hover{opacity:.85;}
-.affil-img{display:block;width:auto;filter:brightness(0) invert(1);object-fit:contain;height:32px;}
-.affil-img-main{height:40px;max-width:260px;}
-.affil-img-inibic{height:28px;max-width:180px;}
-.affil-ph{display:flex;align-items:center;justify-content:center;height:32px;min-width:80px;border:1px dashed rgba(255,255,255,.2);border-radius:2px;padding:0 .75rem;background:rgba(255,255,255,.03);}
-.affil-ph span{font-family:var(--ff-mono,'DM Mono',monospace);font-size:var(--fs-label);letter-spacing:.08em;color:rgba(255,255,255,.35);white-space:nowrap;}
-.affil-ph-main{height:40px;min-width:140px;}
-
-/* DISMISS */
-html.bar-dismissed .hdr{top:0!important;}
-html.bar-dismissed body{padding-top:88px!important;}
-
-/* HOSPITAL DESKTOP (1024-1366px) */
-@media(min-width:1024px) and (max-width:1366px){
-  .wrap,.container{max-width:1280px;}
-  .hero-inner{gap:3rem;}
-  .display.xl{font-size:clamp(2.2rem,3.5vw,3.2rem)!important;}
-}
-
-
-/* ═══ CANONICAL HEADER ═══════════════════════════════════════════ */
-.hdr{position:fixed;top:0;left:0;right:0;height:88px;background:var(--navy-2);border-bottom:1px solid rgba(255,255,255,.1);z-index:900;transition:height .2s ease;}
-.hdr.scrolled{height:68px;}
-.hdr-inner{display:flex;align-items:center;height:100%;max-width:1440px;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem);gap:1.5rem;}
-.hdr-logo{display:flex;align-items:center;flex-shrink:0;text-decoration:none;transition:opacity .15s;}
-.hdr-logo:hover{opacity:.85;}
-.hdr-logo-img{display:block;height:34px;width:auto;max-width:300px;object-fit:contain;filter:brightness(0) invert(1);opacity:.95;}
-.hdr.scrolled .hdr-logo-img{height:26px;}
-.hdr-nav{display:flex;align-items:center;flex:1;min-width:0;gap:4px;margin-left:1.5rem;}
-.hdr-nav a{display:inline-block;padding:.55rem .9rem;font-family:var(--ff-body,'DM Sans',sans-serif);font-size:var(--fs-meta);font-weight:500;letter-spacing:.01em;color:rgba(255,255,255,.78);text-decoration:none;white-space:nowrap;border-radius:var(--r-sm);transition:background .15s,color .15s;}
-.hdr-nav a:hover{color:#fff;background:rgba(255,255,255,.08);}
-.hdr-nav a.current{color:#fff;background:rgba(255,255,255,.14);}
-.hdr-dd-trigger.current{color:#fff;background:rgba(255,255,255,.14);}
-.hdr-dd{position:relative;}
-.hdr-dd-trigger{display:inline-flex;align-items:center;border-radius:var(--r-sm);transition:background .15s;}
-.hdr-dd-trigger:hover{background:rgba(255,255,255,.08);}
-.hdr-dd-trigger a{display:inline-flex;align-items:center;padding:.55rem .55rem .55rem .9rem;font-family:var(--ff-body,'DM Sans',sans-serif);font-size:var(--fs-meta);font-weight:500;letter-spacing:.01em;color:rgba(255,255,255,.78);text-decoration:none;white-space:nowrap;transition:color .15s;}
-.hdr-dd-trigger:hover a,.hdr-dd-trigger a:hover{color:#fff;}
-.hdr-dd-chevron{display:inline-flex;align-items:center;justify-content:center;padding:.55rem .75rem .55rem .35rem;border:none;background:transparent;cursor:pointer;color:rgba(255,255,255,.6);transition:color .15s;position:relative;}
-.hdr-dd-chevron::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:1px;height:16px;background:rgba(255,255,255,.18);transition:background .15s;}
-.hdr-dd-trigger:hover .hdr-dd-chevron::before,.hdr-dd.open .hdr-dd-chevron::before{background:rgba(255,255,255,.4);}
-.hdr-dd-chevron:hover{color:#fff;}
-.hdr-dd-chevron svg{width:13px;height:13px;transition:transform .15s;}
-.hdr-dd.open .hdr-dd-chevron svg{transform:rotate(180deg);}
-.hdr-dd.open .hdr-dd-trigger{background:rgba(255,255,255,.08);}
-.hdr-dd.open .hdr-dd-trigger a{color:#fff;}
-.hdr-dd-panel{position:fixed;top:var(--hdr,88px);left:0;right:0;background:var(--navy-2);box-shadow:0 12px 28px rgba(0,20,40,.18);border-top:1px solid rgba(255,255,255,.12);border-bottom:1px solid rgba(255,255,255,.08);opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .18s,transform .18s,visibility .18s;z-index:950;}
-.hdr-dd.open .hdr-dd-panel{opacity:1;visibility:visible;transform:translateY(0);}
-.hdr-dd-panel-inner{max-width:1440px;margin:0 auto;padding:1.75rem clamp(1.25rem,4vw,3rem) 2rem;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.25rem 2.5rem;}
-.hdr-dd-item{display:block;text-decoration:none;padding:.6rem 0;border-bottom:1px solid transparent;transition:border-color .12s;}
-.hdr-dd-item:hover{border-bottom-color:rgba(255,255,255,.3);}
-.hdr-dd-num{display:block;font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.08em;color:rgba(255,255,255,.4);margin-bottom:2px;}
-.hdr-dd-name{font-size:var(--fs-body-sm);color:#fff;line-height:1.4;}
-.hdr-dd-divider{display:none;}
-.hdr-dd-all{display:block;grid-column:1/-1;margin-top:.5rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,.1);text-decoration:none;font-size:var(--fs-label);color:rgba(255,255,255,.55);transition:color .12s;}
-.hdr-dd-all:hover{color:#fff;}
-.hdr-right{display:flex;align-items:center;gap:.875rem;margin-left:auto;flex-shrink:0;}
-.lang-toggle{display:flex;align-items:center;background:rgba(255,255,255,.12);border-radius:var(--r-sm);padding:2px;flex-shrink:0;}
-.lt-btn{padding:.3rem .65rem;font-family:var(--ff-mono,'DM Mono',monospace);font-size:var(--fs-label);font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.7);background:transparent;border:none;cursor:pointer;transition:color .15s,background .15s;line-height:1;border-radius:calc(var(--r-sm) - 2px);}
-.lt-btn--active,.lt-btn[aria-pressed="true"]{color:var(--navy-2)!important;background:#fff!important;}
-.hdr-contact{font-family:var(--ff-body,'DM Sans',sans-serif);font-size:var(--fs-meta);font-weight:500;color:#fff;text-decoration:none;background:rgba(255,255,255,.16);padding:.5rem 1.1rem;border-radius:var(--r-sm);transition:background .15s;white-space:nowrap;}
-.hdr-contact:hover{background:rgba(255,255,255,.26);}
-.mob-toggle{display:none;width:38px;height:38px;background:rgba(255,255,255,.1);border:none;border-radius:var(--r-sm);cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:0;}
-.mob-toggle span{display:block;width:16px;height:1.5px;background:#fff;transition:all .25s;}
-.mob-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1050;opacity:0;pointer-events:none;transition:opacity .25s;}
-.mob-overlay.open{opacity:1;pointer-events:auto;}
-.mob-drawer{position:fixed;top:0;right:-100%;bottom:0;width:min(300px,84vw);background:var(--navy-2);z-index:1100;transition:right .28s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;padding-top:88px;overflow-y:auto;}
-.mob-drawer.open{right:0;}
-.mob-drawer-nav{padding:1.25rem 1rem;display:flex;flex-direction:column;gap:.2rem;}
-.mob-drawer-nav a{display:block;padding:.7rem .875rem;font-family:var(--ff-body,'DM Sans',sans-serif);font-size:var(--fs-body-sm);font-weight:500;color:rgba(255,255,255,.82);text-decoration:none;border-radius:var(--r-sm);transition:background .15s,color .15s;}
-.mob-drawer-nav a:hover,.mob-drawer-nav a.current{background:rgba(255,255,255,.12);color:#fff;}
-.mob-lang{display:flex;align-items:center;gap:.4rem;padding:1.25rem;border-top:1px solid rgba(255,255,255,.12);margin-top:auto;}
-@media(max-width:860px){.hdr-nav,.hdr-contact{display:none!important;}.mob-toggle{display:flex!important;}.hdr-logo-img{height:26px!important;max-width:220px!important;}.hdr{height:72px!important;}.mob-drawer{padding-top:72px!important;}}
-@media(min-width:861px){.mob-drawer,.mob-overlay{display:none!important;}.mob-toggle{display:none!important;}}
-    :root {
-      --navy:#0C3868; --navy-2:#0C447C; --navy-3:#185FA5; --navy-footer:#07111F;
-      --teal:#007A7A; --teal-2:#00B3B3; --teal-lt:#E2F0F0; --teal-dim:rgba(0,122,122,.12); --teal-mid:rgba(0,122,122,.12);
-      --blue-50:#E6F1FB; --blue-100:#B5D4F4; --blue-200:#85B7EB; --blue-400:#378ADD; --blue-600:#185FA5; --blue-800:#0C447C; --blue-900:#042C53;
-      --white:#FFFFFF;--off-white:#F7F6F3;--surface:#F7F6F3;--light-grey:#EAEAE5;--mid-grey:#D4D4CE;
-      --ink:#111111;--ink-2:#3A3A3A;--ink-3:#6B6B6B;--ink-4:#9B9B9B;
-      --border-l:rgba(0,0,0,.06); --border-d:rgba(255,255,255,.1);
-      --rule-d:rgba(255,255,255,.1);--rule-l:rgba(0,0,0,.06);
-      --rule:rgba(255,255,255,.1);--rule-light:rgba(255,255,255,.14);
-      --text-on-dark:#F5F5F0;--text-on-dark-2:#9DAEC4;--text-on-dark-3:#5D7494;
-      --text-on-light:#111111;--text-on-light-2:#3A3A3A;--text-on-light-3:#6B6B6B;
-      --accent:var(--teal);--accent-2:var(--teal-2);
-      --text-primary:#F5F5F0;--text-secondary:#9DAEC4;--text-muted:#5D7494;
-      --ff-display:'Fraunces',Georgia,serif;
-      --ff-body:'DM Sans',system-ui,sans-serif;
-      --ff-mono:'DM Mono','Courier New',monospace;
-      --header-h:88px;--hdr:88px;--max-w:1380px;--max:1380px;--pad:clamp(1.25rem,4vw,3rem);
-      --r-xs:4px;--r-sm:6px;--r-md:8px;--r-lg:12px;--r-xl:20px;
-
-      --fs-label:.8125rem;
-      --fs-meta:.9375rem;
-      --fs-body-sm:1rem;
-      --fs-body:1.0625rem;
-      --fs-body-lg:1.1875rem;
-      --fs-h4:1.375rem;
-      --fs-h3:1.75rem;
-      --fs-h2:clamp(2rem,3.2vw,2.5rem);
-      --fs-h1:clamp(2.5rem,4.8vw,3.5rem);
-      --fs-hero-title:clamp(1.875rem,2.6vw,2.25rem);
+/** Inject shared styles once — using new design palette */
+if (!document.getElementById('api-js-styles')) {
+  const s = document.createElement('style');
+  s.id = 'api-js-styles';
+  s.textContent = `
+    @keyframes skeleton-pulse {
+      0%,100%{opacity:.35} 50%{opacity:.7}
     }
-    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-    html{scroll-behavior:smooth;font-size:16px;}
-    body{font-family:var(--ff-body);background:var(--off-white);color:var(--text-on-light);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased;padding-top:88px;  padding-top:88px;
+    .api-skeleton {
+      background: #E0DDD8;
+      border-radius: 4px;
+      animation: skeleton-pulse 1.4s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .api-skeleton-dark {
+      background: rgba(255,255,255,.08);
+      border-radius: 4px;
+      animation: skeleton-pulse 1.4s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .api-error {
+      padding: 2rem;
+      text-align: center;
+      color: #767676;
+      font-size: .8125rem;
+      font-family: var(--ff-mono, monospace);
+    }
+    .api-error svg { margin: 0 auto .75rem; display: block; opacity: .4; }
+    tr[onclick]:hover td { background: var(--teal-lt, #E6F7F7); }
+  `;
+  document.head.appendChild(s);
+}
+
+/** Skeleton loader — light for light sections, dark for dark sections */
+function setLoading(el, rows = 3, dark = false) {
+  const cls = dark ? 'api-skeleton-dark' : 'api-skeleton';
+  // tbody only accepts tr elements — use tr/td skeleton for tables
+  if (el.tagName === 'TBODY') {
+    el.innerHTML = Array(rows).fill(
+      `<tr>${Array(6).fill(`<td><div class="${cls}" style="height:14px;border-radius:3px;"></div></td>`).join('')}</tr>`
+    ).join('');
+  } else {
+    el.innerHTML = Array(rows).fill(
+      `<div class="${cls}" style="height:52px;margin-bottom:2px;"></div>`
+    ).join('');
   }
-    img,svg{display:block;}
-    a{color:inherit;text-decoration:none;}
-    .display{font-family:var(--ff-display);font-weight:700;line-height:1.05;letter-spacing:-0.025em;}
-    .display.xl{font-size:clamp(2.5rem,5vw,4rem);}
-    .display.lg{font-size:clamp(2rem,3.5vw,3rem);}
-    .display.md{font-size:clamp(1.5rem,2.5vw,2rem);}
-    .display.sm{font-size:clamp(1.2rem,1.8vw,1.5rem);}
-    .eyebrow,.label{font-family:var(--ff-mono);font-size:var(--fs-label);font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);}
-    .eyebrow.light,.label.light{color:rgba(255,255,255,.75);font-weight:600;letter-spacing:.14em;}
-    .container{width:100%;max-width:var(--max-w);margin:0 auto;padding:0 clamp(1.5rem,5vw,6rem);}
-    @media(min-width:1600px){.container{padding:0 clamp(4rem,8vw,10rem);}}
-    .section{padding:7rem 0;}
-    @media(min-width:1400px){.section{padding:9rem 0;}}
-    @media(max-width:768px){.section{padding:4rem 0;}}
-    @media(max-width:768px){#lineAboutSection > .wrap > div{grid-template-columns:1fr!important;}}
-    .sec-head{margin-bottom:3.5rem;}
-    .sec-head p{margin-top:1rem;font-size:1.0625rem;line-height:1.75;color:var(--text-on-light-2);max-width:580px;}
-    .sec-head h2{margin-top:.75rem;}
-
-    /* Progress */
-
-    /* Header */
-    /* Nav takes all remaining space, pushes right-group to far right */
-    @media(min-width:1024px){}
-    .nav a:hover,
-    @media(min-width:1024px){}
-
-    /* Lang rules */
-    [lang="es"]{display:none !important;}
-    [lang="en"]{display:inline;}
-    [lang="en"].blk{display:block;}
-    html[data-lang="es"] [lang="es"]{display:inline !important;}
-    html[data-lang="es"] [lang="es"].blk{display:block !important;}
-    html[data-lang="es"] [lang="en"]{display:none !important;}
-    html[data-lang="en"] [lang="en"]{display:inline;}
-    html[data-lang="en"] [lang="en"].blk{display:block;}
-    html[data-lang="en"] [lang="es"]{display:none;}
-
-    /* Buttons */
-    .btn-primary{display:inline-flex;align-items:center;gap:.5rem;background:var(--teal-2);color:#fff;font-weight:600;padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;transition:background .18s,border-color .18s,color .18s;border:none;cursor:pointer;}
-    .btn-primary:hover{background:var(--accent);}
-    .btn-secondary{display:inline-flex;align-items:center;gap:.5rem;background:var(--accent);color:#fff;font-weight:600;padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;transition:background .18s,border-color .18s,color .18s;border:none;cursor:pointer;}
-    .btn-secondary:hover{background:#007a7a;}
-    .btn-primary-alt{display:inline-flex;align-items:center;gap:.5rem;background:var(--teal-2);color:#fff;font-weight:600;padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;transition:background .18s,border-color .18s,color .18s;border:none;cursor:pointer;}
-    .btn-primary-alt:hover{background:var(--accent);}
-    .btn-ghost{display:inline-flex;align-items:center;gap:.5rem;border:1.5px solid rgba(255,255,255,.25);color:var(--text-on-dark);padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;font-weight:500;transition:background .18s,border-color .18s,color .18s;}
-    .btn-ghost:hover{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.06);}
-    .btn-ghost-dark{display:inline-flex;align-items:center;gap:.5rem;border:1.5px solid var(--rule-l);color:var(--ink-2);padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;font-weight:500;transition:background .18s,border-color .18s,color .18s;}
-    .btn-ghost-dark:hover{border-color:var(--accent);color:var(--accent);}
-    .btn-outline{display:inline-flex;align-items:center;gap:.5rem;border:1.5px solid currentColor;color:var(--text-on-dark);padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;font-weight:500;transition:background .18s,border-color .18s,color .18s;opacity:.7;}
-    .btn-outline:hover{opacity:1;background:rgba(255,255,255,.06);}
-    .btn-violet{display:inline-flex;align-items:center;gap:.5rem;background:var(--teal-2);color:#fff;font-weight:600;padding:.6rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;transition:background .18s,border-color .18s,color .18s;border:none;cursor:pointer;}
-    .btn-violet:hover{background:var(--accent);}
-
-    /* Hero base (dark) */
-    /* Hero base — see canonical .hero/.hero-title/.hero-desc/.hero-actions
-       further below, which win the cascade; the old duplicate set is gone. */
-
-    /* Footer */
-        /* ── FOOTER ── */
-    .footer-top{
-      display:grid;
-      grid-template-columns:1fr;
-      gap:4rem;
-      padding-bottom:4rem;
-      border-bottom:1px solid rgba(255,255,255,.07);
-    }
-    @media(min-width:768px){
-      .footer-top{grid-template-columns:1.6fr 1fr 1fr;}
-    }
-    /* Brand column */
-    .footer-affiliate{
-      display:flex;align-items:baseline;gap:1rem;
-      font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;
-    }
-    .footer-affiliate-abbr{color:rgba(0,179,179,.65);flex-shrink:0;width:3rem;}
-    .footer-affiliate-name{color:rgba(255,255,255,.25);}
-    /* Nav columns */
-    .footer-col-head{
-      font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.15em;
-      text-transform:uppercase;color:rgba(255,255,255,.28);
-      margin-bottom:1.25rem;
-      padding-bottom:.75rem;
-      border-bottom:1px solid rgba(255,255,255,.06);
-    }
-    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.625rem;}
-    .footer-col ul a{
-      font-size:.875rem;color:rgba(255,255,255,.45);
-      transition:color .18s;
-      display:inline-block;
-    }
-    .footer-col ul a:hover{color:rgba(255,255,255,.85);}
-    .footer-col address{
-      font-style:normal;font-size:.875rem;
-      color:rgba(255,255,255,.38);line-height:1.85;
-    }
-    .footer-col address a{
-      color:rgba(255,255,255,.45);
-      transition:color .18s;
-      border-bottom:1px solid rgba(255,255,255,.1);
-    }
-    .footer-col address a:hover{color:rgba(255,255,255,.8);border-color:rgba(255,255,255,.3);}
-    /* Bottom bar */
-    /* Reveal */
-    .reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease;}
-    .reveal.in{opacity:1;transform:none;}
-    .reveal-d1{transition-delay:.1s;}
-    .reveal-d2{transition-delay:.2s;}
-    .reveal-d3{transition-delay:.3s;}
-    @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
-
-    /* Mobile */
-    @media(max-width:768px){
-      .hero{padding:3.5rem 0 3rem;}
-      .hero-inner{grid-template-columns:1fr;gap:2.5rem;}
-      .footer-grid{grid-template-columns:1fr;}
-    }
-    
-    @supports(padding:env(safe-area-inset-bottom)){
-      }
-
-    /* ═══ CLINICAL PAGE STYLES ═══ */
-    /* ══════════════════════════════════════════════════════════
-       HEADER — neumACt R&I  (unified across all pages)
-       Desktop 88px · Tablet 72px · Mobile 64px
-       ══════════════════════════════════════════════════════════ */
-
-    /* ── Progress bar ── */
-    #progress-bar{position:fixed;top:0;left:0;width:0;height:2px;background:var(--accent-2);z-index:2000;transition:width .1s linear;}
-
-    /* ── Hamburger ── */
-    .mob-toggle:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);}
-    .mob-toggle.open{border-color:rgba(0,179,179,.4);}
-    .mob-toggle.open span:nth-child(1){transform:rotate(45deg) translate(4.5px,4.5px);}
-    .mob-toggle.open span:nth-child(2){opacity:0;transform:scaleX(0);}
-    .mob-toggle.open span:nth-child(3){transform:rotate(-45deg) translate(4.5px,-4.5px);}
-
-    .mob-lang{display:flex;align-items:center;gap:.625rem;padding:.4rem 0;}
-    .mob-lang-lbl{font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-right:.2rem;}
-    .mob-lang button{
-      background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
-      cursor:pointer;padding:.35rem .65rem;
-      font-family:var(--ff-mono);font-size:var(--fs-label);font-weight:600;letter-spacing:.08em;
-      text-transform:uppercase;color:rgba(255,255,255,.36);
-      transition:background .18s,color .18s,border-color .18s;border-radius:6px;
-      min-height:36px;min-width:44px;
-      -webkit-tap-highlight-color:transparent;
-    }
-    .mob-lang button.active{color:var(--teal-2);background:rgba(0,153,153,.18);border-color:rgba(0,153,153,.3);}
-
-    /* ── Responsive header ── */
-    @media(max-width:768px){
-      :root{--header-h:72px;}
-    }
-    @media(max-width:480px){
-      :root{--header-h:64px;}
-      .mob-toggle{width:40px;height:40px;}
-    }
-
-    /* ── HERO ── */
-    .hero{background:var(--navy-2);border-bottom:1px solid var(--rule-d);position:relative;overflow:hidden;padding:5rem 0 0;}
-    .hero-text-link{font-size:.9375rem;font-weight:500;color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.35);padding-bottom:2px;transition:border-color .15s,color .15s;}
-    .hero-text-link:hover{border-color:#fff;color:var(--teal-2);}
-    .hero .eyebrow{color:rgba(255,255,255,.65);}
-    .hero::before{content:'';position:absolute;inset:0;}
-    .hero::after{content:'';position:absolute;width:500px;height:500px;background:radial-gradient(circle,var(--teal-dim) 0%,transparent 70%);top:-150px;right:-100px;pointer-events:none;}
-    .hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1fr;gap:3rem;}
-    @media(min-width:861px){.hero-inner{grid-template-columns:1fr 300px;align-items:start;}}
-    .breadcrumb{display:flex;align-items:center;gap:.5rem;margin-bottom:1.5rem;}
-    .breadcrumb a{font-size:.8rem;color:var(--text-muted);transition:color .2s;}
-    .breadcrumb a:hover{color:var(--text-primary);}
-    .breadcrumb svg{width:10px;height:10px;color:var(--text-muted);flex-shrink:0;}
-    .breadcrumb span{font-size:.8rem;color:var(--teal);}
-    .hero-eyebrow{display:inline-flex;align-items:center;gap:.6rem;border:1px solid rgba(58,191,191,0.3);background:var(--teal-dim);padding:.4rem .9rem;border-radius:3px;margin-bottom:1.5rem;}
-    .hero-eyebrow svg{width:12px;height:12px;}
-    .hero-title{margin-bottom:1.25rem;}
-    .hero-desc{font-size:1.0625rem;line-height:1.75;color:var(--text-secondary);max-width:580px;margin-bottom:2rem;}
-    .hero-actions{display:flex;flex-wrap:wrap;gap:.75rem;margin-bottom:0;}
-
-    /* Hero stat panel */
-    .hero-stats{display:flex;flex-direction:column;gap:1px;background:var(--rule-d);border:1px solid var(--rule-d);border-radius:var(--r-lg);overflow:hidden;}
-    .hstat{background:rgba(255,255,255,.04);padding:1.125rem 1.375rem;transition:background .2s;}
-    .hstat:hover{background:var(--navy-2);}
-    .hstat-num{font-family:var(--ff-display);font-size:1.625rem;font-weight:900;color:var(--teal);line-height:1;margin-bottom:.25rem;}
-    .hstat-label{font-size:.72rem;color:var(--text-muted);line-height:1.3;font-family:var(--ff-mono);}
-
-    /* Hero stat strip at bottom */
-    .hero-strip{border-top:1px solid var(--rule-d);background:var(--navy-3, #162340);margin-top:3rem;}
-    .hero-strip-inner{display:flex;flex-wrap:wrap;}
-    .hstrip-item{flex:1;min-width:140px;padding:1.375rem 1.75rem;border-right:1px solid var(--rule-d);}
-    .hstrip-item:last-child{border-right:none;}
-    .hstrip-num{font-family:var(--ff-display);font-size:1.5rem;font-weight:900;color:var(--teal);line-height:1;margin-bottom:.3rem;}
-    .hstrip-label{font-size:var(--fs-label);font-family:var(--ff-mono);color:var(--text-muted);line-height:1.3;}
-    @media(max-width:640px){.hstrip-item{min-width:50%;border-bottom:1px solid var(--rule-d);}
-    .hstrip-item:nth-child(2n){border-right:none;} .hstrip-item:last-child,.hstrip-item:nth-last-child(2){border-bottom:none;}}
-
-    /* ── SECTION ── */
-    .sec-head{margin-bottom:3.5rem;}
-    .sec-head p{margin-top:1rem;font-size:1.0625rem;line-height:1.7;color:var(--text-secondary);}
-    .sec-head h2{margin-top:.875rem;}
-    .text-center{text-align:center;}
-
-    /* ══════════════════════════════════════════
-       RESEARCH LINES — editorial redesign
-    ══════════════════════════════════════════ */
-    /* ── RESEARCH LINES — 2-col card grid ── */
-    .lines-bg{background:var(--off-white);}
-    #researchLinesList{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:1.25rem;
-    }
-    @media(max-width:860px){#researchLinesList{grid-template-columns:1fr;}}
-
-    .line-card{
-      background:var(--white);
-      border:1px solid var(--rule-l);
-      border-radius:var(--r-lg);
-      overflow:hidden;
-      transition:box-shadow .22s,border-color .22s,transform .22s;
-      position:relative;
-      cursor:pointer;
-      display:flex;flex-direction:column;
-    }
-    .line-card::before{
-      content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
-      background:transparent;transition:background .22s;
-    }
-    .line-card:hover{
-      box-shadow:0 6px 32px rgba(0,153,153,.1),0 2px 8px rgba(0,0,0,.06);
-      border-color:rgba(0,153,153,.22);
-      transform:translateY(-2px);
-    }
-    .line-card:hover::before{background:var(--accent);}
-
-    .line-head{padding:1.75rem 2rem 1.25rem;cursor:pointer;flex:1;}
-    .line-num{
-      font-family:var(--ff-display);font-size:2.5rem;font-weight:700;
-      color:var(--rule-l);line-height:1;margin-bottom:.875rem;
-      transition:color .22s;
-    }
-    .line-card:hover .line-num{color:rgba(0,153,153,.18);}
-    .line-meta{flex:1;}
-    .line-coordinator{
-      font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;
-      text-transform:uppercase;color:var(--accent);
-      margin-bottom:.5rem;display:flex;align-items:center;gap:.375rem;
-    }
-    .line-coordinator svg{display:none;}
-    .line-coordinator strong{font-weight:500;color:var(--accent);}
-    .line-title{
-      font-family:var(--ff-display);
-      font-size:clamp(1rem,1.5vw,1.125rem);
-      font-weight:700;color:var(--text-on-light);line-height:1.3;
-    }
-    .line-tags-preview{
-      display:flex;flex-wrap:wrap;gap:.25rem;
-      padding:0 2rem 1.125rem;
-    }
-    .ltag{
-      font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.07em;
-      text-transform:uppercase;color:var(--text-on-light-3);
-    }
-    .ltag+.ltag::before{content:'·';margin-right:.25rem;color:var(--mid-grey);}
-    .line-expand-toggle{
-      display:flex;align-items:center;justify-content:space-between;
-      padding:.75rem 2rem;
-      border-top:1px solid var(--rule-l);
-      background:var(--off-white);
-      cursor:pointer;
-      transition:background .18s;
-    }
-    .line-card:hover .line-expand-toggle{background:var(--teal-lt);}
-    .toggle-label{
-      display:flex;align-items:center;gap:.5rem;
-      font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.08em;
-      text-transform:uppercase;color:var(--text-on-light-3);
-    }
-    .toggle-label svg{display:none;}
-    .toggle-arrow{
-      width:22px;height:22px;border-radius:50%;
-      border:1px solid var(--mid-grey);
-      display:flex;align-items:center;justify-content:center;
-      color:var(--text-on-light-3);
-      transition:all .2s;flex-shrink:0;
-    }
-    .toggle-arrow svg{width:11px;height:11px;}
-    .line-card:hover .toggle-arrow{border-color:var(--accent);color:var(--accent);}
-    .line-card.open .toggle-arrow{transform:rotate(180deg);background:var(--teal-lt);border-color:var(--accent);}
-    .line-body{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1);}
-    .line-card.open .line-body{max-height:500px;}
-    .line-body-inner{padding:1.25rem 2rem 1.75rem;border-top:1px solid var(--rule-l);}
-    .line-desc{font-size:.9rem;line-height:1.75;color:var(--text-on-light-2);}
-
-    /* ══════════════════════════════════════════
-       CLINICAL TRIALS TABLE
-    ══════════════════════════════════════════ */
-    .trials-bg{background:var(--white);border-top:1px solid var(--rule-l);}
-    .filter-bar{display:flex;flex-wrap:wrap;gap:.875rem;margin-bottom:1.75rem;padding:1.25rem 0;border-bottom:1px solid var(--rule-l);}
-    .filter-grp{flex:1;min-width:140px;} .filter-grp{flex:1;min-width:140px;} .filter-grp label{display:block;font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;color:var(--text-on-light-3);margin-bottom:.45rem;}
-    .filter-grp select{width:100%;background:var(--white);border:1px solid var(--mid-grey);border-radius:var(--r-sm);padding:.575rem .8rem;color:var(--text-on-light);font-family:var(--ff-body);font-size:.8125rem;transition:border .2s;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23767676' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .8rem center;padding-right:2.25rem;}
-    .filter-grp select:focus{outline:none;border-color:var(--teal-2);}
-    .filter-grp select option{background:var(--white);}
-    .search-wrap{position:relative;}
-    .search-wrap svg{position:absolute;left:.75rem;top:50%;transform:translateY(-50%);width:13px;height:13px;color:var(--text-on-light-3);pointer-events:none;}
-    .filter-grp input[type="text"]{width:100%;background:var(--white);border:1px solid var(--mid-grey);border-radius:var(--r-sm);padding:.575rem .8rem .575rem 2.125rem;color:var(--text-on-light);font-family:var(--ff-body);font-size:.8125rem;transition:border .2s;}
-    .filter-grp input[type="text"]:focus{outline:none;border-color:var(--teal);}
-    .filter-grp input[type="text"]::placeholder{color:var(--text-muted);}
-
-    .trials-count-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:.875rem;flex-wrap:wrap;gap:.75rem;}
-    .trials-count-bar span{font-size:.875rem;color:var(--text-on-light-2);font-family:var(--ff-mono);}
-    .trials-count-bar strong{color:var(--teal);}
-    .trials-wrap{border:1px solid var(--mid-grey);border-radius:var(--r-lg);overflow:hidden;}
-    .trials-scroll{overflow-x:auto;}
-    table.trials{width:100%;border-collapse:collapse;min-width:760px;}
-    .trials thead{background:var(--white);border-bottom:2px solid var(--rule-l);}
-    .trials th{padding:1rem 1.25rem;text-align:left;font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;color:var(--text-on-light-3);border-bottom:2px solid var(--mid-grey);white-space:nowrap;font-weight:600;}
-    .trials td{padding:1.1rem 1.25rem;border-bottom:1px solid var(--rule-l);vertical-align:middle;font-size:.9rem;color:var(--text-on-light-2);}
-    .trials tbody tr:last-child td{border-bottom:none;}
-    .trials tbody tr{background:var(--white);transition:background .15s;}
-    .trials tbody tr:hover td{background:var(--off-white);}
-    .trial-protocol{font-family:var(--ff-mono);font-size:.75rem;color:var(--text-on-light-3);white-space:nowrap;}
-    .trial-title{color:var(--text-on-light);font-weight:500;font-size:.9375rem;line-height:1.4;}
-    .trial-line-tag{display:inline-block;padding:.2rem .5rem;border-radius:3px;font-size:.7rem;font-family:var(--ff-mono);border:1px solid var(--rule-l);color:var(--text-on-light-3);white-space:nowrap;background:var(--off-white);}
-    .phase-badge{display:inline-flex;align-items:center;padding:.22rem .55rem;border-radius:3px;font-size:var(--fs-label);font-family:var(--ff-mono);letter-spacing:.05em;border:1px solid rgba(0,153,153,.15);color:var(--teal-2);background:rgba(0,153,153,.06);white-space:nowrap;}
-    .status-badge{display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .65rem;border-radius:20px;font-size:var(--fs-label);font-weight:600;white-space:nowrap;}
-    .status-badge::before{content:'';width:5px;height:5px;border-radius:50%;flex-shrink:0;}
-    .status-badge.recruiting{background:rgba(58,191,191,.1);color:var(--teal);border:1px solid rgba(58,191,191,.2);}
-    .status-badge.recruiting::before{background:var(--teal);box-shadow:0 0 6px var(--teal);}
-    .status-badge.active{background:rgba(0,153,153,.08);color:var(--teal-2);border:1px solid rgba(0,153,153,.15);}
-    .status-badge.active::before{background:var(--teal-2);}
-    .status-badge.completed{background:rgba(90,100,115,.15);color:var(--text-muted);border:1px solid var(--rule-d);}
-    .status-badge.completed::before{background:var(--text-muted);}
-    .status-badge.prep{background:rgba(0,153,153,.06);color:var(--teal-2);border:1px solid rgba(0,153,153,.15);}
-    .status-badge.prep::before{background:var(--violet);}
-    .no-results{padding:2.5rem;text-align:center;color:var(--text-muted);font-size:.875rem;display:none;}
-    .no-results svg{width:28px;height:28px;margin:0 auto .75rem;opacity:.3;}
-    .trials-footer{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;background:var(--white);border-top:1px solid var(--rule-l);flex-wrap:wrap;gap:.875rem;}
-    .trials-footer-info{font-size:.8rem;font-family:var(--ff-mono);color:var(--text-on-light-3);}
-    .trials-footer-db{display:inline-flex;align-items:center;gap:.4rem;font-size:.75rem;font-family:var(--ff-mono);color:var(--text-on-light-3);border:1px solid var(--rule-l);border-radius:3px;padding:.25rem .65rem;margin-top:.35rem;}
-    .trials-footer-db svg{width:10px;height:10px;color:var(--teal-2);}
-
-    /* ── TEAM ── */
-    .team-bg{background:#0B2222;color:var(--text-on-dark);}
-    .team-grid{display:flex;flex-direction:column;}
-    .team-card{
-      display:flex;align-items:flex-start;gap:2.5rem;
-      padding:2rem 1rem;
-      border-bottom:1px solid rgba(255,255,255,.07);
-      border-radius:var(--r-sm);
-      transition:background .18s,margin .18s;
-      margin:0 -1rem;
-    }
-    .team-card:last-child{border-bottom:none;}
-    .team-card:hover{background:rgba(255,255,255,.03);padding-left:0;border-radius:var(--r-sm);margin:0 -1rem;padding-left:1rem;padding-right:1rem;}
-    /* Avatar */
-    .team-avatar{
-      width:52px;height:52px;border-radius:50%;
-      background:linear-gradient(135deg,rgba(0,153,153,.35),rgba(0,179,179,.15));
-      border:1px solid rgba(0,179,179,.3);
-      display:flex;align-items:center;justify-content:center;
-      flex-shrink:0;
-      font-family:var(--ff-display);font-size:1.1rem;font-weight:700;
-      color:var(--teal-2);letter-spacing:-.02em;
-      overflow:hidden;
-    }
-    .team-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
-    /* Plain marginal number — no box, no border */
-    .team-line-num{
-      font-family:var(--ff-mono);font-size:var(--fs-label);
-      color:rgba(255,255,255,.22);
-      letter-spacing:.05em;
-      flex-shrink:0;
-      width:1.5rem;
-      text-align:right;
-      padding-top:.3rem;
-    }
-    .team-body{flex:1;min-width:0;}
-    .team-name{
-      font-family:var(--ff-display);font-size:1.0625rem;font-weight:700;
-      color:#F5F5F0;line-height:1.2;margin-bottom:.2rem;
-    }
-    .team-role{
-      font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;
-      text-transform:uppercase;color:rgba(255,255,255,.36);
-      margin-bottom:.5rem;
-    }
-    /* Left-ruled line tag — accent only, no container */
-    .team-line-tag{
-      font-family:var(--ff-mono);font-size:var(--fs-label);
-      color:rgba(255,255,255,.35);
-      border-left:2px solid rgba(0,179,179,.38);
-      padding-left:.5rem;
-      margin-bottom:.5rem;
-      display:block;
-    }
-    .team-bio{
-      font-size:.8125rem;line-height:1.7;
-      color:rgba(255,255,255,.52);
-      margin-top:.5rem;max-width:580px;
-    }
-    /* Tags as plain inline text with middot separator — no pills */
-    .team-expertise{
-      font-family:var(--ff-mono);font-size:var(--fs-label);
-      color:rgba(255,255,255,.3);letter-spacing:.03em;
-      margin-top:.4rem;
-    }
-    .team-expertise .team-tag{display:inline;}
-    .team-expertise .team-tag + .team-tag::before{
-      content:' · ';
-      color:rgba(255,255,255,.45);
-    }
-    @media(max-width:480px){
-      .team-card{gap:1.375rem;padding:1.375rem 0;}
-      .team-name{font-size:1rem;}
-      .team-avatar{width:44px;height:44px;font-size:.95rem;}
-    }
-
-    /* ── CONTACT ── */
-    .contact-bg{background:var(--navy-2);}
-    .contact-layout{display:grid;grid-template-columns:1fr;gap:3rem;}
-    @media(min-width:861px){.contact-layout{grid-template-columns:1fr 1.2fr;align-items:start;}}
-    .contact-info-list{display:flex;flex-direction:column;gap:.875rem;}
-    .cinfo{display:flex;align-items:flex-start;gap:.875rem;padding:1rem 0;border-bottom:1px solid var(--rule-d);}
-    
-    .cinfo-icon{width:34px;height:34px;flex-shrink:0;background:var(--teal-dim);border-radius:6px;display:flex;align-items:center;justify-content:center;}
-    .cinfo-icon svg{width:15px;height:15px;color:var(--teal-2);}
-    .cinfo-label{font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.25rem;}
-    .cinfo-value{font-size:.875rem;color:var(--text-on-dark);line-height:1.5;}
-    .cinfo-value a{color:var(--teal);transition:color .2s;}
-    .cinfo-value a:hover{color:#6dd6d6;}
-
-    .form-trigger{position:relative;display:flex;align-items:center;justify-content:space-between;padding:1.5rem 2.25rem;cursor:pointer;border-radius:var(--r-lg);background:rgba(255,255,255,.05);border:1px solid var(--rule-d);transition:background .25s,border-color .25s,transform .25s,box-shadow .25s;gap:1.25rem;overflow:hidden;}
-    .form-trigger::before{content:'';position:absolute;inset:0;background:linear-gradient(120deg,transparent 30%,rgba(0,179,179,.10) 50%,transparent 70%);transform:translateX(-120%);transition:transform .7s ease;pointer-events:none;}
-    .form-trigger:hover::before{transform:translateX(120%);}
-    .form-trigger:hover{background:rgba(255,255,255,.09);border-color:rgba(0,179,179,.4);transform:translateY(-2px);box-shadow:0 10px 28px -10px rgba(0,0,0,.4);}
-    .form-trigger[aria-expanded="true"]{background:rgba(0,179,179,.07);border-color:var(--teal-2);}
-    .form-trigger-icon{position:relative;flex-shrink:0;width:44px;height:44px;border-radius:50%;background:var(--teal-dim);display:flex;align-items:center;justify-content:center;}
-    .form-trigger-icon svg{width:18px;height:18px;color:var(--teal-2);}
-    .form-trigger-icon::after{content:'';position:absolute;inset:-5px;border-radius:50%;border:1.5px solid var(--teal-2);opacity:.55;animation:trigPulse 2.6s ease-out infinite;}
-    .form-trigger[aria-expanded="true"] .form-trigger-icon::after{display:none;}
-    .form-trigger-text{flex:1;min-width:0;}
-    .form-trigger-label{font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.12em;text-transform:uppercase;color:var(--teal-2);margin-bottom:.375rem;}
-    .form-trigger-title{font-family:var(--ff-display);font-size:1.125rem;font-weight:700;color:#ffffff;line-height:1.2;}
-    .form-trigger-btn{flex-shrink:0;display:inline-flex;align-items:center;gap:.5rem;background:var(--accent-2);color:#fff;font-weight:600;padding:.625rem 1.25rem;border-radius:var(--r-md);font-size:.8125rem;white-space:nowrap;transition:background .18s;}
-    .form-trigger:hover .form-trigger-btn{background:var(--accent);}
-    .form-trigger-btn svg{width:12px;height:12px;flex-shrink:0;transition:transform .35s cubic-bezier(.4,0,.2,1);}
-    .form-trigger[aria-expanded="true"] .form-trigger-btn svg{transform:rotate(180deg);}
-    @keyframes trigPulse{0%{transform:scale(1);opacity:.55;}70%{transform:scale(1.4);opacity:0;}100%{opacity:0;}}
-    .form-body{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.4,0,.2,1),opacity .3s ease;opacity:0;}
-    .form-body.open{opacity:1;overflow:visible;}
-    .form-success{display:none;margin-top:1rem;padding:.875rem;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);border-radius:var(--r-sm);font-size:.875rem;color:#059669;}
-    .form-success.show{display:block;}
-    .form-card{background:var(--navy-3, #162340);border:1px solid rgba(255,255,255,.12);border-radius:var(--r-xl);padding:2rem;position:relative;overflow:hidden;}
-    .form-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),var(--teal-2));}
-    .form-grid{display:grid;grid-template-columns:1fr;gap:1.125rem;}
-    @media(min-width:640px){.form-grid{grid-template-columns:1fr 1fr;}}
-    .form-grid .span-2{grid-column:1/-1;}
-    .form-group label{display:block;font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;color:var(--text-on-light-3);margin-bottom:.45rem;}
-    .form-group input,.form-group select,.form-group textarea{width:100%;background:var(--off-white);border:1px solid var(--mid-grey);border-radius:var(--r-sm);padding:.7rem .9rem;color:var(--text-on-light);font-family:var(--ff-body);font-size:.875rem;transition:border .2s;resize:vertical;}
-    .form-group input::placeholder,.form-group textarea::placeholder{color:var(--text-on-light-3);}
-    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--teal);}
-    .form-group select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23767676' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .875rem center;padding-right:2.25rem;background-color:var(--off-white);}
-    .form-group select option{background:var(--white);color:var(--text-on-light);}
-    .form-success{display:none;margin-top:1rem;padding:.875rem 1.125rem;background:var(--teal-dim);border:1px solid rgba(58,191,191,.3);border-radius:var(--r-md);color:var(--teal);font-size:.875rem;text-align:center;}
-    .form-success.show{display:block;}
-
-        /* ── FOOTER ── */
-    .footer-top{
-      display:grid;
-      grid-template-columns:1fr;
-      gap:4rem;
-      padding-bottom:4rem;
-      border-bottom:1px solid rgba(255,255,255,.07);
-    }
-    @media(min-width:768px){
-      .footer-top{grid-template-columns:1.6fr 1fr 1fr;}
-    }
-    /* Brand column */
-    .footer-affiliate{
-      display:flex;align-items:baseline;gap:1rem;
-      font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;
-    }
-    .footer-affiliate-abbr{color:rgba(0,179,179,.65);flex-shrink:0;width:3rem;}
-    .footer-affiliate-name{color:rgba(255,255,255,.25);}
-    /* Nav columns */
-    .footer-col-head{
-      font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.15em;
-      text-transform:uppercase;color:rgba(255,255,255,.28);
-      margin-bottom:1.25rem;
-      padding-bottom:.75rem;
-      border-bottom:1px solid rgba(255,255,255,.06);
-    }
-    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.625rem;}
-    .footer-col ul a{
-      font-size:.875rem;color:rgba(255,255,255,.45);
-      transition:color .18s;
-      display:inline-block;
-    }
-    .footer-col ul a:hover{color:rgba(255,255,255,.85);}
-    .footer-col address{
-      font-style:normal;font-size:.875rem;
-      color:rgba(255,255,255,.38);line-height:1.85;
-    }
-    .footer-col address a{
-      color:rgba(255,255,255,.45);
-      transition:color .18s;
-      border-bottom:1px solid rgba(255,255,255,.1);
-    }
-    .footer-col address a:hover{color:rgba(255,255,255,.8);border-color:rgba(255,255,255,.3);}
-    /* Bottom bar */
-    /* ── ANIMATIONS ── */
-    .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}
-    .reveal.in{opacity:1;transform:none;}
-    .reveal-d1{transition-delay:.1s;}
-    .reveal-d2{transition-delay:.2s;}
-    .reveal-d3{transition-delay:.3s;}
-  
-    /* ── FORM — refined submit + fields ── */
-    .form-submit,
-    button[type="submit"].btn-primary{
-      width:100%;
-      padding:1rem 1.5rem;
-      background:var(--teal-2);
-      color:#fff;
-      font-weight:600;
-      font-size:.9375rem;
-      letter-spacing:.01em;
-      border:none;
-      border-radius:var(--r-sm);
-      cursor:pointer;
-      transition:background .18s,color .18s;
-      font-family:var(--ff-body);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:.625rem;
-    }
-    .form-submit:hover,
-    button[type="submit"].btn-primary:hover{
-      background:var(--teal);
-    }
-    /* Remove inline style overrides on submit */
-    .form-group{margin-bottom:0;}
-    .form-group label{
-      display:block;
-      font-family:var(--ff-mono);
-      font-size:var(--fs-label);
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      margin-bottom:.5rem;
-    }
-    /* Inputs on LIGHT backgrounds */
-    .form-card:not(.dark) .form-group input,
-    .form-card:not(.dark) .form-group select,
-    .form-card:not(.dark) .form-group textarea{
-      width:100%;
-      background:#fff;
-      border:1px solid var(--mid-grey);
-      border-radius:var(--r-sm);
-      padding:.75rem 1rem;
-      font-size:.9rem;
-      font-family:var(--ff-body);
-      color:var(--text-on-light);
-      transition:border-color .18s;
-      outline:none;
-    }
-    .form-card:not(.dark) .form-group input:focus,
-    .form-card:not(.dark) .form-group select:focus,
-    .form-card:not(.dark) .form-group textarea:focus{
-      border-color:var(--teal-2);
-    }
-    /* Inputs on DARK backgrounds (navy form-card) */
-    .form-card.dark .form-group input,
-    .form-card.dark .form-group select,
-    .form-card.dark .form-group textarea{
-      width:100%;
-      background:rgba(255,255,255,.09);
-      border:1px solid rgba(255,255,255,.2);
-      border-radius:var(--r-sm);
-      padding:.75rem 1rem;
-      font-size:.9rem;
-      font-family:var(--ff-body);
-      color:#F5F5F0;
-      transition:border-color .18s;
-      outline:none;
-    }
-    .form-card.dark .form-group input:focus,
-    .form-card.dark .form-group select:focus,
-    .form-card.dark .form-group textarea:focus{
-      border-color:var(--teal-2);
-      background:rgba(255,255,255,.1);
-    }
-    .form-card.dark .form-group label{color:rgba(255,255,255,.55);}
-    .form-card.dark .form-group input::placeholder,
-    .form-card.dark .form-group textarea::placeholder{color:rgba(255,255,255,.25);}
-    .form-card.dark h3{color:#F5F5F0;}
-  
-    /* ── TEXT CONTRAST — ensure all text readable on all backgrounds ── */
-    /* text-on-dark-3 (#5D7494) is too dim — boost it on key elements */
-    .hero-cred{color:rgba(255,255,255,.55);}
-    .pstat-label{color:rgba(255,255,255,.55);}
-    .team-role{color:rgba(255,255,255,.55);}
-    .team-line-tag{color:rgba(255,255,255,.5);}
-    /* contact-bg text */
-    .contact-bg .cinfo-label{color:rgba(255,255,255,.5);}
-    .contact-bg .cinfo-value{color:rgba(255,255,255,.85);}
-    .contact-bg .cinfo-value a{color:var(--teal-2);}
-    /* Boost body text in dark sections */
-    .paths-section .path-desc{color:rgba(255,255,255,.72);}
-    .paths-section .path-list li{color:rgba(255,255,255,.68);}
-    .partner-bg .pm-desc{color:rgba(255,255,255,.7);}
-    .partner-bg .pm-benefits li{color:rgba(255,255,255,.65);}
-    /* hero-desc */
-    .hero-desc{color:rgba(255,255,255,.78);}
-    /* footer address */
-    .footer-col address{color:rgba(255,255,255,.52);}
-    /* ── CONTRAST BOOST v2 — stronger readable text ── */
-    /* Body text in dark sections */
-    .hero-desc{color:rgba(255,255,255,.88) !important;}
-    .path-desc{color:rgba(255,255,255,.82);}
-    .path-list li{color:rgba(255,255,255,.78);}
-    .pstat-label{color:rgba(255,255,255,.65) !important;}
-    .team-role{color:rgba(255,255,255,.65) !important;}
-    .team-line-tag{color:rgba(255,255,255,.58) !important;}
-    .team-expertise .team-tag{color:rgba(255,255,255,.5) !important;}
-    /* Contact info on dark */
-    .contact-bg .cinfo-label{color:rgba(255,255,255,.55) !important;}
-    .contact-bg .cinfo-value{color:rgba(255,255,255,.9) !important;}
-    /* Partnership cards */
-    .pm-desc{color:rgba(255,255,255,.8) !important;}
-    .pm-benefits li{color:rgba(255,255,255,.72) !important;}
-    .pm-title{color:#fff !important;}
-    /* Stage/pipeline */
-    .stage-desc{color:rgba(0,0,0,.72);}
-    .stage-list li{color:rgba(0,0,0,.62);}
-    /* Footer */
-    .footer-col ul a{color:rgba(255,255,255,.6) !important;}
-    .footer-col address{color:rgba(255,255,255,.58) !important;}
-    .footer-affiliate-name{color:rgba(255,255,255,.38) !important;}
-    /* Focus cards */
-    .focus-desc{color:rgba(255,255,255,.75) !important;}
-    .focus-cohort{color:rgba(255,255,255,.52) !important;}
-    /* Hero credentials */
-    .hero-cred{color:rgba(255,255,255,.65) !important;}
-    /* Eyebrow on dark */
-    .eyebrow{font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.15em;text-transform:uppercase;color:var(--accent);opacity:1;}
-    /* sec-head p on dark */
-    .contact-bg .sec-head p,
-    .partner-bg .sec-head p,
-    .team-bg .sec-head p{color:rgba(255,255,255,.78);}
-
-
-
-    /* ══ PARTNERS ══ */
-    .partners-strip{
-      background:var(--white);
-      border-top:1px solid var(--rule-l);
-      border-bottom:1px solid var(--rule-l);
-      padding:5rem 0;
-    }
-    .partners-inner{display:flex;flex-direction:column;gap:2.5rem;}
-    .partners-top{
-      display:flex;align-items:flex-end;justify-content:space-between;
-      gap:2rem;flex-wrap:wrap;
-      padding-bottom:2rem;
-      border-bottom:1px solid var(--rule-l);
-    }
-    .partners-heading{
-      font-family:var(--ff-display);
-      font-size:clamp(1.375rem,2.5vw,1.875rem);
-      font-weight:700;color:var(--text-on-light);
-      line-height:1.15;
-    }
-    .partners-heading em{color:var(--accent);font-style:italic;font-weight:300;}
-    .partners-copy{
-      font-size:.9rem;color:var(--text-on-light-3);
-      max-width:320px;line-height:1.7;
-      text-align:right;
-    }
-    @media(max-width:640px){
-      .partners-top{flex-direction:column;align-items:flex-start;}
-      .partners-copy{text-align:left;max-width:100%;}
-    }
-    /* Tile table */
-    .partners-tiles{
-      display:flex;flex-wrap:wrap;
-      border:1px solid var(--rule-l);
-      border-radius:var(--r-lg);
-      overflow:hidden;
-    }
-    .partner-tile{
-      flex:1;min-width:140px;
-      padding:1.5rem 1.75rem;
-      border-right:1px solid var(--rule-l);
-      border-bottom:1px solid var(--rule-l);
-      display:flex;flex-direction:column;gap:.375rem;
-      transition:background .18s;
-      cursor:default;
-      position:relative;
-    }
-    .partner-tile::before{
-      content:'';position:absolute;top:0;left:0;right:0;height:2px;
-      background:transparent;transition:background .25s;
-    }
-    .partner-tile:hover{background:var(--off-white);}
-    .partner-tile:hover::before{background:var(--accent);}
-    /* Remove right border on last in row */
-    .partner-tile:last-child{border-right:none;}
-    .partner-tile-name{
-      font-family:var(--ff-mono);font-size:.75rem;font-weight:500;
-      letter-spacing:.1em;text-transform:uppercase;
-      color:var(--text-on-light);line-height:1;
-    }
-    .partner-tile-sub{
-      font-size:.8rem;color:var(--text-on-light-3);
-      line-height:1.45;
-    }
-    .partner-tile-tag{
-      display:inline-flex;align-items:center;
-      width:fit-content;
-      font-family:var(--ff-mono);font-size:var(--fs-label);
-      letter-spacing:.1em;text-transform:uppercase;
-      padding:.2rem .55rem;border-radius:3px;
-      margin-top:.25rem;
-    }
-    .partner-tile-tag.institutional{
-      background:rgba(0,153,153,.08);
-      border:1px solid rgba(0,153,153,.2);
-      color:var(--accent);
-    }
-    .partner-tile-tag.regulatory{
-      background:rgba(12,68,124,.05);
-      border:1px solid rgba(12,68,124,.12);
-      color:var(--text-on-light-2);
-    }
-    .partner-tile-tag.industry{
-      background:rgba(74,158,232,.07);
-      border:1px solid rgba(74,158,232,.2);
-      color:#3a7ec8;
-    }
-    .partner-tile-tag.government{
-      background:rgba(99,102,241,.07);
-      border:1px solid rgba(99,102,241,.2);
-      color:#5b5fc7;
-    }
-
-    .footer-right{display:flex;flex-direction:column;align-items:flex-end;gap:.375rem;flex-shrink:0;}
-    .footer-contact{font-size:.8rem;color:rgba(255,255,255,.4);}
-    .footer-contact a{color:rgba(0,179,179,.7);text-decoration:none;transition:color .18s;}
-    .footer-contact a:hover{color:var(--teal-2);}
-    @media(max-width:860px){.footer-right{align-items:flex-start;}}
-  
-
-/* Logo — white background pill so composite logo reads on dark header */
-.hdr-logo {
-  padding: 0;
-  background: transparent;
-  border-radius: 0;
-  transition: opacity .15s;
-}
-.hdr-logo:hover { opacity: .85; }
-.hdr-logo-img {
-  filter: brightness(0) invert(1) !important;
-  opacity: .90 !important;
-  height: 38px !important;
-  width: auto;
-  max-width: 340px;
 }
 
-/* Header scroll shrink */
-.hdr { transition: height .25s ease, background .2s; }
-.hdr.scrolled { height: 64px !important; }
-.hdr.scrolled 
-
-/* Nav font size — slightly larger for authority */
-.hdr-nav a { font-size: .875rem !important; }
-
-/* Research line cards — more breathing room */
-.rl-card, .research-line-card, [class*="line-card"] {
-  padding: 2rem !important;
+function setError(el, msg = 'Could not load data. Please try again later.') {
+  el.innerHTML = `
+    <div class="api-error">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="20" height="20">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M12 8v4M12 16h.01"/>
+      </svg>
+      ${msg}
+    </div>`;
 }
 
-/* Unified sharp button style */
-.btn, .btn-primary, .btn-sec, .cta-btn, [class*="btn-"]:not(.lt-btn):not(.mob-toggle) {
-  border-radius: 2px !important;
-}
+// ─────────────────────────────────────────────
+// STATUS / CATEGORY MAPS
+// ─────────────────────────────────────────────
 
-/* Remove remaining 8px radius from inline buttons */
-a[style*="border-radius:8px"], button[style*="border-radius:8px"],
-a[style*="border-radius: 8px"], button[style*="border-radius: 8px"] {
-  border-radius: 2px !important;
-}
-a[style*="border-radius:6px"], a[style*="border-radius:7px"],
-a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
-  border-radius: 2px !important;
-}
+const STATUS_CLASS = {
+  'Reclutando':     'recruiting',
+  'Activo':         'active',
+  'Completado':     'completed',
+  'En preparación': 'prep'
+};
 
+const STATUS_LABEL_EN = {
+  'Reclutando':     'Recruiting',
+  'Activo':         'Active',
+  'Completado':     'Completed',
+  'En preparación': 'In Preparation'
+};
 
-/* ── Tablet (768–860px) ───────────────────────────────────── */
-@media(max-width:860px) and (min-width:641px){
-  .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
-  .hero-stats { display: grid; grid-template-columns: repeat(2,1fr); gap: 0; }
-  .stat-strip-inner { grid-template-columns: repeat(2,1fr); }
-  .lines-grid { grid-template-columns: repeat(2,1fr); }
-  .paths-grid { grid-template-columns: 1fr 1fr; }
-  .inst-inner { grid-template-columns: 1fr; }
+const CATEGORY_CLASS = {
+  'Dispositivo':           'cat-device',
+  'Salud Digital':         'cat-digital',
+  'IA / ML':               'cat-ai',
+  'Tecnología Quirúrgica': 'cat-surgical'
+};
+
+const CATEGORY_ICON = {
+  'Dispositivo':           `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="9" height="9"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M7 7h2l1 3 2-6 1 3h3"/></svg>`,
+  'Salud Digital':         `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="9" height="9"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg>`,
+  'IA / ML':               `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="9" height="9"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6" y2="6"/><line x1="6" y1="18" x2="6" y2="18"/></svg>`,
+  'Tecnología Quirúrgica': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="9" height="9"><path d="M20 7l-9 9-4-4 9-9 4 4z"/><path d="M4 20l1-4"/></svg>`
+};
+
+// ─────────────────────────────────────────────
+// PAGE DETECTION
+// ─────────────────────────────────────────────
+
+const PAGE = (() => {
+  const p = location.pathname.split('/').pop() || 'index.html';
+  if (p.startsWith('clinical'))   return 'clinical';
+  if (p.startsWith('innovation')) return 'innovation';
+  if (p.startsWith('news'))       return 'news';
+  if (p.startsWith('team'))       return 'team';
+  if (p.startsWith('line'))       return 'line';
+  return 'index';
+})();
+
+// ─────────────────────────────────────────────
+// 1. RESEARCH LINES (index.html + clinical.html)
+// ─────────────────────────────────────────────
+
+async function loadResearchLines() {
+  const indexGrid    = document.getElementById('researchLinesGrid');
+  const clinicalList = document.getElementById('researchLinesList');
+
+  if (!indexGrid && !clinicalList) return;
+
+  try {
+    const { data } = await apiFetch('/api/research-lines/website');
+    if (!data?.length) return;
+
+    // ── INDEX: 2-column editorial grid ──────────────────────────────
+    if (indexGrid) {
+      // Skeleton — light section
+      indexGrid.innerHTML = Array(6).fill(
+        `<div class="line-card" style="pointer-events:none;">
+           <div class="api-skeleton" style="width:1.75rem;height:.9rem;margin-top:.2rem;margin-right:1.25rem;flex-shrink:0;"></div>
+           <div style="flex:1;">
+             <div class="api-skeleton" style="height:.9rem;width:80%;margin-bottom:.5rem;"></div>
+             <div class="api-skeleton" style="height:.7rem;width:45%;"></div>
+           </div>
+         </div>`
+      ).join('');
+
+      await new Promise(r => setTimeout(r, 0));
+
+      indexGrid.innerHTML = data.map((line, i) => {
+        const num = String(line.line_number).padStart(2, '0');
+        const displayName = line.short_name || line.name;
+        const trialBadge = line.active_trials > 0
+          ? `<span class="line-tag">${line.active_trials} active</span>` : '';
+        const coord = line.coordinator;
+        let coordBlock = '';
+        if (coord?.full_name) {
+          const initials = coord.full_name.split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
+          const avatar = coord.public_photo_url
+            ? `<img src="${escHtml(coord.public_photo_url)}" alt="" style="width:22px;height:22px;border-radius:50%;object-fit:cover;flex-shrink:0;">`
+            : `<span style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#085041 0%,#0F6E56 55%,#185FA5 100%);display:inline-flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-weight:700;font-size:8px;color:rgba(255,255,255,.96);flex-shrink:0;">${escHtml(initials)}</span>`;
+          coordBlock = `<div class="line-coord" style="display:flex;align-items:center;gap:.5rem;">${avatar}<span>${escHtml(coord.full_name)}</span></div>`;
+        }
+        return `
+          <a href="line.html?id=${line.id}" class="line-card reveal">
+            <div class="line-num">${num}</div>
+            <div class="line-body">
+              <div class="line-title">${escHtml(displayName)}</div>
+              ${coordBlock}
+              ${trialBadge ? `<div class="line-meta">${trialBadge}</div>` : ''}
+            </div>
+            <div class="line-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px;">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </div>
+          </a>`;
+      }).join('');
+      if (window._revealObserver) indexGrid.querySelectorAll('.reveal').forEach(el => window._revealObserver.observe(el));
+
+      // Update stat counters
+      _setStat('statLines', data.length);
+    }
+
+    // ── CLINICAL: expandable accordion ──────────────────────────────
+    // Build line_number -> id map for trial filter
+    window._researchLineMap = {};
+    data.forEach(line => { window._researchLineMap[String(line.line_number)] = line.id; });
+
+    // Populate filterLine dropdown on clinical page
+    const filterLineEl = document.getElementById('filterLine');
+    if (filterLineEl && filterLineEl.options.length <= 1) {
+      data.forEach(line => {
+        const num = String(line.line_number).padStart(2, '0');
+        const shortName = line.name.split(',')[0].split('y ')[0].trim();
+        const opt = document.createElement('option');
+        opt.value = String(line.line_number);
+        opt.textContent = `${num} — ${shortName}`;
+        filterLineEl.appendChild(opt);
+      });
+    }
+
+    if (clinicalList) {
+      clinicalList.innerHTML = data.map(line => `
+        <div class="line-card" id="line-${line.id}">
+          <div class="line-head" onclick="toggleLine('line-${line.id}')">
+            <div class="line-num">${String(line.line_number).padStart(2, '0')}</div>
+            <div class="line-meta">
+              ${line.coordinator?.full_name
+                ? `<div class="line-coordinator">
+                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="11" height="11">
+                       <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                     </svg>
+                     <strong>${escHtml(line.coordinator.full_name)}</strong>
+                   </div>`
+                : ''}
+              <div class="line-title">${escHtml(line.name)}</div>
+            </div>
+          </div>
+          <div class="line-tags-preview">
+            ${(line.keywords || []).map(k => `<span class="ltag">${escHtml(k)}</span>`).join('')}
+          </div>
+          <div class="line-expand-toggle" onclick="toggleLine('line-${line.id}')">
+            <span class="toggle-label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="13" height="13">
+                <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+              </svg>
+              <span lang="en">Research scope &amp; capabilities</span>
+              <span lang="es">Alcance y capacidades</span>
+            </span>
+            <div class="toggle-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11">
+                <path d="M19 9l-7 7-7-7"/>
+              </svg>
+            </div>
+          </div>
+          <div class="line-body">
+            <div class="line-body-inner">
+              ${line.description  ? `<p class="line-desc">${escHtml(line.description)}</p>` : ''}
+              ${line.capabilities ? `<p class="line-desc" style="margin-top:.5rem;">${escHtml(line.capabilities)}</p>` : ''}
+              <a href="line.html?id=${line.id}" class="btn-text" style="display:inline-flex;margin-top:.875rem;"><span lang="en">View full line page</span><span lang="es">Ver página completa de la línea</span> →</a>
+            </div>
+          </div>
+        </div>`
+      ).join('');
+    }
+
+  } catch (err) {
+    console.error('Research lines load failed:', err);
+    if (indexGrid)    setError(indexGrid);
+    if (clinicalList) setError(clinicalList);
   }
-
-
-/* ═══ CANONICAL FOOTER ════════════════════════════════════ */
-.site-footer{background:var(--navy-footer);border-top:1px solid rgba(255,255,255,.06);padding:4rem 0 0;position:relative;overflow:hidden;}
-.site-footer::before{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,122,122,.25),transparent);}
-.footer-grid{max-width:1440px;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem);display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:3rem;}
-.footer-logo-img{height:36px;width:auto;display:block;filter:brightness(0) invert(1);opacity:.82;margin-bottom:1rem;}
-.footer-tagline{font-family:var(--ff-mono,'DM Mono',monospace);font-size:var(--fs-label);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.28);line-height:1.8;max-width:220px;}
-.footer-nav-label{font-family:var(--ff-mono,'DM Mono',monospace);font-size:var(--fs-label);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.22);margin-bottom:.875rem;}
-.footer-col-nav nav{display:flex;flex-direction:column;gap:.5rem;}
-.footer-col-nav nav a{font-size:.8125rem;color:rgba(255,255,255,.42);text-decoration:none;transition:color .15s;}
-.footer-col-nav nav a:hover{color:rgba(255,255,255,.82);}
-.footer-address{font-size:.8rem;color:rgba(255,255,255,.32);line-height:1.75;font-style:normal;}
-.footer-address strong{display:block;color:rgba(255,255,255,.52);font-weight:500;margin-bottom:.25rem;}
-.footer-bottom-bar{max-width:1440px;margin:3rem auto 0;padding:1.25rem clamp(1.25rem,4vw,3rem);border-top:1px solid rgba(255,255,255,.05);display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
-.footer-copy{font-size:var(--fs-label);color:rgba(255,255,255,.45);line-height:1.5;}
-.footer-certs{display:flex;align-items:center;gap:1.5rem;}
-.footer-certs span{font-family:var(--ff-mono,'DM Mono',monospace);font-size:var(--fs-label);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45);}
-@media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr;}.footer-col-brand{grid-column:1/-1;}}
-@media(max-width:480px){.footer-grid{grid-template-columns:1fr;}.footer-bottom-bar{flex-direction:column;align-items:flex-start;}}
-
-/* Publication nav — spread prev/next, minimal style */
-.pub-strip-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 1.5rem;
-}
-.psn-btn {
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  background: rgba(255,255,255,.04);
-  border: 1px solid rgba(255,255,255,.1);
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  color: rgba(255,255,255,.4);
-  transition: background .15s, color .15s, border-color .15s;
-}
-.psn-btn:hover { background: rgba(255,255,255,.08); color: #fff; border-color: rgba(255,255,255,.2); }
-.psn-nav-group { display: flex; align-items: center; gap: .5rem; }
-.psn-count { font-family: var(--ff-mono,'DM Mono',monospace); font-size: .55rem; letter-spacing: .1em; color: rgba(255,255,255,.25); }
-
-/* Affiliation logos — ensure visibility on dark strip */
-.affil-logo-link img {
-  filter: brightness(0) invert(1);
-  opacity: .55;
-  transition: opacity .2s;
-}
-.affil-logo-link:hover img { opacity: .85; }
-.affil-strip {
-  background: rgba(255,255,255,.02);
-  border-top: 1px solid rgba(255,255,255,.05);
-  border-bottom: 1px solid rgba(255,255,255,.05);
-  padding: 1.5rem 0;
-}
-.affil-inner {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 clamp(1.25rem,4vw,3rem);
-  display: flex;
-  align-items: center;
-  gap: 2.5rem;
-  flex-wrap: wrap;
 }
 
-/* ── Subtle visual depth — Crick-style section backgrounds ── */
-.hero { position: relative; }
-.hero::after {
-  content: '';
-  position: absolute;
-  top: -20%; right: -10%;
-  width: 60vw; height: 60vw;
-  max-width: 700px; max-height: 700px;
-  background: radial-gradient(ellipse at center, rgba(0,122,122,.08) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: 0;
+window.toggleLine = function(id) {
+  const card = document.getElementById(id);
+  if (card) card.classList.toggle('open');
+};
+
+// ─────────────────────────────────────────────
+// 2. CLINICAL TRIALS (clinical.html)
+// ─────────────────────────────────────────────
+
+async function loadTrials(filters = {}) {
+  const tbody   = document.getElementById('studiesBody');
+  const countEl = document.getElementById('studiesCount');
+  if (!tbody) return;
+
+  setLoading(tbody, 6);
+
+  const params = new URLSearchParams();
+  if (filters.line && filters.line !== 'all') {
+    // Map line number to UUID using cached research lines data
+    const lineId = window._researchLineMap && window._researchLineMap[filters.line];
+    if (lineId) params.set('line', lineId);
+  }
+  if (filters.phase  && filters.phase  !== 'all') params.set('phase',  filters.phase);
+  if (filters.status && filters.status !== 'all') params.set('status', filters.status);
+  if (filters.search) params.set('search', filters.search);
+
+  try {
+    const { data } = await apiFetch(`/api/clinical-trials/website?${params}`);
+    const trials = data || [];
+
+    if (countEl) countEl.textContent = trials.length;
+
+    const studiesShown   = document.getElementById('studiesShown');
+    const studiesShownEs = document.getElementById('studiesShownEs');
+    if (studiesShown)   studiesShown.textContent   = trials.length;
+    if (studiesShownEs) studiesShownEs.textContent = trials.length;
+
+    if (!trials.length) {
+      tbody.innerHTML = `
+        <tr><td colspan="6" style="text-align:center;padding:2.5rem;color:var(--text-on-light-3,#767676);font-size:.875rem;font-family:var(--ff-mono,monospace);">
+          <span lang="en">No studies match the current filters.</span>
+          <span lang="es">No hay ensayos con los filtros actuales.</span>
+        </td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = trials.map(t => {
+      window._trialData[t.id] = t;
+      const statusClass = STATUS_CLASS[t.status] || 'active';
+      const allLines = [t.research_line, ...(t.additional_lines || [])].filter(Boolean);
+      const lineCell = allLines.length
+        ? allLines.slice(0, 2).map(l => `<span class="trial-line-tag" title="${escHtml(l.name)}" style="margin-right:4px;">L${String(l.line_number).padStart(2,'0')} · ${escHtml(l.short_name || l.name)}</span>`).join('') +
+          (allLines.length > 2 ? `<span class="trial-line-tag" title="${escHtml(allLines.slice(2).map(l => l.name).join(', '))}">+${allLines.length - 2}</span>` : '')
+        : '<span class="trial-line-tag">—</span>';
+      return `
+        <tr onclick="openTrialModal('${t.id}')" style="cursor:pointer;" title="Click for details">
+          <td><span class="trial-protocol">${escHtml(t.protocol_id)}</span></td>
+          <td><span class="trial-title">${escHtml(t.title)}</span></td>
+          <td>${lineCell}</td>
+          <td><span class="phase-badge">${escHtml(t.phase)}</span></td>
+          <td>
+            <span class="status-badge ${statusClass}">
+              <span lang="en">${STATUS_LABEL_EN[t.status] || t.status}</span>
+              <span lang="es">${t.status}</span>
+            </span>
+          </td>
+          <td>${t.sponsor_name
+            ? `<span style="font-size:.75rem;color:var(--text-on-light-3,#767676);font-family:var(--ff-mono,monospace);">${escHtml(t.sponsor_name)}</span>`
+            : `<span style="color:var(--text-on-light-3,#767676)">—</span>`
+          }</td>
+        </tr>`;
+    }).join('');
+
+    _fadeInRows('#studiesBody tr');
+
+  } catch (err) {
+    console.error('Trials load failed:', err);
+    setError(tbody);
+    if (countEl) countEl.textContent = '—';
+  }
 }
-/* Section alternation — warm surface for contrast */
-.section-warm {
-  background: #f7f6f3;
-}
-.section-dark {
-  background: var(--navy-footer);
-}
-/* Research line cards — warmer hover */
-.line-card {
-  transition: background .18s, box-shadow .18s, transform .18s;
-}
-.line-card:hover {
-  background: rgba(0,122,122,.04) !important;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 20px rgba(0,0,0,.06);
-}
-/* Stat numbers — subtle teal tint */
 
-/* Path cards / collaboration cards — warmer bg */
-.path-card {
-  background: rgba(255,255,255,.015) !important;
-  transition: background .2s, border-color .2s;
-}
-.path-card:hover {
-  background: rgba(0,122,122,.04) !important;
-  border-color: rgba(0,122,122,.2) !important;
-}
+function initTrialFilters() {
+  const filterLine   = document.getElementById('filterLine');
+  const filterPhase  = document.getElementById('filterPhase');
+  const filterStatus = document.getElementById('filterStatus');
+  const filterSearch = document.getElementById('filterSearch');
 
+  if (!filterLine && !filterPhase && !filterStatus) return;
 
-@media print {
-  .hdr,.mob-drawer,.mob-overlay,.mob-toggle,.site-footer .footer-col-nav,
-  .btn,.latest-bar,#scrollTop,canvas{display:none!important;}
-  body{background:#fff!important;color:#000!important;font-size:11pt;padding-top:0!important;}
-  a[href]::after{content:" ("attr(href)")";font-size:8pt;color:#555;}
-  a[href^="#"]::after,a[href^="javascript"]::after{content:"";}
+  const getFilters = () => ({
+    line:   filterLine?.value   || 'all',
+    phase:  filterPhase?.value  || 'all',
+    status: filterStatus?.value || 'all',
+    search: filterSearch?.value || ''
+  });
+
+  const refresh = () => loadTrials(getFilters());
+
+  filterLine?.addEventListener('change', refresh);
+  filterPhase?.addEventListener('change', refresh);
+  filterStatus?.addEventListener('change', refresh);
+
+  let searchTimer;
+  filterSearch?.addEventListener('input', () => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(refresh, 380);
+  });
+
+  loadTrials(getFilters());
 }
 
+// ─────────────────────────────────────────────
+// 3. INNOVATION PROJECTS (innovation.html)
+// ─────────────────────────────────────────────
 
-/* Loading skeleton shimmer — referenced by setLoading() in api.js on
-   every page, but the CSS itself never actually existed anywhere in
-   this file. Every loading-state shimmer site-wide was rendering as
-   an invisible, unstyled box until now. */
-.api-skeleton{background:linear-gradient(90deg,var(--surface) 25%,var(--white) 37%,var(--surface) 63%);background-size:400% 100%;animation:skeletonShimmer 1.4s ease infinite;border-radius:4px;}
-.api-skeleton-dark{background:linear-gradient(90deg,rgba(255,255,255,.06) 25%,rgba(255,255,255,.12) 37%,rgba(255,255,255,.06) 63%);background-size:400% 100%;animation:skeletonShimmer 1.4s ease infinite;border-radius:4px;}
-@keyframes skeletonShimmer{0%{background-position:100% 50%;}100%{background-position:0 50%;}}
-</style>
+async function loadProjects() {
+  const grid = document.getElementById('projectsGrid');
+  if (!grid) return;
 
-  <!-- neumAC Design System — buttons, pills, team grid -->
-  <style>
-    /* ── Buttons: one system, two variants ── */
-    .btn-primary,.btn-secondary,.btn-primary-alt,.btn-ghost,
-    .btn-ghost-dark,.btn-outline,.btn-outline-dark,.btn-violet,.btn-gold,.btn-cta,
-    .form-trigger-btn,.path-btn,.cta-pill,.hstat-btn,
-    a[class*="btn-"],button[class*="btn-"] {
-      display:inline-flex;align-items:center;gap:.5rem;
-      font-family:var(--ff-body);font-size:var(--fs-meta);font-weight:500;
-      padding:.625rem 1.25rem;border-radius:var(--r-md);
-      transition:background .15s,border-color .15s,color .15s,opacity .15s;
-      cursor:pointer;text-decoration:none;border:none;
-    }
-    .btn-primary,.btn-primary-alt,.btn-violet,.btn-gold,.form-trigger-btn,.btn-cta,.hstat-btn {
-      background:#fff;color:var(--navy-2);
-    }
-    .btn-primary:hover,.btn-primary-alt:hover,.btn-violet:hover,.btn-gold:hover,
-    .form-trigger-btn:hover,.btn-cta:hover,.hstat-btn:hover {
-      background:rgba(255,255,255,.88);
-    }
-    .btn-secondary,.btn-ghost,.btn-ghost-dark,.btn-outline,.btn-outline-dark,.path-btn {
-      background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.35);
-    }
-    .btn-secondary:hover,.btn-ghost:hover,.btn-ghost-dark:hover,.btn-outline:hover,
-    .btn-outline-dark:hover,.path-btn:hover {
-      background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.55);
-    }
-    /* On light backgrounds, primary flips to filled-blue, secondary to outlined-blue */
-    .section-light .btn-primary,.section-light .btn-primary-alt,.section-light .btn-violet,
-    .section-light .btn-gold,.section-light .form-trigger-btn,.section-light .btn-cta {
-      background:var(--navy-2);color:#fff;
-    }
-    .section-light .btn-primary:hover,.section-light .btn-primary-alt:hover,
-    .section-light .btn-violet:hover,.section-light .btn-gold:hover,
-    .section-light .form-trigger-btn:hover,.section-light .btn-cta:hover {
-      background:var(--navy-3);
-    }
-    .section-light .btn-secondary,.section-light .btn-ghost,.section-light .btn-outline {
-      background:transparent;color:var(--navy-2);border:1.5px solid var(--blue-200);
-    }
-    .section-light .btn-secondary:hover,.section-light .btn-ghost:hover,.section-light .btn-outline:hover {
-      background:var(--blue-50);
+  setLoading(grid, 4, true); // dark section
+
+  try {
+    const { data } = await apiFetch('/api/innovation-projects/website');
+    const projects = data || [];
+
+    if (!projects.length) {
+      setError(grid, 'No active projects at this time.');
+      return;
     }
 
-    /* ── Labels / pills: information, never an action ── */
-    .team-tag,.cap-pill,.trial-phase,.trial-status,.persp-badge,
-    .stage-node,.tech-tag,.focus-tag,.tca-tag,.tca-affil,.tca-line,
-    .lead-tag,.lead-line-pill,.lead-affil-pill,.opp-type,.story-type-pill,
-    .spotlight-stage-pill {
-      cursor:default;pointer-events:none;border-radius:var(--r-xs);
-    }
+    grid.innerHTML = projects.map((p, i) => {
+      const catClass = CATEGORY_CLASS[p.category] || 'cat-device';
+      const catIcon  = CATEGORY_ICON[p.category]  || CATEGORY_ICON['Dispositivo'];
+      const delay    = i % 2 === 0 ? '' : ' reveal-d1';
+      return `
+        <div class="project-card reveal${delay}">
+          <div class="project-top">
+            <span class="project-cat-badge ${catClass}">
+              ${catIcon}
+              ${escHtml(p.category)}
+            </span>
+            ${p.development_stage ? `<span class="stage-badge">${escHtml(p.development_stage)}</span>` : ''}
+          </div>
+          <h3 class="project-title">${escHtml(p.title)}</h3>
+          <p class="project-desc">${escHtml(p.description)}</p>
+          ${p.partner_needs?.length
+            ? `<p class="project-needs-label">
+                 <span lang="en">Partner Needs</span>
+                 <span lang="es">Necesidades del Socio</span>
+               </p>
+               <div class="project-needs">
+                 ${p.partner_needs.map(n => `<span class="pneed">${escHtml(n)}</span>`).join('')}
+               </div>`
+            : ''}
+        </div>`;
+    }).join('');
 
-    /* ── Team grid (public team page card) ── */
-    #teamGrid {
-      display:grid;
-      grid-template-columns:repeat(auto-fill, minmax(min(100%,320px),1fr));
-      gap:1px;
-      background:var(--rule-l,rgba(0,0,0,.06));
-      border:1px solid rgba(0,0,0,.06);
-      border-radius:var(--r-md);
-      overflow:hidden;
-    }
-    .team-card-api {
-      background:#fff;
-      padding:1.5rem;
-      display:flex;align-items:flex-start;gap:1.125rem;
-    }
-    .team-card-api:hover { background:var(--teal-lt,#E2F0F0); }
-    .tca-avatar {
-      width:40px;height:40px;border-radius:var(--r-sm);flex-shrink:0;
-      background:var(--navy-2);
-      display:flex;align-items:center;justify-content:center;
-      font-family:var(--ff-mono,monospace);font-size:var(--fs-label);
-      font-weight:600;letter-spacing:.05em;color:#fff;
-    }
-    .tca-name { font-size:var(--fs-body-sm);font-weight:600;color:#111;line-height:1.3;margin-bottom:.2rem; }
-    .tca-spec { font-size:var(--fs-label);color:#6B6B6B;margin-bottom:.375rem; }
-    .tca-line {
-      display:inline-flex;align-items:center;gap:.3rem;
-      font-family:var(--ff-mono,monospace);font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;
-      padding:.25rem .55rem;
-      background:var(--blue-50);color:var(--navy-2);border:1px solid var(--blue-100);
-    }
-    .tca-bio { font-size:var(--fs-meta);color:#404040;line-height:1.6;margin-top:.5rem; }
-    .tca-tags { display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.5rem; }
-    .tca-tag {
-      font-size:var(--fs-label);padding:.2rem .5rem;
-      background:rgba(0,0,0,.04);color:#6B6B6B;border:1px solid rgba(0,0,0,.06);
-      font-family:var(--ff-mono,monospace);letter-spacing:.06em;text-transform:uppercase;
-    }
-    .tca-affil {
-      font-size:var(--fs-label);padding:.2rem .5rem;
-      background:#FAEEDA;color:#633806;border:1px solid #EF9F27;
-      font-family:var(--ff-mono,monospace);letter-spacing:.06em;text-transform:uppercase;
-    }
-
-    /* ── line.html — trial teaser rows ──
-       Deliberately new class names, not .status-badge/.phase-badge —
-       those are flattened to plain text by an !important override
-       elsewhere in this file for the clinical.html trials table, and
-       this page needs the real colored-pill treatment instead. */
-    .lt-trial-row{display:flex;align-items:center;gap:.75rem;padding:1rem 1.25rem;text-decoration:none;color:inherit;transition:background .12s;}
-    .lt-trial-row:hover{background:var(--surface);}
-    .lt-trial-phase{display:inline-flex;align-items:center;padding:.22rem .55rem;border-radius:3px;font-size:var(--fs-label);font-family:var(--ff-mono);letter-spacing:.05em;border:1px solid rgba(0,153,153,.15);color:var(--teal-2);background:rgba(0,153,153,.06);white-space:nowrap;flex-shrink:0;}
-    .lt-trial-title{flex:1;font-size:var(--fs-meta);min-width:0;}
-    .lt-trial-arrow{width:16px;height:16px;color:var(--ink-4);flex-shrink:0;}
-    .ltr-item{display:flex;gap:.875rem;padding:1rem 0;border-top:1px solid var(--border-l);font-size:1.0625rem;line-height:1.6;color:var(--ink-2);}
-    .ltr-item:first-child{border-top:none;padding-top:0;}
-    .ltr-mark{color:var(--teal);flex-shrink:0;font-weight:600;}
-    .line-team-card{border:1px solid var(--border-l);border-radius:var(--r-lg,12px);overflow:hidden;background:var(--white);transition:border-color .15s;}
-    .line-team-card:hover{border-color:var(--teal-2);}
-    .line-team-header{display:flex;align-items:center;gap:.875rem;padding:1rem 1.125rem;cursor:pointer;}
-    .line-team-avatar{width:48px;height:48px;border-radius:50%;flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-weight:700;font-size:1rem;color:rgba(255,255,255,.96);}
-    .line-team-chevron{width:14px;height:14px;color:var(--ink-4);flex-shrink:0;transition:transform .2s;margin-left:auto;}
-    .line-team-card[aria-expanded="true"] .line-team-chevron{transform:rotate(180deg);}
-    .line-team-detail{max-height:0;overflow:hidden;transition:max-height .25s ease;}
-    .line-team-detail-inner{padding:0 1.125rem 1.125rem;font-size:var(--fs-body-sm);line-height:1.65;color:var(--ink-2);border-top:1px solid var(--border-l);margin-top:0;padding-top:1rem;}
-    .line-team-name{font-size:var(--fs-body-sm);font-weight:500;color:var(--ink);margin:0;line-height:1.3;}
-    .line-team-role{font-size:var(--fs-label);color:var(--ink-3);margin:.15rem 0 0;line-height:1.3;}
-    .btn-text{display:inline-flex;align-items:center;gap:.35rem;font-size:var(--fs-meta);font-weight:500;color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(0,122,122,.25);padding-bottom:1px;transition:color .15s,border-color .15s;}
-    .btn-text:hover{color:#006666;border-bottom-color:rgba(0,102,102,.5);}
-  </style>
-
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","name":"neumACt R&I — Research","description":"Clinical research programme — six active lines covering transplantation, airway disease, interventional pneumology, critical care, thoracic surgery, and precision medicine.","isPartOf":{"@type":"WebSite","url":"https://neumact.org","name":"neumACt R&I"}}
-</script>
-</head>
-<body>
-<header class="hdr" id="hdr"><div class="hdr-inner"><a href="index.html" class="hdr-logo" aria-label="neumACt R&amp;I"><img src="logo.svg" alt="neumACt R&I" class="hdr-logo-img" onerror="this.style.opacity='.3'"></a><nav class="hdr-nav" aria-label="Primary navigation">
-      <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
-      <div class="hdr-dd">
-        <span class="hdr-dd-trigger current"><a href="clinical.html" aria-current="page"><span lang="en">Research</span><span lang="es">Investigación</span></a><button type="button" class="hdr-dd-chevron" aria-label="Show research lines" aria-expanded="false" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button></span>
-        <div class="hdr-dd-panel"><div class="hdr-dd-panel-inner" id="hdrResearchLines"></div></div>
-      </div>
-      <a href="innovation.html"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
-      <a href="news.html"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
-      <a href="team.html"><span lang="en">Team</span><span lang="es">Equipo</span></a>
-    <a href="index.html#contact"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
-    </nav><div class="hdr-right"><div class="lang-toggle" role="group" aria-label="Language"><button class="lt-btn lt-btn--active" data-lang="en" id="ltBtnEn" onclick="selectLang('en')" aria-pressed="true">EN</button><button class="lt-btn" data-lang="es" id="ltBtnEs" onclick="selectLang('es')" aria-pressed="false">ES</button></div><button class="mob-toggle" id="mobToggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobDrawer"><span></span><span></span><span></span></button></div></div></header><div class="mob-overlay" id="mobOverlay"></div><nav class="mob-drawer" id="mobDrawer" aria-label="Mobile navigation"><div class="mob-drawer-nav">
-      <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
-      <a href="clinical.html" class="current" aria-current="page"><span lang="en">Research</span><span lang="es">Investigación</span></a>
-      <a href="innovation.html"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
-      <a href="news.html"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
-      <a href="team.html"><span lang="en">Team</span><span lang="es">Equipo</span></a>
-    <a href="index.html#contact"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
-    </div><div class="mob-lang"><button class="lt-btn lt-btn--active" data-lang="en" onclick="selectLang('en')" aria-pressed="true">EN</button><button class="lt-btn" data-lang="es" onclick="selectLang('es')" aria-pressed="false">ES</button></div></nav>
-<div id="pb" role="progressbar" aria-hidden="true"></div>
-
-<section class="hero" id="top" style="min-height:auto;padding:0;">
-  <div id="lineLoadingState" style="padding:8rem 0;text-align:center;color:rgba(255,255,255,.4);">
-    <span lang="en">Loading research line…</span><span lang="es">Cargando línea de investigación…</span>
-  </div>
-  <div id="lineNotFound" style="display:none;padding:8rem 0;text-align:center;">
-    <p style="color:rgba(255,255,255,.6);font-size:1.0625rem;margin-bottom:1rem;">
-      <span lang="en">This research line could not be found.</span><span lang="es">No se encontró esta línea de investigación.</span>
-    </p>
-    <a href="clinical.html" class="btn-primary"><span lang="en">View all research lines</span><span lang="es">Ver todas las líneas</span></a>
-  </div>
-
-  <div id="lineHero" style="display:none;padding:4.5rem 0 3.5rem;">
-    <div class="wrap" style="max-width:1100px;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem);">
-      <p class="eyebrow" id="lineEyebrow" style="margin-bottom:1rem;"></p>
-      <h1 class="display lg" id="lineTitle" style="color:#fff;max-width:46rem;margin-bottom:1.25rem;"></h1>
-      <div id="lineStatPills" style="display:flex;gap:.625rem;flex-wrap:wrap;"></div>
-      <div id="lineKeywords" style="display:flex;flex-wrap:wrap;gap:.4rem .25rem;margin-top:1.5rem;"></div>
-    </div>
-  </div>
-</section>
-
-<section style="background:var(--surface);padding:3.5rem 0;display:none;" id="lineAboutSection">
-  <div class="wrap" style="max-width:1100px;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem);">
-    <p class="eyebrow" style="margin-bottom:1rem;"><span lang="en">About this line</span><span lang="es">Sobre esta línea</span></p>
-    <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:1.5rem;align-items:start;">
-      <div id="lineAboutContent" style="font-size:1.0625rem;line-height:1.75;color:var(--ink-2);"></div>
-      <div id="lineQuickFacts" style="background:var(--white);border-radius:var(--r-md,8px);padding:1.5rem;display:none;"></div>
-    </div>
-  </div>
-</section>
-
-<section style="background:var(--white);padding:3.5rem 0;display:none;" id="lineTrackRecordSection">
-  <div class="wrap" style="max-width:1100px;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem);">
-    <p class="eyebrow" style="margin-bottom:1.25rem;"><span lang="en">Track record</span><span lang="es">Trayectoria</span></p>
-    <ul id="lineTrackRecordList" style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0;max-width:70ch;"></ul>
-  </div>
-</section>
-
-<section style="background:var(--surface);padding:3.5rem 0;display:none;" id="lineTrialsSection">
-  <div class="wrap" style="max-width:1100px;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem);">
-    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:.75rem;">
-      <p class="eyebrow" style="margin:0;"><span lang="en">Active trials</span><span lang="es">Ensayos activos</span></p>
-      <a href="clinical.html" class="btn-text"><span lang="en">View all trials</span><span lang="es">Ver todos los ensayos</span> →</a>
-    </div>
-    <div id="lineTrialsList" style="border:1px solid var(--border-l);border-radius:var(--r-md);overflow:hidden;"></div>
-  </div>
-</section>
-
-<section style="background:var(--white);padding:3.5rem 0;display:none;" id="linePubsSection">
-  <div class="wrap" style="max-width:1100px;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem);">
-    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:.75rem;">
-      <p class="eyebrow" style="margin:0;"><span lang="en">Recent publications</span><span lang="es">Publicaciones recientes</span></p>
-      <a href="news.html" class="btn-text"><span lang="en">All publications</span><span lang="es">Todas las publicaciones</span> →</a>
-    </div>
-    <div id="linePubsList"></div>
-  </div>
-</section>
-
-<!-- THE PEOPLE — coordinator and supporting team merged into one section,
-     positioned last. Substance (about/track-record/trials/publications)
-     now reads as one uninterrupted flow; this is the "who" reference at
-     the end, not a structural detour in the middle. The coordinator is
-     visually distinguished within this same list (larger, chief/PI
-     badge), not a separate card with its own design language. -->
-<section style="background:var(--surface);padding:3.5rem 0 5rem;display:none;" id="linePeopleSection">
-  <div class="wrap" style="max-width:1100px;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem);">
-    <p class="eyebrow" style="margin-bottom:1.5rem;"><span lang="en">The people</span><span lang="es">El equipo</span></p>
-    <div id="lineCoordinatorCard" style="margin-bottom:2rem;"></div>
-    <div id="lineTeamChips" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:.875rem;align-items:start;"></div>
-  </div>
-</section>
-
-<section style="background:var(--navy-2);padding:4rem 0;display:none;" id="lineCollabSection">
-  <div class="wrap" style="max-width:1100px;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem);display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;">
-    <div style="max-width:560px;">
-      <p style="font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.5);margin:0 0 .75rem;">
-        <span lang="en">Collaborate</span><span lang="es">Colaborar</span>
-      </p>
-      <h2 style="font-family:var(--ff-display);font-size:clamp(1.5rem,3vw,2rem);font-weight:500;color:#fff;margin:0 0 .75rem;line-height:1.2;">
-        <span lang="en">Interested in this line's work?</span><span lang="es">¿Te interesa el trabajo de esta línea?</span>
-      </h2>
-      <p style="font-size:.9375rem;color:rgba(255,255,255,.65);margin:0;line-height:1.6;">
-        <span lang="en">Reach out for collaboration, referrals, or to discuss an active study.</span><span lang="es">Contacta para colaboración, derivaciones, o para hablar sobre un estudio activo.</span>
-      </p>
-    </div>
-    <a href="index.html#contact" class="hero-text-link" style="flex-shrink:0;">
-      <span lang="en">Get in touch</span><span lang="es">Contactar</span> →
-    </a>
-  </div>
-</section>
-
-<footer class="site-footer">
-  <div class="footer-grid">
-    <div class="footer-col-brand">
-      <img src="logo.svg" alt="neumACt R&I" class="footer-logo-img">
-      <p class="footer-tagline">
-        <span lang="en">Servicio de Neumología<br>Hospital Universitario A Coruña<br>Área Sanitaria de A Coruña y Cee</span>
-        <span lang="es">Servicio de Neumología<br>Hospital Universitario A Coruña<br>Área Sanitaria de A Coruña y Cee</span>
-      </p>
-    </div>
-    <div class="footer-col-nav">
-      <p class="footer-nav-label"><span lang="en">Site</span><span lang="es">Sitio</span></p>
-      <nav>
-          <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
-          <a href="clinical.html"><span lang="en">Research</span><span lang="es">Investigación</span></a>
-          <a href="innovation.html"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
-          <a href="news.html"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
-          <a href="team.html"><span lang="en">Team</span><span lang="es">Equipo</span></a>
-      </nav>
-    </div>
-    <div class="footer-col-contact">
-      <p class="footer-nav-label"><span lang="en">Contact</span><span lang="es">Contacto</span></p>
-      <address class="footer-address">
-        <strong>Servicio de Neumología · CHUAC</strong>
-        As Xubias, 84 · 15006 A Coruña<br>Galicia, España<br>
-        <a href="index.html#contact" style="color:rgba(0,179,179,.55);text-decoration:none;margin-top:.5rem;display:inline-block;font-size:.75rem;transition:color .15s;" onmouseover="this.style.color='rgba(0,179,179,.85)'" onmouseout="this.style.color='rgba(0,179,179,.55)'">
-          <span lang="en">Research enquiries →</span><span lang="es">Consultas de investigación →</span>
-        </a>
-      </address>
-    </div>
-  </div>
-  <div class="footer-bottom-bar">
-    <p class="footer-copy">© 2026 neumACt R&amp;I · INIBIC · SERGAS</p>
-    <div class="footer-certs">
-      <span>GCP · ICH E6</span>
-      <span>CE MDR 2017/745</span>
-      <span>AEMPS</span>
-    </div>
-  </div>
-</footer>
-<div class="footer-legal" style="background:var(--navy-footer);max-width:1440px;margin:0 auto;padding:.75rem clamp(1.25rem,4vw,3rem);display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.04);">
-  <a href="privacidad.html" style="font-size:var(--fs-label);font-family:var(--ff-mono,'DM Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);text-decoration:none;transition:color .15s;" onmouseover="this.style.color='rgba(255,255,255,.85)'" onmouseout="this.style.color='rgba(255,255,255,.55)'"><span lang="en">Privacy</span><span lang="es">Privacidad</span></a>
-  <a href="accesibilidad.html" style="font-size:var(--fs-label);font-family:var(--ff-mono,'DM Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);text-decoration:none;transition:color .15s;" onmouseover="this.style.color='rgba(255,255,255,.85)'" onmouseout="this.style.color='rgba(255,255,255,.55)'"><span lang="en">Accessibility</span><span lang="es">Accesibilidad</span></a>
-  <a href="aviso-legal.html" style="font-size:var(--fs-label);font-family:var(--ff-mono,'DM Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);text-decoration:none;transition:color .15s;" onmouseover="this.style.color='rgba(255,255,255,.85)'" onmouseout="this.style.color='rgba(255,255,255,.55)'"><span lang="en">Legal</span><span lang="es">Aviso legal</span></a>
-  <span style="font-size:var(--fs-label);font-family:var(--ff-mono,'DM Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-left:auto;"><span lang="en">Accredited by INIBIC · SERGAS</span><span lang="es">Acreditado por INIBIC · SERGAS</span></span>
-</div>
-
-
-
-
-
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-
-  <script>
-    /* ── Scroll: header + progress bar + scroll-to-top ── */
-    (function(){
-      var hdr=document.getElementById('hdr'),prg=document.getElementById('progress-bar'),stt=document.getElementById('scrollTop');
-      window.addEventListener('scroll',function(){
-        var y=window.scrollY;
-        if(hdr)hdr.classList.toggle('scrolled',y>40);
-        if(prg){var tot=document.documentElement.scrollHeight-window.innerHeight;prg.style.width=(tot>0?(y/tot*100):0)+'%';}
-        if(stt){var thr=Math.max(400,(document.documentElement.scrollHeight-window.innerHeight)*0.35);stt.classList.toggle('visible',y>thr);}
-      },{passive:true});
-      if(stt)stt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
-    })();
-
-    /* ── Mobile drawer ── */
-    var _tog=document.getElementById('mobToggle'),_drw=document.getElementById('mobDrawer'),_ovl=document.getElementById('mobOverlay'),_cls=document.getElementById('mobClose');
-    function openMob(){
-      if(!_tog||!_drw)return;
-      _tog.classList.add('open');_drw.classList.add('open');_ovl&&_ovl.classList.add('open');
-      _tog.setAttribute('aria-expanded','true');document.body.style.overflow='hidden';
-      closeLang();
-    }
-    function closeMob(){
-      if(!_tog||!_drw)return;
-      _tog.classList.remove('open');_drw.classList.remove('open');_ovl&&_ovl.classList.remove('open');
-      _tog.setAttribute('aria-expanded','false');document.body.style.overflow='';
-    }
-    if(_tog)_tog.addEventListener('click',openMob);
-    if(_cls)_cls.addEventListener('click',closeMob);
-    if(_ovl)_ovl.addEventListener('click',closeMob);
-    document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeMob();closeLang();}});
-
-    /* ── Language dropdown ── */
-    var _lsw=document.getElementById('langSw'),_lbt=document.getElementById('langBtn'),_lbl=document.getElementById('langLabel');
-    function openLang(){
-      if(!_lsw)return;
-      closeMob();
-      _lsw.classList.add('open');
-      if(_lbt)_lbt.setAttribute('aria-expanded','true');
-    }
-    function closeLang(){
-      if(!_lsw)return;
-      _lsw.classList.remove('open');
-      if(_lbt)_lbt.setAttribute('aria-expanded','false');
-    }
-    function toggleLang(){
-      if(_lsw&&_lsw.classList.contains('open'))closeLang();else openLang();
-    }
-    if(_lbt){
-      _lbt.addEventListener('click',function(e){e.stopPropagation();toggleLang();});
-    }
-    if(_lsw){
-      _lsw.addEventListener('click',function(e){e.stopPropagation();});
-    }
-    document.addEventListener('click',function(){closeLang();});
-
-    /* ── Language core — NO _busy flag, always reliable ── */
-    function setLang(l){
-      if(!l||!(l==='en'||l==='es'))return;
-      document.documentElement.dataset.lang=l;
-      try{localStorage.setItem('huac_lang',l);}catch(e){}
-    }
-    function selectLang(l){
-      setLang(l);
-      /* Update dropdown options */
-      document.querySelectorAll('.lt-btn').forEach(function(b){
-        var on = b.dataset.lang === l;
-        b.classList.toggle('lt-btn--active', on);
-        b.setAttribute('aria-pressed', on ? 'true' : 'false');
-      });
-      /* Update mobile lang buttons */
-      var me=document.getElementById('mobLangEn'),mes=document.getElementById('mobLangEs');
-      if(me)me.classList.toggle('active',l==='en');
-      if(mes)mes.classList.toggle('active',l==='es');
-      /* Update label */
-      if(_lbl)_lbl.textContent=l.toUpperCase();
-      closeLang();
-    }
-    /* Restore saved language */
-    (function(){
-      try{
-        var s=localStorage.getItem('huac_lang');
-        if(s==='en'||s==='es')selectLang(s);
-      }catch(e){}
-    })();
-
-
-    /* ── Research line accordion ── */
-    function toggleLine(id){
-      var card = document.getElementById(id);
-      if(!card) return;
-      var isOpen = card.classList.contains('open');
-      /* Close all open lines first */
-      document.querySelectorAll('.line-card.open').forEach(function(c){
-        c.classList.remove('open');
-      });
-      /* Open clicked one if it was closed */
-      if(!isOpen) card.classList.add('open');
-    }
-
-    /* ── Smooth anchor scroll ── */
-    document.querySelectorAll('a[href^="#"]').forEach(function(a){
-      a.addEventListener('click',function(e){
-        var id=a.getAttribute('href').slice(1);if(!id)return;
-        var el=document.getElementById(id);if(!el)return;
-        e.preventDefault();closeMob();
-        setTimeout(function(){window.scrollTo({top:el.offsetTop-92,behavior:'smooth'});try{history.pushState(null,'','#'+id);}catch(x){}},50);
+    requestAnimationFrame(() => {
+      grid.querySelectorAll('.reveal').forEach(el => {
+        setTimeout(() => el.classList.add('in'), 50);
       });
     });
 
-    /* ── Reveal observer — exposed globally so api.js can observe
-       dynamically injected elements ── */
-    window._revealObserver=new IntersectionObserver(function(entries){
-      entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');window._revealObserver.unobserve(e.target);}});
-    },{threshold:.1,rootMargin:'0px 0px -40px 0px'});
-    document.querySelectorAll('.reveal').forEach(function(el){window._revealObserver.observe(el);});
-  </script>
-<script>
-(function(){
-  var hdr=document.getElementById('hdr');
-  var mob=document.getElementById('mobToggle');
-  var drawer=document.getElementById('mobDrawer');
-  if(hdr) window.addEventListener('scroll',function(){hdr.classList.toggle('scrolled',window.scrollY>20);},{passive:true});
-  /* mob handled by separate script */
-  function syncLang(l){
-    var en=document.getElementById('ltBtnEn'),es=document.getElementById('ltBtnEs');
-    if(en){en.classList.toggle('lt-btn--active',l==='en');en.setAttribute('aria-pressed',l==='en');}
-    if(es){es.classList.toggle('lt-btn--active',l==='es');es.setAttribute('aria-pressed',l==='es');}
+  } catch (err) {
+    console.error('Projects load failed:', err);
+    setError(grid);
   }
-  syncLang(document.documentElement.dataset.lang||'en');
-  var _orig=window.selectLang;
-  window.selectLang=function(l){if(_orig)_orig(l);syncLang(l);if(drawer)drawer.classList.remove('open');if(mob)mob.setAttribute('aria-expanded','false');};
-})();
-</script>
-<script src="animations.js" defer></script>
-<script src="api.js" defer></script>
-<div id="cookieBanner" role="dialog"
-  style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9000;background:rgba(4,44,83,.97);border-top:1px solid rgba(255,255,255,.08);padding:1rem clamp(1.25rem,4vw,3rem);flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;backdrop-filter:blur(8px);">
-  <p style="font-size:.8rem;color:rgba(255,255,255,.55);margin:0;max-width:680px;">
-    <span lang="en">This site uses essential cookies only. No tracking, no advertising.</span>
-    <span lang="es">Este sitio solo usa cookies esenciales. Sin rastreo, sin publicidad.</span>
-  </p>
-  <button onclick="this.parentElement.style.display='none';localStorage.setItem('cookieOk','1')"
-    style="flex-shrink:0;padding:.45rem 1.1rem;background:#007A7A;color:#fff;border:none;border-radius:100px;font-size:.75rem;cursor:pointer;">
-    <span lang="en">Understood</span><span lang="es">Entendido</span>
-  </button>
-</div>
-<script>if(!localStorage.getItem('cookieOk')){var c=document.getElementById('cookieBanner');if(c)c.style.display='flex';}</script>
+}
+
+// ─────────────────────────────────────────────
+// 4. NEWS (news.html)
+// ─────────────────────────────────────────────
+
+async function loadNews(filters = {}) {
+  // Support both old 'newsFeed' and new 'blogFeed' element ids
+  const feed = document.getElementById('blogFeed') || document.getElementById('newsFeed');
+  if (!feed) return;
+
+  // New blog page has its own skeleton (#feedSkeleton) — only inject if old layout
+  if (!document.getElementById('feedSkeleton')) {
+    feed.innerHTML = Array(4).fill('').map((_, i) => `
+      <div style="padding:1.5rem;border-bottom:1px solid rgba(0,0,0,.07);opacity:${1 - i * 0.15}">
+        <div class="api-skeleton" style="width:60px;height:12px;margin-bottom:12px;border-radius:3px;"></div>
+        <div class="api-skeleton" style="width:85%;height:16px;margin-bottom:8px;border-radius:3px;animation-delay:${i * 0.07}s;"></div>
+        <div class="api-skeleton" style="width:50%;height:11px;border-radius:3px;animation-delay:${i * 0.07 + 0.05}s;"></div>
+      </div>`).join('');
+  }
+
+  const params = new URLSearchParams();
+  if (filters.type && filters.type !== 'all') params.set('type', filters.type);
+  if (filters.line) params.set('line', filters.line);
+
+  try {
+    const { data } = await apiFetch(`/api/news/website?${params}`);
+    window._newsAllPosts = data || [];
+    if (typeof window.onNewsLoaded === 'function') window.onNewsLoaded();
+  } catch (err) {
+    console.error('News load failed:', err);
+    setError(feed, 'Could not load posts. Please try again later.');
+  }
+}
+
+// ─────────────────────────────────────────────
+// 5. TEAM (team.html)
+// ─────────────────────────────────────────────
+
+// ─────────────────────────────────────────────
+// TEAM PAGE — two targeted functions
+// ─────────────────────────────────────────────
+
+const EXPERTISE_MAP = {
+  '04c82d53': ['Lung Transplant','PAH','ILD / IPF','CLAD'],
+  '09ed9240': ['Severe Asthma','COPD','Biologics','Bronchiectasis','CF'],
+  '97c8ee3f': ['EBUS-TBNA','Lung Cancer','Cryobiopsy','Bronchoscopy'],
+  'e1cbfedb': ['NIV','Critical Care','Sleep Medicine','Home O₂'],
+  '5d329d71': ['VATS','RATS','Thoracic Oncology','ERATS'],
+  'c290a7e5': ['Precision Medicine','AI / Digital Health','Rare Diseases','AAT'],
+};
+function _getExpertise(id) {
+  const prefix = (id||'').replace(/-/g,'').slice(0,8);
+  return EXPERTISE_MAP[prefix] || [];
+}
+
+async function loadTeamLeads() {
+  const grid = document.getElementById('leadsGrid');
+  if (!grid) return;
+  try {
+    const { data } = await apiFetch('/api/team/website');
+    const leads = (data||[]).filter(m => m.coordinates_line)
+      .sort((a,b) => {
+        if (a.is_chief_of_department && !b.is_chief_of_department) return -1;
+        if (!a.is_chief_of_department && b.is_chief_of_department) return 1;
+        return (a.coordinates_line?.line_number||99) - (b.coordinates_line?.line_number||99);
+      });
+    if (!leads.length) { grid.innerHTML = '<p class="state-empty">Research lead profiles coming soon.</p>'; return; }
+    grid.innerHTML = leads.map((m,i) => {
+      const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
+      const lineNum = m.coordinates_line?.line_number ? String(m.coordinates_line.line_number).padStart(2,'0') : '';
+      const lineName = m.coordinates_line?.name || '';
+      const expertise = _getExpertise(m.id);
+      const isAffiliated = m.is_external;
+      const avatarArea = m.public_photo_url
+        ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:100%;height:100%;object-fit:cover;"/>`
+        : `<span class="lead-initials">${initials}</span>`;
+
+      // Research-focus tags only — role/seniority (Chief, PI) moved to the
+      // name area as plain text, since "JEFE DE SERVICIO" is a title, not
+      // a topic, and competing for attention with real expertise tags
+      // diluted both.
+      const tags = expertise.map(t=>`<span class="lead-tag">${escHtml(t)}</span>`).join('');
+
+      const roleLine = [
+        m.is_chief_of_department ? `<span lang="en">Department Chief</span><span lang="es">Jefe de Servicio</span>` : '',
+        m.id === 'c290a7e5-7bea-4652-a0ef-251fbc73184d'
+          ? `<span lang="en">Principal Investigator, neumACt</span><span lang="es">Investigador Principal, neumACt</span>`
+          : (m.can_be_pi ? `<span lang="en">Principal Investigator</span><span lang="es">Investigador Principal</span>` : ''),
+      ].filter(Boolean).join(' · ');
+
+      // Publication list — the genuine variable-depth element. Someone
+      // with 6 papers gets a real list with overflow; someone with 1
+      // gets exactly that, no padding, no invented stat tiles.
+      // Note: deliberately NOT showing a trial/study count here — that
+      // figure was derived from the coordinator's *line*, not personal
+      // PI/co-investigator involvement (which isn't recorded in the
+      // database yet), so it would overstate what's actually verified.
+      const pubs = m.recent_pubs || [];
+      const pubCount = m.publication_count || pubs.length;
+      const pubList = pubs.length
+        ? `<div class="lead-pubs">
+             <p class="lead-pubs-label"><span lang="en">${pubCount} ${pubCount === 1 ? 'publication' : 'publications'}</span><span lang="es">${pubCount} ${pubCount === 1 ? 'publicación' : 'publicaciones'}</span></p>
+             ${pubs.map(p => `
+               <div class="lead-pub-row">
+                 <span class="lp-year">${p.year || ''}</span>
+                 <span class="lp-title-inline">${escHtml(p.title)}</span>
+                 ${p.doi ? `<a href="https://doi.org/${escHtml(p.doi)}" target="_blank" rel="noopener" class="lp-doi-inline">DOI →</a>` : ''}
+               </div>`).join('')}
+             ${pubCount > pubs.length ? `<a href="news.html" class="ls-link" style="display:inline-block;margin-top:.5rem;"><span lang="en">+${pubCount - pubs.length} more →</span><span lang="es">+${pubCount - pubs.length} más →</span></a>` : ''}
+           </div>`
+        : '';
+
+      const partnerNote = m.seeking_partner
+        ? `<a href="innovation.html" class="ls-link" style="display:inline-flex;align-items:center;gap:.4rem;margin-top:.625rem;">
+             <span class="ls-dot" style="background:#d97706;"></span>
+             <span lang="en">Seeking innovation partner</span><span lang="es">Buscando socio innovador</span> →
+           </a>`
+        : '';
+      const delayClass = i > 0 ? ` reveal-d${Math.min(i,3)}` : '';
+      return `<div class="lead-row reveal${delayClass}">
+        <div class="lead-visual">
+          <div class="lead-avatar" data-line="L${lineNum}" aria-hidden="true">${avatarArea}</div>
+          ${lineNum ? `<span class="lead-line-num">L${lineNum}</span>` : ''}
+        </div>
+        <div class="lead-copy">
+          <div class="lead-name">${escHtml(m.display_name || m.full_name)}</div>
+          <div class="lead-spec">${roleLine ? roleLine + ' · ' : ''}${m.specialization ? escHtml(m.specialization) : ''}${isAffiliated?' · '+escHtml(m.primary_dept_name||'External'):' · Neumología, CHUAC'}</div>
+          ${lineName ? `<div class="lead-line-name">${escHtml(lineName)}</div>` : ''}
+          ${m.public_bio ? `<p class="lead-bio">${escHtml(trimBioRolePrefix(m.public_bio))}</p>` : ''}
+          ${tags ? `<div class="lead-tags">${tags}</div>` : ''}
+          ${pubList}
+          ${partnerNote}
+        </div>
+      </div>`;
+    }).join('');
+    if (window._revealObserver) grid.querySelectorAll('.reveal').forEach(el=>window._revealObserver.observe(el));
+  } catch(err) { console.error('Leads load failed:',err); grid.innerHTML='<p class="state-empty">Unable to load team profiles.</p>'; }
+}
+
+async function loadTeamGroup() {
+  const grid = document.getElementById('teamGroup');
+  if (!grid) return;
+  try {
+    const { data } = await apiFetch('/api/team/website');
+    const group = (data||[]).filter(m => !m.coordinates_line);
+    if (!group.length) { grid.style.display='none'; return; }
+    window._teamGroupData = group; // for the click-to-expand profile modal
+    const roleLabel = { attending_physician:'Attending Physician', medical_resident:'Resident', fellow:'Fellow', nurse_practitioner:'Nurse Practitioner', studies_coordinator:'Studies Coordinator', data_manager:'Data Manager', labtech:'Lab Technician', biomedical_engineer:'Biomedical Engineer', administrator:'Administrator' };
+    grid.innerHTML = group.map(m => {
+      const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
+      const role = roleLabel[m.staff_type] || m.staff_type;
+      return `<div class="team-member" onclick="openProfileModal('${escHtml(m.id)}')" style="cursor:pointer;">
+        <div class="tm-avatar">${m.public_photo_url ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"/>` : initials}</div>
+        <div style="min-width:0;">
+          <div class="tm-name">${escHtml(m.display_name || m.full_name)}</div>
+          <div class="tm-role">${escHtml(role)}</div>
+          ${m.specialization ? `<div class="tm-spec">${escHtml(m.specialization)}</div>` : ''}
+        </div>
+      </div>`;
+    }).join('');
+  } catch(err) { console.error('Team group load failed:',err); if (grid) grid.innerHTML = '<p class="state-empty">Unable to load team list.</p>'; }
+}
+
+// Click-to-expand profile modal — shared by team.html's team-member cards.
+// Looks up the already-fetched record by ID rather than a second request.
+function openProfileModal(staffId) {
+  const m = (window._teamGroupData || []).find(x => x.id === staffId);
+  if (!m) return;
+  const overlay = document.getElementById('profileModalOverlay');
+  const content = document.getElementById('profileModalContent');
+  if (!overlay || !content) return;
+  const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
+  const roleLabel = { attending_physician:'Attending Physician', medical_resident:'Resident', fellow:'Fellow', nurse_practitioner:'Nurse Practitioner', studies_coordinator:'Studies Coordinator', data_manager:'Data Manager', labtech:'Lab Technician', biomedical_engineer:'Biomedical Engineer', administrator:'Administrator' };
+  const role = roleLabel[m.staff_type] || m.staff_type;
+  const avatar = m.public_photo_url
+    ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:72px;height:72px;border-radius:50%;object-fit:cover;flex-shrink:0;">`
+    : `<div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#085041 0%,#0F6E56 55%,#185FA5 100%);display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-weight:700;font-size:22px;color:rgba(255,255,255,.96);flex-shrink:0;">${escHtml(initials)}</div>`;
+  content.innerHTML = `
+    <div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:1.25rem;">
+      ${avatar}
+      <div>
+        <p style="font-weight:600;font-size:1.0625rem;margin:0;">${escHtml(m.display_name || m.full_name)}</p>
+        <p style="font-size:.875rem;color:var(--ink-3);margin:2px 0 0;">${escHtml(role)}</p>
+        ${m.specialization ? `<p style="font-size:.8125rem;color:var(--ink-4);margin:2px 0 0;font-family:var(--ff-mono);">${escHtml(m.specialization)}</p>` : ''}
+      </div>
+    </div>
+    ${m.public_bio
+      ? `<p style="font-size:.9375rem;line-height:1.65;color:var(--ink-2);margin:0;">${escHtml(m.public_bio)}</p>`
+      : `<p style="font-size:.875rem;color:var(--ink-4);font-style:italic;margin:0;border-top:1px dashed var(--border-l);padding-top:1rem;">Bio not yet added.</p>`}
+  `;
+  overlay.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closeProfileModal() {
+  const overlay = document.getElementById('profileModalOverlay');
+  if (overlay) overlay.style.display = 'none';
+  document.body.style.overflow = '';
+}
+window.openProfileModal = openProfileModal;
+window.closeProfileModal = closeProfileModal;
+
+// Legacy loadTeam() — used by clinical.html #teamGrid.
+// Excludes line coordinators — they already get a full profile card
+// via loadTeamLeads() above this section; showing them again here in
+// a flatter card was straight duplication, same person twice on one page.
+async function loadTeam() {
+  if (PAGE === 'team') return;
+  const grid = document.getElementById('teamGrid');
+  if (!grid) return;
+  try {
+    const { data } = await apiFetch('/api/team/website');
+    const members = (data || []).filter(m => !m.coordinates_line);
+    if (!members.length) { grid.innerHTML='<p style="padding:2rem;color:#6B6B6B;font-size:.875rem;">Team information coming soon.</p>'; return; }
+    grid.innerHTML = members.map(m => {
+      const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
+      const lineTag = m.coordinates_line ? `<span class="tca-line">L${String(m.coordinates_line.line_number).padStart(2,'0')} — ${escHtml(m.coordinates_line.name)}</span>` : '';
+      const affiliTag = m.is_external ? `<span class="tca-affil">${escHtml(m.primary_dept_name||'Affiliated')}</span>` : '';
+      return `<div class="team-card-api">
+        <div class="tca-avatar">${m.public_photo_url ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:40px;height:40px;object-fit:cover;border-radius:3px;">` : initials}</div>
+        <div style="flex:1;min-width:0;">
+          <div class="tca-name">${escHtml(m.display_name || m.full_name)}</div>
+          ${m.specialization ? `<div class="tca-spec">${escHtml(m.specialization)}</div>` : ''}
+          <div style="display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.375rem;">${lineTag}${affiliTag}</div>
+          ${m.public_bio ? `<p class="tca-bio">${escHtml(trimBioRolePrefix(m.public_bio))}</p>` : ''}
+        </div>
+      </div>`;
+    }).join('');
+  } catch(err) { console.error('Team load failed:',err); grid.innerHTML='<p style="padding:2rem;color:#6B6B6B;">Unable to load team information.</p>'; }
+}
+
+// ─────────────────────────────────────────────
+// 7. TEAM PAGE — PUBLICATION STRIP
+// Horizontal scrolling journal index.
+// NOT a duplicate of news.html — no body text.
+// ─────────────────────────────────────────────
+
+async function loadPublicationStrip() {
+  const inner = document.getElementById('pubStripInner');
+  const countEl = document.getElementById('pubCount');
+  if (!inner) return;
+
+  try {
+    const { data } = await apiFetch('/api/news/website?type=publication&limit=30');
+    const pubs = (data || []).filter(p => p.journal_name);
+
+    if (!pubs.length) { inner.innerHTML = '<div class="pub-card" style="color:rgba(255,255,255,.4);font-size:.875rem;padding:2rem;">No publications available.</div>'; return; }
+
+    inner.innerHTML = pubs.map(p => {
+      const year = p.published_at ? new Date(p.published_at).getFullYear() : '';
+      const authorLine = p.authors_text ? p.authors_text.split(';')[0].trim() + (p.authors_text.includes(';') ? ' et al.' : '') : (p.author?.full_name || '');
+      return `
+        <div class="pub-card">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:.5rem;">
+            <span class="pub-journal">${escHtml(p.journal_name)}</span>
+            <span class="pub-year">${year}</span>
+          </div>
+          <div class="pub-title">${escHtml(p.title)}</div>
+          ${authorLine ? `<div class="pub-authors">${escHtml(authorLine)}</div>` : ''}
+          ${p.doi
+            ? `<a href="https://doi.org/${escHtml(p.doi)}" target="_blank" rel="noopener" class="pub-doi-link">DOI →</a>`
+            : `<a href="news.html" class="pub-doi-link"><span lang="en">View</span><span lang="es">Ver</span> →</a>`}
+        </div>`;
+    }).join('');
+
+    if (countEl) countEl.textContent = `${pubs.length} publications`;
+
+    // Scroll controls
+    const scroll = document.getElementById('pubScroll');
+    const prev = document.getElementById('pubPrev');
+    const next = document.getElementById('pubNext');
+    const STEP = 280;
+    if (prev) prev.addEventListener('click', () => scroll.scrollBy({left:-STEP,behavior:'smooth'}));
+    if (next) next.addEventListener('click', () => scroll.scrollBy({left: STEP,behavior:'smooth'}));
+
+  } catch (err) {
+    console.error('Publication strip failed:', err);
+  }
+}
+
+// ─────────────────────────────────────────────
+// 8. TEAM PAGE — OPEN OPPORTUNITIES
+// Recruiting trials + innovation projects seeking partners.
+// Unique content — not shown elsewhere.
+// ─────────────────────────────────────────────
+
+async function loadOpportunities() {
+  const grid = document.getElementById('oppsGrid');
+  const section = document.getElementById('opportunities');
+  if (!grid) return;
+
+  try {
+    const [trialsRes, projectsRes] = await Promise.all([
+      apiFetch('/api/clinical-trials/website'),
+      apiFetch('/api/innovation-projects/website'),
+    ]);
+
+    const recruiting = (trialsRes.data || []).filter(t =>
+      ['Reclutando','Recruiting'].includes(t.status)
+    );
+    const seekingProjects = (projectsRes.data || []).filter(p =>
+      p.funding_status === 'seeking'
+    );
+
+    if (!recruiting.length && !seekingProjects.length) return; // keep section hidden
+
+    if (section) section.style.display = '';
+
+    const trialCards = recruiting.slice(0, 4).map(t => `
+      <div class="opp-card">
+        <span class="opp-type opp-type--trial">${escHtml(t.phase || 'Clinical Study')} · <span lang="en">Recruiting</span><span lang="es">Reclutando</span></span>
+        <div class="opp-title">${escHtml(t.title || t.study_id || '—')}</div>
+        <div class="opp-meta">${t.sponsor ? escHtml(t.sponsor) : ''}</div>
+        <a href="clinical.html" class="opp-link">
+          <span lang="en">View study</span><span lang="es">Ver estudio</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:10px;height:10px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>`).join('');
+
+    const projCards = seekingProjects.slice(0, 2).map(p => `
+      <div class="opp-card">
+        <span class="opp-type opp-type--inno"><span lang="en">Innovation · Seeking partner</span><span lang="es">Innovación · Buscando socio</span></span>
+        <div class="opp-title">${escHtml(p.title || '—')}</div>
+        <div class="opp-meta">${p.current_stage ? escHtml(p.current_stage.charAt(0).toUpperCase() + p.current_stage.slice(1)) : ''}</div>
+        <a href="innovation.html" class="opp-link">
+          <span lang="en">View project</span><span lang="es">Ver proyecto</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:10px;height:10px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>`).join('');
+
+    grid.innerHTML = trialCards + projCards;
+
+  } catch (err) {
+    console.error('Opportunities load failed:', err);
+  }
+}
+
+async function loadLiveStats() {
+  if (PAGE !== 'index') return;
+  try {
+    const linesRes = await apiFetch('/api/research-lines/website');
+    const lineCount = linesRes.data?.length || 0;
+    if (lineCount > 0) {
+      _setStat('statLines', lineCount);
+      // Sum active trials across all lines
+      const totalActive = linesRes.data.reduce((sum, l) => sum + (l.active_trials || 0), 0);
+      if (totalActive > 0) {
+        _setStat('statTrials', totalActive + '+');
+        _setStat('statTrials2', totalActive + '+');
+      }
+    }
+
+    // Team count from website endpoint
+    try {
+      const teamRes = await apiFetch('/api/team/website');
+      const memberCount = teamRes.data?.length || 0;
+      if (memberCount > 0) _setStat('statMembers', memberCount);
+    } catch { /* keep static fallback */ }
+
+    // Publication count — limit=30 caps what the API actually returns, so
+    // a count >=30 means there are more we haven't fetched; show "30+"
+    // rather than silently understating the real total.
+    try {
+      const pubsRes = await apiFetch('/api/news/website?type=publication&limit=30');
+      const pubCount = pubsRes.data?.length || 0;
+      if (pubCount > 0) _setStat('statPubs', pubCount >= 30 ? '30+' : pubCount);
+    } catch { /* keep static fallback */ }
+
+  } catch (err) {
+    console.warn('Live stats not available:', err.message);
+  }
+}
+
+/** Update any element with id matching statId */
+function _setStat(id, value) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.dataset.counter = value;
+  // If the element is already on screen by the time live data arrives,
+  // animate to the real number now rather than leaving it static —
+  // the IntersectionObserver in animations.js only fires once on first
+  // entry, which may have already happened with the static fallback value.
+  if (window._animateCounter) {
+    window._animateCounter(el, value);
+  } else {
+    el.textContent = value;
+  }
+}
+
+// ─────────────────────────────────────────────
+// UTILITIES
+// ─────────────────────────────────────────────
+
+function escHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// Every bio in the database opens with a role/affiliation sentence
+// ("Head of Research Line N (neumACt – INIBIC)...", "Head of the
+// Pulmonology Department at CHUAC and Principal Investigator of...")
+// that's now redundant — role and line are shown as structured fields
+// above the bio. Strips that one leading sentence if it matches the
+// pattern; leaves the bio untouched otherwise, so this never mangles
+// a bio that doesn't follow the convention.
+function trimBioRolePrefix(bio) {
+  if (!bio) return bio;
+  const sentences = bio.split(/(?<=[.!?])\s+/);
+  if (sentences.length < 2) return bio;
+  const first = sentences[0];
+  const rolePattern = /^(Head of|Jefe de|Principal Investigator|Coordinator of|Coordinador[a]? de)/i;
+  if (rolePattern.test(first)) {
+    return sentences.slice(1).join(' ');
+  }
+  return bio;
+}
+
+function _fadeInRows(selector) {
+  requestAnimationFrame(() => {
+    document.querySelectorAll(selector).forEach((row, i) => {
+      row.style.opacity = '0';
+      row.style.transition = `opacity .25s ease ${i * 25}ms`;
+      requestAnimationFrame(() => { row.style.opacity = '1'; });
+    });
+  });
+}
+
+// ─────────────────────────────────────────────
+// TRIAL DETAIL MODAL
+// ─────────────────────────────────────────────
+
+window._trialData = {};
+
+window.openTrialModal = function(id) {
+  const t = window._trialData[id];
+  if (!t) return;
+
+  const modal = document.getElementById('trialModal');
+  if (!modal) return;
+
+  document.getElementById('tmProtocol').textContent = t.protocol_id;
+  document.getElementById('tmTitle').textContent = t.title;
+
+  const statusClass = STATUS_CLASS[t.status] || 'active';
+  const statusLabel = STATUS_LABEL_EN[t.status] || t.status;
+  const lineName = t.research_line?.name || '—';
+  const lineNum  = t.research_line?.line_number ? `0${t.research_line.line_number}`.slice(-2) : '—';
+
+  document.getElementById('tmMeta').innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:.3rem;">
+      <div style="font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-on-light-3);">Status</div>
+      <span class="status-badge ${statusClass}" style="width:fit-content;">
+        <span lang="en">${statusLabel}</span><span lang="es">${t.status}</span>
+      </span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:.3rem;">
+      <div style="font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-on-light-3);">Phase</div>
+      <span class="phase-badge" style="width:fit-content;">${escHtml(t.phase)}</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:.3rem;">
+      <div style="font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-on-light-3);">Research Line</div>
+      <span style="font-size:.875rem;color:var(--text-on-light);">${escHtml(lineNum)} — ${escHtml(lineName)}</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:.3rem;">
+      <div style="font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-on-light-3);">Sponsor</div>
+      <span style="font-size:.875rem;color:var(--text-on-light);">${t.sponsor_name ? escHtml(t.sponsor_name) : '—'}</span>
+    </div>
+    ${t.study_type ? `
+    <div style="display:flex;flex-direction:column;gap:.3rem;">
+      <div style="font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-on-light-3);">Study Type</div>
+      <span style="font-size:.875rem;color:var(--text-on-light);">${escHtml(t.study_type)}</span>
+    </div>` : ''}
+    ${t.sponsor_type ? `
+    <div style="display:flex;flex-direction:column;gap:.3rem;">
+      <div style="font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-on-light-3);">Sponsor Type</div>
+      <span style="font-size:.875rem;color:var(--text-on-light);">${escHtml(t.sponsor_type)}</span>
+    </div>` : ''}
+  `;
+
+  const descEl = document.getElementById('tmDesc');
+  if (t.description) {
+    descEl.textContent = t.description;
+    descEl.style.display = 'block';
+  } else {
+    descEl.style.display = 'none';
+  }
+
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeTrialModal = function() {
+  const modal = document.getElementById('trialModal');
+  if (modal) modal.style.display = 'none';
+  document.body.style.overflow = '';
+};
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') window.closeTrialModal();
+});
+// ─────────────────────────────────────────────
+
+function initContactForm() {
+  // Different pages use different form ids (index uses 'contactForm',
+  // clinical uses 'researchForm', innovation uses 'innovForm') — check all of them.
+  const form = document.getElementById('contactForm')
+            || document.getElementById('researchForm')
+            || document.getElementById('innovForm');
+  if (!form) return;
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const btn = form.querySelector('button[type="submit"]');
+    const success = document.getElementById('formSuccess');
+    const originalText = btn ? btn.innerHTML : '';
+
+    // Collect fields by their `name` attribute. This is robust to each page's
+    // own field order/layout, unlike reading by position (fields[0], fields[1]…),
+    // which silently scrambles data whenever a page's form differs from the
+    // original index.html layout this was written against.
+    const data = {};
+    form.querySelectorAll('[name]').forEach(el => {
+      data[el.name] = el.value;
+    });
+
+    // Some pages (clinical, innovation) have a second dropdown — e.g. "Nature
+    // of Inquiry" or "Partnership Model" — that doesn't have its own slot in
+    // the backend's contact payload. Fold it into the free-text message
+    // instead of silently dropping it.
+    let message = data.message || '';
+    if (data.secondary_topic) {
+      message = `[${data.secondary_topic}]\n\n${message}`;
+    }
+
+    const payload = {
+      name:             data.contact_name || '',
+      organisation:     data.organisation || '',
+      email:            data.email || '',
+      area_of_interest: data.area_of_interest || '',
+      message:          message
+    };
+
+    if (!payload.name || !payload.email) return;
+
+    // Loading state
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:14px;height:14px;animation:spin .8s linear infinite;">
+        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+      </svg> Sending…`;
+    }
+
+    try {
+      const res = await fetch(`${API_BASE}/api/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || 'Submission failed');
+
+      // Success
+      form.reset();
+      if (success) {
+        success.classList.add('show');
+        setTimeout(() => success.classList.remove('show'), 7000);
+      }
+    } catch (err) {
+      console.error('Contact form error:', err);
+      if (success) {
+        success.style.background = 'rgba(220,38,38,.08)';
+        success.style.borderColor = 'rgba(220,38,38,.2)';
+        success.style.color = '#dc2626';
+        success.textContent = 'Something went wrong. Please email us directly.';
+        success.classList.add('show');
+        setTimeout(() => {
+          success.classList.remove('show');
+          success.removeAttribute('style');
+        }, 6000);
+      }
+    } finally {
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+      }
+    }
+  });
+}
+
+// Add spin keyframe for loading button
+if (!document.getElementById('api-spin-style')) {
+  const s = document.createElement('style');
+  s.id = 'api-spin-style';
+  s.textContent = '@keyframes spin { to { transform: rotate(360deg); } }';
+  document.head.appendChild(s);
+}
+
+// ─────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────
+
+// ─────────────────────────────────────────────
+// 0. HEADER — RESEARCH LINES DROPDOWN
+// Runs on every page (the header is shared). Lightweight — only
+// line_number + short_name, no images/bios/trial counts needed here.
+// ─────────────────────────────────────────────
+
+async function loadHeaderResearchDropdown() {
+  const menu = document.getElementById('hdrResearchLines');
+  if (!menu) return;
+  try {
+    const { data } = await apiFetch('/api/research-lines/website');
+    const lines = data || [];
+    if (!lines.length) { menu.innerHTML = ''; return; }
+    menu.innerHTML = lines.map(l => `
+      <a class="hdr-dd-item" href="line.html?id=${l.id}">
+        <span class="hdr-dd-num">L${String(l.line_number).padStart(2,'0')}</span>
+        <span class="hdr-dd-name">${escHtml(l.short_name || l.name)}</span>
+      </a>`).join('')
+      + `<a class="hdr-dd-all" href="clinical.html#research-lines">
+           <span lang="en">View all ${lines.length} lines</span><span lang="es">Ver las ${lines.length} líneas</span> →
+         </a>`;
+  } catch (err) {
+    console.error('Header research dropdown failed:', err);
+  }
+}
+
+// Click-to-toggle dropdown (replaces hover, which doesn't work on touch and
+// reads ambiguously — hovering shows the open state without any deliberate
+// action having happened). Closes on outside click, Escape, or selecting
+// an item.
+function initHeaderDropdown() {
+  const dd = document.querySelector('.hdr-dd');
+  if (!dd) return;
+  const chevron = dd.querySelector('.hdr-dd-chevron');
+  if (!chevron) return;
+
+  function close() { dd.classList.remove('open'); chevron.setAttribute('aria-expanded', 'false'); }
+  function open() { dd.classList.add('open'); chevron.setAttribute('aria-expanded', 'true'); }
+
+  chevron.addEventListener('click', (e) => {
+    e.preventDefault();
+    dd.classList.contains('open') ? close() : open();
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!dd.contains(e.target)) close();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') close();
+  });
+
+  dd.addEventListener('click', (e) => {
+    if (e.target.closest('.hdr-dd-item, .hdr-dd-all')) close();
+  });
+}
+
+// ─────────────────────────────────────────────
+// 5b. CONTACT FORM TRIGGER TOGGLE
+// Used by the form-trigger card on clinical.html and innovation.html —
+// expands/collapses the form body and flips aria-expanded. Called via
+// inline onclick="openContactForm('id','id')" in the HTML, so it must be
+// global. Was referenced but never defined — this was throwing
+// "openContactForm is not defined" on every click.
+// ─────────────────────────────────────────────
+
+window.openContactForm = function(triggerId, bodyId) {
+  const trigger = document.getElementById(triggerId);
+  const body = document.getElementById(bodyId);
+  if (!trigger || !body) return;
+
+  const isOpen = body.classList.contains('open');
+  if (isOpen) {
+    body.classList.remove('open');
+    body.style.maxHeight = '0';
+    trigger.setAttribute('aria-expanded', 'false');
+  } else {
+    body.classList.add('open');
+    body.style.maxHeight = body.scrollHeight + 'px';
+    trigger.setAttribute('aria-expanded', 'true');
+    setTimeout(() => { body.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 150);
+  }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadHeaderResearchDropdown();
+  initHeaderDropdown();
+  switch (PAGE) {
+    case 'index':
+      loadResearchLines();
+      loadLiveStats();
+      loadFeaturedStories();
+      loadInnovationSpotlight();
+      initContactForm();
+      break;
+    case 'clinical':
+      loadResearchLines();
+      loadTeam();
+      initTrialFilters();
+      initContactForm();
+      break;
+    case 'innovation':
+      loadProjects();
+      initContactForm();
+      break;
+    case 'news':
+      loadNews();
+      break;
+    case 'team':
+      loadTeamLeads();
+      loadTeamGroup();
+      loadPublicationStrip();
+      loadOpportunities();
+      break;
+    case 'line':
+      loadLineDetail();
+      break;
+  }
+});
+
+// ─────────────────────────────────────────────
+// 6. HOMEPAGE STORY SECTION
+// Fetches featured posts first, fills remainder from recent public posts
+// Renders Feature (left) + Sidebar (right 4) layout
+// ─────────────────────────────────────────────
+
+async function loadFeaturedStories() {
+  const section = document.getElementById('storySection');
+  const skeleton = document.getElementById('storySkeleton');
+  if (!section) return;
+
+  try {
+    const { data } = await apiFetch('/api/news/website?limit=8');
+    const posts = data || [];
+
+    if (!posts.length) {
+      if (skeleton) skeleton.innerHTML = '<p style="color:var(--ink-3);font-size:.875rem;padding:2rem 0;">No posts available.</p>';
+      return;
+    }
+
+    const typeLabel = {
+      publication: 'Publication', article: 'Article',
+      highlight: 'Highlight', update: 'Update', photo_story: 'Photo Story'
+    };
+    const typePill = {
+      publication: 'pill-pub', article: 'pill-article',
+      highlight: 'pill-highlight', update: 'pill-update', photo_story: 'pill-article'
+    };
+
+    function formatDate(d) {
+      if (!d) return '';
+      const dt = new Date(d);
+      return dt.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
+    }
+
+    // Hero candidate pool: featured posts first, top up to 4 with recent posts.
+    // The hero never auto-rotates — publication titles take real reading time,
+    // so the visitor drives this via dot indicators, not a timer.
+    const featuredPool = posts.filter(p => p.is_featured);
+    const heroPool = (featuredPool.length ? featuredPool : posts).slice(0, 4);
+    let activeHeroIdx = 0;
+
+    const MOTIF_SVG = `<div class="story-typographic-motif" aria-hidden="true"><svg viewBox="0 0 240 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g stroke="currentColor" stroke-linecap="round">
+        <path d="M40 320 L40 220" stroke-width="2.4" opacity="0.5"/>
+        <path d="M40 220 L20 150" stroke-width="1.8" opacity="0.45"/>
+        <path d="M40 220 L80 160" stroke-width="1.8" opacity="0.45"/>
+        <path d="M20 150 L0 95" stroke-width="1.2" opacity="0.4"/>
+        <path d="M20 150 L45 90" stroke-width="1.2" opacity="0.4"/>
+        <path d="M80 160 L60 100" stroke-width="1.2" opacity="0.4"/>
+        <path d="M80 160 L120 105" stroke-width="1.2" opacity="0.4"/>
+        <path d="M0 95 L-15 45" stroke-width="0.8" opacity="0.35"/>
+        <path d="M0 95 L20 40" stroke-width="0.8" opacity="0.35"/>
+        <path d="M45 90 L30 35" stroke-width="0.8" opacity="0.35"/>
+        <path d="M45 90 L70 38" stroke-width="0.8" opacity="0.35"/>
+        <path d="M60 100 L45 45" stroke-width="0.8" opacity="0.35"/>
+        <path d="M120 105 L105 50" stroke-width="0.8" opacity="0.35"/>
+        <path d="M120 105 L150 55" stroke-width="0.8" opacity="0.35"/>
+      </g>
+      <g fill="currentColor">
+        <circle cx="40" cy="220" r="2.4" opacity="0.4"/><circle cx="20" cy="150" r="2" opacity="0.4"/>
+        <circle cx="80" cy="160" r="2" opacity="0.4"/><circle cx="0" cy="95" r="1.6" opacity="0.35"/>
+        <circle cx="45" cy="90" r="1.6" opacity="0.35"/><circle cx="60" cy="100" r="1.6" opacity="0.35"/>
+        <circle cx="120" cy="105" r="1.6" opacity="0.35"/>
+      </g>
+    </svg></div>`;
+
+    function renderHero(feature) {
+      const hasImg = !!feature.featured_image_url;
+      const topArea = hasImg
+        ? `<div class="story-main-img">
+             <img src="${escHtml(feature.featured_image_url)}" alt="${escHtml(feature.title)}" loading="eager"/>
+           </div>`
+        : `<div class="story-main-typographic">
+             ${MOTIF_SVG}
+             ${feature.journal_name ? `<div class="story-typographic-journal">${escHtml(feature.journal_name)}</div>` : ''}
+             <div class="story-typographic-title">${escHtml(feature.title)}</div>
+           </div>`;
+
+      const dotsHTML = heroPool.length > 1
+        ? `<div class="story-dots" role="tablist" aria-label="More featured stories">
+             ${heroPool.map((_, i) => `<button class="story-dot${i === activeHeroIdx ? ' active' : ''}" role="tab" aria-selected="${i === activeHeroIdx}" aria-label="Story ${i + 1} of ${heroPool.length}" data-idx="${i}"></button>`).join('')}
+           </div>`
+        : '';
+
+      return `
+        <div class="story-main">
+          ${topArea}
+          <div class="story-main-body">
+            <span class="story-type-pill ${typePill[feature.post_type] || 'pill-article'}">
+              ${typeLabel[feature.post_type] || feature.post_type}
+              ${feature.is_featured ? ' · Featured' : ''}
+            </span>
+            ${hasImg ? `<div class="story-main-title">${escHtml(feature.title)}</div>` : ''}
+            <div class="story-main-meta">
+              ${feature.author?.full_name ? `<span>${escHtml(feature.author.full_name)}</span><span class="story-meta-sep">·</span>` : ''}
+              ${feature.journal_name && !hasImg ? '' : feature.journal_name ? `<span style="color:var(--teal);font-weight:500;">${escHtml(feature.journal_name)}</span><span class="story-meta-sep">·</span>` : ''}
+              <span>${formatDate(feature.published_at)}</span>
+              ${feature.doi ? `<span class="story-meta-sep">·</span><a href="https://doi.org/${escHtml(feature.doi)}" target="_blank" rel="noopener">DOI</a>` : ''}
+            </div>
+            ${dotsHTML}
+          </div>
+        </div>`;
+    }
+
+    // Sidebar: always shows the same 4 non-hero posts (so content stays put while
+    // reading), but a thin progress sliver auto-advances which item is "in focus" —
+    // visible motion without ever changing what's on screen mid-read.
+    function renderSidebar() {
+      const sidebarPosts = posts.filter(p => !heroPool.some(h => h.id === p.id)).slice(0, 4);
+      return `
+        <div class="story-sidebar">
+          ${sidebarPosts.map((p, i) => `
+            <a class="story-side-item" href="news.html" aria-label="${escHtml(p.title)}" data-side-idx="${i}">
+              <div class="story-side-progress"><span></span></div>
+              ${p.journal_name ? `<div class="story-side-journal">${escHtml(p.journal_name)}</div>` : ''}
+              <div class="story-side-title">${escHtml(p.title)}</div>
+              <div class="story-side-meta">${formatDate(p.published_at)}${p.author?.full_name ? ' · ' + escHtml(p.author.full_name) : ''}</div>
+            </a>`).join('')}
+        </div>`;
+    }
+
+    let sidebarTimer = null;
+    let activeSideIdx = 0;
+
+    function runSidebarProgress() {
+      const items = section.querySelectorAll('.story-side-item');
+      if (!items.length) return;
+      items.forEach((item, i) => {
+        item.classList.toggle('in-focus', i === activeSideIdx);
+        const bar = item.querySelector('.story-side-progress > span');
+        if (bar) {
+          bar.style.transition = 'none';
+          bar.style.width = i === activeSideIdx ? '0%' : (i < activeSideIdx ? '100%' : '0%');
+        }
+      });
+      requestAnimationFrame(() => {
+        const activeBar = section.querySelector(`.story-side-item[data-side-idx="${activeSideIdx}"] .story-side-progress > span`);
+        if (activeBar) {
+          activeBar.style.transition = 'width 6.5s linear';
+          activeBar.style.width = '100%';
+        }
+      });
+      clearTimeout(sidebarTimer);
+      sidebarTimer = setTimeout(() => {
+        activeSideIdx = (activeSideIdx + 1) % items.length;
+        runSidebarProgress();
+      }, 6500);
+    }
+
+    function render() {
+      const layout = `<div class="story-layout" style="opacity:0;">${renderHero(heroPool[activeHeroIdx])}${renderSidebar()}</div>`;
+      section.innerHTML = layout;
+      requestAnimationFrame(() => {
+        const l = section.querySelector('.story-layout');
+        if (l) l.style.opacity = '1';
+      });
+      activeSideIdx = 0;
+      runSidebarProgress();
+
+      section.querySelectorAll('.story-dot').forEach(dot => {
+        dot.addEventListener('click', () => {
+          const idx = parseInt(dot.dataset.idx, 10);
+          if (idx === activeHeroIdx) return;
+          const l = section.querySelector('.story-layout');
+          if (l) {
+            l.style.transition = 'opacity .3s ease';
+            l.style.opacity = '0';
+            setTimeout(() => { activeHeroIdx = idx; render(); }, 300);
+          } else {
+            activeHeroIdx = idx;
+            render();
+          }
+        });
+      });
+    }
+
+    render();
+
+  } catch (err) {  
+    console.error('Story section load failed:', err);
+    if (skeleton) skeleton.innerHTML = '<p style="color:var(--ink-3);font-size:.875rem;padding:2rem 0;">Unable to load recent posts.</p>';
+  }
+}
+
+// ─────────────────────────────────────────────
+// 7. HOMEPAGE INNOVATION SPOTLIGHT
+// /api/innovation-projects/website already only returns projects with
+// featured_in_website=true (the publish gate). Within that set, prefer
+// ones flagged is_featured (the homepage-spotlight pick, curated by an
+// editor in neumDesk), same two-tier pattern as the news story section.
+// ─────────────────────────────────────────────
+
+const STAGE_LABEL = {
+  'Idea': 'Concept', 'Prototipo': 'Prototype', 'Piloto': 'Pilot',
+  'Validación': 'Validation', 'Escalamiento': 'Scaling', 'Comercialización': 'Commercialisation'
+};
+
+async function loadInnovationSpotlight() {
+  const section = document.getElementById('spotlightSection');
+  const skeleton = document.getElementById('spotlightSkeleton');
+  if (!section) return;
+
+  try {
+    const { data } = await apiFetch('/api/innovation-projects/website');
+    const projects = data || [];
+
+    if (!projects.length) {
+      // No published projects — hide the whole section rather than show an empty card
+      const sec = document.getElementById('innovation-spotlight');
+      if (sec) sec.style.display = 'none';
+      return;
+    }
+
+    const featuredPool = projects.filter(p => p.is_featured);
+    const spotlightPool = (featuredPool.length ? featuredPool : projects).slice(0, 4);
+    let activeSpotlightIdx = 0;
+
+    function renderSpotlight() {
+      const p = spotlightPool[activeSpotlightIdx];
+      const stageLabel = STAGE_LABEL[p.current_stage] || STAGE_LABEL[p.development_stage] || p.current_stage || '';
+      const dotsHTML = spotlightPool.length > 1
+        ? `<div class="story-dots" role="tablist" aria-label="More projects">
+             ${spotlightPool.map((_, i) => `<button class="story-dot${i === activeSpotlightIdx ? ' active' : ''}" role="tab" aria-selected="${i === activeSpotlightIdx}" aria-label="Project ${i + 1} of ${spotlightPool.length}" data-idx="${i}"></button>`).join('')}
+           </div>`
+        : '';
+      const html = `
+        <div class="spotlight-card" style="opacity:0;">
+          <span class="spotlight-stage-pill">
+            ${escHtml(p.category || 'Project')}${stageLabel ? ' · ' + escHtml(stageLabel) : ''}
+          </span>
+          <div class="spotlight-title">${escHtml(p.title)}</div>
+          ${p.description ? `<div class="spotlight-desc">${escHtml(p.description)}</div>` : ''}
+          <div class="spotlight-meta">
+            ${p.research_line?.name ? `<span>${escHtml(p.research_line.name)}</span><span>·</span>` : ''}
+            <a href="innovation.html">
+              <span lang="en">Learn more</span><span lang="es">Saber más</span>
+            </a>
+          </div>
+          ${dotsHTML}
+        </div>`;
+      section.innerHTML = html;
+      requestAnimationFrame(() => {
+        const card = section.querySelector('.spotlight-card');
+        if (card) card.style.opacity = '1';
+      });
+
+      section.querySelectorAll('.story-dot').forEach(dot => {
+        dot.addEventListener('click', () => {
+          const idx = parseInt(dot.dataset.idx, 10);
+          if (idx === activeSpotlightIdx) return;
+          const card = section.querySelector('.spotlight-card');
+          if (card) {
+            card.style.transition = 'opacity .3s ease';
+            card.style.opacity = '0';
+            setTimeout(() => { activeSpotlightIdx = idx; renderSpotlight(); }, 300);
+          } else {
+            activeSpotlightIdx = idx;
+            renderSpotlight();
+          }
+        });
+      });
+    }
+
+    renderSpotlight();
+
+  } catch (err) {
+    console.error('Innovation spotlight load failed:', err);
+    if (skeleton) skeleton.innerHTML = '<p style="color:var(--ink-3);font-size:.875rem;padding:2rem 0;">Unable to load projects.</p>';
+  }
+}
+
+// ─────────────────────────────────────────────
+// 8. RESEARCH LINE DETAIL PAGE (line.html?id=<uuid>)
+// One template, data-driven — see /api/research-lines/:id/website.
+// Trials and publications are NOT fetched from that endpoint; they reuse
+// the existing /api/clinical-trials/website?line=:id and
+// /api/news/website?line=:id calls, same data source as clinical.html
+// and news.html, so there's one source of truth.
+// "About this line" only renders if a coordinator has actually written
+// deep_content — an empty section is worse than no section.
+// ─────────────────────────────────────────────
+
+async function loadLineDetail() {
+  const params = new URLSearchParams(location.search);
+  const lineId = params.get('id');
+  const loadingEl   = document.getElementById('lineLoadingState');
+  const notFoundEl  = document.getElementById('lineNotFound');
+  const heroEl      = document.getElementById('lineHero');
+
+  if (!lineId) {
+    if (loadingEl) loadingEl.style.display = 'none';
+    if (notFoundEl) notFoundEl.style.display = '';
+    return;
+  }
+
+  try {
+    const { data: line } = await apiFetch(`/api/research-lines/${lineId}/website`);
+    if (!line) throw new Error('not found');
+
+    if (loadingEl) loadingEl.style.display = 'none';
+    if (heroEl) heroEl.style.display = '';
+    const collabEl = document.getElementById('lineCollabSection');
+    if (collabEl) collabEl.style.display = '';
+
+    // Page title / description, since this is one template for six lines
+    const titleText = `${line.short_name || line.name} | neumACt R&I`;
+    document.title = titleText;
+    const titleTag = document.getElementById('pageTitle');
+    if (titleTag) titleTag.textContent = titleText;
+    const descTag = document.getElementById('pageDescription');
+    if (descTag && line.description) descTag.setAttribute('content', line.description);
+
+    // Hero
+    const eyebrowEl = document.getElementById('lineEyebrow');
+    if (eyebrowEl) {
+      eyebrowEl.innerHTML = `<span lang="en">Research line ${String(line.line_number).padStart(2,'0')}</span><span lang="es">Línea de investigación ${String(line.line_number).padStart(2,'0')}</span>`;
+    }
+    const titleEl = document.getElementById('lineTitle');
+    if (titleEl) titleEl.textContent = line.name || line.short_name;
+
+    const pillsEl = document.getElementById('lineStatPills');
+    if (pillsEl) {
+      const pills = [];
+      if (line.active_trials > 0) {
+        pills.push(`<span class="hstat-label" style="background:rgba(255,255,255,.12);color:#fff;padding:.4rem .8rem;border-radius:var(--r-sm);font-size:var(--fs-label);"><span lang="en">${line.active_trials} recruiting ${line.active_trials===1?'trial':'trials'}</span><span lang="es">${line.active_trials} ${line.active_trials===1?'ensayo':'ensayos'} en reclutamiento</span></span>`);
+      }
+      if (line.active_projects > 0) {
+        pills.push(`<span class="hstat-label" style="background:rgba(255,255,255,.12);color:#fff;padding:.4rem .8rem;border-radius:var(--r-sm);font-size:var(--fs-label);"><span lang="en">${line.active_projects} active ${line.active_projects===1?'project':'projects'}</span><span lang="es">${line.active_projects} ${line.active_projects===1?'proyecto':'proyectos'} activo${line.active_projects===1?'':'s'}</span></span>`);
+      }
+      pillsEl.innerHTML = pills.join('');
+    }
+
+    const keywordsEl = document.getElementById('lineKeywords');
+    if (keywordsEl && line.keywords && line.keywords.length) {
+      keywordsEl.innerHTML = line.keywords.map(k =>
+        `<span style="font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.07em;text-transform:uppercase;color:rgba(255,255,255,.65);">${escHtml(k)}</span>`
+      ).join('<span style="color:rgba(255,255,255,.3);margin:0 -.05rem;">·</span>');
+    }
+
+    // Coordinator — first, visually distinguished row in the merged
+    // "People" section (larger avatar, chief/PI badge), not a separate
+    // bordered card with its own design language.
+    const peopleSection = document.getElementById('linePeopleSection');
+    const coordCard = document.getElementById('lineCoordinatorCard');
+    if (line.coordinator && peopleSection && coordCard) {
+      const c = line.coordinator;
+      const initials = (c.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
+      const avatar = c.public_photo_url
+        ? `<div style="width:96px;height:96px;border-radius:50%;box-shadow:0 1px 2px rgba(0,40,40,.08),0 6px 20px rgba(0,95,95,.18);overflow:hidden;flex-shrink:0;"><img src="${escHtml(c.public_photo_url)}" alt="${escHtml(c.full_name)}" style="width:100%;height:100%;object-fit:cover;"></div>`
+        : `<div style="width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,#005F5F 0%,#007A7A 55%,#3D8FD6 100%);box-shadow:0 1px 2px rgba(0,40,40,.08),0 6px 20px rgba(0,95,95,.18);display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-weight:700;font-size:1.625rem;color:rgba(255,255,255,.96);flex-shrink:0;">${escHtml(initials)}</div>`;
+
+      // Every real role this person holds gets its own badge — these are
+      // independent facts (chief, PI, and line coordinator are not
+      // mutually exclusive), not a single slot picking the "best" one.
+      // Previously an if/else-if meant a chief who was also a PI never
+      // had that second, equally true fact shown at all.
+      const roleBadges = [
+        c.is_chief_of_department ? `<span class="role-badge" style="background:var(--blue-50);color:var(--navy-2);padding:.3rem .7rem;border-radius:var(--r-sm);font-size:var(--fs-label);"><span lang="en">Department Chief</span><span lang="es">Jefe de Servicio</span></span>` : '',
+        c.id === 'c290a7e5-7bea-4652-a0ef-251fbc73184d'
+          ? `<span class="role-badge" style="background:var(--blue-50);color:var(--navy-2);padding:.3rem .7rem;border-radius:var(--r-sm);font-size:var(--fs-label);"><span lang="en">Principal Investigator, neumACt</span><span lang="es">Investigador Principal, neumACt</span></span>`
+          : (c.can_be_pi ? `<span class="role-badge" style="background:var(--blue-50);color:var(--navy-2);padding:.3rem .7rem;border-radius:var(--r-sm);font-size:var(--fs-label);"><span lang="en">Principal Investigator</span><span lang="es">Investigador Principal</span></span>` : ''),
+      ].filter(Boolean).join('');
+
+      coordCard.innerHTML = `
+        <div style="display:flex;flex-direction:column;gap:.5rem;padding-bottom:1.25rem;border-bottom:1px solid var(--border-l);">
+          <div style="display:flex;gap:1rem;align-items:flex-start;">
+            ${avatar}
+            <div style="flex:1;min-width:0;">
+              <p style="font-weight:500;font-size:var(--fs-body-sm);margin:0;">${escHtml(c.title ? c.title + ' ' + c.full_name : c.full_name)}</p>
+              <p style="font-size:var(--fs-label);color:var(--ink-3);margin:2px 0 0;">
+                <span lang="en">Coordinator, this line</span><span lang="es">Coordinador de esta línea</span>${c.specialization ? ' · ' + (c.id === 'c290a7e5-7bea-4652-a0ef-251fbc73184d' ? '<span lang="en">Pulmonologist</span><span lang="es">Neumólogo</span>' : escHtml(c.specialization)) : ''}
+              </p>
+              <p style="font-size:var(--fs-label);color:var(--ink-4);margin:2px 0 0;">
+                <span lang="en">Servicio de Neumología, CHUAC</span><span lang="es">Servicio de Neumología, CHUAC</span>
+              </p>
+            </div>
+          </div>
+          ${roleBadges ? `<div style="display:flex;gap:.5rem;flex-wrap:wrap;padding-left:calc(56px + 1rem);">${roleBadges}</div>` : ''}
+        </div>`;
+      peopleSection.style.display = '';
+    }
+
+    // About this line — description/capabilities/keywords are real,
+    // populated fields on every line, so this renders unconditionally.
+    // deep_content (long-form, written by a coordinator) is additional,
+    // optional substance — shown as a second block only once it exists,
+    // not the only thing gating this section.
+    const aboutSection = document.getElementById('lineAboutSection');
+    const aboutContent = document.getElementById('lineAboutContent');
+    if (aboutSection && aboutContent) {
+      let html = '';
+      if (line.description) {
+        html += `<p style="margin-bottom:1.5rem;">${escHtml(line.description)}</p>`;
+      }
+      if (line.capabilities) {
+        const caps = line.capabilities.split(',').map(c => c.trim()).filter(Boolean);
+        if (caps.length) {
+          html += `<div style="display:flex;flex-wrap:wrap;gap:.4rem .25rem;margin-bottom:${line.deep_content ? '2rem' : '0'};">
+            ${caps.map(c => `<span class="ltag">${escHtml(c)}</span>`).join('')}
+          </div>`;
+        }
+      }
+      if (line.deep_content) {
+        html += `<div style="border-top:1px solid var(--border-l);padding-top:1.5rem;">
+          ${line.deep_content.split(/\n\n+/).map(p => `<p style="margin-bottom:1.25rem;">${escHtml(p)}</p>`).join('')}
+        </div>`;
+      }
+      if (html) {
+        aboutContent.innerHTML = html;
+        aboutSection.style.display = '';
+      }
+
+      // Quick-facts panel — sits beside the About text, breaking the
+      // full-width band rhythm. Uses only real, already-fetched counts;
+      // no invented "established" date or similar, since that's not
+      // a real field anywhere in this data.
+      const factsEl = document.getElementById('lineQuickFacts');
+      if (factsEl) {
+        const facts = [
+          { num: line.total_trials || 0, labelEn: line.total_trials === 1 ? 'Clinical trial' : 'Clinical trials', labelEs: line.total_trials === 1 ? 'Ensayo clínico' : 'Ensayos clínicos' },
+          { num: line.total_projects || 0, labelEn: line.total_projects === 1 ? 'Innovation project' : 'Innovation projects', labelEs: line.total_projects === 1 ? 'Proyecto de innovación' : 'Proyectos de innovación' },
+        ].filter(f => f.num > 0);
+        if (facts.length) {
+          factsEl.innerHTML = facts.map((f, i) => `
+            <div style="${i > 0 ? 'border-top:1px solid var(--border-l);margin-top:1rem;padding-top:1rem;' : ''}">
+              <p style="font-family:var(--ff-display);font-size:1.75rem;font-weight:700;margin:0;line-height:1;">${f.num}</p>
+              <p style="font-size:var(--fs-label);color:var(--ink-3);margin-top:.25rem;"><span lang="en">${f.labelEn}</span><span lang="es">${f.labelEs}</span></p>
+            </div>`).join('');
+          factsEl.style.display = '';
+        }
+      }
+    }
+
+    // Track record — discrete, asserted facts about this line's standing.
+    // Only renders if populated; this is content someone has to actually
+    // write and stand behind, not something derivable from other fields.
+    const trackSection = document.getElementById('lineTrackRecordSection');
+    const trackList = document.getElementById('lineTrackRecordList');
+    if (trackSection && trackList && line.track_record && line.track_record.length) {
+      trackList.innerHTML = line.track_record.map(item =>
+        `<li class="ltr-item"><span class="ltr-mark">—</span><span>${escHtml(item)}</span></li>`
+      ).join('');
+      trackSection.style.display = '';
+    }
+
+    // Active trials — reuses the existing public trials endpoint, filtered by line
+    const trialsSection = document.getElementById('lineTrialsSection');
+    const trialsList = document.getElementById('lineTrialsList');
+    try {
+      const { data: trials } = await apiFetch(`/api/clinical-trials/website?line=${lineId}`);
+      const activeTrials = (trials || []).filter(t => ['Reclutando','Activo','Active','Recruiting'].includes(t.status));
+      if (activeTrials.length && trialsSection && trialsList) {
+        trialsList.innerHTML = activeTrials.slice(0, 6).map((t, i) => `
+          <a href="clinical.html#research-lines" class="lt-trial-row" style="${i > 0 ? 'border-top:1px solid var(--border-l);' : ''}">
+            <span class="lt-trial-phase">${escHtml(t.phase || 'Clinical study')}</span>
+            <span class="lt-trial-title">${escHtml(t.title || t.protocol_id || '—')}</span>
+            <svg class="lt-trial-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>`).join('');
+        trialsSection.style.display = '';
+      }
+    } catch (err) { console.error('Line trials load failed:', err); }
+
+    // Team on this line — derived from trial/project investigators and
+    // explicit research_line_members, server-side. Coordinator excluded
+    // here since they're already shown, distinguished, just above.
+    // Full-bleed photo cards: the photo fills the whole card, the name
+    // overlays directly on it like a real photo credit, rather than a
+    // small circular avatar sitting beside a block of text. A real
+    // photo drops in with zero markup change — gradient+initials is
+    // just today's fallback for this same card shape, not the design.
+    const teamChips = document.getElementById('lineTeamChips');
+    if (line.team && line.team.length && peopleSection && teamChips) {
+      const teamWithoutCoordinator = line.team.filter(m => m.id !== line.coordinator?.id);
+      const roleTextFor = (m) => m.role_on_line ? escHtml(m.role_on_line)
+        : m.is_chief_of_department ? '<span lang="en">Department Chief</span><span lang="es">Jefe de Servicio</span>'
+        : m.id === 'c290a7e5-7bea-4652-a0ef-251fbc73184d' ? '<span lang="en">Principal Investigator, neumACt</span><span lang="es">Investigador Principal, neumACt</span>'
+        : m.can_be_pi ? '<span lang="en">Principal Investigator</span><span lang="es">Investigador Principal</span>'
+        : (m.specialization ? escHtml(m.specialization) : '');
+
+      teamChips.innerHTML = teamWithoutCoordinator.map((m, i) => {
+        const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
+        const avatarInner = m.public_photo_url
+          ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:100%;height:100%;object-fit:cover;">`
+          : escHtml(initials);
+        const avatarStyle = m.public_photo_url ? '' : 'background:linear-gradient(135deg,#085041 0%,#0F6E56 55%,#185FA5 100%);';
+        const detailId = `lineTeamDetail-${i}`;
+        // public_bio is the real, substantive biography — distinct from
+        // role_on_line, which is a one-line role descriptor. Previously
+        // this card only ever showed role_on_line, even for people who
+        // have a real bio on file.
+        const bioHtml = m.public_bio
+          ? `<p style="margin:0;">${escHtml(m.public_bio)}</p>`
+          : `<p style="margin:0;color:var(--ink-4);font-style:italic;">Bio not yet added.</p>`;
+        return `<div class="line-team-card">
+          <div class="line-team-header" onclick="this.parentElement.setAttribute('aria-expanded', this.parentElement.getAttribute('aria-expanded')==='true' ? 'false' : 'true'); var d=document.getElementById('${detailId}'); d.style.maxHeight = d.style.maxHeight ? '' : d.scrollHeight + 'px';">
+            <div class="line-team-avatar" style="${avatarStyle}">${avatarInner}</div>
+            <div style="min-width:0;flex:1;">
+              <p class="line-team-name">${escHtml(m.title ? m.title + ' ' + m.full_name : m.full_name)}</p>
+              ${roleTextFor(m) ? `<p class="line-team-role">${roleTextFor(m)}</p>` : ''}
+            </div>
+            <svg class="line-team-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="line-team-detail" id="${detailId}">
+            <div class="line-team-detail-inner">${bioHtml}</div>
+          </div>
+        </div>`;
+      }).join('');
+      peopleSection.style.display = '';
+    }
+
+    // Recent publications for this line
+    const pubsSection = document.getElementById('linePubsSection');
+    const pubsList = document.getElementById('linePubsList');
+    try {
+      const { data: pubs } = await apiFetch(`/api/news/website?type=publication&line=${lineId}&limit=5`);
+      if (pubs && pubs.length && pubsSection && pubsList) {
+        pubsList.innerHTML = pubs.map((p, i) => {
+          const year = p.published_at ? new Date(p.published_at).getFullYear() : '';
+          return `<div style="padding:1rem 0;${i > 0 ? 'border-top:1px solid var(--border-l);' : ''}">
+            <div style="display:flex;justify-content:space-between;gap:8px;margin-bottom:4px;">
+              ${p.journal_name ? `<span style="font-size:var(--fs-label);color:var(--navy-2);font-weight:500;">${escHtml(p.journal_name)}</span>` : '<span></span>'}
+              <span style="font-size:var(--fs-label);color:var(--ink-4);">${year}</span>
+            </div>
+            <p style="font-size:var(--fs-meta);margin:0;">${escHtml(p.title)}</p>
+          </div>`;
+        }).join('');
+        pubsSection.style.display = '';
+      }
+    } catch (err) { console.error('Line publications load failed:', err); }
+
+  } catch (err) {
+    console.error('Research line load failed:', err.message);
+    if (loadingEl) loadingEl.style.display = 'none';
+    if (notFoundEl) notFoundEl.style.display = '';
+  }
+}
