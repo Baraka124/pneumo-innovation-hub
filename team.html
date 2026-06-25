@@ -941,6 +941,16 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
       <div class="team-member" style="opacity:.4;"><div class="tm-avatar">—</div><div><div style="height:13px;width:130px;border-radius:2px;background:rgba(0,0,0,.07);margin-bottom:6px;"></div><div style="height:11px;width:65px;border-radius:2px;background:rgba(0,0,0,.05);"></div></div></div>
     </div>
 
+    <!-- Profile detail modal — opened by clicking a team-member card -->
+    <div id="profileModalOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;align-items:center;justify-content:center;padding:1.5rem;" onclick="if(event.target===this) closeProfileModal()">
+      <div style="background:var(--white);border-radius:var(--r-lg,12px);max-width:480px;width:100%;max-height:85vh;overflow-y:auto;padding:2rem;position:relative;">
+        <button onclick="closeProfileModal()" aria-label="Close" style="position:absolute;top:1rem;right:1rem;width:32px;height:32px;border-radius:50%;border:none;background:var(--surface);cursor:pointer;display:flex;align-items:center;justify-content:center;">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+        <div id="profileModalContent"></div>
+      </div>
+    </div>
+
     <div style="margin-top:1.5rem;" class="reveal">
       <p style="font-size:.8125rem;color:var(--ink-4);line-height:1.6;">
         <span lang="en">Only staff members who have enabled public visibility appear here. Team profiles are managed through the neumDesk platform.</span>
@@ -1366,4 +1376,4 @@ if(!localStorage.getItem('cookieOk')){
 })();
 </script>
 </body>
-</html> 
+</html>
