@@ -585,7 +585,7 @@ async function loadTeamGroup() {
     grid.innerHTML = group.map(m => {
       const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
       const role = roleLabel[m.staff_type] || m.staff_type;
-      return `<div class="team-member" onclick="openProfileModal('${escHtml(m.id)}')" style="cursor:pointer;">
+      return `<div class="team-member" onclick="openProfileModal('${escHtml(m.id)}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProfileModal('${escHtml(m.id)}');}" style="cursor:pointer;" tabindex="0" role="button" aria-label="View profile for ${escHtml(m.full_name)}">
         <div class="tm-avatar">${m.public_photo_url ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" loading="lazy"/>` : initials}</div>
         <div style="min-width:0;">
           <div class="tm-name">${escHtml(m.display_name || m.full_name)}</div>
@@ -782,6 +782,7 @@ async function loadLiveStats() {
       if (totalActive > 0) {
         _setStat('statTrials', totalActive + '+');
         _setStat('statTrials2', totalActive + '+');
+        _setStat('statTrialsBig', totalActive + '+');
       }
     }
 
@@ -1699,6 +1700,18 @@ async function loadLineDetail() {
         : m.can_be_pi ? '<span lang="en">Principal Investigator</span><span lang="es">Investigador Principal</span>'
         : (m.specialization ? escHtml(m.specialization) : '');
 
+// Toggles a line.html team-member card open/closed — shared by both
+// click and keyboard (Enter/Space) activation, so the expand logic
+// lives in one place instead of being duplicated inline per event type.
+function toggleLineTeamCard(headerEl, detailId) {
+  const card = headerEl.parentElement;
+  const expanded = card.getAttribute('aria-expanded') === 'true';
+  card.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+  const d = document.getElementById(detailId);
+  if (d) d.style.maxHeight = d.style.maxHeight ? '' : d.scrollHeight + 'px';
+}
+window.toggleLineTeamCard = toggleLineTeamCard;
+
       teamChips.innerHTML = teamWithoutCoordinator.map((m, i) => {
         const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
         const avatarInner = m.public_photo_url
@@ -1714,7 +1727,7 @@ async function loadLineDetail() {
           ? `<p style="margin:0;">${escHtml(m.public_bio)}</p>`
           : `<p style="margin:0;color:var(--ink-4);font-style:italic;">Bio not yet added.</p>`;
         return `<div class="line-team-card">
-          <div class="line-team-header" onclick="this.parentElement.setAttribute('aria-expanded', this.parentElement.getAttribute('aria-expanded')==='true' ? 'false' : 'true'); var d=document.getElementById('${detailId}'); d.style.maxHeight = d.style.maxHeight ? '' : d.scrollHeight + 'px';">
+          <div class="line-team-header" onclick="toggleLineTeamCard(this, '${detailId}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleLineTeamCard(this, '${detailId}');}" tabindex="0" role="button" aria-label="${escHtml(m.full_name)} — show biography">
             <div class="line-team-avatar" style="${avatarStyle}">${avatarInner}</div>
             <div style="min-width:0;flex:1;">
               <p class="line-team-name">${escHtml(m.title ? m.title + ' ' + m.full_name : m.full_name)}</p>
