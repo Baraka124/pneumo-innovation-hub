@@ -8,7 +8,7 @@
   <meta name="description" content="Clinical research at neumACt R&I conducting research across six specialised respiratory and thoracic medicine lines." />
     <link rel="alternate" hreflang="es" href="https://neumact.org/clinical.html"/>
   <link rel="alternate" hreflang="en" href="https://neumact.org/clinical.html"/>
-  <link rel="alternate" hreflang="x-default" href="https://neumact.org/clinical.html"/> 
+  <link rel="alternate" hreflang="x-default" href="https://neumact.org/clinical.html"/>
   <link rel="canonical" href="https://neumact.org/clinical.html"/>
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="neumACt R&I"/> 
@@ -137,6 +137,8 @@ html.bar-dismissed body{padding-top:88px!important;}
 
 
 /* ═══ CANONICAL HEADER ═══════════════════════════════════════════ */
+.skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:var(--navy-2);color:#fff;padding:.75rem 1.25rem;font-size:.875rem;font-weight:500;border-radius:0 0 6px 0;}
+.skip-link:focus{left:0;}
 .hdr{position:fixed;top:0;left:0;right:0;height:88px;background:var(--navy-2);border-bottom:1px solid rgba(255,255,255,.1);z-index:900;transition:height .2s ease;}
 .hdr.scrolled{height:68px;}
 .hdr-inner{display:flex;align-items:center;height:100%;max-width:1440px;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem);gap:1.5rem;}
@@ -1282,6 +1284,7 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
 </script>
 </head>
 <body>
+<a href="#top" class="skip-link">Skip to main content</a>
 <header class="hdr" id="hdr"><div class="hdr-inner"><a href="index.html" class="hdr-logo" aria-label="neumACt R&amp;I"><img src="logo.svg" alt="neumACt R&I" class="hdr-logo-img" onerror="this.style.opacity='.3'"></a><nav class="hdr-nav" aria-label="Primary navigation">
       <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
       <div class="hdr-dd">
@@ -1325,7 +1328,7 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
         <!-- Right stats panel -->
         <div class="hero-stats reveal reveal-d2" style="margin-bottom:3rem;">
           <div class="hstat"><div class="hstat-num" data-counter="6">6</div><div class="hstat-label"><span lang="en">Specialized Research Lines</span><span lang="es">Líneas de Investigación</span></div></div>
-          <div class="hstat"><div class="hstat-num" data-counter="13+">13+</div><div class="hstat-label"><span lang="en">Active &amp; Recruiting Studies</span><span lang="es">Ensayos Activos y Reclutando</span></div></div>
+          <div class="hstat"><div class="hstat-num" data-counter="10+">10+</div><div class="hstat-label"><span lang="en">Active &amp; Recruiting Studies</span><span lang="es">Ensayos Activos y Reclutando</span></div></div>
           <div class="hstat"><div class="hstat-num" data-counter="6">6</div><div class="hstat-label"><span lang="en">Specialist Coordinators</span><span lang="es">Coordinadores Especialistas</span></div></div>
           <div class="hstat"><div class="hstat-num">GCP</div><div class="hstat-label"><span lang="en">INIBIC · Good Clinical Practice</span><span lang="es">INIBIC · Cumplimiento GCP</span></div></div>
         </div>
@@ -1469,7 +1472,7 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
   <!-- STAT BREAK — typographic moment -->
   <div style="background:var(--navy);padding:3.5rem 0;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);">
     <div style="padding:0 clamp(1.5rem,4vw,5rem);display:flex;align-items:baseline;gap:1.5rem;flex-wrap:wrap;">
-      <span style="font-family:var(--ff-display);font-size:clamp(3.5rem,8vw,6rem);font-weight:300;color:#fff;line-height:1;letter-spacing:-.03em;" id="statTrialsBig">13+</span>
+      <span style="font-family:var(--ff-display);font-size:clamp(3.5rem,8vw,6rem);font-weight:300;color:#fff;line-height:1;letter-spacing:-.03em;" id="statTrialsBig">10+</span>
       <div>
         <div style="font-family:var(--ff-body);font-size:1rem;color:rgba(255,255,255,.75);font-weight:400;line-height:1.5;">
           <span lang="en">active and recruiting clinical studies<br>across six research lines · INIBIC-backed · GCP-compliant</span>
@@ -1909,4 +1912,4 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
     <span lang="en">Understood</span><span lang="es">Entendido</span>
   </button>
 </div>
-<script>if(!localStorage.getItem('cookieOk')){var c=document.getElementById('cookieBanner');if(c)c.style.display='flex';}</script>  
+<script>if(!localStorage.getItem('cookieOk')){var c=document.getElementById('cookieBanner');if(c)c.style.display='flex';}</script>
