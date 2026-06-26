@@ -1,5 +1,5 @@
 <!DOCTYPE html>   
-<html lang="en" data-lang="en">  
+<html lang="en" data-lang="en">
 <head>
   <script>try{var _l=localStorage.getItem('huac_lang');if(_l&&(_l==='en'||_l==='es'))document.documentElement.dataset.lang=_l;}catch(e){}</script>
   <meta charset="UTF-8"/>
@@ -13,7 +13,7 @@
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="neumACt R&I"/>
   <meta property="og:title" content="neumACt R&I — Precision Respiratory Medicine"/>
-  <meta property="og:description" content="Six specialist research lines. 13+ active clinical studies. 1,000 lung transplants — milestone achieved May 2026. CHUAC · INIBIC · SERGAS."/>
+  <meta property="og:description" content="Six specialist research lines. 10+ active clinical studies. 1,000 lung transplants — milestone achieved May 2026. CHUAC · INIBIC · SERGAS."/>
   <meta property="og:image" content="https://neumact.org/og-home.jpg"/>
   <meta name="twitter:card" content="summary_large_image"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -145,6 +145,8 @@ html.bar-dismissed body{padding-top:88px!important;}
 
 
 /* ═══ CANONICAL HEADER ═══════════════════════════════════════════ */
+.skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:var(--navy-2);color:#fff;padding:.75rem 1.25rem;font-size:.875rem;font-weight:500;border-radius:0 0 6px 0;}
+.skip-link:focus{left:0;}
 .hdr{position:fixed;top:0;left:0;right:0;height:88px;background:var(--navy-2);border-bottom:1px solid rgba(255,255,255,.1);z-index:900;transition:height .2s ease;}
 .hdr.scrolled{height:68px;}
 .hdr-inner{display:flex;align-items:center;height:100%;max-width:1440px;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem);gap:1.5rem;}
@@ -1093,6 +1095,7 @@ body { padding-top: calc(88px + 30px) !important; }
       aria-label="Dismiss" style="background:none;border:none;color:rgba(255,255,255,.3);cursor:pointer;font-size:1rem;line-height:1;padding:0 0 0 .5rem;">×</button>
   </div>
 </div>
+<a href="#mainContent" class="skip-link">Skip to main content</a>
 <header class="hdr" id="hdr"><div class="hdr-inner"><a href="index.html" class="hdr-logo" aria-label="neumACt R&amp;I"><img src="logo.svg" alt="neumACt R&I" class="hdr-logo-img" onerror="this.style.opacity='.3'"></a><nav class="hdr-nav" aria-label="Primary navigation">
       <a href="index.html" class="current" aria-current="page"><span lang="en">Home</span><span lang="es">Inicio</span></a>
       <div class="hdr-dd">
@@ -1113,7 +1116,7 @@ body { padding-top: calc(88px + 30px) !important; }
     </div><div class="mob-lang"><button class="lt-btn lt-btn--active" data-lang="en" onclick="selectLang('en')" aria-pressed="true">EN</button><button class="lt-btn" data-lang="es" onclick="selectLang('es')" aria-pressed="false">ES</button></div></nav>
 <div id="pb" role="progressbar" aria-hidden="true"></div>
 <!-- ═══════════════════ HERO ════════════════════ -->
-<section class="hero" aria-labelledby="heroTitle">
+<section class="hero" aria-labelledby="heroTitle" id="mainContent">
   <canvas id="heroBg" aria-hidden="true"></canvas>
   <div class="wrap">
     <div class="hero-inner">
@@ -1134,7 +1137,7 @@ body { padding-top: calc(88px + 30px) !important; }
 
         
         <p class="hero-desc reveal reveal-d2">
-          <span lang="en">The Servicio de Neumología at CHUAC runs six research lines spanning the full spectrum of respiratory disease — from transplantation and pulmonary hypertension to interventional bronchoscopy, thoracic surgery, sleep medicine, and precision phenotyping. <strong>1,000 lung transplants performed</strong> — a regional reference milestone, May 2026. Regional reference centre for lung transplantation and pulmonary hypertension. INIBIC-accredited. 13+ active recruiting studies.</span>
+          <span lang="en">The Servicio de Neumología at CHUAC runs six research lines spanning the full spectrum of respiratory disease — from transplantation and pulmonary hypertension to interventional bronchoscopy, thoracic surgery, sleep medicine, and precision phenotyping. <strong>1,000 lung transplants performed</strong> — a regional reference milestone, May 2026. Regional reference centre for lung transplantation and pulmonary hypertension. INIBIC-accredited. 10+ active recruiting studies.</span>
           <span lang="es">Seis líneas especializadas. <strong>1.000 trasplantes pulmonares</strong> realizados en el CHUAC — hito alcanzado en mayo de 2026. Más de 13 estudios activos en reclutamiento sobre EPOC, asma, EPI, cáncer de pulmón, hipertensión pulmonar, insuficiencia respiratoria, trastornos respiratorios del sueño y cirugía torácica.</span>
         </p>
 
@@ -1165,7 +1168,7 @@ body { padding-top: calc(88px + 30px) !important; }
           </div>
           <div class="hstat">
             <span class="hstat-label"><span lang="en">Active Studies</span><span lang="es">Estudios Activos</span></span>
-            <span class="hstat-num" id="statTrials" data-counter="13+">13+</span>
+            <span class="hstat-num" id="statTrials" data-counter="10+">10+</span>
           </div>
           <div class="hstat">
             <span class="hstat-label"><span lang="en">Clinician-Investigators</span><span lang="es">Investigadores Clínicos</span></span>
@@ -1936,4 +1939,4 @@ function dismissLatestBar(){var bar=document.getElementById('latestBar');if(!bar
 })();
 </script>
 </body>
-</html>  
+</html> 
