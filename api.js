@@ -148,8 +148,19 @@ async function loadResearchLines() {
   if (!indexGrid && !clinicalList) return;
 
   try {
-    const { data } = await apiFetch('/api/research-lines/website');
-    if (!data?.length) return;
+    let { data } = await apiFetch('/api/research-lines/website');
+    if (!data?.length) {
+      // Retry once before giving up — a transient backend hiccup
+      // shouldn't leave visitors staring at the loading skeleton forever
+      // with no indication anything went wrong.
+      await new Promise(r => setTimeout(r, 800));
+      ({ data } = await apiFetch('/api/research-lines/website'));
+    }
+    if (!data?.length) {
+      if (indexGrid) setError(indexGrid, 'Unable to load research lines right now. Please refresh the page.');
+      if (clinicalList) setError(clinicalList, 'Unable to load research lines right now. Please refresh the page.');
+      return;
+    }
 
     // ── INDEX: 2-column editorial grid ──────────────────────────────
     if (indexGrid) {
@@ -380,6 +391,12 @@ function initTrialFilters() {
     searchTimer = setTimeout(refresh, 380);
   });
 
+  // Support a ?search= URL parameter so a link from elsewhere (e.g. a
+  // named project mentioned in a research line's description) can land
+  // directly on that specific trial, filtered, instead of the generic table.
+  const urlSearch = new URLSearchParams(window.location.search).get('search');
+  if (urlSearch && filterSearch) filterSearch.value = urlSearch;
+
   loadTrials(getFilters());
 }
 
@@ -394,11 +411,15 @@ async function loadProjects() {
   setLoading(grid, 4, true); // dark section
 
   try {
-    const { data } = await apiFetch('/api/innovation-projects/website');
+    let { data } = await apiFetch('/api/innovation-projects/website');
+    if (!data?.length) {
+      await new Promise(r => setTimeout(r, 800));
+      ({ data } = await apiFetch('/api/innovation-projects/website'));
+    }
     const projects = data || [];
 
     if (!projects.length) {
-      setError(grid, 'No active projects at this time.');
+      setError(grid, 'Unable to load projects right now. Please refresh the page.');
       return;
     }
 
@@ -885,15 +906,18 @@ window.openTrialModal = function(id) {
   const modal = document.getElementById('trialModal');
   if (!modal) return;
 
-  document.getElementById('tmProtocol').textContent = t.protocol_id;
-  document.getElementById('tmTitle').textContent = t.title;
+  const tmProtocol = document.getElementById('tmProtocol');
+  const tmTitle = document.getElementById('tmTitle');
+  const tmMeta = document.getElementById('tmMeta');
+  if (tmProtocol) tmProtocol.textContent = t.protocol_id;
+  if (tmTitle) tmTitle.textContent = t.title;
 
   const statusClass = STATUS_CLASS[t.status] || 'active';
   const statusLabel = STATUS_LABEL_EN[t.status] || t.status;
   const lineName = t.research_line?.name || '—';
   const lineNum  = t.research_line?.line_number ? `0${t.research_line.line_number}`.slice(-2) : '—';
 
-  document.getElementById('tmMeta').innerHTML = `
+  if (tmMeta) tmMeta.innerHTML = `
     <div style="display:flex;flex-direction:column;gap:.3rem;">
       <div style="font-family:var(--ff-mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-on-light-3);">Status</div>
       <span class="status-badge ${statusClass}" style="width:fit-content;">
@@ -1085,13 +1109,22 @@ if (!document.getElementById('api-spin-style')) {
 // line_number + short_name, no images/bios/trial counts needed here.
 // ─────────────────────────────────────────────
 
-async function loadHeaderResearchDropdown() {
+async function loadHeaderResearchDropdown(isRetry = false) {
   const menu = document.getElementById('hdrResearchLines');
   if (!menu) return;
   try {
     const { data } = await apiFetch('/api/research-lines/website');
     const lines = data || [];
-    if (!lines.length) { menu.innerHTML = ''; return; }
+    if (!lines.length) {
+      if (!isRetry) { setTimeout(() => loadHeaderResearchDropdown(true), 800); return; }
+      // Both attempts came back empty — leave a real, working link instead
+      // of silently wiping the menu, which previously looked like the
+      // dropdown had simply lost its contents with no way to recover.
+      menu.innerHTML = `<a class="hdr-dd-all" href="/clinical#research-lines">
+        <span lang="en">View research lines</span><span lang="es">Ver líneas de investigación</span> →
+      </a>`;
+      return;
+    }
     menu.innerHTML = lines.map(l => `
       <a class="hdr-dd-item" href="/line?id=${l.id}">
         <span class="hdr-dd-num">L${String(l.line_number).padStart(2,'0')}</span>
@@ -1102,6 +1135,10 @@ async function loadHeaderResearchDropdown() {
          </a>`;
   } catch (err) {
     console.error('Header research dropdown failed:', err);
+    if (!isRetry) { setTimeout(() => loadHeaderResearchDropdown(true), 800); return; }
+    menu.innerHTML = `<a class="hdr-dd-all" href="/clinical#research-lines">
+      <span lang="en">View research lines</span><span lang="es">Ver líneas de investigación</span> →
+    </a>`;
   }
 }
 
@@ -1497,6 +1534,7 @@ async function loadLineDetail() {
   const lineId = params.get('id');
   const loadingEl   = document.getElementById('lineLoadingState');
   const notFoundEl  = document.getElementById('lineNotFound');
+  const loadErrorEl = document.getElementById('lineLoadError');
   const heroEl      = document.getElementById('lineHero');
 
   if (!lineId) {
@@ -1505,10 +1543,24 @@ async function loadLineDetail() {
     return;
   }
 
+  let line;
   try {
-    const { data: line } = await apiFetch(`/api/research-lines/${lineId}/website`);
+    ({ data: line } = await apiFetch(`/api/research-lines/${lineId}/website`));
+    if (!line) {
+      // Retry once — a genuine fetch hiccup shouldn't land on the same
+      // "this line doesn't exist" dead-end as an actually-invalid URL.
+      await new Promise(r => setTimeout(r, 800));
+      ({ data: line } = await apiFetch(`/api/research-lines/${lineId}/website`));
+    }
     if (!line) throw new Error('not found');
+  } catch (err) {
+    console.error('Research line load failed:', err.message);
+    if (loadingEl) loadingEl.style.display = 'none';
+    if (loadErrorEl) loadErrorEl.style.display = '';
+    return;
+  }
 
+  try {
     if (loadingEl) loadingEl.style.display = 'none';
     if (heroEl) heroEl.style.display = '';
     const collabEl = document.getElementById('lineCollabSection');
@@ -1619,7 +1671,23 @@ async function loadLineDetail() {
     if (aboutSection && aboutContent) {
       let html = '';
       if (line.description) {
-        html += `<p style="margin-bottom:1.5rem;">${escHtml(line.description)}</p>`;
+        // Named projects mentioned in free-text description (e.g.
+        // "CATARS-VAC, TUCUVI-LOLA, EARCO") are often real trials already
+        // in the database — link each mention to the real record instead
+        // of leaving it as inert text disconnected from the actual table.
+        let descHtml = escHtml(line.description);
+        (line.trials_list || []).forEach(t => {
+          const shortName = (t.title || '').split(/[—-]/)[0].trim();
+          const candidates = [shortName, t.protocol_id].filter(s => s && s.length > 2);
+          candidates.forEach(name => {
+            const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const re = new RegExp(`(?<![\\w-])${escapedName}(?![\\w-])`, 'g');
+            if (re.test(descHtml)) {
+              descHtml = descHtml.replace(re, `<a href="/clinical?search=${encodeURIComponent(t.protocol_id || shortName)}" class="btn-text" style="font-size:inherit;border-bottom-width:1px;">${escHtml(name)}</a>`);
+            }
+          });
+        });
+        html += `<p style="margin-bottom:1.5rem;">${descHtml}</p>`;
       }
       if (line.capabilities) {
         const caps = line.capabilities.split(',').map(c => c.trim()).filter(Boolean);
@@ -1709,40 +1777,57 @@ async function loadLineDetail() {
 // Toggles a line.html team-member card open/closed — shared by both
 // click and keyboard (Enter/Space) activation, so the expand logic
 // lives in one place instead of being duplicated inline per event type.
-function toggleLineTeamCard(headerEl, detailId) {
-  const card = headerEl.parentElement;
-  const expanded = card.getAttribute('aria-expanded') === 'true';
-  card.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-  const d = document.getElementById(detailId);
-  if (d) d.style.maxHeight = d.style.maxHeight ? '' : d.scrollHeight + 'px';
+// Opens a line.html team member's bio in the same fixed-overlay modal
+// used on team.html — previously this page used an inline accordion that
+// pushed every card below it down the moment one expanded, which felt
+// jarring on a multi-column grid. The overlay shows the bio without
+// touching the page's layout at all.
+function openLineProfileModal(m) {
+  const overlay = document.getElementById('profileModalOverlay');
+  const content = document.getElementById('profileModalContent');
+  if (!overlay || !content) return;
+  const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
+  const avatar = m.public_photo_url
+    ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:72px;height:72px;border-radius:50%;object-fit:cover;flex-shrink:0;" loading="lazy">`
+    : `<div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#085041 0%,#0F6E56 55%,#185FA5 100%);display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-weight:700;font-size:22px;color:rgba(255,255,255,.96);flex-shrink:0;">${escHtml(initials)}</div>`;
+  const roleText = m.role_on_line ? escHtml(m.role_on_line)
+    : m.is_chief_of_department ? '<span lang="en">Department Chief</span><span lang="es">Jefe de Servicio</span>'
+    : m.id === 'c290a7e5-7bea-4652-a0ef-251fbc73184d' ? '<span lang="en">Principal Investigator, neumACt</span><span lang="es">Investigador Principal, neumACt</span>'
+    : m.can_be_pi ? '<span lang="en">Principal Investigator</span><span lang="es">Investigador Principal</span>'
+    : (m.specialization ? escHtml(m.specialization) : '');
+  content.innerHTML = `
+    <div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:1.25rem;">
+      ${avatar}
+      <div>
+        <p style="font-weight:600;font-size:1.0625rem;margin:0;">${escHtml(m.title ? m.title + ' ' + m.full_name : m.full_name)}</p>
+        ${roleText ? `<p style="font-size:.875rem;color:var(--ink-3);margin:2px 0 0;">${roleText}</p>` : ''}
+      </div>
+    </div>
+    ${m.public_bio
+      ? `<p style="font-size:.9375rem;line-height:1.65;color:var(--ink-2);margin:0;">${escHtml(m.public_bio)}</p>`
+      : `<p style="font-size:.875rem;color:var(--ink-4);font-style:italic;margin:0;border-top:1px dashed var(--border-l);padding-top:1rem;">Bio not yet added.</p>`}
+  `;
+  overlay.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
 }
-window.toggleLineTeamCard = toggleLineTeamCard;
+window.openLineProfileModal = openLineProfileModal;
+window._lineTeamData = [];
 
+      window._lineTeamData = teamWithoutCoordinator;
       teamChips.innerHTML = teamWithoutCoordinator.map((m, i) => {
         const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
         const avatarInner = m.public_photo_url
           ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:100%;height:100%;object-fit:cover;" loading="lazy">`
           : escHtml(initials);
         const avatarStyle = m.public_photo_url ? '' : 'background:linear-gradient(135deg,#085041 0%,#0F6E56 55%,#185FA5 100%);';
-        const detailId = `lineTeamDetail-${i}`;
-        // public_bio is the real, substantive biography — distinct from
-        // role_on_line, which is a one-line role descriptor. Previously
-        // this card only ever showed role_on_line, even for people who
-        // have a real bio on file.
-        const bioHtml = m.public_bio
-          ? `<p style="margin:0;">${escHtml(m.public_bio)}</p>`
-          : `<p style="margin:0;color:var(--ink-4);font-style:italic;">Bio not yet added.</p>`;
         return `<div class="line-team-card">
-          <div class="line-team-header" onclick="toggleLineTeamCard(this, '${detailId}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleLineTeamCard(this, '${detailId}');}" tabindex="0" role="button" aria-label="${escHtml(m.full_name)} — show biography">
+          <div class="line-team-header" onclick="openLineProfileModal(window._lineTeamData[${i}])" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLineProfileModal(window._lineTeamData[${i}]);}" tabindex="0" role="button" aria-label="${escHtml(m.full_name)} — view full profile">
             <div class="line-team-avatar" style="${avatarStyle}">${avatarInner}</div>
             <div style="min-width:0;flex:1;">
               <p class="line-team-name">${escHtml(m.title ? m.title + ' ' + m.full_name : m.full_name)}</p>
               ${roleTextFor(m) ? `<p class="line-team-role">${roleTextFor(m)}</p>` : ''}
             </div>
-            <svg class="line-team-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
-          </div>
-          <div class="line-team-detail" id="${detailId}">
-            <div class="line-team-detail-inner">${bioHtml}</div>
+            <svg class="line-team-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="transform:rotate(-90deg);"><path d="M6 9l6 6 6-6"/></svg>
           </div>
         </div>`;
       }).join('');
@@ -1770,8 +1855,8 @@ window.toggleLineTeamCard = toggleLineTeamCard;
     } catch (err) { console.error('Line publications load failed:', err); }
 
   } catch (err) {
-    console.error('Research line load failed:', err.message);
+    console.error('Research line render failed:', err.message);
     if (loadingEl) loadingEl.style.display = 'none';
-    if (notFoundEl) notFoundEl.style.display = '';
+    if (loadErrorEl) loadErrorEl.style.display = '';
   }
 }
