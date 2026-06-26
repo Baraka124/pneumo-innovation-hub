@@ -1,7 +1,7 @@
 /**
  * neumAC R&I — Website Data Layer
  * api.js — shared script loaded by all pages
- *  
+ *   
  * Architecture:
  *   Website → Railway backend (public endpoints, no auth)
  *   App     → Railway backend (authenticated endpoints)
