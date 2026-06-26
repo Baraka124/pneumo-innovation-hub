@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-lang="en">   
+<html lang="en" data-lang="en"> 
 <head>
   <script>try{var _l=localStorage.getItem('huac_lang');if(_l&&(_l==='en'||_l==='es'))document.documentElement.dataset.lang=_l;}catch(e){}</script>
   <meta charset="UTF-8"/>
@@ -159,6 +159,8 @@ html.bar-dismissed body{padding-top:88px!important;}
 
 
 /* ═══ CANONICAL HEADER ═══════════════════════════════════════════ */
+.skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:var(--navy-2);color:#fff;padding:.75rem 1.25rem;font-size:.875rem;font-weight:500;border-radius:0 0 6px 0;}
+.skip-link:focus{left:0;}
 .hdr{position:fixed;top:0;left:0;right:0;height:88px;background:var(--navy-2);border-bottom:1px solid rgba(255,255,255,.1);z-index:900;transition:height .2s ease;}
 .hdr.scrolled{height:68px;}
 .hdr-inner{display:flex;align-items:center;height:100%;max-width:1440px;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem);gap:1.5rem;}
@@ -397,6 +399,7 @@ html.bar-dismissed body{padding-top:88px!important;}
       display:flex;align-items:flex-start;gap:1rem;
     }
     .team-member:hover{box-shadow:0 2px 8px rgba(0,0,0,.1),0 8px 32px rgba(0,0,0,.08);transform:translateY(-1px);}
+    .team-member:focus-visible{outline:2px solid var(--teal,#007A7A);outline-offset:2px;box-shadow:0 2px 8px rgba(0,0,0,.1),0 8px 32px rgba(0,0,0,.08);}
     .tm-avatar{
       width:52px;height:52px;border-radius:50%;flex-shrink:0;
       background:linear-gradient(135deg,#005F5F 0%,#007A7A 50%,#4A9EE8 100%);
@@ -818,6 +821,7 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
 </script>
 </head>
 <body>
+<a href="#mainContent" class="skip-link">Skip to main content</a>
 <header class="hdr" id="hdr"><div class="hdr-inner"><a href="index.html" class="hdr-logo" aria-label="neumACt R&amp;I"><img src="logo.svg" alt="neumACt R&I" class="hdr-logo-img" onerror="this.style.opacity='.3'"></a><nav class="hdr-nav" aria-label="Primary navigation">
       <a href="index.html"><span lang="en">Home</span><span lang="es">Inicio</span></a>
       <div class="hdr-dd">
@@ -838,7 +842,7 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
     </div><div class="mob-lang"><button class="lt-btn lt-btn--active" data-lang="en" onclick="selectLang('en')" aria-pressed="true">EN</button><button class="lt-btn" data-lang="es" onclick="selectLang('es')" aria-pressed="false">ES</button></div></nav>
 <div id="pb" role="progressbar" aria-hidden="true"></div>
 <!-- ═══ HERO ═══════════════════════════════════════════ -->
-<section class="hero" aria-labelledby="teamHeroTitle">
+<section class="hero" aria-labelledby="teamHeroTitle" id="mainContent">
   <canvas id="heroBg" aria-hidden="true"></canvas>
   <div class="wrap">
     <div class="hero-inner">
@@ -864,7 +868,7 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
           <div class="hsr-l"><span lang="en">Research lines</span><span lang="es">Líneas de investigación</span></div>
         </div>
         <div class="hsr-item">
-          <div class="hsr-n" id="statTrials" data-counter="13+">13+</div>
+          <div class="hsr-n" id="statTrials" data-counter="10+">10+</div>
           <div class="hsr-l"><span lang="en">Active studies</span><span lang="es">Estudios activos</span></div>
         </div>
         <div class="hsr-item">
