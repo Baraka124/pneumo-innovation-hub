@@ -122,7 +122,13 @@ const CATEGORY_ICON = {
 // ─────────────────────────────────────────────
 
 const PAGE = (() => {
-  const p = location.pathname.split('/').pop() || 'index.html';
+  // Folder-based URLs (e.g. /team or /team/) mean the old
+  // "last path segment" logic breaks on a trailing slash — splitting
+  // "/team/" by '/' ends in an empty string, which used to silently
+  // fall through to the index-page fallback and load the wrong content
+  // entirely. Filter out empty segments before taking the last one.
+  const segments = location.pathname.split('/').filter(Boolean);
+  const p = segments[segments.length - 1] || 'index.html';
   if (p.startsWith('clinical'))   return 'clinical';
   if (p.startsWith('innovation')) return 'innovation';
   if (p.startsWith('news'))       return 'news';
@@ -175,7 +181,7 @@ async function loadResearchLines() {
           coordBlock = `<div class="line-coord" style="display:flex;align-items:center;gap:.5rem;">${avatar}<span>${escHtml(coord.full_name)}</span></div>`;
         }
         return `
-          <a href="line.html?id=${line.id}" class="line-card reveal">
+          <a href="/line?id=${line.id}" class="line-card reveal">
             <div class="line-num">${num}</div>
             <div class="line-body">
               <div class="line-title">${escHtml(displayName)}</div>
@@ -251,7 +257,7 @@ async function loadResearchLines() {
             <div class="line-body-inner">
               ${line.description  ? `<p class="line-desc">${escHtml(line.description)}</p>` : ''}
               ${line.capabilities ? `<p class="line-desc" style="margin-top:.5rem;">${escHtml(line.capabilities)}</p>` : ''}
-              <a href="line.html?id=${line.id}" class="btn-text" style="display:inline-flex;margin-top:.875rem;"><span lang="en">View full line page</span><span lang="es">Ver página completa de la línea</span> →</a>
+              <a href="/line?id=${line.id}" class="btn-text" style="display:inline-flex;margin-top:.875rem;"><span lang="en">View full line page</span><span lang="es">Ver página completa de la línea</span> →</a>
             </div>
           </div>
         </div>`
@@ -542,12 +548,12 @@ async function loadTeamLeads() {
                  <span class="lp-title-inline">${escHtml(p.title)}</span>
                  ${p.doi ? `<a href="https://doi.org/${escHtml(p.doi)}" target="_blank" rel="noopener" class="lp-doi-inline">DOI →</a>` : ''}
                </div>`).join('')}
-             ${pubCount > pubs.length ? `<a href="news.html" class="ls-link" style="display:inline-block;margin-top:.5rem;"><span lang="en">+${pubCount - pubs.length} more →</span><span lang="es">+${pubCount - pubs.length} más →</span></a>` : ''}
+             ${pubCount > pubs.length ? `<a href="/news" class="ls-link" style="display:inline-block;margin-top:.5rem;"><span lang="en">+${pubCount - pubs.length} more →</span><span lang="es">+${pubCount - pubs.length} más →</span></a>` : ''}
            </div>`
         : '';
 
       const partnerNote = m.seeking_partner
-        ? `<a href="innovation.html" class="ls-link" style="display:inline-flex;align-items:center;gap:.4rem;margin-top:.625rem;">
+        ? `<a href="/innovation" class="ls-link" style="display:inline-flex;align-items:center;gap:.4rem;margin-top:.625rem;">
              <span class="ls-dot" style="background:#d97706;"></span>
              <span lang="en">Seeking innovation partner</span><span lang="es">Buscando socio innovador</span> →
            </a>`
@@ -694,7 +700,7 @@ async function loadPublicationStrip() {
           ${authorLine ? `<div class="pub-authors">${escHtml(authorLine)}</div>` : ''}
           ${p.doi
             ? `<a href="https://doi.org/${escHtml(p.doi)}" target="_blank" rel="noopener" class="pub-doi-link">DOI →</a>`
-            : `<a href="news.html" class="pub-doi-link"><span lang="en">View</span><span lang="es">Ver</span> →</a>`}
+            : `<a href="/news" class="pub-doi-link"><span lang="en">View</span><span lang="es">Ver</span> →</a>`}
         </div>`;
     }).join('');
 
@@ -746,7 +752,7 @@ async function loadOpportunities() {
         <span class="opp-type opp-type--trial">${escHtml(t.phase || 'Clinical Study')} · <span lang="en">Recruiting</span><span lang="es">Reclutando</span></span>
         <div class="opp-title">${escHtml(t.title || t.study_id || '—')}</div>
         <div class="opp-meta">${t.sponsor ? escHtml(t.sponsor) : ''}</div>
-        <a href="clinical.html" class="opp-link">
+        <a href="/clinical" class="opp-link">
           <span lang="en">View study</span><span lang="es">Ver estudio</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:10px;height:10px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -757,7 +763,7 @@ async function loadOpportunities() {
         <span class="opp-type opp-type--inno"><span lang="en">Innovation · Seeking partner</span><span lang="es">Innovación · Buscando socio</span></span>
         <div class="opp-title">${escHtml(p.title || '—')}</div>
         <div class="opp-meta">${p.current_stage ? escHtml(p.current_stage.charAt(0).toUpperCase() + p.current_stage.slice(1)) : ''}</div>
-        <a href="innovation.html" class="opp-link">
+        <a href="/innovation" class="opp-link">
           <span lang="en">View project</span><span lang="es">Ver proyecto</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:10px;height:10px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -1087,11 +1093,11 @@ async function loadHeaderResearchDropdown() {
     const lines = data || [];
     if (!lines.length) { menu.innerHTML = ''; return; }
     menu.innerHTML = lines.map(l => `
-      <a class="hdr-dd-item" href="line.html?id=${l.id}">
+      <a class="hdr-dd-item" href="/line?id=${l.id}">
         <span class="hdr-dd-num">L${String(l.line_number).padStart(2,'0')}</span>
         <span class="hdr-dd-name">${escHtml(l.short_name || l.name)}</span>
       </a>`).join('')
-      + `<a class="hdr-dd-all" href="clinical.html#research-lines">
+      + `<a class="hdr-dd-all" href="/clinical#research-lines">
            <span lang="en">View all ${lines.length} lines</span><span lang="es">Ver las ${lines.length} líneas</span> →
          </a>`;
   } catch (err) {
@@ -1306,7 +1312,7 @@ async function loadFeaturedStories() {
       return `
         <div class="story-sidebar">
           ${sidebarPosts.map((p, i) => `
-            <a class="story-side-item" href="news.html" aria-label="${escHtml(p.title)}" data-side-idx="${i}">
+            <a class="story-side-item" href="/news" aria-label="${escHtml(p.title)}" data-side-idx="${i}">
               <div class="story-side-progress"><span></span></div>
               ${p.journal_name ? `<div class="story-side-journal">${escHtml(p.journal_name)}</div>` : ''}
               <div class="story-side-title">${escHtml(p.title)}</div>
@@ -1438,7 +1444,7 @@ async function loadInnovationSpotlight() {
           ${p.description ? `<div class="spotlight-desc">${escHtml(p.description)}</div>` : ''}
           <div class="spotlight-meta">
             ${p.research_line?.name ? `<span>${escHtml(p.research_line.name)}</span><span>·</span>` : ''}
-            <a href="innovation.html">
+            <a href="/innovation">
               <span lang="en">Learn more</span><span lang="es">Saber más</span>
             </a>
           </div>
@@ -1520,7 +1526,7 @@ async function loadLineDetail() {
     // line pages, which tells search engines to treat five of the six as
     // duplicates of whichever one they happened to crawl first.
     const canonicalTag = document.getElementById('canonicalLink');
-    if (canonicalTag) canonicalTag.setAttribute('href', `https://neumact.org/line.html?id=${lineId}`);
+    if (canonicalTag) canonicalTag.setAttribute('href', `https://neumact.org/line?id=${lineId}`);
     const jsonLdTag = document.getElementById('lineJsonLd');
     if (jsonLdTag) {
       jsonLdTag.textContent = JSON.stringify({
@@ -1531,7 +1537,7 @@ async function loadLineDetail() {
       });
     }
     const collabLink = document.getElementById('lineCollabLink');
-    if (collabLink) collabLink.setAttribute('href', `index.html?line=${encodeURIComponent(line.short_name || line.name)}#contact`);
+    if (collabLink) collabLink.setAttribute('href', `/?line=${encodeURIComponent(line.short_name || line.name)}#contact`);
 
     // Hero
     const eyebrowEl = document.getElementById('lineEyebrow');
@@ -1674,7 +1680,7 @@ async function loadLineDetail() {
       const activeTrials = (trials || []).filter(t => ['Reclutando','Activo','Active','Recruiting'].includes(t.status));
       if (activeTrials.length && trialsSection && trialsList) {
         trialsList.innerHTML = activeTrials.slice(0, 6).map((t, i) => `
-          <a href="clinical.html#research-lines" class="lt-trial-row" style="${i > 0 ? 'border-top:1px solid var(--border-l);' : ''}">
+          <a href="/clinical#research-lines" class="lt-trial-row" style="${i > 0 ? 'border-top:1px solid var(--border-l);' : ''}">
             <span class="lt-trial-phase">${escHtml(t.phase || 'Clinical study')}</span>
             <span class="lt-trial-title">${escHtml(t.title || t.protocol_id || '—')}</span>
             <svg class="lt-trial-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
