@@ -1877,4 +1877,4 @@ window._lineTeamData = [];
     if (loadingEl) loadingEl.style.display = 'none';
     if (loadErrorEl) loadErrorEl.style.display = '';
   }
-}  
+}
