@@ -181,7 +181,7 @@
     } else {
       el.textContent = raw;
     }
-  };
+  };  
   /* ── INIT ──────────────────────────────────────────────────── */
   function init() {
     initCounters();
