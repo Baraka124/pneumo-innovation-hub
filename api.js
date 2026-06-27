@@ -1,7 +1,7 @@
 /**
  * neumAC R&I — Website Data Layer
  * api.js — shared script loaded by all pages
- *   
+ *  
  * Architecture:
  *   Website → Railway backend (public endpoints, no auth)
  *   App     → Railway backend (authenticated endpoints)
@@ -185,10 +185,7 @@ async function loadResearchLines() {
         const coord = line.coordinator;
         let coordBlock = '';
         if (coord?.full_name) {
-          const initials = coord.full_name.split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
-          const avatar = coord.public_photo_url
-            ? `<img src="${escHtml(coord.public_photo_url)}" alt="" style="width:22px;height:22px;border-radius:50%;object-fit:cover;flex-shrink:0;">`
-            : `<span style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#085041 0%,#0F6E56 55%,#185FA5 100%);display:inline-flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-weight:700;font-size:8px;color:rgba(255,255,255,.96);flex-shrink:0;">${escHtml(initials)}</span>`;
+          const avatar = buildAvatar(coord, 22);
           coordBlock = `<div class="line-coord" style="display:flex;align-items:center;gap:.5rem;">${avatar}<span>${escHtml(coord.full_name)}</span></div>`;
         }
         return `
@@ -534,8 +531,9 @@ async function loadTeamLeads() {
       const lineName = m.coordinates_line?.name || '';
       const expertise = _getExpertise(m.id);
       const isAffiliated = m.is_external;
+      const leadInitialsId = 'lav' + Math.random().toString(36).slice(2, 9);
       const avatarArea = m.public_photo_url
-        ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:100%;height:100%;object-fit:cover;" loading="lazy"/>`
+        ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:100%;height:100%;object-fit:cover;" loading="lazy" onerror="this.style.display='none';document.getElementById('${leadInitialsId}').style.display='inline';"/><span id="${leadInitialsId}" class="lead-initials" style="display:none;">${initials}</span>`
         : `<span class="lead-initials">${initials}</span>`;
 
       // Research-focus tags only — role/seniority (Chief, PI) moved to the
@@ -635,9 +633,7 @@ function openProfileModal(staffId) {
   const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
   const roleLabel = { attending_physician:'Attending Physician', medical_resident:'Resident', fellow:'Fellow', nurse_practitioner:'Nurse Practitioner', studies_coordinator:'Studies Coordinator', data_manager:'Data Manager', labtech:'Lab Technician', biomedical_engineer:'Biomedical Engineer', administrator:'Administrator' };
   const role = roleLabel[m.staff_type] || m.staff_type;
-  const avatar = m.public_photo_url
-    ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:72px;height:72px;border-radius:50%;object-fit:cover;flex-shrink:0;" loading="lazy">`
-    : `<div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#085041 0%,#0F6E56 55%,#185FA5 100%);display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-weight:700;font-size:22px;color:rgba(255,255,255,.96);flex-shrink:0;">${escHtml(initials)}</div>`;
+  const avatar = buildAvatar(m, 72);
   content.innerHTML = `
     <div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:1.25rem;">
       ${avatar}
@@ -679,7 +675,7 @@ async function loadTeam() {
       const lineTag = m.coordinates_line ? `<span class="tca-line">L${String(m.coordinates_line.line_number).padStart(2,'0')} — ${escHtml(m.coordinates_line.name)}</span>` : '';
       const affiliTag = m.is_external ? `<span class="tca-affil">${escHtml(m.primary_dept_name||'Affiliated')}</span>` : '';
       return `<div class="team-card-api">
-        <div class="tca-avatar">${m.public_photo_url ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:40px;height:40px;object-fit:cover;border-radius:3px;" loading="lazy">` : initials}</div>
+        <div class="tca-avatar">${m.public_photo_url ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:40px;height:40px;object-fit:cover;border-radius:50%;" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span style="display:none;width:100%;height:100%;align-items:center;justify-content:center;">${escHtml(initials)}</span>` : initials}</div>
         <div style="flex:1;min-width:0;">
           <div class="tca-name">${escHtml(m.display_name || m.full_name)}</div>
           ${m.specialization ? `<div class="tca-spec">${escHtml(m.specialization)}</div>` : ''}
@@ -862,6 +858,28 @@ function escHtml(str) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
+}
+
+// Builds a self-healing avatar: a real photo if one exists, with a true
+// onerror fallback to initials if the image fails to load (stale URL,
+// deleted storage file, etc.) — not just a check that the URL string
+// is non-empty, which says nothing about whether the image actually
+// loads. Centralized here so every avatar site shares one fallback
+// behavior instead of each reimplementing it slightly differently.
+function buildAvatar(person, sizePx, shape = 'circle') {
+  const initials = (person.full_name || '').split(' ')
+    .filter(w => w && !['Dr.', 'Dra.', 'Prof.'].includes(w))
+    .slice(0, 2).map(n => n[0]).join('').toUpperCase();
+  const radius = shape === 'circle' ? '50%' : 'var(--r-sm, 6px)';
+  const fallbackId = 'av' + Math.random().toString(36).slice(2, 9);
+  const fallbackSpan = `<span id="${fallbackId}" style="display:none;width:100%;height:100%;border-radius:${radius};background:linear-gradient(135deg,#085041 0%,#0F6E56 55%,#185FA5 100%);align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-weight:700;font-size:${Math.round(sizePx * 0.32)}px;color:rgba(255,255,255,.96);">${escHtml(initials)}</span>`;
+  if (!person.public_photo_url) {
+    return `<div style="width:${sizePx}px;height:${sizePx}px;border-radius:${radius};background:linear-gradient(135deg,#085041 0%,#0F6E56 55%,#185FA5 100%);display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-weight:700;font-size:${Math.round(sizePx * 0.32)}px;color:rgba(255,255,255,.96);flex-shrink:0;">${escHtml(initials)}</div>`;
+  }
+  return `<div style="width:${sizePx}px;height:${sizePx}px;border-radius:${radius};overflow:hidden;flex-shrink:0;position:relative;">
+    <img src="${escHtml(person.public_photo_url)}" alt="${escHtml(person.full_name)}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.style.display='none';document.getElementById('${fallbackId}').style.display='flex';">
+    ${fallbackSpan}
+  </div>`;
 }
 
 // Every bio in the database opens with a role/affiliation sentence
@@ -1626,8 +1644,9 @@ async function loadLineDetail() {
     if (line.coordinator && peopleSection && coordCard) {
       const c = line.coordinator;
       const initials = (c.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
+      const coordAvId = 'cav' + Math.random().toString(36).slice(2, 9);
       const avatar = c.public_photo_url
-        ? `<div style="width:96px;height:96px;border-radius:50%;box-shadow:0 1px 2px rgba(0,40,40,.08),0 6px 20px rgba(0,95,95,.18);overflow:hidden;flex-shrink:0;"><img src="${escHtml(c.public_photo_url)}" alt="${escHtml(c.full_name)}" style="width:100%;height:100%;object-fit:cover;" loading="lazy"></div>`
+        ? `<div style="width:96px;height:96px;border-radius:50%;box-shadow:0 1px 2px rgba(0,40,40,.08),0 6px 20px rgba(0,95,95,.18);overflow:hidden;flex-shrink:0;position:relative;"><img src="${escHtml(c.public_photo_url)}" alt="${escHtml(c.full_name)}" style="width:100%;height:100%;object-fit:cover;" loading="lazy" onerror="this.style.display='none';document.getElementById('${coordAvId}').style.display='flex';"><div id="${coordAvId}" style="display:none;position:absolute;inset:0;background:linear-gradient(135deg,#005F5F 0%,#007A7A 55%,#3D8FD6 100%);align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-weight:700;font-size:1.625rem;color:rgba(255,255,255,.96);">${escHtml(initials)}</div></div>`
         : `<div style="width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,#005F5F 0%,#007A7A 55%,#3D8FD6 100%);box-shadow:0 1px 2px rgba(0,40,40,.08),0 6px 20px rgba(0,95,95,.18);display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-weight:700;font-size:1.625rem;color:rgba(255,255,255,.96);flex-shrink:0;">${escHtml(initials)}</div>`;
 
       // Every real role this person holds gets its own badge — these are
@@ -1787,9 +1806,7 @@ function openLineProfileModal(m) {
   const content = document.getElementById('profileModalContent');
   if (!overlay || !content) return;
   const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
-  const avatar = m.public_photo_url
-    ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:72px;height:72px;border-radius:50%;object-fit:cover;flex-shrink:0;" loading="lazy">`
-    : `<div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#085041 0%,#0F6E56 55%,#185FA5 100%);display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-weight:700;font-size:22px;color:rgba(255,255,255,.96);flex-shrink:0;">${escHtml(initials)}</div>`;
+  const avatar = buildAvatar(m, 72);
   const roleText = m.role_on_line ? escHtml(m.role_on_line)
     : m.is_chief_of_department ? '<span lang="en">Department Chief</span><span lang="es">Jefe de Servicio</span>'
     : m.id === 'c290a7e5-7bea-4652-a0ef-251fbc73184d' ? '<span lang="en">Principal Investigator, neumACt</span><span lang="es">Investigador Principal, neumACt</span>'
@@ -1816,8 +1833,9 @@ window._lineTeamData = [];
       window._lineTeamData = teamWithoutCoordinator;
       teamChips.innerHTML = teamWithoutCoordinator.map((m, i) => {
         const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
+        const lineAvId = 'ltav' + i;
         const avatarInner = m.public_photo_url
-          ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:100%;height:100%;object-fit:cover;" loading="lazy">`
+          ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:100%;height:100%;object-fit:cover;" loading="lazy" onerror="this.style.display='none';document.getElementById('${lineAvId}').style.display='flex';this.parentElement.style.background='linear-gradient(135deg,#085041 0%,#0F6E56 55%,#185FA5 100%)';"><span id="${lineAvId}" style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-weight:700;">${escHtml(initials)}</span>`
           : escHtml(initials);
         const avatarStyle = m.public_photo_url ? '' : 'background:linear-gradient(135deg,#085041 0%,#0F6E56 55%,#185FA5 100%);';
         return `<div class="line-team-card">
