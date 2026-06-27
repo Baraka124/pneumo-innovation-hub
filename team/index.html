@@ -5,7 +5,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0"/>
   <title>Team | neumACt R&I · CHUAC · INIBIC</title>
-  <link rel="icon" type="image/svg+xml" href="../logo.svg"/> 
+  <link rel="icon" type="image/svg+xml" href="../logo.svg"/>
   <meta name="description" content="23 clinician-investigators across six specialist research lines in respiratory medicine at CHUAC. Part of INIBIC and the SERGAS network."/>
     <link rel="alternate" hreflang="es" href="https://neumact.org/team"/>
   <link rel="alternate" hreflang="en" href="https://neumact.org/team"/>
@@ -584,13 +584,12 @@ html.bar-dismissed body{padding-top:88px!important;}
        Shows only the active language. Default: EN.
        Toggled by selectLang() which sets data-lang on <html>.
     ══════════════════════════════════════════════════════ */
-    html[data-lang="en"] span[lang="es"],
-    html[data-lang="en"] [lang="es"] { display: none !important; }
-    html[data-lang="es"] span[lang="en"],
-    html[data-lang="es"] [lang="en"] { display: none !important; }
-    /* Preserve structural elements that use lang for SEO but not display */
-    html[data-lang="es"] html[lang="en"],
-    html[data-lang="en"] html[lang="es"] { display: block !important; }
+    html[data-lang="es"] [lang="es"]{display:inline !important;}
+    html[data-lang="es"] [lang="es"].blk{display:block !important;}
+    html[data-lang="es"] [lang="en"]{display:none !important;}
+    html[data-lang="en"] [lang="en"]{display:inline;}
+    html[data-lang="en"] [lang="en"].blk{display:block;}
+    html[data-lang="en"] [lang="es"]{display:none;}
 
     /* Tag/pill stays informational, never an action */
     .line-tag, .lead-line-pill, .lead-line-num,
@@ -1381,4 +1380,4 @@ if(!localStorage.getItem('cookieOk')){
 })();
 </script>
 </body>
-</html>
+</html>  
