@@ -138,7 +138,7 @@ html.bar-dismissed body{padding-top:88px!important;}
 /* ═══ CANONICAL HEADER ═══════════════════════════════════════════ */
 .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:var(--navy-2);color:#fff;padding:.75rem 1.25rem;font-size:.875rem;font-weight:500;border-radius:0 0 6px 0;}
 .skip-link:focus{left:0;}
-.hdr{position:fixed;top:0;left:0;right:0;height:88px;background:var(--navy-2);border-bottom:1px solid rgba(255,255,255,.1);z-index:900;transition:height .2s ease;}
+.hdr{position:fixed;top:0;left:0;right:0;height:88px;background:var(--navy-2);border-bottom:1px solid rgba(255,255,255,.1);z-index:900;transition:height .2s var(--ease-clinical);}
 .hdr.scrolled{height:68px;}
 .hdr-inner{display:flex;align-items:center;height:100%;max-width:1440px;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem);gap:1.5rem;}
 .hdr-logo{display:flex;align-items:center;flex-shrink:0;text-decoration:none;transition:opacity .15s;}
@@ -183,7 +183,7 @@ html.bar-dismissed body{padding-top:88px!important;}
 .mob-toggle span{display:block;width:16px;height:1.5px;background:#fff;transition:all .25s;}
 .mob-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1050;opacity:0;pointer-events:none;transition:opacity .25s;}
 .mob-overlay.open{opacity:1;pointer-events:auto;}
-.mob-drawer{position:fixed;top:0;right:-100%;bottom:0;width:min(300px,84vw);background:var(--navy-2);z-index:1100;transition:right .28s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;padding-top:88px;overflow-y:auto;}
+.mob-drawer{position:fixed;top:0;right:-100%;bottom:0;width:min(300px,84vw);background:var(--navy-2);z-index:1100;transition:right .28s var(--ease-clinical);display:flex;flex-direction:column;padding-top:88px;overflow-y:auto;}
 .mob-drawer.open{right:0;}
 .mob-drawer-nav{padding:1.25rem 1rem;display:flex;flex-direction:column;gap:.2rem;}
 .mob-drawer-nav a{display:block;padding:.7rem .875rem;font-family:var(--ff-body,'DM Sans',sans-serif);font-size:var(--fs-body-sm);font-weight:500;color:rgba(255,255,255,.82);text-decoration:none;border-radius:var(--r-sm);transition:background .15s,color .15s;}
@@ -277,7 +277,8 @@ html.bar-dismissed body{padding-top:88px!important;}
 
     /* ── Responsive header ── */
     @media(max-width:768px){
-      :root{--header-h:72px;}
+      :root{
+      --ease-clinical:cubic-bezier(.16,1,.3,1);--header-h:72px;}
     }
     @media(max-width:480px){
       :root{--header-h:64px;}
@@ -340,7 +341,7 @@ html.bar-dismissed body{padding-top:88px!important;}
     .blog-hero-feature img{
       width:100%;height:100%;object-fit:cover;display:block;
       filter:brightness(.65);opacity:1;
-      transition:transform .6s ease,filter .4s ease,opacity .35s ease;
+      transition:transform .6s var(--ease-clinical),filter .4s var(--ease-clinical),opacity .35s var(--ease-clinical);
     }
     .blog-hero-feature:hover img{transform:scale(1.03);filter:brightness(.75);}
     .blog-hero-feature-ph{
@@ -356,7 +357,7 @@ html.bar-dismissed body{padding-top:88px!important;}
       background:linear-gradient(to right,rgba(12,68,124,.85) 0%,rgba(12,68,124,.2) 65%,transparent 100%);
       display:flex;align-items:flex-end;
       padding:1.5rem clamp(1.5rem,4vw,5rem);
-      opacity:1;transition:opacity .35s ease;
+      opacity:1;transition:opacity .35s var(--ease-clinical);
     }
     .blog-hero-feature-inner{max-width:560px;}
     .blog-hero-feature-badge{
@@ -428,7 +429,7 @@ html.bar-dismissed body{padding-top:88px!important;}
     /* ── PHOTO STORY — full-bleed with overlay ── */
     .post-item.is-photo{padding:0;overflow:hidden;border-radius:var(--r-md);margin-bottom:1.5rem;border:none;}
     .post-photo-wrap{position:relative;overflow:hidden;}
-    .post-photo-img{width:100%;height:300px;object-fit:cover;display:block;transition:transform .5s cubic-bezier(.4,0,.2,1);}
+    .post-photo-img{width:100%;height:300px;object-fit:cover;display:block;transition:transform .5s var(--ease-clinical);}
     .post-item.is-photo:hover .post-photo-img{transform:scale(1.03);}
     .post-photo-scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(12,68,124,.88) 0%,rgba(12,68,124,.15) 55%,transparent 100%);transition:opacity .3s;}
     .post-item.is-photo:hover .post-photo-scrim{opacity:.92;}
@@ -454,7 +455,7 @@ html.bar-dismissed body{padding-top:88px!important;}
     .post-item.is-article:hover .post-item-num{color:var(--accent);}
     .post-article-body{flex:1;min-width:0;}
     .post-article-thumb{width:84px;height:84px;flex-shrink:0;border-radius:var(--r-sm);overflow:hidden;border:1px solid var(--rule-l);}
-    .post-article-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease;}
+    .post-article-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s var(--ease-clinical);}
     .post-item.is-article:hover .post-article-thumb img{transform:scale(1.07);}
 
     /* ── UPDATE — accent line left ── */
@@ -645,7 +646,7 @@ html.bar-dismissed body{padding-top:88px!important;}
     @media(max-width:860px){
       .footer-right{align-items:flex-start;}
       }
-        .reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease;}
+        .reveal{opacity:0;transform:translateY(18px);transition:opacity .5s var(--ease-clinical),transform .5s var(--ease-clinical);}
     .reveal.in{opacity:1;transform:none;}
     .reveal-d1{transition-delay:.1s;}
     @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}}
@@ -808,7 +809,7 @@ html.bar-dismissed body{padding-top:88px!important;}
 }
 
 /* Header scroll shrink */
-.hdr { transition: height .25s ease, background .2s; }
+.hdr { transition: height .25s var(--ease-clinical), background .2s; }
 .hdr.scrolled { height: 64px !important; }
 .hdr.scrolled 
 
@@ -1081,7 +1082,15 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
       background:#FAEEDA;color:#633806;border:1px solid #EF9F27;
       font-family:var(--ff-mono,monospace);letter-spacing:.06em;text-transform:uppercase;
     }
-  </style>
+  
+    /* ── Signature motion + accessibility additions ──────────── */
+    a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,
+    textarea:focus-visible,[tabindex]:focus-visible,summary:focus-visible,
+    .toggle-arrow:focus-visible,.line-card:focus-visible{
+      outline:2px solid var(--teal-2);outline-offset:2px;border-radius:var(--r-xs);
+    }
+    [data-counter]{font-variant-numeric:tabular-nums;font-feature-settings:'tnum';}
+</style>
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebPage","name":"neumACt R&I — Publications","description":"Peer-reviewed publications from the Servicio de Neumología research group, CHUAC, A Coruña.","isPartOf":{"@type":"WebSite","url":"https://neumact.org","name":"neumACt R&I"}}
