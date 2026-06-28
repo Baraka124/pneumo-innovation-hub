@@ -75,7 +75,7 @@
       list.querySelectorAll('.fw-step').forEach((step, i) => {
         step.style.opacity = '0';
         step.style.transform = 'translateY(10px)';
-        step.style.transition = `opacity .4s ease ${i * 80}ms, transform .4s ease ${i * 80}ms`;
+        step.style.transition = `opacity .4s var(--ease-clinical) ${i * 80}ms, transform .4s var(--ease-clinical) ${i * 80}ms`;
         // Trigger shortly after page load
         setTimeout(() => {
           step.style.opacity = '1';
@@ -95,7 +95,7 @@
       line.style.cssText = `
         position:absolute;top:0;left:0;width:3px;height:0;
         background:linear-gradient(to bottom, var(--teal-2), transparent);
-        z-index:2;transition:height .7s cubic-bezier(.4,0,.2,1);
+        z-index:2;transition:height .7s var(--ease-clinical);
         pointer-events:none;
       `;
       // Only inject if hero is position:relative/absolute
@@ -125,7 +125,7 @@
         body.style.opacity = '1';
         body.style.overflow = 'hidden';
         requestAnimationFrame(() => {
-          body.style.transition = 'max-height .35s cubic-bezier(.4,0,.2,1), opacity .25s ease';
+          body.style.transition = 'max-height .35s var(--ease-clinical), opacity .25s var(--ease-clinical)';
           body.style.maxHeight = '0';
           body.style.opacity = '0';
         });
@@ -135,7 +135,7 @@
         body.style.maxHeight = '0';
         body.style.opacity = '0';
         body.style.overflow = 'hidden';
-        body.style.transition = 'max-height .4s cubic-bezier(.4,0,.2,1), opacity .3s ease .05s';
+        body.style.transition = 'max-height .4s var(--ease-clinical), opacity .3s var(--ease-clinical) .05s';
         card.classList.add('open');
 
         // Pulse the toggle hint briefly to confirm interaction
@@ -182,7 +182,7 @@
       el.textContent = raw;
     }
   };  
-  /* ── INIT ──────────────────────────────────────────────────── */
+  /* ── INIT ──────────────────────────────────────────────────── */  
   function init() {
     initCounters();
     initStagger();
