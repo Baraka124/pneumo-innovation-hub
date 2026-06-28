@@ -177,6 +177,8 @@ async function loadResearchLines() {
 
       await new Promise(r => setTimeout(r, 0));
 
+      indexGrid.style.transition = 'none';
+      indexGrid.style.opacity = '0';
       indexGrid.innerHTML = data.map((line, i) => {
         const num = String(line.line_number).padStart(2, '0');
         const displayName = line.short_name || line.name;
@@ -203,6 +205,7 @@ async function loadResearchLines() {
             </div>
           </a>`;
       }).join('');
+      requestAnimationFrame(() => { indexGrid.style.transition = 'opacity .22s var(--ease-clinical)'; indexGrid.style.opacity = '1'; });
       if (window._revealObserver) indexGrid.querySelectorAll('.reveal').forEach(el => window._revealObserver.observe(el));
 
       // Update stat counters
@@ -228,6 +231,8 @@ async function loadResearchLines() {
     }
 
     if (clinicalList) {
+      clinicalList.style.transition = 'none';
+      clinicalList.style.opacity = '0';
       clinicalList.innerHTML = data.map(line => `
         <div class="line-card" id="line-${line.id}">
           <div class="line-head" onclick="toggleLine('line-${line.id}')">
@@ -270,6 +275,7 @@ async function loadResearchLines() {
           </div>
         </div>`
       ).join('');
+      requestAnimationFrame(() => { clinicalList.style.transition = 'opacity .22s var(--ease-clinical)'; clinicalList.style.opacity = '1'; });
     }
 
   } catch (err) {
@@ -420,6 +426,8 @@ async function loadProjects() {
       return;
     }
 
+    grid.style.transition = 'none';
+    grid.style.opacity = '0';
     grid.innerHTML = projects.map((p, i) => {
       const catClass = CATEGORY_CLASS[p.category] || 'cat-device';
       const catIcon  = CATEGORY_ICON[p.category]  || CATEGORY_ICON['Dispositivo'];
@@ -446,6 +454,7 @@ async function loadProjects() {
             : ''}
         </div>`;
     }).join('');
+    requestAnimationFrame(() => { grid.style.transition = 'opacity .22s var(--ease-clinical)'; grid.style.opacity = '1'; });
 
     requestAnimationFrame(() => {
       grid.querySelectorAll('.reveal').forEach(el => {
@@ -525,6 +534,8 @@ async function loadTeamLeads() {
         return (a.coordinates_line?.line_number||99) - (b.coordinates_line?.line_number||99);
       });
     if (!leads.length) { grid.innerHTML = '<p class="state-empty">Research lead profiles coming soon.</p>'; return; }
+    grid.style.transition = 'none';
+    grid.style.opacity = '0';
     grid.innerHTML = leads.map((m,i) => {
       const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
       const lineNum = m.coordinates_line?.line_number ? String(m.coordinates_line.line_number).padStart(2,'0') : '';
@@ -594,6 +605,7 @@ async function loadTeamLeads() {
         </div>
       </div>`;
     }).join('');
+    requestAnimationFrame(() => { grid.style.transition = 'opacity .22s var(--ease-clinical)'; grid.style.opacity = '1'; });
     if (window._revealObserver) grid.querySelectorAll('.reveal').forEach(el=>window._revealObserver.observe(el));
   } catch(err) { console.error('Leads load failed:',err); grid.innerHTML='<p class="state-empty">Unable to load team profiles.</p>'; }
 }
@@ -607,6 +619,8 @@ async function loadTeamGroup() {
     if (!group.length) { grid.style.display='none'; return; }
     window._teamGroupData = group; // for the click-to-expand profile modal
     const roleLabel = { attending_physician:'Attending Physician', medical_resident:'Resident', fellow:'Fellow', nurse_practitioner:'Nurse Practitioner', studies_coordinator:'Studies Coordinator', data_manager:'Data Manager', labtech:'Lab Technician', biomedical_engineer:'Biomedical Engineer', administrator:'Administrator' };
+    grid.style.transition = 'none';
+    grid.style.opacity = '0';
     grid.innerHTML = group.map(m => {
       const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
       const role = roleLabel[m.staff_type] || m.staff_type;
@@ -619,6 +633,7 @@ async function loadTeamGroup() {
         </div>
       </div>`;
     }).join('');
+    requestAnimationFrame(() => { grid.style.transition = 'opacity .22s var(--ease-clinical)'; grid.style.opacity = '1'; });
   } catch(err) { console.error('Team group load failed:',err); if (grid) grid.innerHTML = '<p class="state-empty">Unable to load team list.</p>'; }
 }
 
@@ -670,6 +685,8 @@ async function loadTeam() {
     const { data } = await apiFetch('/api/team/website');
     const members = (data || []).filter(m => !m.coordinates_line);
     if (!members.length) { grid.innerHTML='<p style="padding:2rem;color:#6B6B6B;font-size:.875rem;">Team information coming soon.</p>'; return; }
+    grid.style.transition = 'none';
+    grid.style.opacity = '0';
     grid.innerHTML = members.map(m => {
       const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
       const lineTag = m.coordinates_line ? `<span class="tca-line">L${String(m.coordinates_line.line_number).padStart(2,'0')} — ${escHtml(m.coordinates_line.name)}</span>` : '';
@@ -684,6 +701,7 @@ async function loadTeam() {
         </div>
       </div>`;
     }).join('');
+    requestAnimationFrame(() => { grid.style.transition = 'opacity .22s var(--ease-clinical)'; grid.style.opacity = '1'; });
   } catch(err) { console.error('Team load failed:',err); grid.innerHTML='<p style="padding:2rem;color:#6B6B6B;">Unable to load team information.</p>'; }
 }
 
@@ -704,6 +722,8 @@ async function loadPublicationStrip() {
 
     if (!pubs.length) { inner.innerHTML = '<div class="pub-card" style="color:rgba(255,255,255,.4);font-size:.875rem;padding:2rem;">No publications available.</div>'; return; }
 
+    inner.style.transition = 'none';
+    inner.style.opacity = '0';
     inner.innerHTML = pubs.map(p => {
       const year = p.published_at ? new Date(p.published_at).getFullYear() : '';
       const authorLine = p.authors_text ? p.authors_text.split(';')[0].trim() + (p.authors_text.includes(';') ? ' et al.' : '') : (p.author?.full_name || '');
@@ -720,6 +740,7 @@ async function loadPublicationStrip() {
             : `<a href="/news" class="pub-doi-link"><span lang="en">View</span><span lang="es">Ver</span> →</a>`}
         </div>`;
     }).join('');
+    requestAnimationFrame(() => { inner.style.transition = 'opacity .22s var(--ease-clinical)'; inner.style.opacity = '1'; });
 
     if (countEl) countEl.textContent = `${pubs.length} publications`;
 
@@ -905,7 +926,7 @@ function _fadeInRows(selector) {
   requestAnimationFrame(() => {
     document.querySelectorAll(selector).forEach((row, i) => {
       row.style.opacity = '0';
-      row.style.transition = `opacity .25s ease ${i * 25}ms`;
+      row.style.transition = `opacity .25s var(--ease-clinical) ${i * 25}ms`;
       requestAnimationFrame(() => { row.style.opacity = '1'; });
     });
   });
@@ -1143,6 +1164,8 @@ async function loadHeaderResearchDropdown(isRetry = false) {
       </a>`;
       return;
     }
+    menu.style.transition = 'none';
+    menu.style.opacity = '0';
     menu.innerHTML = lines.map(l => `
       <a class="hdr-dd-item" href="/line?id=${l.id}">
         <span class="hdr-dd-num">L${String(l.line_number).padStart(2,'0')}</span>
@@ -1151,6 +1174,7 @@ async function loadHeaderResearchDropdown(isRetry = false) {
       + `<a class="hdr-dd-all" href="/clinical#research-lines">
            <span lang="en">View all ${lines.length} lines</span><span lang="es">Ver las ${lines.length} líneas</span> →
          </a>`;
+    requestAnimationFrame(() => { menu.style.transition = 'opacity .18s var(--ease-clinical)'; menu.style.opacity = '1'; });
   } catch (err) {
     console.error('Header research dropdown failed:', err);
     if (!isRetry) { setTimeout(() => loadHeaderResearchDropdown(true), 800); return; }
@@ -1677,7 +1701,9 @@ async function loadLineDetail() {
           </div>
           ${roleBadges ? `<div style="display:flex;gap:.5rem;flex-wrap:wrap;padding-left:calc(56px + 1rem);">${roleBadges}</div>` : ''}
         </div>`;
+      peopleSection.style.opacity = '0';
       peopleSection.style.display = '';
+      requestAnimationFrame(() => { peopleSection.style.transition = 'opacity .25s var(--ease-clinical)'; peopleSection.style.opacity = '1'; });
     }
 
     // About this line — description/capabilities/keywords are real,
@@ -1723,7 +1749,9 @@ async function loadLineDetail() {
       }
       if (html) {
         aboutContent.innerHTML = html;
+        aboutSection.style.opacity = '0';
         aboutSection.style.display = '';
+        requestAnimationFrame(() => { aboutSection.style.transition = 'opacity .25s var(--ease-clinical)'; aboutSection.style.opacity = '1'; });
       }
 
       // Quick-facts panel — sits beside the About text, breaking the
@@ -1739,10 +1767,12 @@ async function loadLineDetail() {
         if (facts.length) {
           factsEl.innerHTML = facts.map((f, i) => `
             <div style="${i > 0 ? 'border-top:1px solid var(--border-l);margin-top:1rem;padding-top:1rem;' : ''}">
-              <p style="font-family:var(--ff-display);font-size:1.75rem;font-weight:700;margin:0;line-height:1;">${f.num}</p>
+              <p style="font-family:var(--ff-display);font-size:1.75rem;font-weight:700;margin:0;line-height:1;font-variant-numeric:tabular-nums;">${f.num}</p>
               <p style="font-size:var(--fs-label);color:var(--ink-3);margin-top:.25rem;"><span lang="en">${f.labelEn}</span><span lang="es">${f.labelEs}</span></p>
             </div>`).join('');
+          factsEl.style.opacity = '0';
           factsEl.style.display = '';
+          requestAnimationFrame(() => { factsEl.style.transition = 'opacity .25s var(--ease-clinical)'; factsEl.style.opacity = '1'; });
         }
       }
     }
@@ -1756,7 +1786,9 @@ async function loadLineDetail() {
       trackList.innerHTML = line.track_record.map(item =>
         `<li class="ltr-item"><span class="ltr-mark">—</span><span>${escHtml(item)}</span></li>`
       ).join('');
+      trackSection.style.opacity = '0';
       trackSection.style.display = '';
+      requestAnimationFrame(() => { trackSection.style.transition = 'opacity .25s var(--ease-clinical)'; trackSection.style.opacity = '1'; });
     }
 
     // Active trials — reuses the existing public trials endpoint, filtered by line
@@ -1772,7 +1804,9 @@ async function loadLineDetail() {
             <span class="lt-trial-title">${escHtml(t.title || t.protocol_id || '—')}</span>
             <svg class="lt-trial-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>`).join('');
+        trialsSection.style.opacity = '0';
         trialsSection.style.display = '';
+        requestAnimationFrame(() => { trialsSection.style.transition = 'opacity .25s var(--ease-clinical)'; trialsSection.style.opacity = '1'; });
       }
     } catch (err) { console.error('Line trials load failed:', err); }
 
@@ -1831,6 +1865,8 @@ window.openLineProfileModal = openLineProfileModal;
 window._lineTeamData = [];
 
       window._lineTeamData = teamWithoutCoordinator;
+      teamChips.style.transition = 'none';
+      teamChips.style.opacity = '0';
       teamChips.innerHTML = teamWithoutCoordinator.map((m, i) => {
         const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
         const lineAvId = 'ltav' + i;
@@ -1849,6 +1885,7 @@ window._lineTeamData = [];
           </div>
         </div>`;
       }).join('');
+      requestAnimationFrame(() => { teamChips.style.transition = 'opacity .22s var(--ease-clinical)'; teamChips.style.opacity = '1'; });
       peopleSection.style.display = '';
     }
 
@@ -1868,7 +1905,9 @@ window._lineTeamData = [];
             <p style="font-size:var(--fs-meta);margin:0;">${escHtml(p.title)}</p>
           </div>`;
         }).join('');
+        pubsSection.style.opacity = '0';
         pubsSection.style.display = '';
+        requestAnimationFrame(() => { pubsSection.style.transition = 'opacity .25s var(--ease-clinical)'; pubsSection.style.opacity = '1'; });
       }
     } catch (err) { console.error('Line publications load failed:', err); }
 
