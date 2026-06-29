@@ -1305,20 +1305,58 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebPage","name":"neumACt R&I — Research","description":"Clinical research programme — six active lines covering transplantation, airway disease, interventional pneumology, critical care, thoracic surgery, and precision medicine.","isPartOf":{"@type":"WebSite","url":"https://neumact.org","name":"neumACt R&I"}}
 </script>
+  <link rel="stylesheet" href="../polish.css">
 </head>
 <body>
 <a href="#top" class="skip-link">Skip to main content</a>
-<header class="hdr" id="hdr"><div class="hdr-inner"><a href="/" class="hdr-logo" aria-label="neumACt R&amp;I"><img src="../logo.svg" alt="neumACt R&I" class="hdr-logo-img" onerror="this.style.opacity='.3'"></a><nav class="hdr-nav" aria-label="Primary navigation">
-      <a href="/"><span lang="en">Home</span><span lang="es">Inicio</span></a>
-      <div class="hdr-dd">
-        <span class="hdr-dd-trigger current"><a href="/clinical" aria-current="page"><span lang="en">Research</span><span lang="es">Investigación</span></a><button type="button" class="hdr-dd-chevron" aria-label="Show research lines" aria-expanded="false" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button></span>
-        <div class="hdr-dd-panel"><div class="hdr-dd-panel-inner" id="hdrResearchLines"></div></div>
+<header class="hdr" id="hdr" data-page="clinical">
+  <!-- Tier 1: institutional utility strip -->
+  <div class="hdr-utility">
+    <div class="hdr-utility-inner">
+      <div class="hdr-affil">
+        <span lang="en">Servicio de Neumología · CHUAC</span><span lang="es">Servicio de Neumología · CHUAC</span>
+        <span class="hdr-affil-sep">·</span>
+        <span class="hdr-affil-org">INIBIC · SERGAS</span>
       </div>
-      <a href="/innovation"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
-      <a href="/news"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
-      <a href="/team"><span lang="en">Team</span><span lang="es">Equipo</span></a>
-    <a href="/#contact"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
-    </nav><div class="hdr-right"><div class="lang-toggle" role="group" aria-label="Language"><button class="lt-btn lt-btn--active" data-lang="en" id="ltBtnEn" onclick="selectLang('en')" aria-pressed="true">EN</button><button class="lt-btn" data-lang="es" id="ltBtnEs" onclick="selectLang('es')" aria-pressed="false">ES</button></div><button class="mob-toggle" id="mobToggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobDrawer"><span></span><span></span><span></span></button></div></div></header><div class="mob-overlay" id="mobOverlay"></div><nav class="mob-drawer" id="mobDrawer" aria-label="Mobile navigation"><div class="mob-drawer-nav">
+      <div class="hdr-utility-right">
+        <a class="hdr-utility-link" href="https://www.sergas.gal" target="_blank" rel="noopener">sergas.gal</a>
+        <div class="lang-switch" role="group" aria-label="Language / Idioma">
+          <span class="lang-switch-knob" aria-hidden="true"></span>
+          <button class="lang-opt" data-lang="en" id="ltBtnEn" onclick="selectLang('en')" aria-pressed="true">EN</button>
+          <button class="lang-opt" data-lang="es" id="ltBtnEs" onclick="selectLang('es')" aria-pressed="false">ES</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Tier 2: primary navigation -->
+  <div class="hdr-main">
+    <div class="hdr-inner">
+      <a href="/" class="hdr-logo" aria-label="neumACt R&amp;I">
+        <img src="../logo.svg" alt="neumACt R&I" class="hdr-logo-img" onerror="this.style.opacity='.3'">
+        <span class="hdr-logo-rule" aria-hidden="true"></span>
+        <span class="hdr-logo-desc"><span lang="en">Research &amp; Innovation</span><span lang="es">Investigación e Innovación</span></span>
+      </a>
+      <nav class="hdr-nav" aria-label="Primary navigation">
+        <span class="hdr-nav-pill" aria-hidden="true"></span>
+        <a href="/" class="hdr-nav-link" data-nav="home"><span lang="en">Home</span><span lang="es">Inicio</span></a>
+        <div class="hdr-dd" data-nav="research">
+          <span class="hdr-dd-trigger">
+            <a href="/clinical" class="hdr-nav-link" data-nav="research" data-current="true"><span lang="en">Research</span><span lang="es">Investigación</span></a>
+            <button type="button" class="hdr-dd-chevron" aria-label="Show research lines" aria-expanded="false" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button>
+          </span>
+          <div class="hdr-dd-panel"><div class="hdr-dd-panel-inner" id="hdrResearchLines"></div></div>
+        </div>
+        <a href="/innovation" class="hdr-nav-link" data-nav="innovation"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
+        <a href="/news" class="hdr-nav-link" data-nav="news"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
+        <a href="/team" class="hdr-nav-link" data-nav="team"><span lang="en">Team</span><span lang="es">Equipo</span></a>
+      </nav>
+      <div class="hdr-right">
+        <a href="/#contact" class="hdr-contact-btn"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
+        <button class="mob-toggle" id="mobToggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobDrawer"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </div>
+</header><div class="mob-overlay" id="mobOverlay"></div><nav class="mob-drawer" id="mobDrawer" aria-label="Mobile navigation"><div class="mob-drawer-nav">
       <a href="/"><span lang="en">Home</span><span lang="es">Inicio</span></a>
       <a href="/clinical" class="current" aria-current="page"><span lang="en">Research</span><span lang="es">Investigación</span></a>
       <a href="/innovation"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
@@ -1331,15 +1369,15 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
     <div class="container" style="padding-bottom:0;">
       <div class="hero-inner">
         <div style="padding-bottom:3rem;">
-          <h1 class="display xl hero-title reveal reveal-d1">
+          <h1 class="display xl hero-title">
             <span lang="en">Respiratory medicine,<br>systematically investigated.</span>
             <span lang="es">Medicina respiratoria,<br>investigada con rigor.</span>
           </h1>
-          <p class="hero-desc reveal reveal-d2">
+          <p class="hero-desc">
             <span lang="en">The Servicio de Neumología at CHUAC covers the full spectrum of pulmonary and thoracic medicine — from lung transplantation and pulmonary arterial hypertension to interventional pneumology, thoracic surgery, sleep medicine, and precision phenotyping. Active clinical trials in all areas, within the Fundación Galega de Investigación Biomédica (INIBIC) framework.</span>
             <span lang="es">El Servicio de Neumología del CHUAC cubre el espectro completo de la medicina pulmonar y torácica — desde el trasplante pulmonar y la hipertensión arterial pulmonar hasta la neumología intervencionista, la cirugía torácica, la medicina del sueño y la fenotipificación de precisión. Ensayos clínicos activos en todas las áreas, dentro del marco de la Fundación Galega de Investigación Biomédica (INIBIC).</span>
           </p>
-          <div class="hero-actions reveal reveal-d3" style="display:flex;gap:1.75rem;align-items:center;">
+          <div class="hero-actions" style="display:flex;gap:1.75rem;align-items:center;">
             <a href="#research-lines" class="hero-text-link">
               <span lang="en">Research Lines</span><span lang="es">Ver Líneas</span> →
             </a>
@@ -1649,7 +1687,7 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
             <span lang="es">Para consultas urgentes sobre ensayos activos u oportunidades de colaboración, contáctenos directamente.</span>
           </p>
           <div style="margin-top:1.5rem;display:flex;flex-direction:column;gap:.625rem;">
-            <a href="/cdn-cgi/l/email-protection#d7b9b2a2bab8b4b6a5b297a4b2a5b0b6a4f9b2a4" style="color:var(--teal-2);font-size:.9rem;text-decoration:none;"><span class="__cf_email__" data-cfemail="9af4ffeff7f5f9fbe8ffdae9ffe8fdfbe9b4ffe9">[email&#160;protected]</span></a>
+            <a href="mailto:neumocare@sergas.es" style="color:var(--teal-2);font-size:.9rem;text-decoration:none;">neumocare@sergas.es</a>
             <a href="tel:+34881111800" style="color:var(--text-on-dark-2);font-size:.875rem;text-decoration:none;">+34 881 111 800</a>
             <span style="font-size:.8rem;color:var(--text-on-dark-3);">As Xubias, 84 · 15006 A Coruña</span>
           </div>
@@ -1781,12 +1819,6 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
   <a href="aviso-legal.html" style="font-size:var(--fs-label);font-family:var(--ff-mono,'DM Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);text-decoration:none;transition:color .15s;" onmouseover="this.style.color='rgba(255,255,255,.85)'" onmouseout="this.style.color='rgba(255,255,255,.55)'"><span lang="en">Legal</span><span lang="es">Aviso legal</span></a>
   <span style="font-size:var(--fs-label);font-family:var(--ff-mono,'DM Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-left:auto;"><span lang="en">Accredited by INIBIC · SERGAS</span><span lang="es">Acreditado por INIBIC · SERGAS</span></span>
 </div>
-
-
-
-
-
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 
   <script>
     /* ── Scroll: header + progress bar + scroll-to-top ── */
@@ -1936,3 +1968,6 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
   </button>
 </div>
 <script>if(!localStorage.getItem('cookieOk')){var c=document.getElementById('cookieBanner');if(c)c.style.display='flex';}</script>
+<script src="../header-enhance.js" defer></script>
+</body>
+</html>
