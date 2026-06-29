@@ -99,7 +99,7 @@ section[style*="background:var(--white)"] .milestone-label,
   --ff-display:'Fraunces',Georgia,serif;
   --ff-body:'DM Sans',system-ui,sans-serif;
   --ff-mono:'DM Mono','Courier New',monospace;
-  --hdr:88px; --max:1380px; --pad:clamp(1.25rem,4vw,3rem);
+  --hdr:68px; --max:1380px; --pad:clamp(1.25rem,4vw,3rem);
   --r-xs:4px; --r-sm:6px; --r-md:8px; --r-lg:12px;
 
   --fs-label:.8125rem;
@@ -116,7 +116,7 @@ section[style*="background:var(--white)"] .milestone-label,
 }
     body{font-family:var(--ff-body);background:var(--white);color:var(--ink);
       line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased;
-      padding-top:88px;
+      padding-top:68px;
   }
     ::selection{background:var(--teal-lt);color:var(--ink);}
 
@@ -774,11 +774,11 @@ section[style*="background:var(--white)"] .milestone-label,
 }
 /* Push header down when latest bar is visible */
 .hdr { top: 30px !important; }
-body { padding-top: calc(88px + 30px) !important; }
+body { padding-top: calc(68px + 30px) !important; }
 @media(max-width:860px) {
   .latest-text { font-size: .7rem; }
   .hdr { top: 28px !important; }
-  body { padding-top: calc(88px + 28px) !important; }
+  body { padding-top: calc(68px + 28px) !important; }
 }
 
 
@@ -868,24 +868,6 @@ body { padding-top: calc(88px + 30px) !important; }
 </div>
 <a href="#mainContent" class="skip-link">Skip to main content</a>
 <header class="hdr" id="hdr" data-page="home">
-  <!-- Tier 1: institutional utility strip -->
-  <div class="hdr-utility">
-    <div class="hdr-utility-inner">
-      <div class="hdr-affil">
-        <span lang="en">Servicio de Neumología · CHUAC</span><span lang="es">Servicio de Neumología · CHUAC</span>
-        <span class="hdr-affil-sep">·</span>
-        <span class="hdr-affil-org">INIBIC · SERGAS</span>
-      </div>
-      <div class="hdr-utility-right">
-        <a class="hdr-utility-link" href="https://www.sergas.gal" target="_blank" rel="noopener">sergas.gal</a>
-        <div class="lang-switch" role="group" aria-label="Language / Idioma">
-          <span class="lang-switch-knob" aria-hidden="true"></span>
-          <button class="lang-opt" data-lang="en" id="ltBtnEn" onclick="selectLang('en')" aria-pressed="true">EN</button>
-          <button class="lang-opt" data-lang="es" id="ltBtnEs" onclick="selectLang('es')" aria-pressed="false">ES</button>
-        </div>
-      </div>
-    </div>
-  </div>
   <!-- Tier 2: primary navigation -->
   <div class="hdr-main">
     <div class="hdr-inner">
@@ -909,6 +891,11 @@ body { padding-top: calc(88px + 30px) !important; }
         <a href="/team/" class="hdr-nav-link" data-nav="team"><span lang="en">Team</span><span lang="es">Equipo</span></a>
       </nav>
       <div class="hdr-right">
+        <div class="lang-switch" role="group" aria-label="Language / Idioma">
+          <span class="lang-switch-knob" aria-hidden="true"></span>
+          <button class="lang-opt" data-lang="en" id="ltBtnEn" onclick="selectLang('en')" aria-pressed="true">EN</button>
+          <button class="lang-opt" data-lang="es" id="ltBtnEs" onclick="selectLang('es')" aria-pressed="false">ES</button>
+        </div>
         <a href="#contact" class="hdr-contact-btn"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
         <button class="mob-toggle" id="mobToggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobDrawer"><span></span><span></span><span></span></button>
       </div>

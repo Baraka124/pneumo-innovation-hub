@@ -110,7 +110,7 @@
   --ff-display:'Fraunces',Georgia,serif;
   --ff-body:'DM Sans',system-ui,sans-serif;
   --ff-mono:'DM Mono','Courier New',monospace;
-  --hdr:88px; --max:1380px; --pad:clamp(1.25rem,4vw,3rem);
+  --hdr:68px; --max:1380px; --pad:clamp(1.25rem,4vw,3rem);
   --r-xs:4px; --r-sm:6px; --r-md:8px; --r-lg:12px;
 
   --fs-label:.8125rem;
@@ -126,7 +126,7 @@
 }
     body{font-family:var(--ff-body);background:var(--white);color:var(--ink);
       line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased;
-      padding-top:88px;  padding-top:88px;
+      padding-top:68px;  padding-top:68px;
   }
     ::selection{background:var(--teal-lt);color:var(--ink);}
     #pb{position:fixed;top:0;left:0;height:1.5px;width:0;background:var(--teal);z-index:3000;transition:width .08s linear;pointer-events:none;}
@@ -594,24 +594,6 @@
 <body>
 <a href="#mainContent" class="skip-link">Skip to main content</a>
 <header class="hdr" id="hdr" data-page="team">
-  <!-- Tier 1: institutional utility strip -->
-  <div class="hdr-utility">
-    <div class="hdr-utility-inner">
-      <div class="hdr-affil">
-        <span lang="en">Servicio de Neumología · CHUAC</span><span lang="es">Servicio de Neumología · CHUAC</span>
-        <span class="hdr-affil-sep">·</span>
-        <span class="hdr-affil-org">INIBIC · SERGAS</span>
-      </div>
-      <div class="hdr-utility-right">
-        <a class="hdr-utility-link" href="https://www.sergas.gal" target="_blank" rel="noopener">sergas.gal</a>
-        <div class="lang-switch" role="group" aria-label="Language / Idioma">
-          <span class="lang-switch-knob" aria-hidden="true"></span>
-          <button class="lang-opt" data-lang="en" id="ltBtnEn" onclick="selectLang('en')" aria-pressed="true">EN</button>
-          <button class="lang-opt" data-lang="es" id="ltBtnEs" onclick="selectLang('es')" aria-pressed="false">ES</button>
-        </div>
-      </div>
-    </div>
-  </div>
   <!-- Tier 2: primary navigation -->
   <div class="hdr-main">
     <div class="hdr-inner">
@@ -635,6 +617,11 @@
         <a href="/team/" class="hdr-nav-link" data-nav="team" data-current="true" aria-current="page"><span lang="en">Team</span><span lang="es">Equipo</span></a>
       </nav>
       <div class="hdr-right">
+        <div class="lang-switch" role="group" aria-label="Language / Idioma">
+          <span class="lang-switch-knob" aria-hidden="true"></span>
+          <button class="lang-opt" data-lang="en" id="ltBtnEn" onclick="selectLang('en')" aria-pressed="true">EN</button>
+          <button class="lang-opt" data-lang="es" id="ltBtnEs" onclick="selectLang('es')" aria-pressed="false">ES</button>
+        </div>
         <a href="/#contact" class="hdr-contact-btn"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
         <button class="mob-toggle" id="mobToggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobDrawer"><span></span><span></span><span></span></button>
       </div>

@@ -156,33 +156,6 @@ html{ scroll-behavior:smooth; }
 }
 
 /* ── Tier 1: utility strip ──────────────────────────────────────── */
-.hdr-utility{
-  background:var(--navy-footer,#07111F);
-  border-bottom:1px solid rgba(255,255,255,.06);
-  font-size:.72rem;
-}
-.hdr-utility-inner{
-  max-width:1440px; margin:0 auto; height:34px;
-  padding:0 clamp(1.25rem,4vw,3rem);
-  display:flex; align-items:center; justify-content:space-between; gap:1rem;
-}
-.hdr-affil{
-  display:flex; align-items:center; gap:.6rem;
-  font-family:var(--ff-mono,'DM Mono',monospace);
-  letter-spacing:.04em; color:rgba(255,255,255,.5);
-  text-transform:uppercase; font-size:.66rem; white-space:nowrap;
-  overflow:hidden; text-overflow:ellipsis;
-}
-.hdr-affil-sep{ opacity:.4; }
-.hdr-affil-org{ color:rgba(0,179,179,.7); }
-.hdr-utility-right{ display:flex; align-items:center; gap:1.25rem; }
-.hdr-utility-link{
-  font-family:var(--ff-mono,'DM Mono',monospace);
-  font-size:.66rem; letter-spacing:.04em; text-transform:uppercase;
-  color:rgba(255,255,255,.45); text-decoration:none; transition:color .2s;
-}
-.hdr-utility-link:hover{ color:rgba(0,179,179,.85); }
-
 /* ── Premium language switch: sliding-knob pill ─────────────────── */
 .lang-switch{
   position:relative; display:inline-flex; align-items:center;
@@ -330,10 +303,8 @@ body{ padding-top:0; }
 }
 .hdr-dd-all:hover{ color:var(--navy-2,#0C447C); gap:.75rem; }
 
-/* ── Mobile: collapse two-tier into one, show hamburger ─────────── */
+/* ── Mobile: show hamburger, hide desktop nav ───────────────────── */
 @media(max-width:880px){
-  .hdr-affil{ font-size:.6rem; }
-  .hdr-affil-org, .hdr-utility-link{ display:none; }
   .hdr-logo-rule, .hdr-logo-desc{ display:none; }
   .hdr-nav{ display:none; }
   .hdr-contact-btn{ display:none; }
