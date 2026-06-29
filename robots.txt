@@ -1,0 +1,6 @@
+# neumACt R&I — Servicio de Neumología, CHUAC
+User-agent: *
+Allow: /
+Disallow: /cdn-cgi/
+
+Sitemap: https://neumact.org/sitemap.xml
