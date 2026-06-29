@@ -1,0 +1,12 @@
+{
+  "name": "neumACt — Research & Innovation",
+  "short_name": "neumACt",
+  "description": "Servicio de Neumología, CHUAC · Research & Innovation",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0C3868",
+  "theme_color": "#0C3868",
+  "icons": [
+    { "src": "/logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
