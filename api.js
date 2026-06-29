@@ -26,26 +26,18 @@ async function apiFetch(path) {
   return res.json();
 }
 
-/** Inject shared styles once — using new design palette */
+/** Inject shared styles once — using new design palette.
+ *  NOTE: .api-skeleton/.api-skeleton-dark are NOT defined here on purpose.
+ *  Each page's own <style> block already defines the real shimmer version
+ *  (background-position keyframe, not opacity-pulse). This script tag is
+ *  appended to <head> at runtime, after the page's own <style> block —
+ *  so on equal specificity it would always win the cascade and silently
+ *  replace the real shimmer with a plain grey pulsing box. Keep skeleton
+ *  styling page-side only. */
 if (!document.getElementById('api-js-styles')) {
   const s = document.createElement('style');
   s.id = 'api-js-styles';
   s.textContent = `
-    @keyframes skeleton-pulse {
-      0%,100%{opacity:.35} 50%{opacity:.7}
-    }
-    .api-skeleton {
-      background: #E0DDD8;
-      border-radius: 4px;
-      animation: skeleton-pulse 1.4s ease-in-out infinite;
-      pointer-events: none;
-    }
-    .api-skeleton-dark {
-      background: rgba(255,255,255,.08);
-      border-radius: 4px;
-      animation: skeleton-pulse 1.4s ease-in-out infinite;
-      pointer-events: none;
-    }
     .api-error {
       padding: 2rem;
       text-align: center;
@@ -661,6 +653,12 @@ function openProfileModal(staffId) {
     ${m.public_bio
       ? `<p style="font-size:.9375rem;line-height:1.65;color:var(--ink-2);margin:0;">${escHtml(m.public_bio)}</p>`
       : `<p style="font-size:.875rem;color:var(--ink-4);font-style:italic;margin:0;border-top:1px dashed var(--border-l);padding-top:1rem;">Bio not yet added.</p>`}
+    ${(m.orcid_id || m.scholar_url || m.researchgate_url) ? `
+    <div class="scholar-links">
+      ${m.orcid_id ? `<a href="https://orcid.org/${escHtml(String(m.orcid_id).trim())}" target="_blank" rel="noopener" class="scholar-link scholar-orcid"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zM7.4 18.4H5.5V7.6h1.9v10.8zM6.4 6.3a1.1 1.1 0 110-2.2 1.1 1.1 0 010 2.2zm12.3 12.1h-1.9v-5.3c0-1.3 0-2.9-1.8-2.9s-2 1.4-2 2.8v5.4H11V7.6h1.8v1.5h.03c.25-.48.87-1 1.8-1 1.9 0 2.3 1.27 2.3 2.9v5.4z"/></svg><span>ORCID <span class="scholar-id">${escHtml(String(m.orcid_id).trim())}</span></span></a>` : ''}
+      ${m.scholar_url ? `<a href="${escHtml(m.scholar_url)}" target="_blank" rel="noopener" class="scholar-link">Google Scholar →</a>` : ''}
+      ${m.researchgate_url ? `<a href="${escHtml(m.researchgate_url)}" target="_blank" rel="noopener" class="scholar-link">ResearchGate →</a>` : ''}
+    </div>` : ''}
   `;
   overlay.style.display = 'flex';
   document.body.style.overflow = 'hidden';
@@ -987,12 +985,35 @@ window.openTrialModal = function(id) {
     </div>` : ''}
   `;
 
-  const descEl = document.getElementById('tmDesc');
-  if (t.description) {
-    descEl.textContent = t.description;
-    descEl.style.display = 'block';
-  } else {
-    descEl.style.display = 'none';
+  // ── Registry verification: NCT / EudraCT links to official registries.
+  // These are the identifiers a reviewer or pharma BD lead looks up to
+  // confirm a trial is real and registered. Rendered only when present.
+  const tmRegistry = document.getElementById('tmRegistry');
+  if (tmRegistry) {
+    const badges = [];
+    if (t.nct_number) {
+      const nct = String(t.nct_number).trim();
+      badges.push(`<a href="https://clinicaltrials.gov/study/${encodeURIComponent(nct)}" target="_blank" rel="noopener" class="registry-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+        <span class="registry-badge-id">${escHtml(nct)}</span>
+        <span class="registry-badge-src">ClinicalTrials.gov</span>
+      </a>`);
+    }
+    if (t.eudract_number) {
+      const eud = String(t.eudract_number).trim();
+      const url = t.registry_url || `https://www.clinicaltrialsregister.eu/ctr-search/search?query=${encodeURIComponent(eud)}`;
+      badges.push(`<a href="${escHtml(url)}" target="_blank" rel="noopener" class="registry-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+        <span class="registry-badge-id">${escHtml(eud)}</span>
+        <span class="registry-badge-src">EU CTR · EudraCT</span>
+      </a>`);
+    }
+    if (badges.length) {
+      tmRegistry.innerHTML = `<div class="registry-label"><span lang="en">Registered &amp; verifiable</span><span lang="es">Registrado y verificable</span></div><div class="registry-badges">${badges.join('')}</div>`;
+      tmRegistry.style.display = 'block';
+    } else {
+      tmRegistry.style.display = 'none';
+    }
   }
 
   modal.style.display = 'flex';
@@ -1916,4 +1937,4 @@ window._lineTeamData = [];
     if (loadingEl) loadingEl.style.display = 'none';
     if (loadErrorEl) loadErrorEl.style.display = '';
   }
-}
+}  
