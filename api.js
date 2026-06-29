@@ -1625,7 +1625,13 @@ async function loadLineDetail() {
 
   try {
     if (loadingEl) loadingEl.style.display = 'none';
-    if (heroEl) heroEl.style.display = '';
+    // heroEl is intentionally NOT shown here. Showing it before the render
+    // below completes means any exception partway through this block
+    // (a malformed field on one specific line, a slow/failed secondary
+    // fetch, etc.) leaves a half-populated, already-visible page on
+    // screen with no error state — which is indistinguishable from a
+    // blank page to a visitor. heroEl is shown only once everything in
+    // this block has finished without throwing (see end of try block).
     const collabEl = document.getElementById('lineCollabSection');
     if (collabEl) collabEl.style.display = '';
 
@@ -1932,9 +1938,13 @@ window._lineTeamData = [];
       }
     } catch (err) { console.error('Line publications load failed:', err); }
 
+    // Everything above completed without throwing — safe to reveal now.
+    if (heroEl) heroEl.style.display = '';
+
   } catch (err) {
     console.error('Research line render failed:', err.message);
     if (loadingEl) loadingEl.style.display = 'none';
+    if (heroEl) heroEl.style.display = 'none';
     if (loadErrorEl) loadErrorEl.style.display = '';
   }
 }  
