@@ -781,3 +781,52 @@ html[data-lang="es"] .team-member::after{ content:"Ver perfil →"; }
 }
 .feed-search input::placeholder{ color:var(--ink-4,#9A9A9A); }
 @media(max-width:640px){ .feed-search{ margin-left:0; width:100%; } .feed-search input{ width:100%; } }
+
+/* ════════════════════════════════════════════════════════════════
+   CREDIBILITY: TRIAL REGISTRY BADGES + SCHOLARLY IDENTIFIERS
+   The signals a reviewer / pharma BD lead verifies first.
+   ════════════════════════════════════════════════════════════════ */
+
+/* Trial registry verification badges (NCT / EudraCT) */
+.registry-label{
+  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.66rem; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--teal,#007A7A); margin-bottom:.6rem;
+  display:flex; align-items:center; gap:.4rem;
+}
+.registry-label::before{ content:""; width:5px; height:5px; border-radius:50%; background:var(--teal-2,#00B3B3); }
+.registry-badges{ display:flex; flex-wrap:wrap; gap:.6rem; }
+.registry-badge{
+  display:inline-flex; align-items:center; gap:.55rem;
+  padding:.5rem .85rem; border-radius:10px; text-decoration:none;
+  background:var(--teal-lt,#E2F0F0); border:1px solid rgba(0,122,122,.18);
+  transition:background .2s var(--ease-clinical), transform .2s var(--ease-clinical), box-shadow .2s;
+}
+.registry-badge:hover{ background:#d4ecec; transform:translateY(-1px); box-shadow:var(--shadow-sm); }
+.registry-badge svg{ width:16px; height:16px; color:var(--teal,#007A7A); flex-shrink:0; }
+.registry-badge-id{
+  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.82rem; font-weight:600;
+  color:var(--navy,#0C3868); letter-spacing:.02em;
+}
+.registry-badge-src{
+  font-size:.62rem; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--teal,#007A7A); padding-left:.5rem; border-left:1px solid rgba(0,122,122,.25);
+}
+
+/* Scholarly identifier links (ORCID / Scholar / ResearchGate) */
+.scholar-links{
+  display:flex; flex-wrap:wrap; gap:.6rem; margin-top:1.25rem;
+  padding-top:1.25rem; border-top:1px solid var(--border-l,rgba(12,56,104,.08));
+}
+.scholar-link{
+  display:inline-flex; align-items:center; gap:.45rem;
+  padding:.4rem .8rem; border-radius:100px; text-decoration:none;
+  font-size:.8rem; font-weight:600; color:var(--teal,#007A7A);
+  border:1px solid var(--border-l,rgba(12,56,104,.12));
+  transition:all .2s var(--ease-clinical);
+}
+.scholar-link:hover{ border-color:var(--teal,#007A7A); background:var(--teal-lt,#E2F0F0); }
+.scholar-link svg{ width:15px; height:15px; flex-shrink:0; }
+.scholar-orcid{ color:#A6CE39; border-color:rgba(166,206,57,.4); }
+.scholar-orcid:hover{ background:rgba(166,206,57,.1); border-color:#A6CE39; }
+.scholar-orcid span{ color:var(--navy,#0C3868); }
+.scholar-id{ font-family:var(--ff-mono,'DM Mono',monospace); font-size:.74rem; color:var(--ink-3,#6B6B6B); }
