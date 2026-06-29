@@ -21,28 +21,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap"/>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="core.css">
   <style>
 
 /* View trial / View project links — stronger resting state */
-.opp-link{
-  color:#006666!important;
-  font-weight:600!important;
-  border-bottom:1.5px solid rgba(0,102,102,.4)!important;
-}
-.opp-link:hover{
-  color:#004d4d!important;
-  border-bottom-color:rgba(0,77,77,.6)!important;
-}
 
 /* 1,000 lung transplant milestone — celebratory but restrained */
-.milestone-num{
-  color:#E8B84B!important;
-  -webkit-text-fill-color:#E8B84B!important;
-  position:relative;
-}
-.milestone-label{
-  color:rgba(232,184,75,.75)!important;
-}
 /* On light/white backgrounds, the pale gold above fails contrast —
    use a deeper amber so the milestone still reads as celebratory
    without becoming illegible. */
@@ -56,20 +40,8 @@ section[style*="background:var(--white)"] .milestone-label,
 .section[style*="background:var(--white)"] .milestone-label{
   color:rgba(156,107,10,.8)!important;
 }
-
-
-
-body{padding-top:88px;}
-@media(max-width:860px){body{padding-top:72px;}}
-html.bar-dismissed body{padding-top:88px;}
-@media(max-width:860px){html.bar-dismissed body{padding-top:72px;}}
-
-.paths-section .btn-text,.hero .btn-text,.contact-bg .btn-text,.team-bg .btn-text,
-.partner-bg .btn-text,.focus-bg .btn-text,section[id] .btn-text:not(.on-dark)
-{color: rgba(0,200,200,.9) !important;border-bottom-color: rgba(0,179,179,.3) !important;}
-.paths-section .btn-text:hover,.hero .btn-text:hover,.contact-bg .btn-text:hover,
-.team-bg .btn-text:hover,.partner-bg .btn-text:hover,.focus-bg .btn-text:hover
-{color: #00e0e0 !important;border-bottom-color: rgba(0,224,224,.5) !important;}
+@media(max-width:860px){}
+@media(max-width:860px){}
 
 /* Everything else in this area (heading/body color on dark/light
    backgrounds, stat styling, affiliation placeholders, dead lead-avatar
@@ -80,127 +52,35 @@ html.bar-dismissed body{padding-top:88px;}
    later, more considered italic-serif treatment; the old pill version
    removed. */
 .story-typographic-journal{font-family:var(--ff-display,'Fraunces',serif);font-style:italic;font-size:.8125rem;font-weight:500;letter-spacing:0;text-transform:none;color:rgba(255,255,255,.92);background:none;border:none;border-radius:0;padding:0 0 .5rem 0;margin-bottom:.65rem;display:inline-block;position:relative;z-index:1;}
-.story-typographic-journal::after{content:'';position:absolute;bottom:0;left:0;width:28px;height:1.5px;background:var(--teal-2,#00B3B3);}
 
 /* DARK BG — all headings white */
-.hero h1,.hero h2,.hero h3,.hero .display,.hero .display-xl,.hero .display-lg,.hero .display-md,.hero .display-sm,
-.contact-bg h1,.contact-bg h2,.contact-bg h3,.contact-bg .display,.contact-bg .display-lg,.contact-bg .display-md,.contact-bg .display-xl,
-.team-bg h1,.team-bg h2,.team-bg h3,.team-bg .display,
-.partner-bg h1,.partner-bg h2,.partner-bg h3,.partner-bg .display,
-.paths-section h2,.paths-section .display,
-.focus-bg h2,.focus-bg .display,
-.blog-hero h1,.blog-hero h2,.blog-hero .display
-{color:#fff!important;}
 
 /* DARK BG — body text readable */
-.contact-bg p,.contact-bg .sec-head p,.team-bg p,.partner-bg p,.paths-section p,.focus-bg p,.blog-hero p,.hero .hero-desc
-{color:rgba(255,255,255,.8)!important;}
 
 /* DARK BG — secondary minimum .65 */
 .contact-bg .label,.team-bg .label,.partner-bg .label
 {color:rgba(0,153,153,.9)!important;}
-.hero-cred,.team-role,.team-bio,.team-line-tag,.cinfo-label,.hstat-label,.footer-col ul a,.footer-col address
-{color:rgba(255,255,255,.72)!important;}
-.cinfo-value{color:rgba(255,255,255,.9)!important;}
 
 /* LIGHT BG — headings dark */
-.lines-bg h2,.lines-bg .display,.trials-bg h2,.trials-bg .display,.pipeline-bg h2,.pipeline-bg .display,.projects-bg h2,.projects-bg .display,.cap-bg h2,.cap-bg .display,.partners-strip h2,.partners-strip .display
-{color:var(--ink,#1A1A1A)!important;}
-.lines-bg p,.lines-bg .sec-head p,.trials-bg p,.trials-bg .sec-head p,.pipeline-bg p,.projects-bg p,.cap-bg p
-{color:var(--text-on-light-2,#404040)!important;}
-.lines-bg .eyebrow,.lines-bg .label,.trials-bg .label,.trials-bg .eyebrow,.pipeline-bg .label,.projects-bg .label
-{color:var(--accent,#009999)!important;}
 
 /* STATS — pure white */
-.hstat-num,.stat-num,.hstrip-num,.pstat-num,.blog-hero-stat-n
-{color:#fff!important;-webkit-text-fill-color:#fff!important;background:none!important;-webkit-background-clip:unset!important;background-clip:unset!important;}
-.hstat-num sub{color:#009999!important;-webkit-text-fill-color:#009999!important;}
-.hstat-label{color:rgba(255,255,255,.72)!important;}
 
 /* LOGO */
-.hdr-logo-img{filter:brightness(0) invert(1)!important;opacity:.9!important;}
-.footer-logo-img{filter:brightness(0) invert(1)!important;opacity:.8!important;height:36px!important;width:auto!important;}
 
 /* AFFIL PLACEHOLDERS */
-.affil-section{background:rgba(255,255,255,.025);border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07);}
-.affil-logo-item{display:block;opacity:.55;transition:opacity .2s;}
-.affil-logo-item:hover{opacity:.85;}
 /* .affil-img: unused in markup, removed — same destructive invert
    pattern as the real affiliation logos fixed elsewhere in this file. */
-.affil-img-main{height:40px;max-width:260px;}
-.affil-img-inibic{height:28px;max-width:180px;}
-.affil-ph{display:flex;align-items:center;justify-content:center;height:32px;min-width:80px;border:1px dashed rgba(255,255,255,.2);border-radius:2px;padding:0 .75rem;background:rgba(255,255,255,.03);}
-.affil-ph span{font-family:var(--ff-mono,'DM Mono',monospace);font-size:var(--fs-label);letter-spacing:.08em;color:rgba(255,255,255,.35);white-space:nowrap;}
-.affil-ph-main{height:40px;min-width:140px;}
 
 /* DISMISS */
-html.bar-dismissed .hdr{top:0!important;}
-html.bar-dismissed body{padding-top:88px!important;}
 
 /* HOSPITAL DESKTOP (1024-1366px) */
 @media(min-width:1024px) and (max-width:1366px){
-  .wrap,.container{max-width:1280px;}
-  .hero-inner{gap:3rem;}
-  .display.xl{font-size:clamp(2.2rem,3.5vw,3.2rem)!important;}
 }
 
 
 /* ═══ CANONICAL HEADER ═══════════════════════════════════════════ */
-.skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:var(--navy-2);color:#fff;padding:.75rem 1.25rem;font-size:.875rem;font-weight:500;border-radius:0 0 6px 0;}
-.skip-link:focus{left:0;}
-.hdr{position:fixed;top:0;left:0;right:0;height:88px;background:var(--navy-2);border-bottom:1px solid rgba(255,255,255,.1);z-index:900;transition:height .2s var(--ease-clinical);}
-.hdr.scrolled{height:68px;}
-.hdr-inner{display:flex;align-items:center;height:100%;max-width:1440px;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem);gap:1.5rem;}
-.hdr-logo{display:flex;align-items:center;flex-shrink:0;text-decoration:none;transition:opacity .15s;}
-.hdr-logo:hover{opacity:.85;}
-.hdr-logo-img{display:block;height:34px;width:auto;max-width:300px;object-fit:contain;filter:brightness(0) invert(1);opacity:.95;}
-.hdr.scrolled .hdr-logo-img{height:26px;}
-.hdr-nav{display:flex;align-items:center;flex:1;min-width:0;gap:4px;margin-left:1.5rem;}
-.hdr-nav a{display:inline-block;padding:.55rem .9rem;font-family:var(--ff-body,'DM Sans',sans-serif);font-size:var(--fs-meta);font-weight:500;letter-spacing:.01em;color:rgba(255,255,255,.78);text-decoration:none;white-space:nowrap;border-radius:var(--r-sm);transition:background .15s,color .15s;}
-.hdr-nav a:hover{color:#fff;background:rgba(255,255,255,.08);}
-.hdr-nav a.current{color:#fff;background:rgba(255,255,255,.14);}
-.hdr-dd-trigger.current{color:#fff;background:rgba(255,255,255,.14);}
-.hdr-dd{position:relative;}
-.hdr-dd-trigger{display:inline-flex;align-items:center;border-radius:var(--r-sm);transition:background .15s;}
-.hdr-dd-trigger:hover{background:rgba(255,255,255,.08);}
-.hdr-dd-trigger a{display:inline-flex;align-items:center;padding:.55rem .55rem .55rem .9rem;font-family:var(--ff-body,'DM Sans',sans-serif);font-size:var(--fs-meta);font-weight:500;letter-spacing:.01em;color:rgba(255,255,255,.78);text-decoration:none;white-space:nowrap;transition:color .15s;}
-.hdr-dd-trigger:hover a,.hdr-dd-trigger a:hover{color:#fff;}
-.hdr-dd-chevron{display:inline-flex;align-items:center;justify-content:center;padding:.55rem .75rem .55rem .35rem;border:none;background:transparent;cursor:pointer;color:rgba(255,255,255,.6);transition:color .15s;position:relative;}
-.hdr-dd-chevron::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:1px;height:16px;background:rgba(255,255,255,.18);transition:background .15s;}
-.hdr-dd-trigger:hover .hdr-dd-chevron::before,.hdr-dd.open .hdr-dd-chevron::before{background:rgba(255,255,255,.4);}
-.hdr-dd-chevron:hover{color:#fff;}
-.hdr-dd-chevron svg{width:13px;height:13px;transition:transform .15s;}
-.hdr-dd.open .hdr-dd-chevron svg{transform:rotate(180deg);}
-.hdr-dd.open .hdr-dd-trigger{background:rgba(255,255,255,.08);}
-.hdr-dd.open .hdr-dd-trigger a{color:#fff;}
-.hdr-dd-panel{position:fixed;top:var(--hdr,88px);left:0;right:0;background:var(--navy-2);box-shadow:0 12px 28px rgba(0,20,40,.18);border-top:1px solid rgba(255,255,255,.12);border-bottom:1px solid rgba(255,255,255,.08);opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .18s,transform .18s,visibility .18s;z-index:950;}
-.hdr-dd.open .hdr-dd-panel{opacity:1;visibility:visible;transform:translateY(0);}
-.hdr-dd-panel-inner{max-width:1440px;margin:0 auto;padding:1.75rem clamp(1.25rem,4vw,3rem) 2rem;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.25rem 2.5rem;}
-.hdr-dd-item{display:block;text-decoration:none;padding:.6rem 0;border-bottom:1px solid transparent;transition:border-color .12s;}
-.hdr-dd-item:hover{border-bottom-color:rgba(255,255,255,.3);}
-.hdr-dd-num{display:block;font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.08em;color:rgba(255,255,255,.4);margin-bottom:2px;}
-.hdr-dd-name{font-size:var(--fs-body-sm);color:#fff;line-height:1.4;}
-.hdr-dd-divider{display:none;}
-.hdr-dd-all{display:block;grid-column:1/-1;margin-top:.5rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,.1);text-decoration:none;font-size:var(--fs-label);color:rgba(255,255,255,.55);transition:color .12s;}
-.hdr-dd-all:hover{color:#fff;}
-.hdr-right{display:flex;align-items:center;gap:.875rem;margin-left:auto;flex-shrink:0;}
-.lang-toggle{display:flex;align-items:center;background:rgba(255,255,255,.12);border-radius:var(--r-sm);padding:2px;flex-shrink:0;}
-.lt-btn{padding:.3rem .65rem;font-family:var(--ff-mono,'DM Mono',monospace);font-size:var(--fs-label);font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.7);background:transparent;border:none;cursor:pointer;transition:color .15s,background .15s;line-height:1;border-radius:calc(var(--r-sm) - 2px);}
-.lt-btn--active,.lt-btn[aria-pressed="true"]{color:var(--navy-2)!important;background:#fff!important;}
-.hdr-contact{font-family:var(--ff-body,'DM Sans',sans-serif);font-size:var(--fs-meta);font-weight:500;color:#fff;text-decoration:none;background:rgba(255,255,255,.16);padding:.5rem 1.1rem;border-radius:var(--r-sm);transition:background .15s;white-space:nowrap;}
-.hdr-contact:hover{background:rgba(255,255,255,.26);}
-.mob-toggle{display:none;width:38px;height:38px;background:rgba(255,255,255,.1);border:none;border-radius:var(--r-sm);cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:0;}
-.mob-toggle span{display:block;width:16px;height:1.5px;background:#fff;transition:all .25s;}
-.mob-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1050;opacity:0;pointer-events:none;transition:opacity .25s;}
-.mob-overlay.open{opacity:1;pointer-events:auto;}
-.mob-drawer{position:fixed;top:0;right:-100%;bottom:0;width:min(300px,84vw);background:var(--navy-2);z-index:1100;transition:right .28s var(--ease-clinical);display:flex;flex-direction:column;padding-top:88px;overflow-y:auto;}
-.mob-drawer.open{right:0;}
-.mob-drawer-nav{padding:1.25rem 1rem;display:flex;flex-direction:column;gap:.2rem;}
-.mob-drawer-nav a{display:block;padding:.7rem .875rem;font-family:var(--ff-body,'DM Sans',sans-serif);font-size:var(--fs-body-sm);font-weight:500;color:rgba(255,255,255,.82);text-decoration:none;border-radius:var(--r-sm);transition:background .15s,color .15s;}
-.mob-drawer-nav a:hover,.mob-drawer-nav a.current{background:rgba(255,255,255,.12);color:#fff;}
-.mob-lang{display:flex;align-items:center;gap:.4rem;padding:1.25rem;border-top:1px solid rgba(255,255,255,.12);margin-top:auto;}
-@media(max-width:860px){.hdr-nav,.hdr-contact{display:none!important;}.mob-toggle{display:flex!important;}.hdr-logo-img{height:26px!important;max-width:220px!important;}.hdr{height:72px!important;}.mob-drawer{padding-top:72px!important;}}
-@media(min-width:861px){.mob-drawer,.mob-overlay{display:none!important;}.mob-toggle{display:none!important;}}
+@media(max-width:860px){}
+@media(min-width:861px){}
 
     /* ══════════════════════════════════════════════
        DESIGN SYSTEM — neumACt R&I 2.0
@@ -234,8 +114,6 @@ html.bar-dismissed body{padding-top:88px!important;}
   --fs-hero-title:clamp(1.875rem,2.6vw,2.25rem);
   --rule-l:var(--border-l); --rule-d:var(--border-d);
 }
-    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-    html{scroll-behavior:smooth;font-size:16px;}
     body{font-family:var(--ff-body);background:var(--white);color:var(--ink);
       line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased;
       padding-top:88px;
@@ -711,7 +589,6 @@ html.bar-dismissed body{padding-top:88px!important;}
 
     /* ══ REVEAL ══════════════════════════════════ */
     .reveal{opacity:0;transform:translateY(18px);transition:opacity .55s,transform .55s;}
-    .reveal.in{opacity:1;transform:none;}
     .reveal-d1{transition-delay:.08s;}
     .reveal-d2{transition-delay:.16s;}
     .reveal-d3{transition-delay:.24s;}
@@ -741,12 +618,6 @@ html.bar-dismissed body{padding-top:88px!important;}
        Shows only the active language. Default: EN.
        Toggled by selectLang() which sets data-lang on <html>.
     ══════════════════════════════════════════════════════ */
-    html[data-lang="es"] [lang="es"]{display:inline !important;}
-    html[data-lang="es"] [lang="es"].blk{display:block !important;}
-    html[data-lang="es"] [lang="en"]{display:none !important;}
-    html[data-lang="en"] [lang="en"]{display:inline;}
-    html[data-lang="en"] [lang="en"].blk{display:block;}
-    html[data-lang="en"] [lang="es"]{display:none;}
 
     /* Tag/pill stays informational, never an action */
     .line-tag, .lead-line-pill, .lead-line-num,
@@ -783,58 +654,22 @@ html.bar-dismissed body{padding-top:88px!important;}
 
   
 /* Logo — white background pill so composite logo reads on dark header */
-.hdr-logo {
-  padding: 0;
-  background: transparent;
-  border-radius: 0;
-  transition: opacity .15s;
-}
-.hdr-logo:hover { opacity: .85; }
-.hdr-logo-img {
-  filter: brightness(0) invert(1) !important;
-  opacity: .90 !important;
-  height: 38px !important;
-  width: auto;
-  max-width: 340px;
-}
 
 /* Header scroll shrink */
-.hdr { transition: height .25s var(--ease-clinical), background .2s; }
-.hdr.scrolled { height: 64px !important; }
 .hdr.scrolled 
 
 /* Nav font size — slightly larger for authority */
 .hdr-nav a { font-size: .875rem !important; }
 
 /* Research line cards — more breathing room */
-.rl-card, .research-line-card, [class*="line-card"] {
-  padding: 2rem !important;
-}
 
 /* Unified sharp button style */
-.btn, .btn-primary, .btn-sec, .cta-btn, [class*="btn-"]:not(.lt-btn):not(.mob-toggle) {
-  border-radius: 2px !important;
-}
 
 /* Remove remaining 8px radius from inline buttons */
-a[style*="border-radius:8px"], button[style*="border-radius:8px"],
-a[style*="border-radius: 8px"], button[style*="border-radius: 8px"] {
-  border-radius: 2px !important;
-}
-a[style*="border-radius:6px"], a[style*="border-radius:7px"],
-a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
-  border-radius: 2px !important;
-}
 
 
 /* ── Tablet (768–860px) ───────────────────────────────────── */
 @media(max-width:860px) and (min-width:641px){
-  .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
-  .hero-stats { display: grid; grid-template-columns: repeat(2,1fr); gap: 0; }
-  .stat-strip-inner { grid-template-columns: repeat(2,1fr); }
-  .lines-grid { grid-template-columns: repeat(2,1fr); }
-  .paths-grid { grid-template-columns: 1fr 1fr; }
-  .inst-inner { grid-template-columns: 1fr; }
   }
 
 
@@ -865,43 +700,11 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
 
 /* ═══ CANONICAL FOOTER ════════════════════════════════════ */
 .site-footer{background:var(--navy-footer);border-top:1px solid rgba(255,255,255,.06);padding:4rem 0 0;position:relative;overflow:hidden;}
-.site-footer::before{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,122,122,.25),transparent);}
-.footer-grid{max-width:1440px;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem);display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:3rem;}
-.footer-logo-img{height:36px;width:auto;display:block;filter:brightness(0) invert(1);opacity:.82;margin-bottom:1rem;}
-.footer-tagline{font-family:var(--ff-mono,'DM Mono',monospace);font-size:var(--fs-label);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.28);line-height:1.8;max-width:220px;}
-.footer-nav-label{font-family:var(--ff-mono,'DM Mono',monospace);font-size:var(--fs-label);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.22);margin-bottom:.875rem;}
-.footer-col-nav nav{display:flex;flex-direction:column;gap:.5rem;}
-.footer-col-nav nav a{font-size:.8125rem;color:rgba(255,255,255,.42);text-decoration:none;transition:color .15s;}
-.footer-col-nav nav a:hover{color:rgba(255,255,255,.82);}
-.footer-address{font-size:.8rem;color:rgba(255,255,255,.32);line-height:1.75;font-style:normal;}
-.footer-address strong{display:block;color:rgba(255,255,255,.52);font-weight:500;margin-bottom:.25rem;}
 .footer-bottom-bar{max-width:1440px;margin:3rem auto 0;padding:1.25rem clamp(1.25rem,4vw,3rem);border-top:1px solid rgba(255,255,255,.05);display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
-.footer-copy{font-size:var(--fs-label);color:rgba(255,255,255,.45);line-height:1.5;}
-.footer-certs{display:flex;align-items:center;gap:1.5rem;}
-.footer-certs span{font-family:var(--ff-mono,'DM Mono',monospace);font-size:var(--fs-label);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45);}
-@media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr;}.footer-col-brand{grid-column:1/-1;}}
-@media(max-width:480px){.footer-grid{grid-template-columns:1fr;}.footer-bottom-bar{flex-direction:column;align-items:flex-start;}}
+@media(max-width:768px){}
+@media(max-width:480px){}
 
 /* Publication nav — spread prev/next, minimal style */
-.pub-strip-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 1.5rem;
-}
-.psn-btn {
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  background: rgba(255,255,255,.04);
-  border: 1px solid rgba(255,255,255,.1);
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  color: rgba(255,255,255,.4);
-  transition: background .15s, color .15s, border-color .15s;
-}
-.psn-btn:hover { background: rgba(255,255,255,.08); color: #fff; border-color: rgba(255,255,255,.2); }
-.psn-nav-group { display: flex; align-items: center; gap: .5rem; }
-.psn-count { font-family: var(--ff-mono,'DM Mono',monospace); font-size: .55rem; letter-spacing: .1em; color: rgba(255,255,255,.25); }
 
 /* Affiliation logos — these are real, multi-color JPEGs with white
    backgrounds, not flat-color marks. brightness(0) invert(1) only works
@@ -918,62 +721,19 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
   border-radius: var(--r-sm, 6px);
   transition: opacity .2s;
 }
-.affil-logo-link:hover img { opacity: .85; }
 .affil-strip {
   background: rgba(255,255,255,.02);
   border-top: 1px solid rgba(255,255,255,.05);
   border-bottom: 1px solid rgba(255,255,255,.05);
   padding: 1.5rem 0;
 }
-.affil-inner {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 clamp(1.25rem,4vw,3rem);
-  display: flex;
-  align-items: center;
-  gap: 2.5rem;
-  flex-wrap: wrap;
-}
 
 /* ── Subtle visual depth — Crick-style section backgrounds ── */
-.hero { position: relative; }
-.hero::after {
-  content: '';
-  position: absolute;
-  top: -20%; right: -10%;
-  width: 60vw; height: 60vw;
-  max-width: 700px; max-height: 700px;
-  background: radial-gradient(ellipse at center, rgba(0,122,122,.08) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: 0;
-}
 /* Section alternation — warm surface for contrast */
-.section-warm {
-  background: #f7f6f3;
-}
-.section-dark {
-  background: var(--navy-footer);
-}
 /* Research line cards — warmer hover */
-.line-card {
-  transition: background .18s, box-shadow .18s, transform .18s;
-}
-.line-card:hover {
-  background: rgba(0,122,122,.04) !important;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 20px rgba(0,0,0,.06);
-}
 /* Stat numbers — subtle teal tint */
 
 /* Path cards / collaboration cards — warmer bg */
-.path-card {
-  background: rgba(255,255,255,.015) !important;
-  transition: background .2s, border-color .2s;
-}
-.path-card:hover {
-  background: rgba(0,122,122,.04) !important;
-  border-color: rgba(0,122,122,.2) !important;
-}
 
 
 @media print {
@@ -1024,9 +784,7 @@ body { padding-top: calc(88px + 30px) !important; }
    every page, but the CSS itself never actually existed anywhere in
    this file. Every loading-state shimmer site-wide was rendering as
    an invisible, unstyled box until now. */
-.api-skeleton{background:linear-gradient(90deg,var(--surface) 25%,var(--white) 37%,var(--surface) 63%);background-size:400% 100%;animation:skeletonShimmer 1.4s ease infinite;border-radius:4px;}
-.api-skeleton-dark{background:linear-gradient(90deg,rgba(255,255,255,.06) 25%,rgba(255,255,255,.12) 37%,rgba(255,255,255,.06) 63%);background-size:400% 100%;animation:skeletonShimmer 1.4s ease infinite;border-radius:4px;}
-@keyframes skeletonShimmer{0%{background-position:100% 50%;}100%{background-position:0 50%;}}
+@keyframes skeletonShimmer{}
 /* Networks & Standards — replaces the old 6-card grid, which used
    #007A7A teal labels on navy-2 background at 1.91:1 contrast (fails
    WCAG AA badly) and felt dense with every description always visible.
@@ -1090,6 +848,9 @@ body { padding-top: calc(88px + 30px) !important; }
   ]
 }
 </script>
+  <link rel="stylesheet" href="polish.css">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#0C3868">
 </head>
 <body>
 <div class="latest-bar" id="latestBar" aria-label="Latest update">
@@ -1104,17 +865,54 @@ body { padding-top: calc(88px + 30px) !important; }
   </div>
 </div>
 <a href="#mainContent" class="skip-link">Skip to main content</a>
-<header class="hdr" id="hdr"><div class="hdr-inner"><a href="/" class="hdr-logo" aria-label="neumACt R&amp;I"><img src="logo.svg" alt="neumACt R&I" class="hdr-logo-img" onerror="this.style.opacity='.3'"></a><nav class="hdr-nav" aria-label="Primary navigation">
-      <a href="/" class="current" aria-current="page"><span lang="en">Home</span><span lang="es">Inicio</span></a>
-      <div class="hdr-dd">
-        <span class="hdr-dd-trigger"><a href="/clinical"><span lang="en">Research</span><span lang="es">Investigación</span></a><button type="button" class="hdr-dd-chevron" aria-label="Show research lines" aria-expanded="false" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button></span>
-        <div class="hdr-dd-panel"><div class="hdr-dd-panel-inner" id="hdrResearchLines"></div></div>
+<header class="hdr" id="hdr" data-page="home">
+  <!-- Tier 1: institutional utility strip -->
+  <div class="hdr-utility">
+    <div class="hdr-utility-inner">
+      <div class="hdr-affil">
+        <span lang="en">Servicio de Neumología · CHUAC</span><span lang="es">Servicio de Neumología · CHUAC</span>
+        <span class="hdr-affil-sep">·</span>
+        <span class="hdr-affil-org">INIBIC · SERGAS</span>
       </div>
-      <a href="/innovation"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
-      <a href="/news"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
-      <a href="/team"><span lang="en">Team</span><span lang="es">Equipo</span></a>
-      <a href="#contact"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
-    </nav><div class="hdr-right"><div class="lang-toggle" role="group" aria-label="Language"><button class="lt-btn lt-btn--active" data-lang="en" id="ltBtnEn" onclick="selectLang('en')" aria-pressed="true">EN</button><button class="lt-btn" data-lang="es" id="ltBtnEs" onclick="selectLang('es')" aria-pressed="false">ES</button></div><button class="mob-toggle" id="mobToggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobDrawer"><span></span><span></span><span></span></button></div></div></header><div class="mob-overlay" id="mobOverlay"></div><nav class="mob-drawer" id="mobDrawer" aria-label="Mobile navigation"><div class="mob-drawer-nav">
+      <div class="hdr-utility-right">
+        <a class="hdr-utility-link" href="https://www.sergas.gal" target="_blank" rel="noopener">sergas.gal</a>
+        <div class="lang-switch" role="group" aria-label="Language / Idioma">
+          <span class="lang-switch-knob" aria-hidden="true"></span>
+          <button class="lang-opt" data-lang="en" id="ltBtnEn" onclick="selectLang('en')" aria-pressed="true">EN</button>
+          <button class="lang-opt" data-lang="es" id="ltBtnEs" onclick="selectLang('es')" aria-pressed="false">ES</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Tier 2: primary navigation -->
+  <div class="hdr-main">
+    <div class="hdr-inner">
+      <a href="/" class="hdr-logo" aria-label="neumACt R&amp;I">
+        <img src="logo.svg" alt="neumACt R&I" class="hdr-logo-img" onerror="this.style.opacity='.3'">
+        <span class="hdr-logo-rule" aria-hidden="true"></span>
+        <span class="hdr-logo-desc"><span lang="en">Research &amp; Innovation</span><span lang="es">Investigación e Innovación</span></span>
+      </a>
+      <nav class="hdr-nav" aria-label="Primary navigation">
+        <span class="hdr-nav-pill" aria-hidden="true"></span>
+        <a href="/" class="hdr-nav-link" data-nav="home" data-current="true" aria-current="page"><span lang="en">Home</span><span lang="es">Inicio</span></a>
+        <div class="hdr-dd" data-nav="research">
+          <span class="hdr-dd-trigger">
+            <a href="/clinical" class="hdr-nav-link" data-nav="research"><span lang="en">Research</span><span lang="es">Investigación</span></a>
+            <button type="button" class="hdr-dd-chevron" aria-label="Show research lines" aria-expanded="false" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button>
+          </span>
+          <div class="hdr-dd-panel"><div class="hdr-dd-panel-inner" id="hdrResearchLines"></div></div>
+        </div>
+        <a href="/innovation" class="hdr-nav-link" data-nav="innovation"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
+        <a href="/news" class="hdr-nav-link" data-nav="news"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
+        <a href="/team" class="hdr-nav-link" data-nav="team"><span lang="en">Team</span><span lang="es">Equipo</span></a>
+      </nav>
+      <div class="hdr-right">
+        <a href="#contact" class="hdr-contact-btn"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
+        <button class="mob-toggle" id="mobToggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobDrawer"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </div>
+</header><div class="mob-overlay" id="mobOverlay"></div><nav class="mob-drawer" id="mobDrawer" aria-label="Mobile navigation"><div class="mob-drawer-nav">
       <a href="/" class="current" aria-current="page"><span lang="en">Home</span><span lang="es">Inicio</span></a>
       <a href="/clinical"><span lang="en">Research</span><span lang="es">Investigación</span></a>
       <a href="/innovation"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
@@ -1138,18 +936,18 @@ body { padding-top: calc(88px + 30px) !important; }
           </span>
         </div>
 
-        <h1 class="display-xl hero-h1 reveal reveal-d1" id="heroTitle">
+        <h1 class="display-xl hero-h1" id="heroTitle">
           <span lang="en">Clinical research<br>in respiratory<br>medicine.</span>
           <span lang="es">Investigación clínica<br>en medicina<br>respiratoria.</span>
         </h1>
 
         
-        <p class="hero-desc reveal reveal-d2">
+        <p class="hero-desc">
           <span lang="en">The Servicio de Neumología at CHUAC runs six research lines spanning the full spectrum of respiratory disease — from transplantation and pulmonary hypertension to interventional bronchoscopy, thoracic surgery, sleep medicine, and precision phenotyping. <strong>1,000 lung transplants performed</strong> — a regional reference milestone, May 2026. Regional reference centre for lung transplantation and pulmonary hypertension. INIBIC-accredited. 10+ active recruiting studies.</span>
           <span lang="es">Seis líneas especializadas. <strong>1.000 trasplantes pulmonares</strong> realizados en el CHUAC — hito alcanzado en mayo de 2026. Más de 13 estudios activos en reclutamiento sobre EPOC, asma, EPI, cáncer de pulmón, hipertensión pulmonar, insuficiencia respiratoria, trastornos respiratorios del sueño y cirugía torácica.</span>
         </p>
 
-        <div class="hero-actions reveal reveal-d2" style="display:flex;gap:1.75rem;align-items:center;">
+        <div class="hero-actions" style="display:flex;gap:1.75rem;align-items:center;">
           <a href="/clinical" class="hero-text-link">
             <span lang="en">Research portfolio</span><span lang="es">Cartera de investigación</span> →
           </a>
@@ -1642,8 +1440,6 @@ body { padding-top: calc(88px + 30px) !important; }
 <button id="scrollTop" aria-label="Scroll to top">
   <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
 </button>
-
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 <script src="api.js"></script>
 
 <script>
@@ -1946,5 +1742,6 @@ function dismissLatestBar(){var bar=document.getElementById('latestBar');if(!bar
   window.selectLang=function(l){if(_orig)_orig(l);syncLang(l);closeD();};
 })();
 </script>
+<script src="header-enhance.js" defer></script>
 </body>
 </html>
