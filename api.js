@@ -183,7 +183,7 @@ async function loadResearchLines() {
           coordBlock = `<div class="line-coord" style="display:flex;align-items:center;gap:.5rem;">${avatar}<span>${escHtml(coord.full_name)}</span></div>`;
         }
         return `
-          <a href="/line?id=${line.id}" class="line-card reveal">
+          <a href="/line/?id=${line.id}" class="line-card reveal">
             <div class="line-num">${num}</div>
             <div class="line-body">
               <div class="line-title">${escHtml(displayName)}</div>
@@ -262,7 +262,7 @@ async function loadResearchLines() {
             <div class="line-body-inner">
               ${line.description  ? `<p class="line-desc">${escHtml(line.description)}</p>` : ''}
               ${line.capabilities ? `<p class="line-desc" style="margin-top:.5rem;">${escHtml(line.capabilities)}</p>` : ''}
-              <a href="/line?id=${line.id}" class="btn-text" style="display:inline-flex;margin-top:.875rem;"><span lang="en">View full line page</span><span lang="es">Ver página completa de la línea</span> →</a>
+              <a href="/line/?id=${line.id}" class="btn-text" style="display:inline-flex;margin-top:.875rem;"><span lang="en">View full line page</span><span lang="es">Ver página completa de la línea</span> →</a>
             </div>
           </div>
         </div>`
@@ -1188,7 +1188,7 @@ async function loadHeaderResearchDropdown(isRetry = false) {
     menu.style.transition = 'none';
     menu.style.opacity = '0';
     menu.innerHTML = lines.map(l => `
-      <a class="hdr-dd-item" href="/line?id=${l.id}">
+      <a class="hdr-dd-item" href="/line/?id=${l.id}">
         <span class="hdr-dd-num">L${String(l.line_number).padStart(2,'0')}</span>
         <span class="hdr-dd-name">${escHtml(l.short_name || l.name)}</span>
       </a>`).join('')
@@ -1641,7 +1641,7 @@ async function loadLineDetail() {
     // line pages, which tells search engines to treat five of the six as
     // duplicates of whichever one they happened to crawl first.
     const canonicalTag = document.getElementById('canonicalLink');
-    if (canonicalTag) canonicalTag.setAttribute('href', `https://neumact.org/line?id=${lineId}`);
+    if (canonicalTag) canonicalTag.setAttribute('href', `https://neumact.org/line/?id=${lineId}`);
     const jsonLdTag = document.getElementById('lineJsonLd');
     if (jsonLdTag) {
       jsonLdTag.textContent = JSON.stringify({
