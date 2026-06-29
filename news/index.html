@@ -126,7 +126,7 @@
        ══════════════════════════════════════════════════════════ */
 
     /* ── Progress bar ── */
-    #progress-bar{position:fixed;top:0;left:0;width:0;height:2px;background:var(--accent-2);z-index:2000;transition:width .1s linear;}
+    #pb{position:fixed;top:0;left:0;height:1.5px;width:0;background:var(--teal);z-index:3000;transition:width .08s linear;pointer-events:none;}
 
     /* ── Hamburger ── */
     .mob-toggle:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);}
@@ -1103,7 +1103,7 @@
   <script>
     /* ── Scroll: header + progress bar + scroll-to-top ── */
     (function(){
-      var hdr=document.getElementById('hdr'),prg=document.getElementById('progress-bar'),stt=document.getElementById('scrollTop');
+      var hdr=document.getElementById('hdr'),prg=document.getElementById('pb'),stt=document.getElementById('scrollTop');
       window.addEventListener('scroll',function(){
         var y=window.scrollY;
         if(hdr)hdr.classList.toggle('scrolled',y>40);
