@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page not found · neumACt R&I</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/core.css">
+  <link rel="stylesheet" href="/polish.css">
+  <style>
+    :root{
+      --navy:#0C3868;--navy-2:#0C447C;--navy-footer:#07111F;
+      --teal:#007A7A;--teal-2:#00B3B3;--teal-lt:#E2F0F0;
+      --ff-display:'Fraunces',Georgia,serif;--ff-body:'DM Sans',system-ui,sans-serif;--ff-mono:'DM Mono',monospace;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      min-height:100vh;display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(160deg,var(--navy) 0%,var(--navy-footer) 100%);
+      font-family:var(--ff-body);color:#fff;padding:2rem;text-align:center;
+    }
+    .e404-wrap{max-width:520px;}
+    .e404-code{
+      font-family:var(--ff-mono);font-size:.8rem;letter-spacing:.3em;text-transform:uppercase;
+      color:var(--teal-2);margin-bottom:1.5rem;
+    }
+    .e404-title{
+      font-family:var(--ff-display);font-weight:600;font-size:clamp(2rem,5vw,3rem);
+      line-height:1.1;letter-spacing:-.02em;margin-bottom:1rem;
+    }
+    .e404-desc{
+      font-size:1.0625rem;line-height:1.7;color:rgba(255,255,255,.72);margin-bottom:2.25rem;
+    }
+    .e404-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+    .e404-btn{
+      display:inline-flex;align-items:center;gap:.5rem;padding:.7rem 1.4rem;border-radius:100px;
+      font-weight:600;font-size:.9375rem;text-decoration:none;transition:all .25s cubic-bezier(.16,1,.3,1);
+    }
+    .e404-btn-solid{background:var(--teal);color:#fff;}
+    .e404-btn-solid:hover{background:var(--teal-2);transform:translateY(-1px);}
+    .e404-btn-out{border:1px solid rgba(255,255,255,.3);color:#fff;}
+    .e404-btn-out:hover{background:rgba(255,255,255,.08);}
+    .e404-foot{
+      margin-top:3rem;font-family:var(--ff-mono);font-size:.66rem;letter-spacing:.1em;
+      text-transform:uppercase;color:rgba(255,255,255,.4);
+    }
+  </style>
+</head>
+<body>
+  <div class="e404-wrap">
+    <div class="e404-code">Error 404</div>
+    <h1 class="e404-title">
+      <span lang="en">This page could not be found.</span>
+      <span lang="es">No se encontró esta página.</span>
+    </h1>
+    <p class="e404-desc">
+      <span lang="en">The page you're looking for may have moved or no longer exists. Let's get you back to the research.</span>
+      <span lang="es">La página que buscas puede haberse movido o ya no existe. Te llevamos de vuelta a la investigación.</span>
+    </p>
+    <div class="e404-actions">
+      <a href="/" class="e404-btn e404-btn-solid">
+        <span lang="en">Return home</span><span lang="es">Volver al inicio</span>
+      </a>
+      <a href="/clinical" class="e404-btn e404-btn-out">
+        <span lang="en">Research lines</span><span lang="es">Líneas de investigación</span>
+      </a>
+    </div>
+    <div class="e404-foot">Servicio de Neumología · CHUAC · INIBIC</div>
+  </div>
+  <script>
+    try{var _l=localStorage.getItem('lang');if(_l==='es')document.documentElement.dataset.lang='es';}catch(e){}
+  </script>
+</body>
+</html>
