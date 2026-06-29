@@ -1,0 +1,783 @@
+/* ════════════════════════════════════════════════════════════════
+   neumACt R&I — Premium Polish Layer  (polish.css)
+   Loaded last, after each page's own <style>, so it refines without
+   rewriting. Every rule here is a deliberate, low-risk upgrade aimed
+   at the details that separate "competent" from "elite": optical
+   spacing, type rhythm, depth, focus craft, and motion discipline.
+   Scoped tightly; no layout-breaking overrides.
+   ════════════════════════════════════════════════════════════════ */
+
+:root{
+  /* Signature motion curve — one expo-out curve used everywhere */
+  --ease-clinical: cubic-bezier(.16,1,.3,1);
+  /* Refined elevation system — soft, layered, never harsh */
+  --shadow-xs: 0 1px 2px rgba(12,56,104,.04), 0 1px 3px rgba(12,56,104,.06);
+  --shadow-sm: 0 2px 4px rgba(12,56,104,.04), 0 4px 12px rgba(12,56,104,.06);
+  --shadow-md: 0 4px 8px rgba(12,56,104,.05), 0 12px 28px rgba(12,56,104,.08);
+  --shadow-lg: 0 8px 16px rgba(12,56,104,.06), 0 24px 56px rgba(12,56,104,.10);
+  --ring: 0 0 0 3px rgba(0,179,179,.32);
+}
+
+/* ── 1. Smooth, consistent rendering everywhere ─────────────────── */
+*{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; text-rendering:optimizeLegibility; }
+
+/* ── 2. Tighter optical tracking on large display type ──────────── */
+.display-xl,.display.xl,.hero-h1,.hero-title,.blog-hero-h1{
+  letter-spacing:-.018em; line-height:1.04;
+  text-wrap:balance;            /* avoids orphans on the headline */
+}
+
+/* ── 3. Body copy: better measure + rhythm ──────────────────────── */
+.hero-desc,.pg-desc,.lead-bio,.section-intro p{
+  line-height:1.68; max-width:62ch; text-wrap:pretty;
+}
+
+/* ── 4. Hero CTA pair: real separation, no more jammed links ─────── */
+.hero-actions,.hero-cta,.hero-ctas{
+  display:flex; flex-wrap:wrap; align-items:center; gap:1.5rem; margin-top:2.25rem;
+}
+.hero-actions a, .hero-cta a{ position:relative; }
+
+/* Animated underline on text-style hero links — quiet, precise */
+.hero-actions a::after, .hero-cta a::after{
+  content:""; position:absolute; left:0; bottom:-3px; height:1px; width:100%;
+  background:currentColor; transform:scaleX(0); transform-origin:left;
+  transition:transform .4s var(--ease-clinical); opacity:.5;
+}
+.hero-actions a:hover::after, .hero-cta a:hover::after{ transform:scaleX(1); }
+
+/* ── 5. Refined card elevation + lift on hover ──────────────────── */
+.project-card,.lead-card,.line-card,.post-item,.team-member,.cap-card,.story-card{
+  transition:transform .4s var(--ease-clinical), box-shadow .4s var(--ease-clinical), border-color .4s var(--ease-clinical);
+  will-change:transform;
+}
+.project-card:hover,.lead-card:hover,.cap-card:hover,.story-card:hover{
+  transform:translateY(-3px); box-shadow:var(--shadow-md);
+}
+
+/* ── 6. Universal keyboard focus — visible, branded, consistent ─── */
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,
+textarea:focus-visible,[tabindex]:focus-visible,summary:focus-visible{
+  outline:none; box-shadow:var(--ring); border-radius:6px;
+}
+
+/* ── 7. Numerals align in stats/counters (no width jitter) ──────── */
+[data-counter],.stat-num,.kpi-num,.lead-line-name,.facts-num,.hero-stat-num{
+  font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1,"cv01" 1;
+}
+
+/* ── 8. Links in body content: refined hover, not default blue ──── */
+.lead-bio a,.section-body a,.post-excerpt a{
+  color:var(--teal,#007A7A); text-decoration:none;
+  background-image:linear-gradient(currentColor,currentColor);
+  background-size:0% 1px; background-repeat:no-repeat; background-position:0 100%;
+  transition:background-size .35s var(--ease-clinical);
+}
+.lead-bio a:hover,.section-body a:hover,.post-excerpt a:hover{ background-size:100% 1px; }
+
+/* ── 9. Buttons: subtle depth + press feedback ──────────────────── */
+.btn-cta-solid,.btn-primary,.cta-btn{
+  box-shadow:var(--shadow-sm); transition:transform .2s var(--ease-clinical), box-shadow .3s var(--ease-clinical), background .2s;
+}
+.btn-cta-solid:hover,.btn-primary:hover,.cta-btn:hover{ box-shadow:var(--shadow-md); transform:translateY(-1px); }
+.btn-cta-solid:active,.btn-primary:active,.cta-btn:active{ transform:translateY(0); box-shadow:var(--shadow-xs); }
+
+/* ── 10. Header: hairline + blur for a crisper, layered top edge ── */
+.hdr{ backdrop-filter:saturate(140%) blur(8px); -webkit-backdrop-filter:saturate(140%) blur(8px); }
+.hdr.scrolled{ box-shadow:0 1px 0 rgba(255,255,255,.06), 0 6px 24px rgba(7,17,31,.28); }
+
+/* ── 11. Nav links: refined active indicator ────────────────────── */
+.hdr-nav a{ position:relative; }
+.hdr-nav a.current::after{
+  content:""; position:absolute; left:.9rem; right:.9rem; bottom:6px; height:1.5px;
+  background:var(--teal-2,#00B3B3); border-radius:2px;
+}
+
+/* ── 12. Language toggle: pill-grouped, cleaner ─────────────────── */
+.lang-toggle{
+  display:inline-flex; gap:2px; padding:3px; border-radius:100px;
+  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.10);
+}
+.lt-btn{ border-radius:100px!important; transition:color .2s, background .2s; }
+
+/* ── 13. Section eyebrows: tighter, more editorial ──────────────── */
+.eyebrow,.section-eyebrow,.sec-eyebrow,.kicker{
+  letter-spacing:.16em; text-transform:uppercase; font-size:.7rem; font-weight:600;
+}
+
+/* ── 14. Dividers as hairlines, not heavy lines ─────────────────── */
+hr,.divider,.section-divider{
+  border:none; height:1px; background:linear-gradient(90deg,transparent,rgba(12,56,104,.14) 18%,rgba(12,56,104,.14) 82%,transparent);
+}
+
+/* ── 15. Images: gentle reveal + never-squashed aspect ──────────── */
+.lead-photo img,.team-photo img,.project-img img,.post-thumb img{
+  transition:transform .6s var(--ease-clinical), filter .6s var(--ease-clinical);
+}
+.lead-card:hover .lead-photo img,.story-card:hover .post-thumb img{ transform:scale(1.03); }
+
+/* ── 16. Selection color on-brand ───────────────────────────────── */
+::selection{ background:rgba(0,179,179,.22); color:inherit; }
+
+/* ── 17. Custom scrollbar (desktop) — quiet, branded ────────────── */
+@media(pointer:fine){
+  *{ scrollbar-width:thin; scrollbar-color:rgba(0,122,122,.35) transparent; }
+  *::-webkit-scrollbar{ width:10px; height:10px; }
+  *::-webkit-scrollbar-thumb{ background:rgba(0,122,122,.32); border-radius:10px; border:2px solid transparent; background-clip:padding-box; }
+  *::-webkit-scrollbar-thumb:hover{ background:rgba(0,122,122,.5); background-clip:padding-box; }
+}
+
+/* ── 18. Skeleton shimmer: smoother sweep ───────────────────────── */
+.api-skeleton,.skeleton{ background-size:200% 100%!important; }
+
+/* ── 19. Footer links: refined hover state ──────────────────────── */
+.site-footer a{ transition:color .2s var(--ease-clinical), opacity .2s; }
+.footer-col-nav nav a:hover{ color:var(--teal-2,#00B3B3); }
+
+/* ── 20. Respect reduced-motion + perf: disable transforms/anim ─── */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{ animation-duration:.001ms!important; animation-iteration-count:1!important; transition-duration:.001ms!important; scroll-behavior:auto!important; }
+}
+
+/* ── Bonus: smoother global scroll anchoring ────────────────────── */
+html{ scroll-behavior:smooth; }
+@media(prefers-reduced-motion:reduce){ html{ scroll-behavior:auto; } }
+
+/* ════════════════════════════════════════════════════════════════
+   TWO-TIER INSTITUTIONAL HEADER  +  PREMIUM LANGUAGE SWITCH
+   Replaces the old single-row .hdr styling. All driven from here so
+   every page stays identical — no per-file header CSS.
+   ════════════════════════════════════════════════════════════════ */
+
+.hdr{
+  position:fixed; top:0; left:0; right:0; z-index:1000;
+  background:transparent; height:auto; border:none;
+  transition:transform .4s var(--ease-clinical);
+}
+
+/* ── Tier 1: utility strip ──────────────────────────────────────── */
+.hdr-utility{
+  background:var(--navy-footer,#07111F);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  font-size:.72rem;
+}
+.hdr-utility-inner{
+  max-width:1440px; margin:0 auto; height:34px;
+  padding:0 clamp(1.25rem,4vw,3rem);
+  display:flex; align-items:center; justify-content:space-between; gap:1rem;
+}
+.hdr-affil{
+  display:flex; align-items:center; gap:.6rem;
+  font-family:var(--ff-mono,'DM Mono',monospace);
+  letter-spacing:.04em; color:rgba(255,255,255,.5);
+  text-transform:uppercase; font-size:.66rem; white-space:nowrap;
+  overflow:hidden; text-overflow:ellipsis;
+}
+.hdr-affil-sep{ opacity:.4; }
+.hdr-affil-org{ color:rgba(0,179,179,.7); }
+.hdr-utility-right{ display:flex; align-items:center; gap:1.25rem; }
+.hdr-utility-link{
+  font-family:var(--ff-mono,'DM Mono',monospace);
+  font-size:.66rem; letter-spacing:.04em; text-transform:uppercase;
+  color:rgba(255,255,255,.45); text-decoration:none; transition:color .2s;
+}
+.hdr-utility-link:hover{ color:rgba(0,179,179,.85); }
+
+/* ── Premium language switch: sliding-knob pill ─────────────────── */
+.lang-switch{
+  position:relative; display:inline-flex; align-items:center;
+  background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.10);
+  border-radius:100px; padding:2px;
+}
+.lang-switch-knob{
+  position:absolute; top:2px; bottom:2px; left:2px; width:calc(50% - 2px);
+  background:#fff; border-radius:100px; z-index:0;
+  transition:transform .32s var(--ease-clinical);
+  box-shadow:0 1px 3px rgba(0,0,0,.2);
+}
+html[data-lang="es"] .lang-switch-knob{ transform:translateX(100%); }
+.lang-opt{
+  position:relative; z-index:1; appearance:none; border:none; background:none;
+  cursor:pointer; padding:.18rem .62rem; min-width:34px;
+  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.66rem; font-weight:600;
+  letter-spacing:.08em; line-height:1; border-radius:100px;
+  color:rgba(255,255,255,.6); transition:color .28s var(--ease-clinical);
+}
+.lang-opt[aria-pressed="true"]{ color:var(--navy,#0C3868); }
+
+/* ── Tier 2: main nav bar ───────────────────────────────────────── */
+.hdr-main{
+  background:rgba(12,68,124,.82);
+  backdrop-filter:saturate(160%) blur(14px);
+  -webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  transition:height .35s var(--ease-clinical), background .35s, box-shadow .35s;
+}
+.hdr-inner{
+  max-width:1440px; margin:0 auto; height:68px;
+  padding:0 clamp(1.25rem,4vw,3rem);
+  display:flex; align-items:center; gap:2rem;
+  transition:height .35s var(--ease-clinical);
+}
+
+/* Logo lockup with hairline rule + descriptor */
+.hdr-logo{ display:flex; align-items:center; gap:.85rem; text-decoration:none; flex-shrink:0; }
+.hdr-logo-img{
+  display:block; height:30px; width:auto; max-width:240px; object-fit:contain;
+  filter:brightness(0) invert(1); opacity:.96;
+  transition:height .35s var(--ease-clinical);
+}
+.hdr-logo-rule{ width:1px; height:26px; background:rgba(255,255,255,.18); flex-shrink:0; }
+.hdr-logo-desc{
+  font-family:var(--ff-mono,'DM Mono',monospace);
+  font-size:.6rem; line-height:1.25; letter-spacing:.05em; text-transform:uppercase;
+  color:rgba(255,255,255,.6); max-width:130px;
+}
+
+/* Nav with sliding active pill */
+.hdr-nav{ position:relative; display:flex; align-items:center; gap:2px; flex:1; min-width:0; }
+.hdr-nav-pill{
+  position:absolute; top:50%; transform:translateY(-50%);
+  height:34px; border-radius:8px; background:rgba(255,255,255,.12);
+  z-index:0; opacity:0; pointer-events:none;
+  transition:left .34s var(--ease-clinical), width .34s var(--ease-clinical), opacity .25s;
+}
+.hdr-nav-link{
+  position:relative; z-index:1; display:inline-block; padding:.55rem .9rem;
+  font-family:var(--ff-body,'DM Sans',sans-serif); font-size:.875rem; font-weight:500;
+  letter-spacing:.01em; color:rgba(255,255,255,.78); text-decoration:none; white-space:nowrap;
+  border-radius:8px; transition:color .2s;
+}
+.hdr-nav-link:hover{ color:#fff; }
+.hdr-nav-link[data-current="true"]{ color:#fff; }
+.hdr-nav-link[data-current="true"]::after{
+  content:""; position:absolute; left:.9rem; right:.9rem; bottom:4px; height:1.5px;
+  background:var(--teal-2,#00B3B3); border-radius:2px;
+}
+
+/* Right cluster: contact button */
+.hdr-right{ display:flex; align-items:center; gap:1rem; flex-shrink:0; }
+.hdr-contact-btn{
+  display:inline-block; padding:.5rem 1.15rem;
+  font-family:var(--ff-body,'DM Sans',sans-serif); font-size:.84rem; font-weight:600;
+  letter-spacing:.01em; color:#fff; text-decoration:none;
+  border:1px solid rgba(255,255,255,.28); border-radius:100px;
+  transition:background .25s var(--ease-clinical), border-color .25s, transform .2s, box-shadow .3s;
+}
+.hdr-contact-btn:hover{
+  background:var(--teal-2,#00B3B3); border-color:var(--teal-2,#00B3B3);
+  transform:translateY(-1px); box-shadow:0 6px 18px rgba(0,179,179,.3);
+}
+
+/* Scrolled state — condense tier 2 */
+.hdr.scrolled .hdr-main{ box-shadow:0 4px 24px rgba(7,17,31,.32); background:rgba(12,56,104,.94); }
+.hdr.scrolled .hdr-inner{ height:58px; }
+.hdr.scrolled .hdr-logo-img{ height:26px; }
+
+/* Body offset so fixed two-tier header doesn't overlap content.
+   Default content starts below 34 + 68 = 102px. */
+body{ padding-top:0; }
+.hdr ~ main, main{ scroll-margin-top:110px; }
+
+/* ── Research mega-dropdown panel ───────────────────────────────── */
+.hdr-dd{ position:relative; display:flex; align-items:center; z-index:1; }
+.hdr-dd-trigger{ display:inline-flex; align-items:center; }
+.hdr-dd-chevron{
+  appearance:none; background:none; border:none; cursor:pointer; padding:.3rem;
+  color:rgba(255,255,255,.6); display:flex; transition:transform .3s var(--ease-clinical), color .2s;
+}
+.hdr-dd-chevron svg{ width:14px; height:14px; }
+.hdr-dd:hover .hdr-dd-chevron{ color:#fff; }
+.hdr-dd:hover .hdr-dd-chevron, .hdr-dd-chevron[aria-expanded="true"]{ transform:rotate(180deg); }
+.hdr-dd-panel{
+  position:absolute; top:calc(100% + 14px); left:-1rem; min-width:440px;
+  background:#fff; border:1px solid rgba(12,56,104,.10); border-radius:14px;
+  box-shadow:var(--shadow-lg); padding:.5rem; opacity:0; visibility:hidden;
+  transform:translateY(-8px); transition:opacity .28s var(--ease-clinical), transform .28s var(--ease-clinical), visibility .28s;
+}
+.hdr-dd:hover .hdr-dd-panel{ opacity:1; visibility:visible; transform:translateY(0); }
+.hdr-dd-panel-inner{ display:grid; grid-template-columns:1fr 1fr; gap:2px; }
+.hdr-dd-item{
+  display:flex; align-items:baseline; gap:.6rem; padding:.7rem .85rem;
+  text-decoration:none; border-radius:9px; transition:background .2s var(--ease-clinical);
+}
+.hdr-dd-item:hover{ background:var(--teal-lt,#E2F0F0); }
+.hdr-dd-num{
+  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.66rem; font-weight:600;
+  letter-spacing:.06em; color:var(--teal,#007A7A); flex-shrink:0;
+}
+.hdr-dd-name{ font-size:.84rem; font-weight:500; color:var(--navy,#0C3868); line-height:1.3; }
+.hdr-dd-all{
+  grid-column:1/-1; margin-top:2px; padding:.7rem .85rem; border-top:1px solid rgba(12,56,104,.08);
+  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.72rem; letter-spacing:.04em;
+  color:var(--teal,#007A7A); text-decoration:none; text-transform:uppercase; transition:color .2s;
+}
+.hdr-dd-all:hover{ color:var(--navy-2,#0C447C); }
+
+/* ── Mobile: collapse two-tier into one, show hamburger ─────────── */
+@media(max-width:880px){
+  .hdr-affil{ font-size:.6rem; }
+  .hdr-affil-org, .hdr-utility-link{ display:none; }
+  .hdr-logo-rule, .hdr-logo-desc{ display:none; }
+  .hdr-nav{ display:none; }
+  .hdr-contact-btn{ display:none; }
+  .mob-toggle{ display:flex!important; }
+  .hdr-inner{ height:60px; }
+}
+@media(min-width:881px){
+  .mob-toggle{ display:none; }
+}
+
+/* Back-to-top button */
+.to-top{
+  position:fixed; bottom:1.5rem; right:1.5rem; z-index:900;
+  width:44px; height:44px; border-radius:50%; border:none; cursor:pointer;
+  background:var(--navy-2,#0C447C); color:#fff; display:flex; align-items:center; justify-content:center;
+  opacity:0; transform:translateY(12px) scale(.9); pointer-events:none;
+  box-shadow:var(--shadow-md); transition:opacity .3s var(--ease-clinical), transform .3s var(--ease-clinical), background .2s;
+}
+.to-top.show{ opacity:1; transform:none; pointer-events:auto; }
+.to-top:hover{ background:var(--teal,#007A7A); }
+.to-top svg{ width:18px; height:18px; }
+
+/* ── Body offset for the two-tier fixed header ──────────────────── */
+/* Old layout reserved 88px; new header is 34 (utility) + 68 (main) = 102px.
+   Override the page's own padding-top so content clears it exactly. */
+body{ padding-top:102px!important; }
+@media(max-width:880px){ body{ padding-top:60px!important; } }
+/* hero min-height referenced the old --hdr var; keep it visually full */
+.hero{ min-height:calc(100vh - 102px); }
+@media(max-width:880px){ .hero{ min-height:calc(100vh - 60px); } }
+
+/* ════════════════════════════════════════════════════════════════
+   PARTNERS / AFFILIATIONS — UNIFORM LOGO WALL
+   A framed, evenly-celled grid. Every logo sits in an identical white
+   card and is optically normalized to the same footprint regardless of
+   its native aspect ratio — so any future logo "just fits". Scales from
+   2 logos to 12+ without ever looking stranded.
+   ════════════════════════════════════════════════════════════════ */
+
+.affil-strip{
+  background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+  border-top:1px solid rgba(255,255,255,.07);
+  border-bottom:1px solid rgba(255,255,255,.07);
+  padding:3rem 0!important;
+}
+.affil-inner{
+  max-width:1440px; margin:0 auto; padding:0 clamp(1.25rem,4vw,3rem);
+  display:flex!important; flex-direction:column; align-items:stretch!important; gap:1.5rem!important;
+}
+.affil-label{
+  font-family:var(--ff-mono,'DM Mono',monospace)!important;
+  font-size:.7rem!important; letter-spacing:.16em!important; text-transform:uppercase!important;
+  color:rgba(255,255,255,.4)!important; text-align:center; display:block;
+}
+
+/* The wall: equal flex cells, centered, wrapping. Any logo count flows
+   cleanly and every cell holds the same footprint. Add logos freely. */
+.affil-logos{
+  display:flex!important; flex-wrap:wrap!important;
+  gap:1px!important;
+  background:rgba(255,255,255,.07);            /* becomes the hairline grid lines */
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:14px; overflow:hidden;
+  max-width:960px; margin:0 auto; width:100%;
+  justify-content:center;
+}
+
+/* Each logo cell — identical footprint, white, logo centered + normalized */
+.affil-logo-link{
+  display:flex!important; align-items:center; justify-content:center;
+  background:#fff; min-height:104px; padding:1.5rem 1.75rem!important;
+  flex:1 1 200px; max-width:280px; min-width:160px;
+  transition:background .3s var(--ease-clinical), transform .3s var(--ease-clinical);
+  position:relative;
+}
+.affil-logo-link:hover{ background:#fafdfd; }
+.affil-logo-link:hover::after{
+  content:""; position:absolute; left:1.25rem; right:1.25rem; bottom:0; height:2px;
+  background:var(--teal-2,#00B3B3);
+}
+/* Normalize EVERY logo to one optical footprint, no matter its native size */
+.affil-logo-link img{
+  filter:none!important; opacity:1!important; background:none!important;
+  padding:0!important; border-radius:0!important;
+  width:auto!important; height:auto!important;
+  max-height:46px!important; max-width:150px!important;
+  object-fit:contain; display:block;
+  transition:transform .3s var(--ease-clinical);
+}
+.affil-logo-link:hover img{ transform:scale(1.04); }
+/* Drop the old vertical separators — the grid lines replace them */
+.affil-sep{ display:none!important; }
+
+@media(max-width:600px){
+  .affil-logos{ grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); }
+  .affil-logo-link{ min-height:88px; padding:1.1rem!important; }
+  .affil-logo-link img{ max-height:38px!important; max-width:120px!important; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   TYPOGRAPHY SYSTEM + CONTRAST FLOOR + CONSISTENCY PASS
+   Audit-driven: fixes 115+ measured WCAG contrast failures, weak type
+   rhythm, and inconsistent surface/button patterns. Loaded last.
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── 1. REFINED TYPE SCALE (modular, ~1.25 ratio) ───────────────── */
+:root{
+  --fs-display-xl: clamp(2.75rem, 5.2vw, 4.25rem);
+  --fs-display-lg: clamp(2.25rem, 4vw, 3.25rem);
+  --fs-display-md: clamp(1.75rem, 3vw, 2.5rem);
+  --fs-h1: clamp(2.25rem, 4.4vw, 3.25rem);
+  --fs-h2: clamp(1.75rem, 3vw, 2.375rem);
+  --fs-h3: clamp(1.375rem, 2vw, 1.75rem);
+  --fs-h4: 1.3125rem;
+  --fs-body-lg: 1.1875rem;
+  --fs-body: 1.0625rem;
+  --fs-body-sm: .9375rem;
+  --fs-meta: .875rem;
+  --fs-label: .75rem;
+  --lh-tight: 1.08;
+  --lh-snug: 1.28;
+  --lh-normal: 1.6;
+  --lh-relaxed: 1.72;
+}
+
+/* ── 2. DISPLAY TYPE: tighter, heavier, optically corrected ─────── */
+.display-xl,.display.xl,.hero-h1,.hero-title,.blog-hero-h1{
+  font-family:var(--ff-display,'Fraunces',serif)!important;
+  font-weight:600!important; letter-spacing:-.02em!important;
+  line-height:var(--lh-tight)!important; text-wrap:balance;
+}
+.display-lg,.display.lg{ font-weight:600!important; letter-spacing:-.018em; line-height:var(--lh-tight); }
+.display-md,.display-sm{ font-weight:600!important; letter-spacing:-.012em; line-height:var(--lh-snug); }
+h1,h2,h3{ letter-spacing:-.012em; }
+h3,h4{ line-height:var(--lh-snug); }
+
+/* ── 3. BODY RHYTHM: readable measure + leading ─────────────────── */
+p{ line-height:var(--lh-normal); }
+.hero-desc,.pg-desc,.lead-bio,.section-intro p,.netstd-detail p{
+  line-height:var(--lh-relaxed)!important; max-width:64ch; text-wrap:pretty;
+}
+
+/* ── 4. CONTRAST FLOOR — fix 115+ measured WCAG failures ────────── */
+/* Body-weight faint text lifted to >=4.5:1 on navy.
+   Map each failing tier up to a passing one. !important to beat inline. */
+[style*="rgba(255,255,255,.55)"],[style*="rgba(255,255,255,0.55)"],
+[style*="rgba(255,255,255,.52)"],[style*="rgba(255,255,255,.5)"],
+[style*="rgba(255,255,255,0.5)"]{ color:rgba(255,255,255,.72)!important; }
+
+[style*="rgba(255,255,255,.45)"],[style*="rgba(255,255,255,.4)"],
+[style*="rgba(255,255,255,0.4)"]{ color:rgba(255,255,255,.7)!important; }
+
+/* Decorative/eyebrow labels: lift to legible minimum without shouting */
+[style*="rgba(255,255,255,.38)"],[style*="rgba(255,255,255,.35)"],
+[style*="rgba(255,255,255,.3)"],[style*="rgba(255,255,255,.28)"],
+[style*="rgba(255,255,255,.25)"]{ color:rgba(255,255,255,.58)!important; }
+
+/* Class-based faint text (not inline) — same floor */
+.netstd-name,.footer-tagline,.footer-copy,.sec-eyebrow span,
+p[style*="color:rgba(255,255,255"]{ }   /* placeholder, handled above */
+
+/* ── 5. UNIFIED BUTTON SYSTEM — pills where appropriate ─────────── */
+/* Primary action: solid teal pill. Secondary: outlined pill. Text: link. */
+.btn-cta-solid,.btn-primary,.cta-btn,a.btn-cta-solid{
+  display:inline-flex; align-items:center; gap:.5rem;
+  padding:.7rem 1.4rem; border-radius:100px;
+  font-family:var(--ff-body,'DM Sans',sans-serif); font-weight:600; font-size:.9375rem;
+  letter-spacing:.005em; text-decoration:none; border:none; cursor:pointer;
+  background:var(--teal,#007A7A); color:#fff;
+  box-shadow:0 1px 2px rgba(0,122,122,.2), 0 4px 14px rgba(0,122,122,.18);
+  transition:transform .2s var(--ease-clinical), box-shadow .3s var(--ease-clinical), background .2s;
+}
+.btn-cta-solid:hover,.btn-primary:hover,.cta-btn:hover{
+  background:var(--teal-2,#00B3B3); transform:translateY(-1px);
+  box-shadow:0 2px 4px rgba(0,179,179,.25), 0 8px 24px rgba(0,179,179,.28);
+}
+.btn-cta-solid:active,.btn-primary:active,.cta-btn:active{ transform:translateY(0); }
+
+/* Outlined / secondary pill */
+.btn-outline,.btn-sec,.btn-secondary{
+  display:inline-flex; align-items:center; gap:.5rem;
+  padding:.66rem 1.3rem; border-radius:100px;
+  font-family:var(--ff-body,'DM Sans',sans-serif); font-weight:600; font-size:.9375rem;
+  text-decoration:none; cursor:pointer;
+  background:transparent; color:var(--teal,#007A7A);
+  border:1.5px solid var(--teal,#007A7A);
+  transition:background .2s var(--ease-clinical), color .2s, transform .2s, border-color .2s;
+}
+.btn-outline:hover,.btn-sec:hover,.btn-secondary:hover{
+  background:var(--teal,#007A7A); color:#fff; transform:translateY(-1px);
+}
+/* On dark sections, outline goes white */
+.hero .btn-outline,[class*="-bg"] .btn-outline,.netstd-row + * .btn-outline{
+  color:#fff; border-color:rgba(255,255,255,.4);
+}
+.hero .btn-outline:hover{ background:#fff; color:var(--navy-2,#0C447C); border-color:#fff; }
+
+/* Text link with arrow — refined underline reveal (already partly set) */
+.btn-text{
+  display:inline-flex; align-items:center; gap:.4rem;
+  font-weight:600; font-size:.9375rem; text-decoration:none;
+  color:var(--teal,#007A7A); position:relative;
+}
+.btn-text.on-dark{ color:var(--teal-2,#00B3B3); }
+.btn-text::after{
+  content:""; position:absolute; left:0; bottom:-2px; height:1.5px; width:100%;
+  background:currentColor; transform:scaleX(0); transform-origin:left;
+  transition:transform .35s var(--ease-clinical);
+}
+.btn-text:hover::after{ transform:scaleX(1); }
+
+/* ── 6. CONSISTENT CARD SURFACE LANGUAGE ────────────────────────── */
+.project-card,.lead-card,.story-card,.cap-card,.line-card,.post-item{
+  border-radius:14px;
+  border:1px solid var(--border-l, rgba(12,56,104,.08));
+  background:var(--white,#fff);
+}
+
+/* ── 7. CONSISTENT SECTION EYEBROWS ─────────────────────────────── */
+.sec-eyebrow span,.section-eyebrow,.eyebrow,.kicker{
+  font-family:var(--ff-mono,'DM Mono',monospace)!important;
+  font-size:.72rem!important; letter-spacing:.18em!important;
+  text-transform:uppercase!important; font-weight:500!important;
+}
+
+/* ── 8. LINKS IN PROSE: consistent, never raw-blue ──────────────── */
+p a:not([class]),li a:not([class]){
+  color:var(--teal,#007A7A); text-decoration:underline;
+  text-decoration-thickness:1px; text-underline-offset:2px;
+  transition:color .2s;
+}
+p a:not([class]):hover,li a:not([class]):hover{ color:var(--navy-2,#0C447C); }
+
+/* ── 9. OPTICAL: prevent giant headings from feeling hollow ─────── */
+.hero-desc strong,.lead strong{ color:rgba(255,255,255,.92); font-weight:600; }
+
+/* ── 10. Hero text-links: guaranteed separation (flex-gap fallback) ─ */
+.hero-actions,.hero-cta,.hero-ctas{
+  display:flex!important; flex-wrap:wrap; align-items:center;
+  gap:2rem!important; margin-top:2.25rem;
+}
+.hero-text-link{
+  display:inline-flex; align-items:center; gap:.4rem;
+  font-family:var(--ff-body,'DM Sans',sans-serif); font-weight:600; font-size:1rem;
+  color:#fff; text-decoration:none; position:relative; white-space:nowrap;
+}
+/* belt-and-braces: even if flex-gap fails, force horizontal separation */
+.hero-text-link + .hero-text-link{ margin-left:.5rem; }
+.hero-text-link::after{
+  content:""; position:absolute; left:0; bottom:-3px; height:1.5px; width:100%;
+  background:var(--teal-2,#00B3B3); transform:scaleX(0); transform-origin:left;
+  transition:transform .4s var(--ease-clinical);
+}
+.hero-text-link:hover::after{ transform:scaleX(1); }
+.hero-text-link:hover{ color:var(--teal-2,#00B3B3); }
+
+/* ════════════════════════════════════════════════════════════════
+   ZONE UPGRADES — HEADER · NEWS · TEAM
+   Builds on existing markup/JS. Every rule targets a real element
+   confirmed present in the pages. Consistent, accessible, no markup
+   changes required for the CSS-expressible improvements.
+   ════════════════════════════════════════════════════════════════ */
+
+/* ─────────────────────────────────────────────────────────────────
+   HEADER ZONE
+   ───────────────────────────────────────────────────────────────── */
+
+/* #4 Scroll-progress bar under the header */
+.scroll-progress{
+  position:fixed; top:0; left:0; height:2px; width:0%;
+  background:linear-gradient(90deg, var(--teal,#007A7A), var(--teal-2,#00B3B3));
+  z-index:1100; transition:width .1s linear; pointer-events:none;
+}
+
+/* #3 Scroll-direction hide/reveal (class toggled by JS) */
+.hdr{ transition:transform .4s var(--ease-clinical); }
+.hdr.hdr-hidden{ transform:translateY(-100%); }
+
+/* #7 Contact pill gains fill once scrolled past hero */
+.hdr.scrolled .hdr-contact-btn{
+  background:var(--teal,#007A7A); border-color:var(--teal,#007A7A);
+}
+.hdr.scrolled .hdr-contact-btn:hover{
+  background:var(--teal-2,#00B3B3); border-color:var(--teal-2,#00B3B3);
+}
+
+/* #2 Research mega-dropdown: description lines + richer items */
+.hdr-dd-item{ flex-direction:column; align-items:flex-start!important; gap:.15rem!important; }
+.hdr-dd-item .hdr-dd-name{ display:block; }
+.hdr-dd-desc{
+  font-size:.7rem; color:var(--ink-4,#8A8A8A); line-height:1.3;
+  font-family:var(--ff-body,'DM Sans',sans-serif); letter-spacing:0;
+}
+
+/* #6 Keyboard-operable dropdown: open on focus-within too */
+.hdr-dd:focus-within .hdr-dd-panel{ opacity:1; visibility:visible; transform:translateY(0); }
+.hdr-dd:focus-within .hdr-dd-chevron{ transform:rotate(180deg); }
+
+/* ─────────────────────────────────────────────────────────────────
+   NEWS / PUBLICATIONS ZONE
+   ───────────────────────────────────────────────────────────────── */
+
+/* #10 Feed items as editorial cards */
+.blog-feed .feed-item,.post-item{
+  display:block; padding:1.5rem 0; border-bottom:1px solid var(--border-l,rgba(12,56,104,.08));
+  transition:transform .3s var(--ease-clinical);
+}
+.blog-feed .feed-item:hover{ transform:translateX(4px); }
+.feed-item-eyebrow,.post-meta{
+  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.72rem;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--teal,#007A7A);
+  display:flex; align-items:center; gap:.6rem; margin-bottom:.6rem;
+}
+.feed-item-type-badge{
+  display:inline-block; padding:.15rem .55rem; border-radius:100px;
+  background:var(--teal-lt,#E2F0F0); color:var(--teal,#007A7A);
+  font-size:.66rem; font-weight:600; letter-spacing:.06em;
+}
+.feed-item-title,.post-title{
+  font-family:var(--ff-display,'Fraunces',serif); font-weight:600;
+  font-size:1.25rem; line-height:1.3; color:var(--navy,#0C3868);
+  margin:0 0 .4rem; letter-spacing:-.01em; transition:color .2s;
+}
+.blog-feed .feed-item:hover .feed-item-title{ color:var(--teal,#007A7A); }
+.feed-item-excerpt{ font-size:.9375rem; line-height:1.6; color:var(--ink-2,#4A4A4A); max-width:62ch; }
+.feed-item-foot{ display:flex; align-items:center; gap:1rem; margin-top:.75rem; font-size:.8rem; color:var(--ink-4,#8A8A8A); }
+
+/* #8 Filter chips — active state + smooth feed transition */
+.flt{
+  padding:.45rem 1rem; border-radius:100px; border:1px solid var(--border-l,rgba(12,56,104,.12));
+  background:transparent; color:var(--ink-3,#6B6B6B); font-size:.84rem; font-weight:500;
+  cursor:pointer; transition:all .2s var(--ease-clinical); font-family:var(--ff-body,'DM Sans',sans-serif);
+}
+.flt:hover{ border-color:var(--teal,#007A7A); color:var(--teal,#007A7A); }
+.flt.flt-active,.flt[aria-pressed="true"]{
+  background:var(--teal,#007A7A); border-color:var(--teal,#007A7A); color:#fff;
+}
+.blog-feed{ transition:opacity .25s var(--ease-clinical); }
+.blog-feed.filtering{ opacity:.4; }
+
+/* #12 Sidebar research-line chips */
+.sb-line-chip{
+  display:flex; align-items:center; justify-content:space-between; gap:.5rem;
+  padding:.55rem .75rem; border-radius:9px; text-decoration:none;
+  color:var(--ink-2,#4A4A4A); font-size:.84rem; transition:background .2s var(--ease-clinical);
+  cursor:pointer; border:none; background:none; width:100%; text-align:left;
+}
+.sb-line-chip:hover{ background:var(--teal-lt,#E2F0F0); color:var(--teal,#007A7A); }
+.sb-line-chip-count{ font-family:var(--ff-mono,'DM Mono',monospace); font-size:.7rem; color:var(--ink-4,#8A8A8A); }
+
+/* #11 Featured-story dots */
+.story-dots{ display:flex; gap:.5rem; margin-top:1rem; }
+.story-dot{
+  width:8px; height:8px; border-radius:50%; border:none; cursor:pointer;
+  background:rgba(255,255,255,.35); transition:all .3s var(--ease-clinical); padding:0;
+}
+.story-dot.active{ background:#fff; width:22px; border-radius:100px; }
+
+/* #14 Empty state */
+.state-empty,.feed-empty{
+  text-align:center; padding:3.5rem 1.5rem; color:var(--ink-3,#6B6B6B);
+}
+.feed-empty-title{ font-family:var(--ff-display,'Fraunces',serif); font-size:1.25rem; color:var(--navy,#0C3868); margin-bottom:.5rem; }
+.feed-empty-reset{
+  margin-top:1rem; padding:.5rem 1.1rem; border-radius:100px;
+  border:1.5px solid var(--teal,#007A7A); background:none; color:var(--teal,#007A7A);
+  font-weight:600; font-size:.84rem; cursor:pointer; transition:all .2s var(--ease-clinical);
+}
+.feed-empty-reset:hover{ background:var(--teal,#007A7A); color:#fff; }
+
+/* ─────────────────────────────────────────────────────────────────
+   TEAM ZONE
+   ───────────────────────────────────────────────────────────────── */
+
+/* #19 Unify card system — team-grid cells become real spaced cards */
+.team-grid{
+  display:grid!important;
+  grid-template-columns:repeat(auto-fill, minmax(min(100%,280px), 1fr))!important;
+  gap:1rem!important; border:none!important; overflow:visible!important;
+}
+.team-member{
+  border-radius:14px!important;
+  border:1px solid var(--border-l,rgba(12,56,104,.08))!important;
+  box-shadow:var(--shadow-xs)!important;
+  position:relative; overflow:hidden;
+}
+.team-member:hover{
+  box-shadow:var(--shadow-md)!important; transform:translateY(-3px)!important;
+  border-color:var(--teal-lt,#E2F0F0)!important;
+}
+
+/* #20 Hover reveal: "View profile" affordance */
+.team-member::after{
+  content:"View profile →"; position:absolute; bottom:.75rem; right:1rem;
+  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.66rem; letter-spacing:.04em;
+  color:var(--teal,#007A7A); opacity:0; transform:translateX(-4px);
+  transition:opacity .3s var(--ease-clinical), transform .3s var(--ease-clinical);
+}
+.team-member:hover::after{ opacity:1; transform:none; }
+html[data-lang="es"] .team-member::after{ content:"Ver perfil →"; }
+
+/* #16 Avatar: refined gradient + photo handling */
+.tm-avatar{
+  box-shadow:0 2px 12px rgba(0,122,122,.22), inset 0 0 0 1px rgba(255,255,255,.15)!important;
+}
+
+/* #18 Lead cards: credentials stat strip */
+.lead-creds{
+  display:flex; gap:1.5rem; margin-top:.85rem; padding-top:.85rem;
+  border-top:1px solid var(--border-l,rgba(12,56,104,.08));
+}
+.lead-cred{ display:flex; flex-direction:column; gap:.1rem; }
+.lead-cred-n{
+  font-family:var(--ff-display,'Fraunces',serif); font-weight:600; font-size:1.125rem;
+  color:var(--navy,#0C3868); font-variant-numeric:tabular-nums; line-height:1;
+}
+.lead-cred-l{
+  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.62rem; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--ink-4,#8A8A8A);
+}
+
+/* #17 Team section group headers */
+.team-group-header{
+  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--ink-4,#8A8A8A); margin:2.5rem 0 1rem;
+  display:flex; align-items:center; gap:.85rem;
+}
+.team-group-header::after{ content:""; flex:1; height:1px; background:var(--border-l,rgba(12,56,104,.1)); }
+
+/* #15 Profile modal polish */
+#profileModalOverlay{
+  position:fixed; inset:0; background:rgba(7,17,31,.55); backdrop-filter:blur(4px);
+  z-index:2000; align-items:center; justify-content:center; padding:1.5rem;
+}
+#profileModalContent,.profile-modal-card{
+  background:#fff; border-radius:18px; box-shadow:var(--shadow-lg);
+  max-width:520px; width:100%; padding:2rem; position:relative;
+  animation:profileModalIn .35s var(--ease-clinical);
+}
+@keyframes profileModalIn{ from{ opacity:0; transform:translateY(12px) scale(.98); } to{ opacity:1; transform:none; } }
+.profile-modal-close{
+  position:absolute; top:1rem; right:1rem; width:32px; height:32px; border-radius:50%;
+  border:none; background:var(--surface,#F4F1EA); color:var(--ink-3,#6B6B6B); cursor:pointer;
+  display:flex; align-items:center; justify-content:center; transition:background .2s, color .2s;
+}
+.profile-modal-close:hover{ background:var(--teal-lt,#E2F0F0); color:var(--teal,#007A7A); }
+
+/* #9 News feed search input */
+.feed-search{
+  display:inline-flex; align-items:center; gap:.5rem;
+  padding:.4rem .85rem; border-radius:100px;
+  border:1px solid var(--border-l,rgba(12,56,104,.12));
+  background:var(--white,#fff); transition:border-color .2s var(--ease-clinical);
+  margin-left:auto;
+}
+.feed-search:focus-within{ border-color:var(--teal,#007A7A); }
+.feed-search svg{ width:15px; height:15px; color:var(--ink-4,#8A8A8A); flex-shrink:0; }
+.feed-search input{
+  border:none; outline:none; background:none; font-size:.84rem; width:160px;
+  font-family:var(--ff-body,'DM Sans',sans-serif); color:var(--ink,#1A1A1A);
+}
+.feed-search input::placeholder{ color:var(--ink-4,#9A9A9A); }
+@media(max-width:640px){ .feed-search{ margin-left:0; width:100%; } .feed-search input{ width:100%; } }
