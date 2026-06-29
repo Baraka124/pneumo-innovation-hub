@@ -212,7 +212,7 @@ section[style*="background:var(--white)"] .milestone-label,
     }
     .hstat{
       padding:1.25rem 1.75rem;
-      display:flex;align-items:baseline;justify-content:space-between;
+      display:flex;align-items:baseline;justify-content:space-between;gap:1rem;
       border-bottom:1px solid var(--border-d);
       transition:background .15s;
     }
@@ -221,10 +221,12 @@ section[style*="background:var(--white)"] .milestone-label,
     .hstat-label{
       font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;
       text-transform:uppercase;color:rgba(255,255,255,.38);
+      min-width:0;flex:1 1 auto;
     }
     .hstat-num{
       font-family:var(--ff-display);font-size:2.125rem;font-weight:700;
       color:#fff;line-height:1;letter-spacing:-.03em;
+      flex-shrink:0;white-space:nowrap;
     }
     .hstat-num sub{font-size:.55em;color:var(--teal);vertical-align:baseline;font-style:normal;}
     .hero-stat-cta{

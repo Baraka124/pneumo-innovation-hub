@@ -95,16 +95,6 @@ html.bar-dismissed body{padding-top:88px!important;}
 .hdr-dd.open .hdr-dd-chevron svg{transform:rotate(180deg);}
 .hdr-dd.open .hdr-dd-trigger{background:rgba(255,255,255,.08);}
 .hdr-dd.open .hdr-dd-trigger a{color:#fff;}
-.hdr-dd-panel{position:fixed;top:var(--hdr,88px);left:0;right:0;background:var(--navy-2);box-shadow:0 12px 28px rgba(0,20,40,.18);border-top:1px solid rgba(255,255,255,.12);border-bottom:1px solid rgba(255,255,255,.08);opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .18s,transform .18s,visibility .18s;z-index:950;}
-.hdr-dd.open .hdr-dd-panel{opacity:1;visibility:visible;transform:translateY(0);}
-.hdr-dd-panel-inner{max-width:1440px;margin:0 auto;padding:1.75rem clamp(1.25rem,4vw,3rem) 2rem;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.25rem 2.5rem;}
-.hdr-dd-item{display:block;text-decoration:none;padding:.6rem 0;border-bottom:1px solid transparent;transition:border-color .12s;}
-.hdr-dd-item:hover{border-bottom-color:rgba(255,255,255,.3);}
-.hdr-dd-num{display:block;font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.08em;color:rgba(255,255,255,.4);margin-bottom:2px;}
-.hdr-dd-name{font-size:var(--fs-body-sm);color:#fff;line-height:1.4;}
-.hdr-dd-divider{display:none;}
-.hdr-dd-all{display:block;grid-column:1/-1;margin-top:.5rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,.1);text-decoration:none;font-size:var(--fs-label);color:rgba(255,255,255,.55);transition:color .12s;}
-.hdr-dd-all:hover{color:#fff;}
 .hdr-right{display:flex;align-items:center;gap:.875rem;margin-left:auto;flex-shrink:0;}
 .lang-toggle{display:flex;align-items:center;background:rgba(255,255,255,.12);border-radius:var(--r-sm);padding:2px;flex-shrink:0;}
 .lt-btn{padding:.3rem .65rem;font-family:var(--ff-mono,'DM Mono',monospace);font-size:var(--fs-label);font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.7);background:transparent;border:none;cursor:pointer;transition:color .15s,background .15s;line-height:1;border-radius:calc(var(--r-sm) - 2px);}
