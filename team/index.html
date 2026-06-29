@@ -828,20 +828,58 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebPage","name":"neumACt R&I — Team","description":"Physician-investigators and clinical staff of the Servicio de Neumología at CHUAC, A Coruña.","isPartOf":{"@type":"WebSite","url":"https://neumact.org","name":"neumACt R&I"}}
 </script>
+  <link rel="stylesheet" href="../polish.css">
 </head>
 <body>
 <a href="#mainContent" class="skip-link">Skip to main content</a>
-<header class="hdr" id="hdr"><div class="hdr-inner"><a href="/" class="hdr-logo" aria-label="neumACt R&amp;I"><img src="../logo.svg" alt="neumACt R&I" class="hdr-logo-img" onerror="this.style.opacity='.3'"></a><nav class="hdr-nav" aria-label="Primary navigation">
-      <a href="/"><span lang="en">Home</span><span lang="es">Inicio</span></a>
-      <div class="hdr-dd">
-        <span class="hdr-dd-trigger"><a href="/clinical"><span lang="en">Research</span><span lang="es">Investigación</span></a><button type="button" class="hdr-dd-chevron" aria-label="Show research lines" aria-expanded="false" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button></span>
-        <div class="hdr-dd-panel"><div class="hdr-dd-panel-inner" id="hdrResearchLines"></div></div>
+<header class="hdr" id="hdr" data-page="team">
+  <!-- Tier 1: institutional utility strip -->
+  <div class="hdr-utility">
+    <div class="hdr-utility-inner">
+      <div class="hdr-affil">
+        <span lang="en">Servicio de Neumología · CHUAC</span><span lang="es">Servicio de Neumología · CHUAC</span>
+        <span class="hdr-affil-sep">·</span>
+        <span class="hdr-affil-org">INIBIC · SERGAS</span>
       </div>
-      <a href="/innovation"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
-      <a href="/news"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
-      <a href="/team" class="current" aria-current="page"><span lang="en">Team</span><span lang="es">Equipo</span></a>
-    <a href="/#contact"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
-    </nav><div class="hdr-right"><div class="lang-toggle" role="group" aria-label="Language"><button class="lt-btn lt-btn--active" data-lang="en" id="ltBtnEn" onclick="selectLang('en')" aria-pressed="true">EN</button><button class="lt-btn" data-lang="es" id="ltBtnEs" onclick="selectLang('es')" aria-pressed="false">ES</button></div><button class="mob-toggle" id="mobToggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobDrawer"><span></span><span></span><span></span></button></div></div></header><div class="mob-overlay" id="mobOverlay"></div><nav class="mob-drawer" id="mobDrawer" aria-label="Mobile navigation"><div class="mob-drawer-nav">
+      <div class="hdr-utility-right">
+        <a class="hdr-utility-link" href="https://www.sergas.gal" target="_blank" rel="noopener">sergas.gal</a>
+        <div class="lang-switch" role="group" aria-label="Language / Idioma">
+          <span class="lang-switch-knob" aria-hidden="true"></span>
+          <button class="lang-opt" data-lang="en" id="ltBtnEn" onclick="selectLang('en')" aria-pressed="true">EN</button>
+          <button class="lang-opt" data-lang="es" id="ltBtnEs" onclick="selectLang('es')" aria-pressed="false">ES</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Tier 2: primary navigation -->
+  <div class="hdr-main">
+    <div class="hdr-inner">
+      <a href="/" class="hdr-logo" aria-label="neumACt R&amp;I">
+        <img src="../logo.svg" alt="neumACt R&I" class="hdr-logo-img" onerror="this.style.opacity='.3'">
+        <span class="hdr-logo-rule" aria-hidden="true"></span>
+        <span class="hdr-logo-desc"><span lang="en">Research &amp; Innovation</span><span lang="es">Investigación e Innovación</span></span>
+      </a>
+      <nav class="hdr-nav" aria-label="Primary navigation">
+        <span class="hdr-nav-pill" aria-hidden="true"></span>
+        <a href="/" class="hdr-nav-link" data-nav="home"><span lang="en">Home</span><span lang="es">Inicio</span></a>
+        <div class="hdr-dd" data-nav="research">
+          <span class="hdr-dd-trigger">
+            <a href="/clinical" class="hdr-nav-link" data-nav="research"><span lang="en">Research</span><span lang="es">Investigación</span></a>
+            <button type="button" class="hdr-dd-chevron" aria-label="Show research lines" aria-expanded="false" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button>
+          </span>
+          <div class="hdr-dd-panel"><div class="hdr-dd-panel-inner" id="hdrResearchLines"></div></div>
+        </div>
+        <a href="/innovation" class="hdr-nav-link" data-nav="innovation"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
+        <a href="/news" class="hdr-nav-link" data-nav="news"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
+        <a href="/team" class="hdr-nav-link" data-nav="team" data-current="true" aria-current="page"><span lang="en">Team</span><span lang="es">Equipo</span></a>
+      </nav>
+      <div class="hdr-right">
+        <a href="/#contact" class="hdr-contact-btn"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
+        <button class="mob-toggle" id="mobToggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobDrawer"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </div>
+</header><div class="mob-overlay" id="mobOverlay"></div><nav class="mob-drawer" id="mobDrawer" aria-label="Mobile navigation"><div class="mob-drawer-nav">
       <a href="/"><span lang="en">Home</span><span lang="es">Inicio</span></a>
       <a href="/clinical"><span lang="en">Research</span><span lang="es">Investigación</span></a>
       <a href="/innovation"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
@@ -858,11 +896,11 @@ a[style*="border-radius:9px"], button[style*="border-radius:6px"] {
       <div class="hero-kicker reveal">
         <span class="label on-dark"><span lang="en">neumACt Research Group · INIBIC</span><span lang="es">Grupo de Investigación neumACt · INIBIC</span></span>
       </div>
-      <h1 class="hero-h1 reveal reveal-d1" id="teamHeroTitle">
+      <h1 class="hero-h1" id="teamHeroTitle">
         <span lang="en">The people<br>behind the work.</span>
         <span lang="es">Las personas<br><em>detrás de la ciencia.</em></span>
       </h1>
-      <p class="hero-desc reveal reveal-d2">
+      <p class="hero-desc">
         <span lang="en"><strong>23 clinician-investigators</strong> across six specialist research lines. Each line led by a physician-scientist who carries both the clinical load and the research portfolio — running trials, treating patients, building evidence.</span>
         <span lang="es"><strong>23 investigadores clínicos</strong> en seis líneas especializadas. Cada línea dirigida por un médico-científico que compagina la carga asistencial con la cartera investigadora: ensayos, pacientes, evidencia.</span>
       </p>
@@ -1388,5 +1426,6 @@ if(!localStorage.getItem('cookieOk')){
   window.selectLang=function(l){if(_orig)_orig(l);syncLang(l);closeD();};
 })();
 </script>
+<script src="../header-enhance.js" defer></script>
 </body>
 </html>
