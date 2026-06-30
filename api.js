@@ -758,8 +758,8 @@ async function loadPublicationStrip() {
       const authorLine = p.authors_text ? p.authors_text.split(';')[0].trim() + (p.authors_text.includes(';') ? ' et al.' : '') : (p.author?.full_name || '');
       return `
         <div class="pub-card">
-          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:.5rem;">
-            <span class="pub-journal">${escHtml(p.journal_name)}</span>
+          <div class="pub-card-top">
+            <span class="pub-journal" title="${escHtml(p.journal_name)}">${escHtml(p.journal_name)}</span>
             <span class="pub-year">${year}</span>
           </div>
           <div class="pub-title">${escHtml(p.title)}</div>

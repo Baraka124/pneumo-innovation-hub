@@ -147,8 +147,8 @@
     .hero-inner{position:relative;z-index:1;}
     .hero-kicker{display:flex;align-items:center;gap:.625rem;margin-bottom:1.75rem;}
     .hero-kicker-line{display:none;}
-    .label{font-family:var(--ff-mono);font-size:var(--fs-label);font-weight:500;letter-spacing:.14em;text-transform:uppercase;}
-    .label.on-dark{color:rgba(255,255,255,.65);}
+    .label{font-family:var(--ff-mono);font-size:var(--fs-label);font-weight:600;letter-spacing:.1em;text-transform:uppercase;}
+    .label.on-dark{color:rgba(255,255,255,.85);}
     .hero-h1{
       font-family:var(--ff-display);font-size:clamp(2.5rem,5vw,4rem);font-weight:700;
       color:#fff; text-shadow: 0 2px 40px rgba(0,0,0,.3);line-height:1.05;letter-spacing:-.03em;margin-bottom:1.25rem;
@@ -353,16 +353,17 @@
       scrollbar-width:thin;
       scrollbar-color:rgba(255,255,255,.15) transparent;
     }
-    .pub-strip-scroll::-webkit-scrollbar{height:3px;}
-    .pub-strip-scroll::-webkit-scrollbar-track{background:transparent;}
-    .pub-strip-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:2px;}
+    .pub-strip-scroll::-webkit-scrollbar{height:4px;}
+    .pub-strip-scroll::-webkit-scrollbar-track{background:rgba(255,255,255,.04);border-radius:2px;}
+    .pub-strip-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.25);border-radius:2px;}
+    .pub-strip-scroll::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.4);}
     .pub-strip-inner{
       display:flex;align-items:stretch;gap:0;
       width:max-content;
       border:1px solid var(--border-d);border-radius:var(--r-sm);overflow:hidden;
     }
     .pub-card{
-      width:260px;flex-shrink:0;
+      width:280px;flex-shrink:0;
       padding:1.25rem 1.375rem;
       border-right:1px solid var(--border-d);
       display:flex;flex-direction:column;gap:.5rem;
@@ -371,13 +372,15 @@
     .pub-card:last-child{border-right:none;}
     .pub-card:hover{background:rgba(255,255,255,.04);}
     .pub-card a{text-decoration:none;}
+    .pub-card-top{display:flex;justify-content:space-between;align-items:baseline;gap:.625rem;}
     .pub-journal{
-      font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.14em;
-      text-transform:uppercase;color:var(--teal);font-weight:500;
+      font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;
+      text-transform:uppercase;color:var(--teal);font-weight:600;
+      overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;
     }
     .pub-year{
-      font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;
-      color:rgba(255,255,255,.25);
+      font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.08em;
+      color:rgba(255,255,255,.35);flex-shrink:0;
     }
     .pub-title{
       font-size:.8125rem;color:rgba(255,255,255,.75);line-height:1.45;
@@ -395,9 +398,18 @@
     }
     .pub-doi-link:hover{color:rgba(0,200,200,.9);}
     .pub-strip-nav{
-      display:flex;align-items:center;gap:.625rem;margin-top:1rem;
+      display:flex;align-items:center;justify-content:space-between;gap:.625rem;margin-top:1rem;
     }
     .psn-btn svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;}
+    .psn-btn{
+      display:flex;align-items:center;justify-content:center;
+      width:34px;height:34px;border-radius:50%;
+      border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.03);
+      color:rgba(255,255,255,.6);cursor:pointer;
+      transition:background .15s,border-color .15s,color .15s;
+    }
+    .psn-btn:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.32);color:#fff;}
+    .psn-nav-group{display:flex;align-items:center;gap:.625rem;}
     .psn-count{font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;color:rgba(255,255,255,.3);}
 
     /* ══ OPEN OPPORTUNITIES ════════════════════ */
@@ -796,6 +808,7 @@
   <div class="wrap">
     <div class="reveal">
       <div class="sec-kicker">
+        <span class="sec-kicker-line"></span>
         <span class="label on-dark"><span lang="en">Scientific Output</span><span lang="es">Producción Científica</span></span>
       </div>
       <h2 class="display-md" style="color:#fff;margin-top:.75rem;">
@@ -826,11 +839,12 @@
         <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
       </button>
       <span class="psn-count" id="pubCount"></span>
-      <a href="/news/" style="margin-left:auto;" class="btn-text on-dark">
+    </div>
+      <a href="/news/" class="btn-text on-dark">
         <span lang="en">Full publications page</span><span lang="es">Página de publicaciones</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:11px;height:11px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
-    </div><a href="/news/" style="font-family:var(--ff-mono,'DM Mono',monospace);font-size:.7rem;letter-spacing:.06em;color:rgba(0,179,179,.6);text-decoration:none;transition:color .15s;" onmouseover="this.style.color='rgba(0,179,179,.9)'" onmouseout="this.style.color='rgba(0,179,179,.6)'"><span lang="en">Full publications page →</span><span lang="es">Ver todas las publicaciones →</span></a></div>
+    </div>
   </div>
 </section>
 
