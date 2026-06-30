@@ -332,72 +332,11 @@ body{ padding-top:102px!important; }
 @media(max-width:880px){ .hero{ min-height:calc(100vh - 60px); } }
 
 /* ════════════════════════════════════════════════════════════════
-   PARTNERS / AFFILIATIONS — UNIFORM LOGO WALL
-   A framed, evenly-celled grid. Every logo sits in an identical white
-   card and is optically normalized to the same footprint regardless of
-   its native aspect ratio — so any future logo "just fits". Scales from
-   2 logos to 12+ without ever looking stranded.
+   PARTNERS / AFFILIATIONS
+   Canonical .affil-section / .affil-card system now lives in
+   core.css (shared sitewide). The old .affil-strip uniform-logo-wall
+   design and its dead selectors were removed here.
    ════════════════════════════════════════════════════════════════ */
-
-.affil-strip{
-  background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
-  border-top:1px solid rgba(255,255,255,.07);
-  border-bottom:1px solid rgba(255,255,255,.07);
-  padding:3rem 0!important;
-}
-.affil-inner{
-  max-width:1440px; margin:0 auto; padding:0 clamp(1.25rem,4vw,3rem);
-  display:flex!important; flex-direction:column; align-items:stretch!important; gap:1.5rem!important;
-}
-.affil-label{
-  font-family:var(--ff-mono,'DM Mono',monospace)!important;
-  font-size:.7rem!important; letter-spacing:.16em!important; text-transform:uppercase!important;
-  color:rgba(255,255,255,.4)!important; text-align:center; display:block;
-}
-
-/* The wall: equal flex cells, centered, wrapping. Any logo count flows
-   cleanly and every cell holds the same footprint. Add logos freely. */
-.affil-logos{
-  display:flex!important; flex-wrap:wrap!important;
-  gap:1px!important;
-  background:rgba(255,255,255,.07);            /* becomes the hairline grid lines */
-  border:1px solid rgba(255,255,255,.07);
-  border-radius:14px; overflow:hidden;
-  max-width:960px; margin:0 auto; width:100%;
-  justify-content:center;
-}
-
-/* Each logo cell — identical footprint, white, logo centered + normalized */
-.affil-logo-link{
-  display:flex!important; align-items:center; justify-content:center;
-  background:#fff; min-height:104px; padding:1.5rem 1.75rem!important;
-  flex:1 1 200px; max-width:280px; min-width:160px;
-  transition:background .3s var(--ease-clinical), transform .3s var(--ease-clinical);
-  position:relative;
-}
-.affil-logo-link:hover{ background:#fafdfd; }
-.affil-logo-link:hover::after{
-  content:""; position:absolute; left:1.25rem; right:1.25rem; bottom:0; height:2px;
-  background:var(--teal-2,#00B3B3);
-}
-/* Normalize EVERY logo to one optical footprint, no matter its native size */
-.affil-logo-link img{
-  filter:none!important; opacity:1!important; background:none!important;
-  padding:0!important; border-radius:0!important;
-  width:auto!important; height:auto!important;
-  max-height:46px!important; max-width:150px!important;
-  object-fit:contain; display:block;
-  transition:transform .3s var(--ease-clinical);
-}
-.affil-logo-link:hover img{ transform:scale(1.04); }
-/* Drop the old vertical separators — the grid lines replace them */
-.affil-sep{ display:none!important; }
-
-@media(max-width:600px){
-  .affil-logos{ grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); }
-  .affil-logo-link{ min-height:88px; padding:1.1rem!important; }
-  .affil-logo-link img{ max-height:38px!important; max-width:120px!important; }
-}
 
 /* ════════════════════════════════════════════════════════════════
    TYPOGRAPHY SYSTEM + CONTRAST FLOOR + CONSISTENCY PASS
