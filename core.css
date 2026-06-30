@@ -49,16 +49,20 @@
 {color:#fff!important;-webkit-text-fill-color:#fff!important;background:none!important;-webkit-background-clip:unset!important;background-clip:unset!important;}
 .hstat-num sub{color:#009999!important;-webkit-text-fill-color:#009999!important;}
 .hstat-label{color:rgba(255,255,255,.72)!important;}
-.hdr-logo-img{filter:brightness(0) invert(1)!important;opacity:.9!important;}
-.footer-logo-img{filter:brightness(0) invert(1)!important;opacity:.8!important;height:36px!important;width:auto!important;}
-.affil-section{background:rgba(255,255,255,.025);border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07);}
-.affil-logo-item{display:block;opacity:.55;transition:opacity .2s;}
-.affil-logo-item:hover{opacity:.85;}
-.affil-img-main{height:40px;max-width:260px;}
-.affil-img-inibic{height:28px;max-width:180px;}
-.affil-ph{display:flex;align-items:center;justify-content:center;height:32px;min-width:80px;border:1px dashed rgba(255,255,255,.2);border-radius:2px;padding:0 .75rem;background:rgba(255,255,255,.03);}
-.affil-ph span{font-family:var(--ff-mono,'DM Mono',monospace);font-size:var(--fs-label);letter-spacing:.08em;color:rgba(255,255,255,.35);white-space:nowrap;}
-.affil-ph-main{height:40px;min-width:140px;}
+/* .hdr-logo-img's full definition (size, filter, opacity:.96,
+   transition) lives in polish.css. This file used to also force
+   opacity:.9 here via !important, silently winning over polish.css's
+   intended .96 regardless of which file loaded last — a small but
+   real visual mismatch (the logo was rendering dimmer than designed).
+   Removed; the onerror="this.style.opacity='.3'" fallback on the
+   <img> tag itself (broken-image-load handling) is unaffected since
+   inline style attributes always win on specificity anyway. */
+/* The old .affil-section / .affil-logo-item / .affil-img-main /
+   .affil-img-inibic / .affil-ph / .affil-ph-main block that used to
+   live here was the pre-redesign affiliations strip — confirmed zero
+   usage anywhere in current markup, removed. The canonical
+   .affil-section/.affil-card system (added this session, shared
+   sitewide) is defined once, further down this file. */
 /* Header sits flush at top by default — the announcement bar only
    exists on the homepage (.latest-bar), which opts into its own
    offset via the rules right below this comment in index.html. */
@@ -68,9 +72,12 @@ body{padding-top:68px;}
 .hero-inner{gap:3rem;}
 .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:var(--navy-2);color:#fff;padding:.75rem 1.25rem;font-size:.875rem;font-weight:500;border-radius:0 0 6px 0;}
 .skip-link:focus{left:0;}
-.hdr{position:fixed;left:0;right:0;height:68px;background:var(--navy-2);border-bottom:1px solid rgba(255,255,255,.1);z-index:900;transition:height .2s var(--ease-clinical),top .3s var(--ease-clinical);}
+.hdr{position:fixed;left:0;right:0;height:68px;background:var(--navy-2);border-bottom:1px solid rgba(255,255,255,.1);z-index:900;}
 .hdr.scrolled{height:68px;}
-.hdr-right{display:flex;align-items:center;gap:.875rem;margin-left:auto;flex-shrink:0;}
+/* .hdr-right is defined once, in polish.css, for the live .hdr-main
+   header structure — this used to also define it here with a
+   slightly different gap (.875rem vs polish.css's 1rem), a leftover
+   from the pre-redesign flat header system. Removed. */
 .lt-btn{padding:.3rem .65rem;font-family:var(--ff-mono,'DM Mono',monospace);font-size:var(--fs-label);font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.7);background:transparent;border:none;cursor:pointer;transition:color .15s,background .15s;line-height:1;border-radius:calc(var(--r-sm) - 2px);}
 .lt-btn--active,.lt-btn[aria-pressed="true"]{color:var(--navy-2)!important;background:#fff!important;}
 .mob-toggle{display:none;width:38px;height:38px;background:rgba(255,255,255,.1);border:none;border-radius:var(--r-sm);cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:0;}

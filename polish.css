@@ -93,10 +93,11 @@ textarea:focus-visible,[tabindex]:focus-visible,summary:focus-visible{
 }
 
 /* ── 12. Language toggle: pill-grouped, cleaner ─────────────────── */
-.lang-toggle{
-  display:inline-flex; gap:2px; padding:3px; border-radius:100px;
-  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.10);
-}
+/* .lang-toggle (the wrapper this border-radius/transition override
+   was originally written for) has zero usage in current markup —
+   superseded by .lang-switch, the live radiogroup design. .lt-btn
+   itself is still live (mobile drawer language buttons), so its
+   rule stays; the dead .lang-toggle parent rule above it is removed. */
 .lt-btn{ border-radius:100px!important; transition:color .2s, background .2s; }
 
 /* ── 13. Section eyebrows: tighter, more editorial ──────────────── */
@@ -164,7 +165,11 @@ html{ scroll-behavior:smooth; }
 }
 .lang-switch-globe{
   width:13px; height:13px; flex-shrink:0;
-  color:rgba(255,255,255,.38);
+  /* .38 measured 2.76:1 against --navy-2 (#0C447C) — under WCAG
+     1.4.11's 3:1 minimum for meaningful UI graphics (this glyph is
+     the resting-state affordance for "this control is about
+     language", not purely decorative). .42 clears it at 3.05:1. */
+  color:rgba(255,255,255,.42);
   transition:color .2s var(--ease-clinical);
 }
 .lang-switch:focus-within .lang-switch-globe,
@@ -314,7 +319,7 @@ body{ padding-top:0; }
 .hdr-dd:hover .hdr-dd-panel, .hdr-dd.open .hdr-dd-panel{ opacity:1; visibility:visible; transform:translateY(0); }
 .hdr-dd-panel-title{
   font-family:var(--ff-mono,'DM Mono',monospace); font-size:.68rem; font-weight:600;
-  letter-spacing:.1em; text-transform:uppercase; color:var(--ink-4,#9B9B9B);
+  letter-spacing:.1em; text-transform:uppercase; color:var(--ink-4,#767676);
   margin:0 0 .5rem; padding-bottom:.75rem; border-bottom:1px solid rgba(12,56,104,.08);
 }
 .hdr-dd-panel-inner{
@@ -435,9 +440,23 @@ p{ line-height:var(--lh-normal); }
 [style*="rgba(255,255,255,.3)"],[style*="rgba(255,255,255,.28)"],
 [style*="rgba(255,255,255,.25)"]{ color:rgba(255,255,255,.58)!important; }
 
-/* Class-based faint text (not inline) — same floor */
-.netstd-name,.footer-tagline,.footer-copy,.sec-eyebrow span,
-p[style*="color:rgba(255,255,255"]{ }   /* placeholder, handled above */
+/* Class-based faint text (not inline) — same floor.
+   .footer-tagline was the one genuine failure here: at its defined
+   opacity (.28, in core.css) it measures ~2.46:1 against
+   --navy-footer (#07111F) — well under the 4.5:1 minimum this whole
+   section exists to fix. .footer-copy (.45 opacity) already clears
+   4.51:1 and didn't need touching. .netstd-name / .sec-eyebrow span
+   were grouped into the old empty placeholder this replaced but
+   don't share the same color declaration, so they're left to their
+   own existing rules rather than guessed at here.
+   Two more turned up doing the same systematic check across every
+   footer text class: .footer-nav-label ("Site" / "Contact" column
+   headers, opacity .22) measured 1.96:1, and .footer-address
+   (opacity .32) measured 2.85:1 — both genuine failures, neither
+   caught before since neither is an inline style. */
+.footer-tagline{ color:rgba(255,255,255,.6)!important; }
+.footer-nav-label{ color:rgba(255,255,255,.55)!important; }
+.footer-address{ color:rgba(255,255,255,.62)!important; }
 
 /* ── 5. UNIFIED BUTTON SYSTEM — pills where appropriate ─────────── */
 /* Primary action: solid teal pill. Secondary: outlined pill. Text: link. */
@@ -552,8 +571,18 @@ p a:not([class]):hover,li a:not([class]):hover{ color:var(--navy-2,#0C447C); }
   z-index:1100; transition:width .1s linear; pointer-events:none;
 }
 
-/* #3 Scroll-direction hide/reveal (class toggled by JS) */
-.hdr{ transition:transform .4s var(--ease-clinical); }
+/* #3 Scroll-direction hide/reveal (class toggled by JS) + the
+   homepage announcement-bar top-offset (set in index.html's inline
+   <style>, html:not(.bar-dismissed) .hdr{top:30px}) — both transition
+   properties belong on the SAME declaration here, since this is the
+   .hdr rule that actually wins the cascade (polish.css loads after
+   core.css, and `transition` as a shorthand fully replaces rather
+   than merges with any earlier declaration of the same property).
+   core.css used to also declare its own .hdr transition; that value
+   was being silently discarded by this one loading after it, which
+   meant the bar-dismiss top-offset change was snapping instantly
+   instead of animating. Removed there, consolidated here. */
+.hdr{ transition:transform .4s var(--ease-clinical), top .3s var(--ease-clinical); }
 .hdr.hdr-hidden{ transform:translateY(-100%); }
 
 /* #7 Contact pill gains fill once scrolled past hero */
@@ -585,7 +614,7 @@ p a:not([class]):hover,li a:not([class]):hover{ color:var(--navy-2,#0C447C); }
    grid, just under-displayed in the nav. */
 .hdr-dd-coord{
   display:flex; align-items:center; gap:.4rem;
-  font-size:.7rem; color:var(--ink-4,#8A8A8A); line-height:1.3;
+  font-size:.7rem; color:var(--ink-4,#767676); line-height:1.3;
   font-family:var(--ff-body,'DM Sans',sans-serif); letter-spacing:0;
 }
 .hdr-dd-coord > span:first-child{ flex-shrink:0; width:18px; height:18px; }
@@ -628,7 +657,7 @@ p a:not([class]):hover,li a:not([class]):hover{ color:var(--navy-2,#0C447C); }
 }
 .blog-feed .feed-item:hover .feed-item-title{ color:var(--teal,#007A7A); }
 .feed-item-excerpt{ font-size:.9375rem; line-height:1.6; color:var(--ink-2,#4A4A4A); max-width:62ch; }
-.feed-item-foot{ display:flex; align-items:center; gap:1rem; margin-top:.75rem; font-size:.8rem; color:var(--ink-4,#8A8A8A); }
+.feed-item-foot{ display:flex; align-items:center; gap:1rem; margin-top:.75rem; font-size:.8rem; color:var(--ink-4,#767676); }
 
 /* #8 Filter chips — active state + smooth feed transition */
 .flt{
@@ -651,7 +680,7 @@ p a:not([class]):hover,li a:not([class]):hover{ color:var(--navy-2,#0C447C); }
   cursor:pointer; border:none; background:none; width:100%; text-align:left;
 }
 .sb-line-chip:hover{ background:var(--teal-lt,#E2F0F0); color:var(--teal,#007A7A); }
-.sb-line-chip-count{ font-family:var(--ff-mono,'DM Mono',monospace); font-size:.7rem; color:var(--ink-4,#8A8A8A); }
+.sb-line-chip-count{ font-family:var(--ff-mono,'DM Mono',monospace); font-size:.7rem; color:var(--ink-4,#767676); }
 
 /* #11 Featured-story dots */
 .story-dots{ display:flex; gap:.5rem; margin-top:1rem; }
@@ -721,13 +750,13 @@ html[data-lang="es"] .team-member::after{ content:"Ver perfil →"; }
 }
 .lead-cred-l{
   font-family:var(--ff-mono,'DM Mono',monospace); font-size:.62rem; letter-spacing:.08em;
-  text-transform:uppercase; color:var(--ink-4,#8A8A8A);
+  text-transform:uppercase; color:var(--ink-4,#767676);
 }
 
 /* #17 Team section group headers */
 .team-group-header{
   font-family:var(--ff-mono,'DM Mono',monospace); font-size:.72rem; letter-spacing:.14em;
-  text-transform:uppercase; color:var(--ink-4,#8A8A8A); margin:2.5rem 0 1rem;
+  text-transform:uppercase; color:var(--ink-4,#767676); margin:2.5rem 0 1rem;
   display:flex; align-items:center; gap:.85rem;
 }
 .team-group-header::after{ content:""; flex:1; height:1px; background:var(--border-l,rgba(12,56,104,.1)); }
@@ -759,12 +788,12 @@ html[data-lang="es"] .team-member::after{ content:"Ver perfil →"; }
   margin-left:auto;
 }
 .feed-search:focus-within{ border-color:var(--teal,#007A7A); }
-.feed-search svg{ width:15px; height:15px; color:var(--ink-4,#8A8A8A); flex-shrink:0; }
+.feed-search svg{ width:15px; height:15px; color:var(--ink-4,#767676); flex-shrink:0; }
 .feed-search input{
   border:none; outline:none; background:none; font-size:.84rem; width:160px;
   font-family:var(--ff-body,'DM Sans',sans-serif); color:var(--ink,#1A1A1A);
 }
-.feed-search input::placeholder{ color:var(--ink-4,#9A9A9A); }
+.feed-search input::placeholder{ color:var(--ink-4,#767676); }
 @media(max-width:640px){ .feed-search{ margin-left:0; width:100%; } .feed-search input{ width:100%; } }
 
 /* ════════════════════════════════════════════════════════════════
