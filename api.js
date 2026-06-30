@@ -1797,18 +1797,48 @@ async function loadLineDetail() {
         // "CATARS-VAC, TUCUVI-LOLA, EARCO") are often real trials already
         // in the database — link each mention to the real record instead
         // of leaving it as inert text disconnected from the actual table.
-        let descHtml = escHtml(line.description);
+        //
+        // IMPORTANT: every match is found against the original plain-text
+        // description, never against a string that already contains
+        // inserted HTML from a previous match. Running a second regex
+        // against partially-built HTML risks matching text that's sitting
+        // inside an already-inserted <a> tag's attributes (e.g. a later
+        // candidate name that happens to be a substring of an earlier
+        // match's protocol_id once URL-encoded into the href), which
+        // would split that tag and leak its closing fragment as visible
+        // text. Collecting all match ranges up front and building the
+        // final string in one left-to-right pass makes that impossible.
+        const desc = line.description;
+        const ranges = []; // {start, end, name, protocolId}
         (line.trials_list || []).forEach(t => {
           const shortName = (t.title || '').split(/[—-]/)[0].trim();
-          const candidates = [shortName, t.protocol_id].filter(s => s && s.length > 2);
+          const candidates = [...new Set([shortName, t.protocol_id].filter(s => s && s.length > 2))];
           candidates.forEach(name => {
             const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
             const re = new RegExp(`(?<![\\w-])${escapedName}(?![\\w-])`, 'g');
-            if (re.test(descHtml)) {
-              descHtml = descHtml.replace(re, `<a href="/clinical?search=${encodeURIComponent(t.protocol_id || shortName)}" class="btn-text" style="font-size:inherit;border-bottom-width:1px;">${escHtml(name)}</a>`);
+            let m;
+            while ((m = re.exec(desc))) {
+              ranges.push({ start: m.index, end: m.index + name.length, name, protocolId: t.protocol_id || shortName });
             }
           });
         });
+        // Sort by start position, then drop any range that overlaps one
+        // already kept (first/longest match wins at a given position —
+        // prevents double-linking the same span from two candidate names).
+        ranges.sort((a, b) => a.start - b.start || (b.end - b.start) - (a.end - a.start));
+        const kept = [];
+        let lastEnd = -1;
+        for (const r of ranges) {
+          if (r.start >= lastEnd) { kept.push(r); lastEnd = r.end; }
+        }
+        let descHtml = '';
+        let cursor = 0;
+        for (const r of kept) {
+          descHtml += escHtml(desc.slice(cursor, r.start));
+          descHtml += `<a href="/clinical?search=${encodeURIComponent(r.protocolId)}" class="btn-text" style="font-size:inherit;border-bottom-width:1px;">${escHtml(r.name)}</a>`;
+          cursor = r.end;
+        }
+        descHtml += escHtml(desc.slice(cursor));
         html += `<p style="margin-bottom:1.5rem;">${descHtml}</p>`;
       }
       if (line.capabilities) {
