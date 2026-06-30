@@ -4,7 +4,7 @@
   <script>try{var _l=localStorage.getItem('huac_lang');if(_l&&(_l==='en'||_l==='es'))document.documentElement.dataset.lang=_l;}catch(e){}</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" /> 
-  <title>Publications | neumACt R&I · CHUAC · INIBIC</title>
+  <title>neumACt Gazette · Research &amp; Innovation · CHUAC · INIBIC</title>
   <link rel="icon" type="image/svg+xml" href="../logo.svg"/>
   <meta name="description" content="neumACt — Medicina Respiratoria Traslacional y de Precisión. Research updates, scientific publications, and clinical innovation notes from the neumACt group at CHUAC · INIBIC · SERGAS." />
     <link rel="alternate" hreflang="es" href="https://neumact.org/news/"/>
@@ -14,7 +14,7 @@
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="neumACt R&I"/>
   <meta property="og:url" content="https://neumact.org/news"/> 
-  <meta property="og:title" content="Publications | neumACt R&I"/>
+  <meta property="og:title" content="neumACt Gazette — Research &amp; Innovation"/>
   <meta property="og:image" content="https://neumact.org/og-news.jpg"/>
   <meta name="twitter:card" content="summary_large_image"/>
   <link rel="preconnect" href="https://fonts.googleapis.com" /> 
@@ -28,6 +28,220 @@
 /* 1,000 lung transplant milestone — celebratory but restrained */
 @media(max-width:860px){}
 @media(max-width:860px){}
+
+/* ══════════════════════════════════════════════════════
+   GAZETTE NAMEPLATE — editorial masthead identity
+   ══════════════════════════════════════════════════════ */
+.gz-nameplate{
+  display:flex; align-items:center; gap:1.25rem;
+  margin-bottom:2rem; padding-bottom:1.25rem;
+  border-bottom:1px solid rgba(255,255,255,.15);
+}
+.gz-name{
+  font-family:var(--ff-display,'Fraunces',serif);
+  font-weight:700; font-style:italic;
+  font-size:clamp(1.125rem,2vw,1.375rem);
+  letter-spacing:-.01em; color:#fff;
+  white-space:nowrap;
+}
+.gz-rule{
+  flex:0 0 1px; align-self:stretch;
+  background:rgba(255,255,255,.2);
+}
+.gz-sub{
+  font-family:var(--ff-mono,'DM Mono',monospace);
+  font-size:.7rem; letter-spacing:.08em; text-transform:uppercase;
+  color:rgba(255,255,255,.45); line-height:1.5;
+}
+
+/* ══════════════════════════════════════════════════════
+   GAZETTE ARTICLE READER
+   Full editorial rendering when an article is opened.
+   Goal: a long-form article by Dr. Pedro Marcos or any
+   clinician should feel like reading a piece in a respected
+   medical journal — generous line lengths, real typographic
+   scale, clear authorship, restrained but distinct from a
+   database row.
+   ══════════════════════════════════════════════════════ */
+.gz-reader{
+  position:fixed; inset:0; z-index:1200;
+  background:#fff; overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  animation:gzSlideIn .35s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes gzSlideIn{
+  from{opacity:0;transform:translateY(24px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.gz-reader-close{
+  position:sticky; top:0; z-index:10;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:.875rem clamp(1.5rem,5vw,4rem);
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(0,0,0,.07);
+}
+.gz-reader-close-name{
+  font-family:var(--ff-display,'Fraunces',serif);
+  font-weight:700; font-style:italic;
+  font-size:1rem; color:var(--navy,#0C3868);
+}
+.gz-reader-close-btn{
+  display:flex; align-items:center; gap:.5rem;
+  font-family:var(--ff-mono,'DM Mono',monospace);
+  font-size:.75rem; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--ink-3,#6B6B6B); background:none; border:none;
+  cursor:pointer; padding:.5rem .75rem; border-radius:6px;
+  transition:background .15s, color .15s;
+}
+.gz-reader-close-btn:hover{ background:var(--surface,#F7F6F3); color:var(--ink,#111); }
+
+.gz-article{
+  max-width:740px; margin:0 auto;
+  padding:4rem clamp(1.5rem,5vw,2rem) 8rem;
+}
+
+/* Article type label */
+.gz-article-type{
+  font-family:var(--ff-mono,'DM Mono',monospace);
+  font-size:.75rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--teal,#007A7A); margin-bottom:1.5rem;
+  display:flex; align-items:center; gap:.5rem;
+}
+.gz-article-type::before{
+  content:''; width:24px; height:1.5px;
+  background:var(--teal,#007A7A); flex-shrink:0;
+}
+
+/* Article headline — the dominant element */
+.gz-article-headline{
+  font-family:var(--ff-display,'Fraunces',serif);
+  font-weight:700; font-size:clamp(2rem,4.5vw,3.25rem);
+  line-height:1.08; letter-spacing:-.025em;
+  color:var(--ink,#111); margin-bottom:1.5rem;
+}
+
+/* Dek / summary — italic, larger than body */
+.gz-article-dek{
+  font-family:var(--ff-display,'Fraunces',serif);
+  font-weight:300; font-style:italic;
+  font-size:clamp(1.125rem,2vw,1.375rem);
+  line-height:1.5; color:var(--ink-2,#3A3A3A);
+  margin-bottom:2rem;
+  padding-bottom:2rem; border-bottom:2px solid var(--ink,#111);
+}
+
+/* Byline strip — reads like a real byline, not a metadata tag */
+.gz-article-byline{
+  display:flex; align-items:center; gap:1rem; flex-wrap:wrap;
+  margin-bottom:3rem;
+}
+.gz-article-author{
+  display:flex; align-items:center; gap:.75rem;
+}
+.gz-article-author-av{
+  width:40px; height:40px; border-radius:50%;
+  background:#F0F4F8; border:1.5px dashed rgba(12,56,104,.18);
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--ff-display,'Fraunces',serif);
+  font-weight:600; font-style:italic; font-size:.95rem;
+  color:var(--navy,#0C3868); flex-shrink:0; overflow:hidden;
+}
+.gz-article-author-av img{ width:100%; height:100%; object-fit:cover; }
+.gz-article-author-name{
+  font-size:.9375rem; font-weight:600; color:var(--ink,#111);
+}
+.gz-article-meta-sep{ color:var(--ink-4,#9B9B9B); font-size:.875rem; }
+.gz-article-date{
+  font-family:var(--ff-mono,'DM Mono',monospace);
+  font-size:.8rem; color:var(--ink-3,#6B6B6B);
+}
+.gz-article-line-tag{
+  font-family:var(--ff-mono,'DM Mono',monospace);
+  font-size:.7rem; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--teal,#007A7A); background:rgba(0,122,122,.07);
+  border:1px solid rgba(0,122,122,.16);
+  padding:.2rem .5rem; border-radius:3px;
+}
+
+/* Cover image — full width, generous aspect ratio */
+.gz-article-cover{
+  margin:0 0 3rem; border-radius:8px; overflow:hidden;
+  aspect-ratio:16/7;
+}
+.gz-article-cover img{
+  width:100%; height:100%; object-fit:cover; display:block;
+}
+
+/* Body copy — the actual reading experience */
+.gz-article-body{
+  font-size:1.1rem; line-height:1.8;
+  color:var(--ink-2,#3A3A3A);
+  font-family:var(--ff-body,'DM Sans',sans-serif);
+}
+.gz-article-body p{ margin:0 0 1.5em; }
+.gz-article-body p:first-child::first-letter{
+  font-family:var(--ff-display,'Fraunces',serif);
+  font-weight:700; font-size:3.5rem;
+  line-height:.8; float:left; margin:.05em .12em -.05em 0;
+  color:var(--navy,#0C3868);
+}
+.gz-article-body h2{
+  font-family:var(--ff-display,'Fraunces',serif);
+  font-weight:600; font-size:1.625rem;
+  letter-spacing:-.015em; color:var(--ink,#111);
+  margin:2.5em 0 .75em;
+}
+.gz-article-body h3{
+  font-family:var(--ff-body,'DM Sans',sans-serif);
+  font-weight:600; font-size:1.125rem;
+  color:var(--ink,#111); margin:2em 0 .5em;
+}
+.gz-article-body blockquote{
+  border-left:3px solid var(--teal,#007A7A);
+  padding:.5rem 0 .5rem 1.5rem; margin:2em 0;
+  font-family:var(--ff-display,'Fraunces',serif);
+  font-style:italic; font-size:1.2rem;
+  color:var(--navy,#0C3868); line-height:1.5;
+}
+.gz-article-body a{
+  color:var(--teal,#007A7A); border-bottom:1px solid rgba(0,122,122,.3);
+  transition:border-color .15s;
+}
+.gz-article-body a:hover{ border-color:var(--teal,#007A7A); }
+.gz-article-body hr{
+  border:none; height:1px;
+  background:var(--border-l,rgba(0,0,0,.08));
+  margin:3em 0;
+}
+
+/* Reading progress bar inside reader */
+.gz-reader-progress{
+  position:sticky; top:52px; left:0; right:0; z-index:9;
+  height:2px; background:rgba(0,0,0,.06);
+}
+.gz-reader-progress-fill{
+  height:100%; background:var(--teal,#007A7A);
+  width:0; transition:width .1s linear;
+}
+
+/* Related / footer area at end of article */
+.gz-article-footer{
+  margin-top:4rem; padding-top:2rem;
+  border-top:1px solid var(--border-l,rgba(0,0,0,.08));
+  display:flex; flex-direction:column; gap:1rem;
+}
+.gz-article-doi{
+  font-family:var(--ff-mono,'DM Mono',monospace);
+  font-size:.8rem; color:var(--ink-3,#6B6B6B);
+}
+.gz-article-doi a{ color:var(--teal,#007A7A); }
+
+@media(max-width:640px){
+  .gz-article{ padding:2.5rem 1.25rem 5rem; }
+  .gz-article-headline{ font-size:1.75rem; }
+  .gz-article-body p:first-child::first-letter{ font-size:2.5rem; }
+}
 
 /* Heading/body color rules below were a first pass fully superseded by
    the more complete "DARK BG" block further down — removed. The
@@ -852,7 +1066,7 @@
 </style>
 
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","name":"neumACt R&I — Publications","description":"Peer-reviewed publications from the Servicio de Neumología research group, CHUAC, A Coruña.","isPartOf":{"@type":"WebSite","url":"https://neumact.org","name":"neumACt R&I"}}
+{"@context":"https://schema.org","@type":"WebPage","name":"neumACt Gazette","description":"Peer-reviewed publications from the Servicio de Neumología research group, CHUAC, A Coruña.","isPartOf":{"@type":"WebSite","url":"https://neumact.org","name":"neumACt R&I"}}
 </script>
   <link rel="stylesheet" href="../polish.css">
   <link rel="manifest" href="/manifest.json">
@@ -880,7 +1094,7 @@
           <div class="hdr-dd-panel"><p class="hdr-dd-panel-title"><span lang="en">Research Lines</span><span lang="es">Líneas de Investigación</span></p><div class="hdr-dd-panel-inner" id="hdrResearchLines"></div></div>
         </div>
         <a href="/innovation/" class="hdr-nav-link" data-nav="innovation"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
-        <a href="/news/" class="hdr-nav-link" data-nav="news" data-current="true" aria-current="page"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
+        <a href="/news/" class="hdr-nav-link" data-nav="news" data-current="true" aria-current="page"><span lang="en">Gazette</span><span lang="es">Gazeta</span></a>
         <a href="/team/" class="hdr-nav-link" data-nav="team"><span lang="en">Team</span><span lang="es">Equipo</span></a>
       </nav>
       <div class="hdr-right">
@@ -898,7 +1112,7 @@
       <a href="/"><span lang="en">Home</span><span lang="es">Inicio</span></a>
       <a href="/clinical/"><span lang="en">Research</span><span lang="es">Investigación</span></a>
       <a href="/innovation/"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
-      <a href="/news/" class="current" aria-current="page"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
+      <a href="/news/" class="current" aria-current="page"><span lang="en">Gazette</span><span lang="es">Gazeta</span></a>
       <a href="/team/"><span lang="en">Team</span><span lang="es">Equipo</span></a>
     <a href="/#contact"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
     </div><div class="mob-lang"><button class="lt-btn lt-btn--active" data-lang="en" onclick="selectLang('en')" aria-pressed="true">EN</button><button class="lt-btn" data-lang="es" onclick="selectLang('es')" aria-pressed="false">ES</button></div></nav>
@@ -909,16 +1123,18 @@
     <!-- Top: big type + stats shelf -->
     <div class="blog-hero-top">
       <div class="container">
-        <div class="blog-hero-eyebrow reveal">
-          <span lang="en">neumACt R&I · Publications</span><span lang="es">neumACt R&I · Publicaciones</span>
+        <div class="gz-nameplate">
+          <span class="gz-name">neumACt Gazette</span>
+          <span class="gz-rule" aria-hidden="true"></span>
+          <span class="gz-sub"><span lang="en">Research &amp; Innovation · Servicio de Neumología · CHUAC</span><span lang="es">Investigación e Innovación · Servicio de Neumología · CHUAC</span></span>
         </div>
         <h1 class="blog-hero-h1">
-          <span lang="en">Research<br>notes,<br><em>shared.</em></span>
-          <span lang="es">Notas de<br>Investigación,<br><em>Compartidas.</em></span>
+          <span lang="en">Clinical research,<br><em>in their own words.</em></span>
+          <span lang="es">Investigación clínica,<br><em>en sus propias palabras.</em></span>
         </h1>
         <p class="reveal-d2" style="font-size:1.0625rem;color:rgba(255,255,255,.68);max-width:480px;line-height:1.7;margin-top:1.25rem;">
-          <span lang="en">Findings from this group are made openly available, so the work can be read, checked, and built on by others.</span>
-          <span lang="es">Los resultados de este grupo se publican en acceso abierto, para que el trabajo pueda leerse, verificarse y servir de base a otros.</span>
+          <span lang="en">Articles, updates, and findings written directly by the clinicians and researchers who did the work.</span>
+          <span lang="es">Artículos, novedades y hallazgos escritos directamente por los clínicos e investigadores que realizaron el trabajo.</span>
         </p>
         <!-- Stat shelf -->
         <div class="blog-hero-shelf reveal reveal-d2">
@@ -974,7 +1190,7 @@
           <span lang="en">Updates</span><span lang="es">Actualizaciones</span>
         </button>
         <button class="flt flt-pub" data-type="publication">
-          <span lang="en">Publications</span><span lang="es">Publicaciones</span>
+          <span lang="en">Gazette</span><span lang="es">Gazeta</span>
         </button>
         <button class="flt flt-photo" data-type="photo_story">
           <span lang="en">Photo Essays</span><span lang="es">Reportajes</span>
@@ -1020,7 +1236,7 @@
           <div class="sb-label"><span lang="en">In this feed</span><span lang="es">En este feed</span></div>
           <div class="sb-stat"><span><span lang="en">Articles</span><span lang="es">Artículos</span></span><span class="sb-stat-n" id="sb2Articles">—</span></div>
           <div class="sb-stat"><span><span lang="en">Updates</span><span lang="es">Actualizaciones</span></span><span class="sb-stat-n" id="sb2Updates">—</span></div>
-          <div class="sb-stat"><span><span lang="en">Publications</span><span lang="es">Publicaciones</span></span><span class="sb-stat-n" id="sb2Pubs">—</span></div>
+          <div class="sb-stat"><span><span lang="en">Gazette</span><span lang="es">Gazeta</span></span><span class="sb-stat-n" id="sb2Pubs">—</span></div>
           <div class="sb-stat"><span><span lang="en">Photo Essays</span><span lang="es">Reportajes</span></span><span class="sb-stat-n" id="sb2Photos">—</span></div>
         </div>
         <div class="sb-rule"></div>
@@ -1069,7 +1285,7 @@
           <a href="/"><span lang="en">Home</span><span lang="es">Inicio</span></a>
           <a href="/clinical/"><span lang="en">Research</span><span lang="es">Investigación</span></a>
           <a href="/innovation/"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
-          <a href="/news/"><span lang="en">Publications</span><span lang="es">Publicaciones</span></a>
+          <a href="/news/"><span lang="en">Gazette</span><span lang="es">Gazeta</span></a>
           <a href="/team/"><span lang="en">Team</span><span lang="es">Equipo</span></a>
       </nav>
     </div>
@@ -1425,65 +1641,105 @@
       }
     }
 
-    /* ── Open single post in reader ───────────────────────── */
+    /* ── Open single post in Gazette reader ───────────────── */
     function openPost(p){
       if(!reader) return;
       var type   = p.post_type || 'article';
       var isPub  = type === 'publication';
-      // Publications show their real author list via authors_text in the
-      // dedicated pub block below — p.author is the curator who submitted
-      // the post, not necessarily a paper author, so showing it in the
-      // byline too was redundant and could read as a wrong/extra name.
       var author = isPub ? '' : (p.author ? p.author.full_name : '');
       var date   = p.published_at || p.created_at;
 
-      var pubBlock = '';
+      /* Author avatar — monogram if no photo, real image if available */
+      var authorInitials = author ? author.split(' ').filter(function(w){
+        return w && ['Dr.','Dra.','Prof.'].indexOf(w) === -1;
+      }).slice(0,2).map(function(n){ return n[0]; }).join('').toUpperCase() : '';
+      var authorAv = (p.author && p.author.public_photo_url)
+        ? '<img src="'+esc(p.author.public_photo_url)+'" alt="'+esc(author)+'" loading="lazy" style="width:100%;height:100%;object-fit:cover;">'
+        : authorInitials;
+
+      /* Body — HTML passthrough if HTML, otherwise plain paragraph blocks */
+      var bodyHtml;
       if(isPub){
-        pubBlock =
-          '<div class="art-pub-box">'+
-            (p.journal_name ? '<div class="art-pub-journal">'+esc(p.journal_name)+'</div>' : '')+
-            (p.authors_text ? '<div class="art-pub-authors">'+esc(p.authors_text)+'</div>' : '')+
-            (p.doi ? '<div class="art-pub-doi"><a href="https://doi.org/'+esc(p.doi)+'" target="_blank" rel="noopener">doi:'+esc(p.doi)+'</a></div>' : '')+
+        bodyHtml =
+          '<div class="gz-article-body">'+
+            (p.journal_name ? '<p><strong>'+esc(p.journal_name)+'</strong></p>' : '')+
+            (p.authors_text ? '<p>'+esc(p.authors_text)+'</p>' : '')+
+            (p.summary ? '<p>'+esc(p.summary)+'</p>' : '')+
+            (p.doi ? '<p><a href="https://doi.org/'+esc(p.doi)+'" target="_blank" rel="noopener">doi:'+esc(p.doi)+' →</a></p>' : '')+
           '</div>';
+      } else {
+        var rawBody = p.body || p.content || '';
+        var isHtml = /^\s*</.test(rawBody);
+        bodyHtml = '<div class="gz-article-body">';
+        if(rawBody){
+          bodyHtml += isHtml ? rawBody
+            : rawBody.split(/\n{2,}/).map(function(para){
+                return '<p>'+esc(para.trim())+'</p>';
+              }).join('');
+        } else {
+          bodyHtml += '<p style="color:var(--ink-3);font-style:italic;">Full article content is available via the linked publication.</p>';
+        }
+        bodyHtml += '</div>';
       }
 
-      var bodyHtml = isPub ? pubBlock :
-        (p.body
-          ? p.body.split(/\n{2,}/).map(function(para){
-              return '<p>'+esc(para.trim())+'</p>';
-            }).join('')
-          : '<p style="color:var(--text-on-light-3);font-style:italic;">No content available.</p>');
-
       reader.innerHTML =
-        '<div class="container">'+
-          '<div class="art-reader-wrap">'+
-            '<button class="art-back" id="artBack" type="button">'+
+        '<div class="gz-reader" id="gzReaderInner">'+
+          '<div class="gz-reader-close">'+
+            '<span class="gz-reader-close-name">neumACt Gazette</span>'+
+            '<button class="gz-reader-close-btn" id="artBack" type="button" aria-label="Close article">'+
               '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;"><path d="M13 8H3M7 4l-4 4 4 4"/></svg>'+
-              '<span lang="en">Back to feed</span><span lang="es">Volver</span>'+
+              '<span lang="en">Back</span><span lang="es">Volver</span>'+
             '</button>'+
-            '<div class="art-type">'+esc(typeLabel(type))+'</div>'+
-            '<h1 class="art-title">'+esc(p.title||'Untitled')+'</h1>'+
-            '<div class="art-byline">'+
-              (author ? '<span>'+esc(author)+'</span>' : '')+
-              (date ? '<span>'+fmtDate(date)+'</span>' : '')+
-              (p.research_line ? '<span style="color:var(--accent);font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.04em;">L'+p.research_line.line_number+' — '+esc(p.research_line.name)+'</span>' : '')+
-            '</div>'+
-            (p.featured_image_url ? '<figure style="margin:0 0 2rem;border-radius:var(--r-md);overflow:hidden;"><img src="'+esc(p.featured_image_url)+'" alt="'+esc(p.title||'')+'" style="width:100%;max-height:420px;object-fit:cover;display:block;" loading="lazy"></figure>' : '')+
-            '<div class="art-body">'+bodyHtml+'</div>'+
           '</div>'+
+          '<div class="gz-reader-progress"><div class="gz-reader-progress-fill" id="gzProgress"></div></div>'+
+          '<article class="gz-article">'+
+            '<div class="gz-article-type">'+esc(typeLabel(type))+'</div>'+
+            '<h1 class="gz-article-headline">'+esc(p.title||'Untitled')+'</h1>'+
+            (p.summary && !isPub ? '<p class="gz-article-dek">'+esc(p.summary)+'</p>' : '')+
+            '<div class="gz-article-byline">'+
+              (author
+                ? '<div class="gz-article-author">'+
+                    '<div class="gz-article-author-av">'+authorAv+'</div>'+
+                    '<span class="gz-article-author-name">'+esc(author)+'</span>'+
+                  '</div>'
+                : '')+
+              (author && date ? '<span class="gz-article-meta-sep">·</span>' : '')+
+              (date ? '<span class="gz-article-date">'+fmtDate(date)+'</span>' : '')+
+              (p.research_line
+                ? '<span class="gz-article-line-tag">L'+p.research_line.line_number+' — '+esc(p.research_line.name)+'</span>'
+                : '')+
+            '</div>'+
+            (p.featured_image_url
+              ? '<div class="gz-article-cover"><img src="'+esc(p.featured_image_url)+'" alt="'+esc(p.title||'')+'" loading="lazy"></div>'
+              : '')+
+            bodyHtml+
+            (p.doi
+              ? '<div class="gz-article-footer"><div class="gz-article-doi">DOI: <a href="https://doi.org/'+esc(p.doi)+'" target="_blank" rel="noopener">'+esc(p.doi)+' →</a></div></div>'
+              : '')+
+          '</article>'+
         '</div>';
 
-      reader.classList.add('open');
       document.querySelector('.blog-layout') && (document.querySelector('.blog-layout').style.display = 'none');
       document.querySelector('.filter-strip') && (document.querySelector('.filter-strip').style.display = 'none');
+      window.scrollTo({ top: 0, behavior: 'instant' });
 
-      reader.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      /* Reading progress tied to page scroll since the reader is full-viewport */
+      var progressEl = document.getElementById('gzProgress');
+      function updateProgress(){
+        if(!progressEl) return;
+        var scrolled = window.scrollY;
+        var total = document.documentElement.scrollHeight - window.innerHeight;
+        progressEl.style.width = total > 0 ? Math.min(100, (scrolled/total)*100)+'%' : '0%';
+      }
+      window.addEventListener('scroll', updateProgress, { passive: true });
 
-      document.getElementById('artBack').addEventListener('click', closePost);
+      document.getElementById('artBack').addEventListener('click', function(){
+        window.removeEventListener('scroll', updateProgress);
+        closePost();
+      });
     }
 
     function closePost(){
-      reader.classList.remove('open');
       reader.innerHTML = '';
       document.querySelector('.blog-layout') && (document.querySelector('.blog-layout').style.display = '');
       document.querySelector('.filter-strip') && (document.querySelector('.filter-strip').style.display = '');

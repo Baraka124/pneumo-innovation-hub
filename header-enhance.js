@@ -1,10 +1,15 @@
 /* neumACt R&I — Header Enhancements (shared)
  * - Sliding active/hover pill under the primary nav
  * - Language choice persisted in localStorage + smooth crossfade
- * - Scrolled-state class on the header
- * - Back-to-top button
+ * - Scrolled-state class + scroll-direction hide/reveal on the header
  * Loaded on every page; all guards are null-safe so a missing element
- * never throws. */
+ * never throws.
+ * Note: progress-bar (#pb) and back-to-top (#scrollTop) are NOT
+ * handled here -- each page already has its own inline implementation
+ * of both. This file used to also create its own duplicate, invisible
+ * versions of each via injected DOM elements, which meant every page
+ * was running two complete, independent scroll-progress systems and
+ * two back-to-top buttons at once. Removed; see commit history. */
 (function(){
   'use strict';
 
@@ -85,14 +90,27 @@
     if (!hdr) return;
     var ticking = false;
     var lastY = 0;
+    // Track the scroll position where the current direction "started",
+    // not just the immediately-previous frame. Comparing only to the
+    // prior frame meant gradual/inertial scrolling in small sub-6px
+    // steps per frame could perpetually fail the threshold and never
+    // re-reveal the header on scroll-up, even though the cumulative
+    // movement was clearly upward.
+    var directionStartY = 0;
+    var goingDown = false;
     function update(){
       var y = window.scrollY;
       hdr.classList.toggle('scrolled', y > 40);
-      // Scroll-direction hide/reveal: hide when scrolling down past hero,
-      // reveal immediately when scrolling up. Never hide near the top.
-      if (y > 240 && y > lastY + 6){
+      var movingDown = y > lastY;
+      if (movingDown !== goingDown) {
+        goingDown = movingDown;
+        directionStartY = lastY;
+      }
+      if (y < 240) {
+        hdr.classList.remove('hdr-hidden');
+      } else if (goingDown && y - directionStartY > 6) {
         hdr.classList.add('hdr-hidden');
-      } else if (y < lastY - 6 || y < 240){
+      } else if (!goingDown && directionStartY - y > 6) {
         hdr.classList.remove('hdr-hidden');
       }
       lastY = y;
@@ -104,51 +122,10 @@
     update();
   }
 
-  /* ── 5. Scroll-progress bar ───────────────────────────────────── */
-  function initScrollProgress(){
-    if (document.querySelector('.scroll-progress')) return;
-    var bar = document.createElement('div');
-    bar.className = 'scroll-progress';
-    document.body.appendChild(bar);
-    var ticking = false;
-    function update(){
-      var h = document.documentElement;
-      var scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight || 1);
-      bar.style.width = Math.min(100, Math.max(0, scrolled * 100)) + '%';
-      ticking = false;
-    }
-    window.addEventListener('scroll', function(){
-      if (!ticking){ window.requestAnimationFrame(update); ticking = true; }
-    }, {passive:true});
-    window.addEventListener('resize', update, {passive:true});
-    update();
-  }
-
-  /* ── 4. Back-to-top button ────────────────────────────────────── */
-  function initToTop(){
-    if (document.querySelector('.to-top')) return;
-    var btn = document.createElement('button');
-    btn.className = 'to-top';
-    btn.setAttribute('aria-label', 'Back to top');
-    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>';
-    btn.addEventListener('click', function(){
-      window.scrollTo({ top:0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
-    });
-    document.body.appendChild(btn);
-    var ticking = false;
-    function update(){ btn.classList.toggle('show', window.scrollY > 600); ticking = false; }
-    window.addEventListener('scroll', function(){
-      if (!ticking){ window.requestAnimationFrame(update); ticking = true; }
-    }, {passive:true});
-    update();
-  }
-
   function boot(){
     restoreLang();
     initNavPill();
     initScrollState();
-    initScrollProgress();
-    initToTop();
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);

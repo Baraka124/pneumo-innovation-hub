@@ -552,6 +552,18 @@ async function loadTeamLeads() {
           : (m.can_be_pi ? `<span lang="en">Principal Investigator</span><span lang="es">Investigador Principal</span>` : ''),
       ].filter(Boolean).join(' · ');
 
+      // The department chief is also the PI of the platform's own
+      // flagship line — that's the single most important institutional
+      // fact on this page, and it deserves to be read before anything
+      // else, not buried in the small muted spec line alongside their
+      // medical specialization. A dedicated banner replaces roleLine
+      // for this one card; everyone else keeps the existing inline
+      // treatment, which is the right amount of weight for their role.
+      const isChiefCard = !!m.is_chief_of_department;
+      const roleBanner = isChiefCard
+        ? `<div class="lead-role-banner">${roleLine.replace(' · ', ' <span class="rb-sep">|</span> ')}</div>`
+        : '';
+
       // Publication list — the genuine variable-depth element. Someone
       // with 6 papers gets a real list with overflow; someone with 1
       // gets exactly that, no padding, no invented stat tiles.
@@ -580,15 +592,34 @@ async function loadTeamLeads() {
              <span lang="en">Seeking innovation partner</span><span lang="es">Buscando socio innovador</span> →
            </a>`
         : '';
+
+      // Build the spec line as distinct, non-overlapping facts joined by
+      // vertical bars -- not string concatenation that assumed
+      // specialization and department affiliation would never say the
+      // same thing. When someone's specialization literally is
+      // "Neumología" at the Servicio de Neumología, the old fallback
+      // text produced "Neumología · Neumología, CHUAC".
+      const specParts = [];
+      if (!isChiefCard && roleLine) specParts.push(roleLine);
+      if (m.specialization) specParts.push(escHtml(m.specialization));
+      if (isAffiliated) {
+        specParts.push(escHtml(m.primary_dept_name || 'External'));
+      } else if (!(m.specialization && /neumolog/i.test(m.specialization))) {
+        specParts.push('Neumología, CHUAC');
+      }
+      const specLine = specParts.join(' <span class="lead-spec-sep">|</span> ');
+
       const delayClass = i > 0 ? ` reveal-d${Math.min(i,3)}` : '';
-      return `<div class="lead-row reveal${delayClass}">
+      const chiefClass = isChiefCard ? ' lead-chief' : '';
+      return `<div class="lead-row${chiefClass} reveal${delayClass}">
         <div class="lead-visual">
           <div class="lead-avatar" data-line="L${lineNum}" aria-hidden="true">${avatarArea}</div>
           ${lineNum ? `<span class="lead-line-num">L${lineNum}</span>` : ''}
         </div>
         <div class="lead-copy">
+          ${roleBanner}
           <div class="lead-name">${escHtml(m.display_name || m.full_name)}</div>
-          <div class="lead-spec">${roleLine ? roleLine + ' · ' : ''}${m.specialization ? escHtml(m.specialization) : ''}${isAffiliated?' · '+escHtml(m.primary_dept_name||'External'):' · Neumología, CHUAC'}</div>
+          <div class="lead-spec">${specLine}</div>
           ${lineName ? `<div class="lead-line-name">${escHtml(lineName)}</div>` : ''}
           ${m.public_bio ? `<p class="lead-bio">${escHtml(trimBioRolePrefix(m.public_bio))}</p>` : ''}
           ${tags ? `<div class="lead-tags">${tags}</div>` : ''}
@@ -891,9 +922,27 @@ function buildAvatar(person, sizePx, shape = 'circle') {
     .slice(0, 2).map(n => n[0]).join('').toUpperCase();
   const radius = shape === 'circle' ? '50%' : 'var(--r-sm, 6px)';
   const fallbackId = 'av' + Math.random().toString(36).slice(2, 9);
-  const fallbackSpan = `<span id="${fallbackId}" style="display:none;width:100%;height:100%;border-radius:${radius};background:linear-gradient(135deg,#085041 0%,#0F6E56 55%,#185FA5 100%);align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-weight:700;font-size:${Math.round(sizePx * 0.32)}px;color:rgba(255,255,255,.96);">${escHtml(initials)}</span>`;
+
+  // No-photo state: typographic monogram rather than a gradient blob.
+  // Fraunces serif initials on a light surface background read as a
+  // deliberate editorial choice (like an author monogram in a journal)
+  // rather than "user hasn't uploaded a profile picture yet".
+  // The dashed border signals 'photo slot' to someone who recognises
+  // the convention (admins, editors) without looking broken to visitors.
+  const noPhotoStyle = [
+    `width:${sizePx}px`, `height:${sizePx}px`, `border-radius:${radius}`,
+    `background:#F0F4F8`, `display:flex`, `align-items:center`,
+    `justify-content:center`, `flex-shrink:0`,
+    `border:1.5px dashed rgba(12,56,104,.18)`,
+    `font-family:'Fraunces',Georgia,serif`, `font-weight:600`,
+    `font-style:italic`, `font-size:${Math.round(sizePx * 0.34)}px`,
+    `color:var(--navy,#0C3868)`, `letter-spacing:-.01em`,
+  ].join(';');
+
+  const fallbackSpan = `<span id="${fallbackId}" style="display:none;${noPhotoStyle};">${escHtml(initials)}</span>`;
+
   if (!person.public_photo_url) {
-    return `<div style="width:${sizePx}px;height:${sizePx}px;border-radius:${radius};background:linear-gradient(135deg,#085041 0%,#0F6E56 55%,#185FA5 100%);display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-weight:700;font-size:${Math.round(sizePx * 0.32)}px;color:rgba(255,255,255,.96);flex-shrink:0;">${escHtml(initials)}</div>`;
+    return `<div style="${noPhotoStyle};">${escHtml(initials)}</div>`;
   }
   return `<div style="width:${sizePx}px;height:${sizePx}px;border-radius:${radius};overflow:hidden;flex-shrink:0;position:relative;">
     <img src="${escHtml(person.public_photo_url)}" alt="${escHtml(person.full_name)}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.style.display='none';document.getElementById('${fallbackId}').style.display='flex';">
@@ -1696,9 +1745,10 @@ async function loadLineDetail() {
       const c = line.coordinator;
       const initials = (c.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
       const coordAvId = 'cav' + Math.random().toString(36).slice(2, 9);
+      const coordMonogram = `background:#F0F4F8;border:1.5px dashed rgba(12,56,104,.18);font-family:'Fraunces',Georgia,serif;font-weight:600;font-style:italic;font-size:1.875rem;color:#0C3868;letter-spacing:-.01em;`;
       const avatar = c.public_photo_url
-        ? `<div style="width:96px;height:96px;border-radius:50%;box-shadow:0 1px 2px rgba(0,40,40,.08),0 6px 20px rgba(0,95,95,.18);overflow:hidden;flex-shrink:0;position:relative;"><img src="${escHtml(c.public_photo_url)}" alt="${escHtml(c.full_name)}" style="width:100%;height:100%;object-fit:cover;" loading="lazy" onerror="this.style.display='none';document.getElementById('${coordAvId}').style.display='flex';"><div id="${coordAvId}" style="display:none;position:absolute;inset:0;background:linear-gradient(135deg,#005F5F 0%,#007A7A 55%,#3D8FD6 100%);align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-weight:700;font-size:1.625rem;color:rgba(255,255,255,.96);">${escHtml(initials)}</div></div>`
-        : `<div style="width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,#005F5F 0%,#007A7A 55%,#3D8FD6 100%);box-shadow:0 1px 2px rgba(0,40,40,.08),0 6px 20px rgba(0,95,95,.18);display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-weight:700;font-size:1.625rem;color:rgba(255,255,255,.96);flex-shrink:0;">${escHtml(initials)}</div>`;
+        ? `<div style="width:96px;height:96px;border-radius:50%;box-shadow:0 1px 2px rgba(0,40,40,.08),0 6px 20px rgba(0,95,95,.18);overflow:hidden;flex-shrink:0;position:relative;"><img src="${escHtml(c.public_photo_url)}" alt="${escHtml(c.full_name)}" style="width:100%;height:100%;object-fit:cover;" loading="lazy" onerror="this.style.display='none';document.getElementById('${coordAvId}').style.display='flex';"><div id="${coordAvId}" style="display:none;position:absolute;inset:0;${coordMonogram}align-items:center;justify-content:center;">${escHtml(initials)}</div></div>`
+        : `<div style="width:96px;height:96px;border-radius:50%;box-shadow:0 1px 2px rgba(0,40,40,.08),0 6px 20px rgba(0,95,95,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;${coordMonogram}">${escHtml(initials)}</div>`;
 
       // Every real role this person holds gets its own badge — these are
       // independent facts (chief, PI, and line coordinator are not
@@ -1897,10 +1947,11 @@ window._lineTeamData = [];
       teamChips.innerHTML = teamWithoutCoordinator.map((m, i) => {
         const initials = (m.full_name||'').split(' ').filter(w=>w&&!['Dr.','Dra.','Prof.'].includes(w)).slice(0,2).map(n=>n[0]).join('').toUpperCase();
         const lineAvId = 'ltav' + i;
+        const lineMonoStyle = `background:#F0F4F8;border:1.5px dashed rgba(12,56,104,.18);font-family:'Fraunces',Georgia,serif;font-weight:600;font-style:italic;color:#0C3868;letter-spacing:-.01em;`;
         const avatarInner = m.public_photo_url
-          ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:100%;height:100%;object-fit:cover;" loading="lazy" onerror="this.style.display='none';document.getElementById('${lineAvId}').style.display='flex';this.parentElement.style.background='linear-gradient(135deg,#085041 0%,#0F6E56 55%,#185FA5 100%)';"><span id="${lineAvId}" style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-weight:700;">${escHtml(initials)}</span>`
+          ? `<img src="${escHtml(m.public_photo_url)}" alt="${escHtml(m.full_name)}" style="width:100%;height:100%;object-fit:cover;" loading="lazy" onerror="this.style.display='none';document.getElementById('${lineAvId}').style.display='flex';this.parentElement.style.cssText+=';${lineMonoStyle.replace(/'/g,'"')}';"><span id="${lineAvId}" style="display:none;width:100%;height:100%;align-items:center;justify-content:center;">${escHtml(initials)}</span>`
           : escHtml(initials);
-        const avatarStyle = m.public_photo_url ? '' : 'background:linear-gradient(135deg,#085041 0%,#0F6E56 55%,#185FA5 100%);';
+        const avatarStyle = m.public_photo_url ? '' : lineMonoStyle;
         return `<div class="line-team-card">
           <div class="line-team-header" onclick="openLineProfileModal(window._lineTeamData[${i}])" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLineProfileModal(window._lineTeamData[${i}]);}" tabindex="0" role="button" aria-label="${escHtml(m.full_name)} — view full profile">
             <div class="line-team-avatar" style="${avatarStyle}">${avatarInner}</div>
