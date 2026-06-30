@@ -48,11 +48,10 @@
 
 /* ── 5. Refined card elevation + lift on hover ──────────────────── */
 .project-card,.lead-card,.line-card,.post-item,.team-member,.cap-card,.story-card{
-  transition:transform .4s var(--ease-clinical), box-shadow .4s var(--ease-clinical), border-color .4s var(--ease-clinical);
-  will-change:transform;
+  transition:transform .2s var(--ease-clinical), box-shadow .2s var(--ease-clinical), border-color .2s var(--ease-clinical);
 }
 .project-card:hover,.lead-card:hover,.cap-card:hover,.story-card:hover{
-  transform:translateY(-3px); box-shadow:var(--shadow-md);
+  transform:translateY(-2px); box-shadow:var(--shadow-md); will-change:transform;
 }
 
 /* ── 6. Universal keyboard focus — visible, branded, consistent ─── */
@@ -688,7 +687,7 @@ p a:not([class]):hover,li a:not([class]):hover{ color:var(--navy-2,#0C447C); }
   position:relative; overflow:hidden;
 }
 .team-member:hover{
-  box-shadow:var(--shadow-md)!important; transform:translateY(-3px)!important;
+  box-shadow:var(--shadow-md)!important; transform:translateY(-2px)!important;
   border-color:var(--teal-lt,#E2F0F0)!important;
 }
 
