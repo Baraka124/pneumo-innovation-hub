@@ -1220,6 +1220,7 @@ if (!document.getElementById('api-spin-style')) {
 
 async function loadHeaderResearchDropdown(isRetry = false) {
   const menu = document.getElementById('hdrResearchLines');
+  const allLink = document.getElementById('hdrResearchLinesAll');
   if (!menu) return;
   try {
     const { data } = await apiFetch('/api/research-lines/website');
@@ -1229,28 +1230,52 @@ async function loadHeaderResearchDropdown(isRetry = false) {
       // Both attempts came back empty — leave a real, working link instead
       // of silently wiping the menu, which previously looked like the
       // dropdown had simply lost its contents with no way to recover.
-      menu.innerHTML = `<a class="hdr-dd-all" href="/clinical#research-lines">
-        <span lang="en">View research lines</span><span lang="es">Ver líneas de investigación</span> →
-      </a>`;
+      menu.innerHTML = '';
+      if (allLink) {
+        allLink.hidden = false;
+        allLink.innerHTML = '<span lang="en">View research lines</span><span lang="es">Ver líneas de investigación</span> →';
+      }
       return;
     }
     menu.style.transition = 'none';
     menu.style.opacity = '0';
-    menu.innerHTML = lines.map(l => `
+    // Coordinator avatar + active-trial count surfaced here rather than
+    // a flat number+name link — both come from the exact same API
+    // response the homepage's research-area grid already reads
+    // (loadResearchLines() above), just under-displayed here before.
+    // buildAvatar(..., 20) gives a small real-photo-or-monogram circle
+    // that matches the homepage's treatment at a size that fits a
+    // dense dropdown row. The "view all" link lives in its own fixed
+    // element outside this scrollable container (see #hdrResearchLinesAll)
+    // so it stays visible even if the line list is long enough to scroll.
+    menu.innerHTML = lines.map(l => {
+      const coord = l.coordinator;
+      const avatar = coord?.full_name ? buildAvatar(coord, 20) : '';
+      const trialCount = l.active_trials > 0
+        ? `<span class="hdr-dd-trials">${l.active_trials}</span>` : '';
+      return `
       <a class="hdr-dd-item" href="/line/?id=${l.id}">
         <span class="hdr-dd-num">L${String(l.line_number).padStart(2,'0')}</span>
-        <span class="hdr-dd-name">${escHtml(l.short_name || l.name)}</span>
-      </a>`).join('')
-      + `<a class="hdr-dd-all" href="/clinical#research-lines">
-           <span lang="en">View all ${lines.length} lines</span><span lang="es">Ver las ${lines.length} líneas</span> →
-         </a>`;
+        <span class="hdr-dd-body">
+          <span class="hdr-dd-name">${escHtml(l.short_name || l.name)}</span>
+          ${coord?.full_name ? `<span class="hdr-dd-coord">${avatar}<span>${escHtml(coord.full_name)}</span></span>` : ''}
+        </span>
+        ${trialCount}
+      </a>`;
+    }).join('');
+    if (allLink) {
+      allLink.hidden = false;
+      allLink.innerHTML = `<span lang="en">View all ${lines.length} lines</span><span lang="es">Ver las ${lines.length} líneas</span> →`;
+    }
     requestAnimationFrame(() => { menu.style.transition = 'opacity .18s var(--ease-clinical)'; menu.style.opacity = '1'; });
   } catch (err) {
     console.error('Header research dropdown failed:', err);
     if (!isRetry) { setTimeout(() => loadHeaderResearchDropdown(true), 800); return; }
-    menu.innerHTML = `<a class="hdr-dd-all" href="/clinical#research-lines">
-      <span lang="en">View research lines</span><span lang="es">Ver líneas de investigación</span> →
-    </a>`;
+    menu.innerHTML = '';
+    if (allLink) {
+      allLink.hidden = false;
+      allLink.innerHTML = '<span lang="en">View research lines</span><span lang="es">Ver líneas de investigación</span> →';
+    }
   }
 }
 

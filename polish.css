@@ -151,19 +151,36 @@ html{ scroll-behavior:smooth; }
    loads after core.css, so any property it redeclared always won).
    ════════════════════════════════════════════════════════════════ */
 
-/* ── Premium language switch: sliding-knob pill ─────────────────── */
+/* ── Premium language switch ───────────────────────────────────────
+   A true two-state segmented control (role="radiogroup"/"radio"),
+   not a flat button pair — arrow-key roving tabindex is wired in
+   header-enhance.js. Globe glyph sits to the left of the pill as a
+   resting-state affordance ("this control is about language"), the
+   knob slides with a touch of overshoot rather than a flat ease so
+   the motion reads as considered rather than mechanical. ─────────── */
 .lang-switch{
-  position:relative; display:inline-flex; align-items:center;
+  position:relative; display:inline-flex; align-items:center; gap:.4rem;
+  padding:2px .1rem 2px 2px;
+}
+.lang-switch-globe{
+  width:13px; height:13px; flex-shrink:0;
+  color:rgba(255,255,255,.38);
+  transition:color .2s var(--ease-clinical);
+}
+.lang-switch:focus-within .lang-switch-globe,
+.lang-switch:hover .lang-switch-globe{ color:rgba(255,255,255,.6); }
+.lang-switch::before{
+  content:''; position:absolute; left:18px; right:0; top:0; bottom:0;
   background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.10);
-  border-radius:100px; padding:2px;
+  border-radius:100px; z-index:0;
 }
 .lang-switch-knob{
-  position:absolute; top:2px; bottom:2px; left:2px; width:calc(50% - 2px);
+  position:absolute; top:2px; bottom:2px; left:20px; width:calc(50% - 11px);
   background:#fff; border-radius:100px; z-index:0;
-  transition:transform .32s var(--ease-clinical);
-  box-shadow:0 1px 3px rgba(0,0,0,.2);
+  transition:transform .42s cubic-bezier(.34,1.56,.64,1);
+  box-shadow:0 1px 3px rgba(0,0,0,.2), 0 1px 1px rgba(0,0,0,.1);
 }
-html[data-lang="es"] .lang-switch-knob{ transform:translateX(100%); }
+html[data-lang="es"] .lang-switch-knob{ transform:translateX(calc(100% + 2px)); }
 .lang-opt{
   position:relative; z-index:1; appearance:none; border:none; background:none;
   cursor:pointer; padding:.18rem .62rem; min-width:34px;
@@ -171,7 +188,15 @@ html[data-lang="es"] .lang-switch-knob{ transform:translateX(100%); }
   letter-spacing:.08em; line-height:1; border-radius:100px;
   color:rgba(255,255,255,.6); transition:color .28s var(--ease-clinical);
 }
-.lang-opt[aria-pressed="true"]{ color:var(--navy,#0C3868); }
+.lang-opt[aria-checked="true"]{ color:var(--navy,#0C3868); }
+/* Keyboard focus on a segmented control needs to read as "this
+   specific option is focused", not just "something in here has
+   focus" — ring sits tight to the individual button, on top of the
+   sliding knob, and is visible whichever side currently holds it. */
+.lang-opt:focus-visible{
+  outline:none;
+  box-shadow:0 0 0 2px var(--navy-2,#0C447C), 0 0 0 4px rgba(0,179,179,.55);
+}
 
 /* ── Tier 2: main nav bar ───────────────────────────────────────── */
 .hdr-main{
@@ -195,12 +220,22 @@ html[data-lang="es"] .lang-switch-knob{ transform:translateX(100%); }
   filter:brightness(0) invert(1); opacity:.96;
   transition:height .35s var(--ease-clinical);
 }
-.hdr-logo-rule{ width:1px; height:26px; background:rgba(255,255,255,.18); flex-shrink:0; }
+.hdr-logo-rule{ width:1px; height:26px; background:rgba(255,255,255,.18); flex-shrink:0; transition:opacity .3s var(--ease-clinical), width .3s var(--ease-clinical), margin .3s var(--ease-clinical); }
 .hdr-logo-desc{
   font-family:var(--ff-mono,'DM Mono',monospace);
   font-size:.6rem; line-height:1.25; letter-spacing:.05em; text-transform:uppercase;
   color:rgba(255,255,255,.6); max-width:130px;
+  transition:opacity .25s var(--ease-clinical), max-width .3s var(--ease-clinical);
+  overflow:hidden; white-space:nowrap;
 }
+/* Scrolled state collapses the descriptor and divider away entirely
+   rather than just scaling the whole lockup down — the goal is a
+   denser, more functional header once someone is mid-page, not a
+   uniformly-shrunk copy of the resting state. The wordmark itself
+   stays legible at a slightly reduced size (set further down,
+   .hdr.scrolled .hdr-logo-img). */
+.hdr.scrolled .hdr-logo-rule{ width:0; opacity:0; margin:0; }
+.hdr.scrolled .hdr-logo-desc{ max-width:0; opacity:0; }
 
 /* Nav with sliding active pill */
 .hdr-nav{ position:relative; display:flex; align-items:center; gap:2px; flex:1; min-width:0; }
@@ -214,7 +249,7 @@ html[data-lang="es"] .lang-switch-knob{ transform:translateX(100%); }
   position:relative; z-index:1; display:inline-block; padding:.55rem .9rem;
   font-family:var(--ff-body,'DM Sans',sans-serif); font-size:.875rem; font-weight:500;
   letter-spacing:.01em; color:rgba(255,255,255,.78); text-decoration:none; white-space:nowrap;
-  border-radius:8px; transition:color .2s;
+  border-radius:8px; transition:color .2s, padding .3s var(--ease-clinical);
 }
 .hdr-nav-link:hover{ color:#fff; }
 .hdr-nav-link[data-current="true"]{ color:#fff; }
@@ -230,17 +265,24 @@ html[data-lang="es"] .lang-switch-knob{ transform:translateX(100%); }
   font-family:var(--ff-body,'DM Sans',sans-serif); font-size:.84rem; font-weight:600;
   letter-spacing:.01em; color:#fff; text-decoration:none;
   border:1px solid rgba(255,255,255,.28); border-radius:100px;
-  transition:background .25s var(--ease-clinical), border-color .25s, transform .2s, box-shadow .3s;
+  transition:background .25s var(--ease-clinical), border-color .25s, transform .2s, box-shadow .3s, padding .3s var(--ease-clinical);
 }
 .hdr-contact-btn:hover{
   background:var(--teal-2,#00B3B3); border-color:var(--teal-2,#00B3B3);
   transform:translateY(-1px); box-shadow:0 6px 18px rgba(0,179,179,.3);
 }
 
-/* Scrolled state — condense tier 2 */
+/* Scrolled state — condense tier 2. Beyond the height/logo shrink
+   already here, the nav links and contact pill also tighten their
+   own padding (not just the overall header height), and the logo's
+   divider+descriptor collapse away above — the combined effect is a
+   header that reads as "compact, working mode" rather than "the
+   same header, just smaller". */
 .hdr.scrolled .hdr-main{ box-shadow:0 4px 24px rgba(7,17,31,.32); background:rgba(12,56,104,.94); }
 .hdr.scrolled .hdr-inner{ height:58px; }
 .hdr.scrolled .hdr-logo-img{ height:26px; }
+.hdr.scrolled .hdr-nav-link{ padding:.5rem .7rem; }
+.hdr.scrolled .hdr-contact-btn{ padding:.4rem .95rem; }
 
 /* Body offset so fixed two-tier header doesn't overlap content.
    Default content starts below 34 + 68 = 102px. */
@@ -258,10 +300,10 @@ body{ padding-top:0; }
 .hdr-dd:hover .hdr-dd-chevron{ color:#fff; }
 .hdr-dd:hover .hdr-dd-chevron, .hdr-dd-chevron[aria-expanded="true"]{ transform:rotate(180deg); }
 .hdr-dd-panel{
-  position:absolute; top:calc(100% + 16px); left:-1rem; min-width:560px;
+  position:absolute; top:calc(100% + 16px); left:-1rem; width:380px;
   background:#fff; border-radius:16px;
   box-shadow:0 24px 48px -12px rgba(7,17,31,.28), 0 2px 8px rgba(7,17,31,.08);
-  padding:1.5rem 1.75rem 1.25rem; opacity:0; visibility:hidden;
+  padding:1.5rem 1.25rem 1.25rem; opacity:0; visibility:hidden;
   transform:translateY(-8px); transition:opacity .28s var(--ease-clinical), transform .28s var(--ease-clinical), visibility .28s;
 }
 .hdr-dd-panel::before{
@@ -273,29 +315,26 @@ body{ padding-top:0; }
 .hdr-dd-panel-title{
   font-family:var(--ff-mono,'DM Mono',monospace); font-size:.68rem; font-weight:600;
   letter-spacing:.1em; text-transform:uppercase; color:var(--ink-4,#9B9B9B);
-  margin:0 0 .9rem; padding-bottom:.75rem; border-bottom:1px solid rgba(12,56,104,.08);
+  margin:0 0 .5rem; padding-bottom:.75rem; border-bottom:1px solid rgba(12,56,104,.08);
 }
 .hdr-dd-panel-inner{
-  display:grid; grid-template-columns:1fr 1fr; gap:.1rem 2rem;
+  display:flex; flex-direction:column; gap:.05rem;
+  max-height:min(60vh,420px); overflow-y:auto; margin:0 -.25rem; padding:.25rem .25rem 0;
 }
-.hdr-dd-item{
-  display:flex; align-items:baseline; gap:.85rem;
-  text-decoration:none; padding:.6rem .5rem; border-radius:10px; transition:background .2s var(--ease-clinical);
-}
-.hdr-dd-item:hover{ background:var(--teal-lt,#E2F0F0); }
-.hdr-dd-item:hover .hdr-dd-num{ color:var(--navy-2,#0C447C); }
-.hdr-dd-num{
-  font-family:var(--ff-display,'Fraunces',serif); font-size:.95rem; font-weight:600;
-  color:var(--teal,#007A7A); line-height:1.4; flex-shrink:0;
-  min-width:1.6rem; transition:color .2s;
-}
-.hdr-dd-name{ font-size:.85rem; font-weight:500; color:var(--navy,#0C3868); line-height:1.35; }
+/* .hdr-dd-item / .hdr-dd-num / .hdr-dd-name are defined once, in full,
+   further down this file (search "Research mega-dropdown: richer
+   items") — that version includes the coordinator subline and
+   trial-count badge. Defining them here too, then overriding most of
+   the same properties later, is exactly the kind of split-definition
+   that's made past header bugs (.hdr.scrolled, .team-member hover)
+   hard to reason about; consolidated to one definition. */
 .hdr-dd-all{
-  grid-column:1/-1; margin-top:.65rem; padding:.85rem .5rem .15rem; border-top:1px solid rgba(12,56,104,.08);
+  flex-shrink:0; margin-top:.65rem; padding:.85rem .5rem .15rem; border-top:1px solid rgba(12,56,104,.08);
   font-family:var(--ff-mono,'DM Mono',monospace); font-size:.72rem; font-weight:600; letter-spacing:.06em;
   color:var(--teal,#007A7A); text-decoration:none; text-transform:uppercase; transition:color .2s,gap .2s;
   display:flex; align-items:center; justify-content:space-between; gap:.5rem;
 }
+.hdr-dd-all[hidden]{ display:none; }
 .hdr-dd-all:hover{ color:var(--navy-2,#0C447C); gap:.75rem; }
 
 /* ── Mobile: show hamburger, hide desktop nav ───────────────────── */
@@ -525,13 +564,38 @@ p a:not([class]):hover,li a:not([class]):hover{ color:var(--navy-2,#0C447C); }
   background:var(--teal-2,#00B3B3); border-color:var(--teal-2,#00B3B3);
 }
 
-/* #2 Research mega-dropdown: description lines + richer items */
-.hdr-dd-item{ flex-direction:column; align-items:flex-start!important; gap:.15rem!important; }
-.hdr-dd-item .hdr-dd-name{ display:block; }
-.hdr-dd-desc{
+.hdr-dd-item{
+  display:flex; align-items:center; gap:.85rem;
+  text-decoration:none; padding:.55rem .5rem; border-radius:10px; transition:background .2s var(--ease-clinical);
+}
+.hdr-dd-item:hover{ background:var(--teal-lt,#E2F0F0); }
+.hdr-dd-item:hover .hdr-dd-num{ color:var(--navy-2,#0C447C); }
+.hdr-dd-num{
+  font-family:var(--ff-display,'Fraunces',serif); font-size:.95rem; font-weight:600;
+  color:var(--teal,#007A7A); line-height:1.4; flex-shrink:0;
+  min-width:1.6rem; transition:color .2s;
+}
+.hdr-dd-body{ display:flex; flex-direction:column; gap:.18rem; min-width:0; flex:1; }
+.hdr-dd-name{ font-size:.85rem; font-weight:500; color:var(--navy,#0C3868); line-height:1.3; }
+/* Coordinator subline — same buildAvatar() treatment (real photo or
+   typographic monogram) used on the homepage research-area grid, at
+   a size that fits a dense dropdown row. Surfacing who leads each
+   line here, not just its name, is the real content this panel was
+   missing — the data was already being fetched for the homepage
+   grid, just under-displayed in the nav. */
+.hdr-dd-coord{
+  display:flex; align-items:center; gap:.4rem;
   font-size:.7rem; color:var(--ink-4,#8A8A8A); line-height:1.3;
   font-family:var(--ff-body,'DM Sans',sans-serif); letter-spacing:0;
 }
+.hdr-dd-coord > span:first-child{ flex-shrink:0; width:18px; height:18px; }
+.hdr-dd-trials{
+  flex-shrink:0; align-self:flex-start; margin-top:.15rem;
+  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.62rem; font-weight:600;
+  letter-spacing:.04em; color:var(--teal,#007A7A); background:var(--teal-lt,#E2F0F0);
+  padding:.15rem .4rem; border-radius:100px; white-space:nowrap;
+}
+.hdr-dd-item:hover .hdr-dd-trials{ background:#fff; }
 
 /* #6 Keyboard-operable dropdown: open on focus-within too */
 .hdr-dd:focus-within .hdr-dd-panel{ opacity:1; visibility:visible; transform:translateY(0); }

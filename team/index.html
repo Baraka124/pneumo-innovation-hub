@@ -616,17 +616,18 @@
             <a href="/clinical/" class="hdr-nav-link" data-nav="research"><span lang="en">Research</span><span lang="es">Investigación</span></a>
             <button type="button" class="hdr-dd-chevron" aria-label="Show research lines" aria-expanded="false" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button>
           </span>
-          <div class="hdr-dd-panel"><p class="hdr-dd-panel-title"><span lang="en">Research Lines</span><span lang="es">Líneas de Investigación</span></p><div class="hdr-dd-panel-inner" id="hdrResearchLines"></div></div>
+          <div class="hdr-dd-panel"><p class="hdr-dd-panel-title"><span lang="en">Research Lines</span><span lang="es">Líneas de Investigación</span></p><div class="hdr-dd-panel-inner" id="hdrResearchLines"></div><a class="hdr-dd-all" id="hdrResearchLinesAll" href="/clinical#research-lines" hidden><span lang="en">View research lines</span><span lang="es">Ver líneas de investigación</span> →</a></div>
         </div>
         <a href="/innovation/" class="hdr-nav-link" data-nav="innovation"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
         <a href="/news/" class="hdr-nav-link" data-nav="news"><span lang="en">Articles</span><span lang="es">Artículos</span></a>
         <a href="/team/" class="hdr-nav-link" data-nav="team" data-current="true" aria-current="page"><span lang="en">Team</span><span lang="es">Equipo</span></a>
       </nav>
       <div class="hdr-right">
-        <div class="lang-switch" role="group" aria-label="Language / Idioma">
+        <div class="lang-switch" role="radiogroup" aria-label="Language / Idioma">
+          <svg class="lang-switch-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 6 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-6-3.8-9s1.3-6.3 3.8-9z"/></svg>
           <span class="lang-switch-knob" aria-hidden="true"></span>
-          <button class="lang-opt" data-lang="en" id="ltBtnEn" onclick="selectLang('en')" aria-pressed="true">EN</button>
-          <button class="lang-opt" data-lang="es" id="ltBtnEs" onclick="selectLang('es')" aria-pressed="false">ES</button>
+          <button class="lang-opt" data-lang="en" id="ltBtnEn" onclick="selectLang('en')" role="radio" aria-checked="true" tabindex="0">EN</button>
+          <button class="lang-opt" data-lang="es" id="ltBtnEs" onclick="selectLang('es')" role="radio" aria-checked="false" tabindex="-1">ES</button>
         </div>
         <a href="/#contact" class="hdr-contact-btn"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
         <button class="mob-toggle" id="mobToggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobDrawer"><span></span><span></span><span></span></button>
@@ -954,33 +955,14 @@
   if(stt)stt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
 })();
 
-/* ── Mobile ── */
-var _tog=document.getElementById('mobToggle'),_drw=document.getElementById('mobDrawer'),_ovl=document.getElementById('mobOverlay'),_cls=document.getElementById('mobClose');
-function openMob(){if(!_tog||!_drw)return;_drw.classList.add('open');_ovl&&_ovl.classList.add('open');document.body.style.overflow='hidden';}
-function closeMob(){if(!_drw)return;_drw.classList.remove('open');_ovl&&_ovl.classList.remove('open');document.body.style.overflow='';}
-if(_tog)_tog.addEventListener('click',openMob);
-if(_cls)_cls.addEventListener('click',closeMob);
-if(_ovl)_ovl.addEventListener('click',closeMob);
-document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeMob();closeLang();}});
-
-/* ── Language ── */
-var _lsw=document.getElementById('langSw'),_lbt=document.getElementById('langBtn'),_lbl=document.getElementById('langLabel');
-function openLang(){if(!_lsw)return;_lsw.classList.add('open');if(_lbt)_lbt.setAttribute('aria-expanded','true');}
-function closeLang(){if(!_lsw)return;_lsw.classList.remove('open');if(_lbt)_lbt.setAttribute('aria-expanded','false');}
-function setLang(l){if(l!=='en'&&l!=='es')return;document.documentElement.dataset.lang=l;document.documentElement.lang=l;try{localStorage.setItem('huac_lang',l);}catch(e){}}
-function selectLang(l){
-  setLang(l);
-  document.querySelectorAll('.lang-opt').forEach(function(o){var a=o.dataset.lang===l;o.classList.toggle('active',a);o.setAttribute('aria-selected',String(a));});
-  var me=document.getElementById('mobLangEn'),mes=document.getElementById('mobLangEs');
-  if(me)me.classList.toggle('active',l==='en');if(mes)mes.classList.toggle('active',l==='es');
-  if(_lbl)_lbl.textContent=l.toUpperCase();
-  closeLang();
-}
-if(_lbt){_lbt.addEventListener('click',function(e){e.stopPropagation();_lsw.classList.contains('open')?closeLang():openLang();});}
-if(_lsw)_lsw.addEventListener('click',function(e){e.stopPropagation();});
-document.addEventListener('click',function(){closeLang();});
-document.querySelectorAll('.lang-opt').forEach(function(o){o.addEventListener('click',function(e){e.stopPropagation();selectLang(o.dataset.lang);});});
-(function(){try{var s=localStorage.getItem('huac_lang');if(s==='en'||s==='es')selectLang(s);}catch(e){}})();
+/* ── Mobile drawer + language: the single, correct implementation
+   lives in the openD/closeD block further down + header-enhance.js
+   (drawer focus trap, scrolled-state, lang-switch sync). This used
+   to also define a second, fully independent drawer toggle
+   (openMob/closeMob, wired to the same #mobToggle/#mobOverlay
+   elements) and an openLang/closeLang dropdown apparatus built for
+   a #langSw/#langBtn/#langLabel design that doesn't exist in the
+   current markup — both dead/duplicate code, removed. ── */
 
 /* ── Reveal — exposed globally so api.js can observe dynamically injected elements ── */
 window._revealObserver = new IntersectionObserver(function(entries){
@@ -1058,23 +1040,6 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){
 })();
 </script>
 
-<script>
-(function(){
-  var hdr=document.getElementById('hdr');
-  var mob=document.getElementById('mobToggle');
-  var drawer=document.getElementById('mobDrawer');
-  if(hdr) window.addEventListener('scroll',function(){hdr.classList.toggle('scrolled',window.scrollY>20);},{passive:true});
-  /* mob handled by separate script */
-  function syncLang(l){
-    var en=document.getElementById('ltBtnEn'),es=document.getElementById('ltBtnEs');
-    if(en){en.classList.toggle('lt-btn--active',l==='en');en.setAttribute('aria-pressed',l==='en');}
-    if(es){es.classList.toggle('lt-btn--active',l==='es');es.setAttribute('aria-pressed',l==='es');}
-  }
-  syncLang(document.documentElement.dataset.lang||'en');
-  var _orig=window.selectLang;
-  window.selectLang=function(l){if(_orig)_orig(l);syncLang(l);if(drawer)drawer.classList.remove('open');if(mob)mob.setAttribute('aria-expanded','false');};
-})();
-</script>
 <script>
 // Auto-generate initials in avatars
 document.querySelectorAll('.tm-avatar').forEach(function(av){
@@ -1221,13 +1186,18 @@ if(!localStorage.getItem('cookieOk')){
 (function(){
   var hdr=document.getElementById('hdr'),mob=document.getElementById('mobToggle'),
       drawer=document.getElementById('mobDrawer'),overlay=document.getElementById('mobOverlay');
+  // header-enhance.js already owns the scrolled-state scroll listener
+  // (RAF-throttled, direction-aware hide/reveal) and the drawer focus
+  // trap (it watches #mobDrawer's "open" class via MutationObserver,
+  // so it works regardless of which inline function toggles that
+  // class on a given page) — this used to run its own second,
+  // independent scroll listener doing the same .scrolled toggle.
+  // Removed.
   function openD(){if(drawer)drawer.classList.add('open');if(overlay)overlay.classList.add('open');if(mob)mob.setAttribute('aria-expanded','true');document.body.style.overflow='hidden';}
   function closeD(){if(drawer)drawer.classList.remove('open');if(overlay)overlay.classList.remove('open');if(mob)mob.setAttribute('aria-expanded','false');document.body.style.overflow='';}
   if(mob)mob.addEventListener('click',function(){drawer&&drawer.classList.contains('open')?closeD():openD();});
   if(overlay)overlay.addEventListener('click',closeD);
   document.addEventListener('keydown',function(e){if(e.key==='Escape')closeD();});
-  var ticking=false;
-  if(hdr)window.addEventListener('scroll',function(){if(!ticking){window.requestAnimationFrame(function(){var y=window.scrollY;hdr.classList.toggle('scrolled',y>40);ticking=false;});ticking=true;}},{passive:true});
   function syncLang(l){document.querySelectorAll('.lt-btn').forEach(function(b){var a=b.dataset.lang===l;b.classList.toggle('lt-btn--active',a);b.setAttribute('aria-pressed',String(a));});document.documentElement.lang=l==='es'?'es':'en';}
   syncLang(document.documentElement.dataset.lang||'en');
   var _orig=window.selectLang;

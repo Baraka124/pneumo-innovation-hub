@@ -16,6 +16,22 @@
   /* ── 1. Language: persist + crossfade ─────────────────────────── */
   // Wrap the page's existing selectLang (set by inline script) so we add
   // persistence and a crossfade without losing the original behaviour.
+  function syncLangSwitch(lang){
+    // .lang-opt is now a role="radio" pair inside a radiogroup, not a
+    // plain toggle-button pair — aria-checked (not aria-pressed) is
+    // the correct state attribute, and tabindex must follow selection
+    // (roving tabindex: only the checked option is in the Tab order;
+    // the other is reached via arrow keys, per initLangRovingTabindex
+    // below). Both attributes are kept in sync here so a language
+    // change from *any* source — header click, drawer click,
+    // restoreLang() on load — leaves the control in a consistent,
+    // correctly-announced state.
+    document.querySelectorAll('.lang-opt').forEach(function(b){
+      var on = b.dataset.lang === lang;
+      b.setAttribute('aria-checked', String(on));
+      b.tabIndex = on ? 0 : -1;
+    });
+  }
   function applyLangCrossfade(lang){
     var root = document.documentElement;
     root.style.transition = 'opacity .18s ease';
@@ -23,11 +39,7 @@
     setTimeout(function(){
       root.dataset.lang = lang;
       root.lang = (lang === 'es') ? 'es' : 'en';
-      // sync the switch buttons' pressed state
-      document.querySelectorAll('.lang-opt').forEach(function(b){
-        var on = b.dataset.lang === lang;
-        b.setAttribute('aria-pressed', String(on));
-      });
+      syncLangSwitch(lang);
       try { localStorage.setItem('lang', lang); } catch(e){}
       root.style.opacity = '1';
     }, 120);
@@ -47,9 +59,7 @@
     try { saved = localStorage.getItem('lang') || 'en'; } catch(e){}
     document.documentElement.dataset.lang = saved;
     document.documentElement.lang = (saved === 'es') ? 'es' : 'en';
-    document.querySelectorAll('.lang-opt').forEach(function(b){
-      b.setAttribute('aria-pressed', String(b.dataset.lang === saved));
-    });
+    syncLangSwitch(saved);
   }
 
   /* ── 2. Sliding nav pill ──────────────────────────────────────── */
@@ -122,10 +132,87 @@
     update();
   }
 
+  /* ── 4. Mobile drawer focus trap ──────────────────────────────────
+     Deliberately decoupled from whichever inline open/close function
+     a given page uses (openD/closeD, openMob/closeMob, openDrawer/
+     closeDrawer — naming has drifted across pages over time). Rather
+     than patch N divergent implementations, this watches the
+     drawer's "open" class directly via MutationObserver, so it works
+     identically everywhere with zero per-page wiring. */
+  function initDrawerFocusTrap(){
+    var drawer = document.getElementById('mobDrawer');
+    var toggle = document.getElementById('mobToggle');
+    if (!drawer) return;
+    var trapping = false;
+    function focusable(){
+      return Array.prototype.slice.call(
+        drawer.querySelectorAll('a[href], button:not([disabled])')
+      ).filter(function(el){ return el.offsetParent !== null; });
+    }
+    function onKeydown(e){
+      if (e.key !== 'Tab') return;
+      var f = focusable();
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault(); last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault(); first.focus();
+      }
+    }
+    var mo = new MutationObserver(function(){
+      var isOpen = drawer.classList.contains('open');
+      if (isOpen && !trapping) {
+        trapping = true;
+        document.addEventListener('keydown', onKeydown);
+        var f = focusable();
+        if (f.length) f[0].focus();
+      } else if (!isOpen && trapping) {
+        trapping = false;
+        document.removeEventListener('keydown', onKeydown);
+        if (toggle && drawer.contains(document.activeElement)) toggle.focus();
+      }
+    });
+    mo.observe(drawer, { attributes: true, attributeFilter: ['class'] });
+  }
+
+  /* ── 5. Language switch: roving tabindex (arrow-key navigation) ──
+     role="radiogroup"/"radio" implies arrow keys move selection, not
+     just Tab — this is the standard interaction pattern for a
+     two-state segmented control (matches how a native OS language
+     toggle or a <select role="radio"> group behaves). Left/Right and
+     Up/Down all move; Home/End jump to the ends (trivial with two
+     items, kept for correctness if a third language is ever added). */
+  function initLangRovingTabindex(){
+    var group = document.querySelector('.lang-switch[role="radiogroup"]');
+    if (!group) return;
+    var opts = Array.prototype.slice.call(group.querySelectorAll('.lang-opt'));
+    if (opts.length < 2) return;
+    function focusAt(i){
+      opts.forEach(function(o, idx){ o.tabIndex = idx === i ? 0 : -1; });
+      opts[i].focus();
+    }
+    group.addEventListener('keydown', function(e){
+      var i = opts.indexOf(document.activeElement);
+      if (i === -1) return;
+      var next = null;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = (i + 1) % opts.length;
+      else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') next = (i - 1 + opts.length) % opts.length;
+      else if (e.key === 'Home') next = 0;
+      else if (e.key === 'End') next = opts.length - 1;
+      if (next === null) return;
+      e.preventDefault();
+      focusAt(next);
+      opts[next].click();
+    });
+  }
+
   function boot(){
     restoreLang();
     initNavPill();
     initScrollState();
+    initDrawerFocusTrap();
+    initLangRovingTabindex();
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);

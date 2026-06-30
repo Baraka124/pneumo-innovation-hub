@@ -1056,17 +1056,18 @@
             <a href="/clinical/" class="hdr-nav-link" data-nav="research" data-current="true"><span lang="en">Research</span><span lang="es">Investigación</span></a>
             <button type="button" class="hdr-dd-chevron" aria-label="Show research lines" aria-expanded="false" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button>
           </span>
-          <div class="hdr-dd-panel"><p class="hdr-dd-panel-title"><span lang="en">Research Lines</span><span lang="es">Líneas de Investigación</span></p><div class="hdr-dd-panel-inner" id="hdrResearchLines"></div></div>
+          <div class="hdr-dd-panel"><p class="hdr-dd-panel-title"><span lang="en">Research Lines</span><span lang="es">Líneas de Investigación</span></p><div class="hdr-dd-panel-inner" id="hdrResearchLines"></div><a class="hdr-dd-all" id="hdrResearchLinesAll" href="/clinical#research-lines" hidden><span lang="en">View research lines</span><span lang="es">Ver líneas de investigación</span> →</a></div>
         </div>
         <a href="/innovation/" class="hdr-nav-link" data-nav="innovation"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
         <a href="/news/" class="hdr-nav-link" data-nav="news"><span lang="en">Articles</span><span lang="es">Artículos</span></a>
         <a href="/team/" class="hdr-nav-link" data-nav="team"><span lang="en">Team</span><span lang="es">Equipo</span></a>
       </nav>
       <div class="hdr-right">
-        <div class="lang-switch" role="group" aria-label="Language / Idioma">
+        <div class="lang-switch" role="radiogroup" aria-label="Language / Idioma">
+          <svg class="lang-switch-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 6 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-6-3.8-9s1.3-6.3 3.8-9z"/></svg>
           <span class="lang-switch-knob" aria-hidden="true"></span>
-          <button class="lang-opt" data-lang="en" id="ltBtnEn" onclick="selectLang('en')" aria-pressed="true">EN</button>
-          <button class="lang-opt" data-lang="es" id="ltBtnEs" onclick="selectLang('es')" aria-pressed="false">ES</button>
+          <button class="lang-opt" data-lang="en" id="ltBtnEn" onclick="selectLang('en')" role="radio" aria-checked="true" tabindex="0">EN</button>
+          <button class="lang-opt" data-lang="es" id="ltBtnEs" onclick="selectLang('es')" role="radio" aria-checked="false" tabindex="-1">ES</button>
         </div>
         <a href="/#contact" class="hdr-contact-btn"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
         <button class="mob-toggle" id="mobToggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobDrawer"><span></span><span></span><span></span></button>
@@ -1339,19 +1340,25 @@
   </script>
 <script>
 (function(){
-  var hdr=document.getElementById('hdr');
   var mob=document.getElementById('mobToggle');
   var drawer=document.getElementById('mobDrawer');
-  if(hdr) window.addEventListener('scroll',function(){hdr.classList.toggle('scrolled',window.scrollY>20);},{passive:true});
-  /* mob handled by separate script */
-  function syncLang(l){
-    var en=document.getElementById('ltBtnEn'),es=document.getElementById('ltBtnEs');
-    if(en){en.classList.toggle('lt-btn--active',l==='en');en.setAttribute('aria-pressed',l==='en');}
-    if(es){es.classList.toggle('lt-btn--active',l==='es');es.setAttribute('aria-pressed',l==='es');}
-  }
-  syncLang(document.documentElement.dataset.lang||'en');
+  var overlay=document.getElementById('mobOverlay');
+  // header-enhance.js owns the scrolled-state scroll listener and the
+  // drawer focus trap (MutationObserver on #mobDrawer's "open" class
+  // -- works regardless of which function below toggles it). This
+  // used to also sync aria-pressed on the desktop language buttons by
+  // ID, which is now wrong: those buttons are role="radio" inside a
+  // radiogroup (see polish.css/header-enhance.js), so the correct
+  // attribute is aria-checked, and header-enhance.js's syncLangSwitch
+  // already keeps it current on every selectLang() call -- this
+  // redundant, now-incorrect sync is removed.
   var _orig=window.selectLang;
-  window.selectLang=function(l){if(_orig)_orig(l);syncLang(l);if(drawer)drawer.classList.remove('open');if(mob)mob.setAttribute('aria-expanded','false');};
+  window.selectLang=function(l){
+    if(_orig)_orig(l);
+    if(drawer)drawer.classList.remove('open');
+    if(overlay)overlay.classList.remove('open');
+    if(mob)mob.setAttribute('aria-expanded','false');
+  };
 })();
 </script>
 <script src="../animations.js" defer></script>
