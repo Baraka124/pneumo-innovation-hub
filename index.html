@@ -2,6 +2,7 @@
 <html lang="en" data-lang="en">
 <head>
   <script>try{var _l=localStorage.getItem('huac_lang');if(_l&&(_l==='en'||_l==='es'))document.documentElement.dataset.lang=_l;}catch(e){}</script>
+  <script>try{if(localStorage.getItem('latestBarDismissed'))document.documentElement.classList.add('bar-dismissed');}catch(e){}</script>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0"/>
   <title>neumACt R&I — Respiratory Medicine Research &amp; Innovation · CHUAC · INIBIC</title>
@@ -823,13 +824,17 @@ section[style*="background:var(--white)"] .milestone-label,
   flex: 1; min-width: 0; overflow: hidden;
   white-space: nowrap; text-overflow: ellipsis;
 }
-/* Push header down when latest bar is visible */
-.hdr { top: 30px !important; }
-body { padding-top: calc(68px + 30px) !important; }
+/* Push header down while the latest bar is visible (homepage only —
+   core.css defaults every page, including this one before JS runs,
+   to top:0/padding-top:68px since most pages have no bar at all).
+   html.bar-dismissed below restores those defaults once dismissed
+   so there's no permanent gap above the header afterward. */
+html:not(.bar-dismissed) .hdr { top: 30px; }
+html:not(.bar-dismissed) body { padding-top: calc(68px + 30px); }
 @media(max-width:860px) {
   .latest-text { font-size: .7rem; }
-  .hdr { top: 28px !important; }
-  body { padding-top: calc(68px + 28px) !important; }
+  html:not(.bar-dismissed) .hdr { top: 28px; }
+  html:not(.bar-dismissed) body { padding-top: calc(68px + 28px); }
 }
 
 
@@ -1852,7 +1857,7 @@ if(!localStorage.getItem('cookieOk')){
 
 <script>
 function dismissLatestBar(){var bar=document.getElementById('latestBar');if(!bar)return;bar.style.transition='transform .3s var(--ease-clinical)';bar.style.transform='translateY(-100%)';setTimeout(function(){bar.style.display='none';document.documentElement.classList.add('bar-dismissed');},300);try{localStorage.setItem('latestBarDismissed','1');}catch(e){}}
-(function(){try{if(localStorage.getItem('latestBarDismissed')){var b=document.getElementById('latestBar');if(b)b.style.display='none';document.documentElement.classList.add('bar-dismissed');}}catch(e){}})();
+(function(){try{if(localStorage.getItem('latestBarDismissed')){var b=document.getElementById('latestBar');if(b)b.style.display='none';}}catch(e){}})();
 (function(){
   var hdr=document.getElementById('hdr'),mob=document.getElementById('mobToggle'),
       drawer=document.getElementById('mobDrawer'),overlay=document.getElementById('mobOverlay');

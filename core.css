@@ -59,12 +59,11 @@
 .affil-ph{display:flex;align-items:center;justify-content:center;height:32px;min-width:80px;border:1px dashed rgba(255,255,255,.2);border-radius:2px;padding:0 .75rem;background:rgba(255,255,255,.03);}
 .affil-ph span{font-family:var(--ff-mono,'DM Mono',monospace);font-size:var(--fs-label);letter-spacing:.08em;color:rgba(255,255,255,.35);white-space:nowrap;}
 .affil-ph-main{height:40px;min-width:140px;}
-/* Default: announcement bar visible above header */
-body{padding-top:96px;}
-.hdr{top:28px;}
-/* Dismissed: header reclaims top:0, body padding drops to just header height */
-html.bar-dismissed .hdr{top:0!important;}
-html.bar-dismissed body{padding-top:68px!important;}
+/* Header sits flush at top by default — the announcement bar only
+   exists on the homepage (.latest-bar), which opts into its own
+   offset via the rules right below this comment in index.html. */
+body{padding-top:68px;}
+.hdr{top:0;}
 .wrap,.container{max-width:1280px;}
 .hero-inner{gap:3rem;}
 .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:var(--navy-2);color:#fff;padding:.75rem 1.25rem;font-size:.875rem;font-weight:500;border-radius:0 0 6px 0;}

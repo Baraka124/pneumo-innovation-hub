@@ -144,18 +144,14 @@ html{ scroll-behavior:smooth; }
 @media(prefers-reduced-motion:reduce){ html{ scroll-behavior:auto; } }
 
 /* ════════════════════════════════════════════════════════════════
-   TWO-TIER INSTITUTIONAL HEADER  +  PREMIUM LANGUAGE SWITCH
-   Replaces the old single-row .hdr styling. All driven from here so
-   every page stays identical — no per-file header CSS.
+   PREMIUM LANGUAGE SWITCH
+   The old two-tier header this section was originally written for
+   no longer exists in the markup (removed when the utility strip
+   was dropped) — its .hdr{} rule was deleted here since it was
+   silently overriding core.css's top/height/z-index (this file
+   loads after core.css, so any property it redeclared always won).
    ════════════════════════════════════════════════════════════════ */
 
-.hdr{
-  position:fixed; top:0; left:0; right:0; z-index:1000;
-  background:transparent; height:auto; border:none;
-  transition:transform .4s var(--ease-clinical);
-}
-
-/* ── Tier 1: utility strip ──────────────────────────────────────── */
 /* ── Premium language switch: sliding-knob pill ─────────────────── */
 .lang-switch{
   position:relative; display:inline-flex; align-items:center;
