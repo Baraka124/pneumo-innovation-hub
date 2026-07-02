@@ -245,10 +245,19 @@ html[data-lang="es"] .lang-switch-knob{ transform:translateX(calc(100% + 2px)); 
 /* Nav with sliding active pill */
 .hdr-nav{ position:relative; display:flex; align-items:center; gap:2px; flex:1; min-width:0; }
 .hdr-nav-pill{
-  position:absolute; top:50%; transform:translateY(-50%);
-  height:34px; border-radius:8px; background:rgba(255,255,255,.12);
+  position:absolute; top:50%; left:0;
+  height:34px; width:1px; border-radius:8px; background:rgba(255,255,255,.12);
   z-index:0; opacity:0; pointer-events:none;
-  transition:left .34s var(--ease-clinical), width .34s var(--ease-clinical), opacity .25s;
+  transform-origin:left center;
+  transform:translateY(-50%) scaleX(1);
+  /* transform + opacity only — both GPU-composited, so the pill
+     glides between nav items at a solid 60fps without triggering
+     layout on every frame (the previous left/width animation
+     re-laid-out the header on each tick — visible jank on lower-end
+     devices and a needless main-thread cost). width stays a fixed
+     1px base that scaleX stretches to the target. */
+  transition:transform .34s var(--ease-clinical), opacity .25s;
+  will-change:transform;
 }
 .hdr-nav-link{
   position:relative; z-index:1; display:inline-block; padding:.55rem .9rem;

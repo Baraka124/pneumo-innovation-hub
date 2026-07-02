@@ -31,6 +31,16 @@
       b.setAttribute('aria-checked', String(on));
       b.tabIndex = on ? 0 : -1;
     });
+    // The mobile drawer's language buttons (.lt-btn) are now also a
+    // role="radio" pair (aria-checked, matching the desktop switch's
+    // semantics — they used to be aria-pressed, an inconsistency
+    // between the two controls). Kept in sync here too so both stay
+    // correct regardless of which one the user operates.
+    document.querySelectorAll('.lt-btn').forEach(function(b){
+      var on = b.dataset.lang === lang;
+      b.setAttribute('aria-checked', String(on));
+      b.classList.toggle('lt-btn--active', on);
+    });
   }
   function applyLangCrossfade(lang){
     var root = document.documentElement;
@@ -72,8 +82,10 @@
       if (!el) return;
       var navRect = nav.getBoundingClientRect();
       var r = el.getBoundingClientRect();
-      pill.style.left = (r.left - navRect.left) + 'px';
-      pill.style.width = r.width + 'px';
+      // pill is a 1px base at left:0; translateX to the item and
+      // scaleX up to its width — pure transform, no layout.
+      var x = r.left - navRect.left;
+      pill.style.transform = 'translateY(-50%) translateX(' + x + 'px) scaleX(' + r.width + ')';
       pill.style.opacity = '1';
     }
     function reset(){

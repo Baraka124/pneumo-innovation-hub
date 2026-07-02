@@ -20,9 +20,39 @@ const API_BASE = 'https://neumac-manage-back-end-production.up.railway.app';
 // HELPERS
 // ─────────────────────────────────────────────
 
-async function apiFetch(path) {
-  const res = await fetch(`${API_BASE}${path}`);
-  if (!res.ok) throw new Error(`API ${res.status}: ${path}`);
+async function apiFetch(path, _isRetry = false) {
+  // Hardened: 12s timeout + a single retry with backoff on 429
+  // (rate limit), 5xx, or network failure. Every page load fires
+  // several calls at once (header dropdown + page data + stats), so
+  // a user clicking through the nav quickly can burst the backend
+  // rate limiter — previously any 429 threw straight through all 23
+  // call sites with no second chance. 4xx other than 429 still
+  // throws immediately (retrying a 404 is pointless). The call-site
+  // contract is unchanged: resolves to parsed JSON or throws.
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), 12000);
+  let res;
+  try {
+    res = await fetch(`${API_BASE}${path}`, { signal: ctrl.signal });
+  } catch (err) {
+    clearTimeout(timer);
+    if (!_isRetry) {
+      await new Promise(r => setTimeout(r, 1200));
+      return apiFetch(path, true);
+    }
+    throw err;
+  }
+  clearTimeout(timer);
+  if (!res.ok) {
+    const retryable = res.status === 429 || res.status >= 500;
+    if (retryable && !_isRetry) {
+      const retryAfter = parseInt(res.headers.get('Retry-After'), 10);
+      const waitMs = !isNaN(retryAfter) ? Math.min(retryAfter * 1000, 5000) : 1200;
+      await new Promise(r => setTimeout(r, waitMs));
+      return apiFetch(path, true);
+    }
+    throw new Error(`API ${res.status}: ${path}`);
+  }
   return res.json();
 }
 
@@ -1302,11 +1332,50 @@ function initHeaderDropdown() {
   });
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') close();
+    if (e.key === 'Escape' && dd.classList.contains('open')) {
+      close();
+      if (chevron) chevron.focus();
+    }
   });
 
   dd.addEventListener('click', (e) => {
     if (e.target.closest('.hdr-dd-item, .hdr-dd-all')) close();
+  });
+
+  // Full keyboard operability (WAI-ARIA menu-button pattern): ArrowDown
+  // on the trigger opens the panel and moves focus to the first item;
+  // Up/Down cycle through items (including the "view all" link);
+  // Home/End jump to the ends. Items are real <a>s so Enter/click work
+  // for free. Without this the panel could be opened by keyboard but
+  // not traversed — you'd have to Tab through every item blindly.
+  function items() {
+    return Array.prototype.slice.call(
+      dd.querySelectorAll('.hdr-dd-item, .hdr-dd-all:not([hidden])')
+    );
+  }
+  function focusItem(list, i) {
+    if (!list.length) return;
+    var idx = (i + list.length) % list.length;
+    list[idx].focus();
+  }
+  if (chevron) {
+    chevron.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (!dd.classList.contains('open')) open();
+        var list = items();
+        if (list.length) list[0].focus();
+      }
+    });
+  }
+  dd.addEventListener('keydown', (e) => {
+    var list = items();
+    var i = list.indexOf(document.activeElement);
+    if (i === -1) return;
+    if (e.key === 'ArrowDown') { e.preventDefault(); focusItem(list, i + 1); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); focusItem(list, i - 1); }
+    else if (e.key === 'Home') { e.preventDefault(); focusItem(list, 0); }
+    else if (e.key === 'End') { e.preventDefault(); focusItem(list, list.length - 1); }
   });
 }
 

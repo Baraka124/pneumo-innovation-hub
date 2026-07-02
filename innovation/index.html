@@ -2,6 +2,9 @@
 <html lang="en" data-lang="en">  
 <head>
   <script>try{var _l=localStorage.getItem('huac_lang');if(_l&&(_l==='en'||_l==='es'))document.documentElement.dataset.lang=_l;}catch(e){}</script>
+  <script>/* blank-page guard: opacity:0 .reveal content must never stay hidden if any script throws */
+window.addEventListener('error',function(){try{document.querySelectorAll('.reveal:not(.in)').forEach(function(el){el.classList.add('in');});}catch(_){}} ,true);
+window.addEventListener('unhandledrejection',function(){try{document.querySelectorAll('.reveal:not(.in)').forEach(function(el){el.classList.add('in');});}catch(_){}} );</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />  
   <title>Innovation | neumACt R&I · CHUAC · INIBIC</title>
@@ -1138,7 +1141,7 @@
       <a href="/news/"><span lang="en">Articles</span><span lang="es">Artículos</span></a>
       <a href="/team/"><span lang="en">Team</span><span lang="es">Equipo</span></a>
     <a href="/#contact"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
-    </div><div class="mob-lang"><button class="lt-btn lt-btn--active" data-lang="en" onclick="selectLang('en')" aria-pressed="true">EN</button><button class="lt-btn" data-lang="es" onclick="selectLang('es')" aria-pressed="false">ES</button></div></nav>
+    </div><div class="mob-lang" role="radiogroup" aria-label="Language / Idioma"><button class="lt-btn lt-btn--active" data-lang="en" onclick="selectLang('en')" role="radio" aria-checked="true">EN</button><button class="lt-btn" data-lang="es" onclick="selectLang('es')" role="radio" aria-checked="false">ES</button></div></nav>
 <div id="pb" role="progressbar" aria-hidden="true"></div>
 <section class="hero" id="top">
     <div class="container">
@@ -1678,7 +1681,7 @@
       document.querySelectorAll('.lt-btn').forEach(function(b){
         var on = b.dataset.lang === l;
         b.classList.toggle('lt-btn--active', on);
-        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        b.setAttribute('aria-checked', on ? 'true' : 'false');
       });
       /* Update mobile lang buttons */
       var me=document.getElementById('mobLangEn'),mes=document.getElementById('mobLangEs');
@@ -1752,5 +1755,57 @@
 </div>
 <script>if(!localStorage.getItem('cookieOk')){var c=document.getElementById('cookieBanner');if(c)c.style.display='flex';}</script>
 <script src="../header-enhance.js" defer></script>
+<script>
+/* ── Reveal safety net — deliberately its own <script> block. ──
+   The main reveal observer is created at the END of a long inline
+   script; a thrown exception anywhere earlier in that block halts it
+   before the observer exists, and every .reveal element (hard-coded
+   opacity:0 in CSS) then stays invisible forever — i.e. a blank
+   page. Exceptions do NOT propagate across script-block boundaries,
+   so this block always runs: it recreates the observer if the main
+   one died, falls back to instant-reveal if IntersectionObserver
+   itself is unavailable, and as a last resort force-reveals anything
+   still hidden in the viewport 2.5s after load. */
+(function(){
+  var recreated=false;
+  try{
+    if(!window._revealObserver){
+      window._revealObserver=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');window._revealObserver.unobserve(e.target);}});},{threshold:.08,rootMargin:'0px 0px -32px 0px'});
+      document.querySelectorAll('.reveal').forEach(function(el){window._revealObserver.observe(el);});
+      recreated=true;
+    }
+  }catch(err){
+    // IntersectionObserver unavailable or threw — reveal everything now,
+    // no observer to rely on for below-fold content later.
+    document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in');});
+    return;
+  }
+  // Last-resort sweep 2.5s after load: if the primary observer never
+  // ran (an exception earlier in its own script block killed it before
+  // it could observe anything), reveal what's on screen AND wire a
+  // cheap scroll fallback so below-the-fold .reveal elements don't stay
+  // permanently invisible — the original net only handled the current
+  // viewport, which left a blank strip on scroll when the observer died.
+  setTimeout(function(){
+    var orphans=document.querySelectorAll('.reveal:not(.in)');
+    if(!orphans.length)return;
+    function sweep(){
+      document.querySelectorAll('.reveal:not(.in)').forEach(function(el){
+        var r=el.getBoundingClientRect();
+        if(r.top<window.innerHeight&&r.bottom>0)el.classList.add('in');
+      });
+      if(!document.querySelector('.reveal:not(.in)')){
+        window.removeEventListener('scroll',sweep);
+      }
+    }
+    sweep();
+    // Only attach the scroll fallback if the observer clearly isn't
+    // doing its job (orphans still exist after it should have run).
+    if(document.querySelector('.reveal:not(.in)')){
+      window.addEventListener('scroll',sweep,{passive:true});
+    }
+  },2500);
+})();
+</script>
 </body>
 </html>
