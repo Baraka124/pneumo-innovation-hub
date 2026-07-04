@@ -1,0 +1,27 @@
+name: Site integrity
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - name: HTML/CSS integrity + contrast checks
+        run: python3 scripts/integrity_check.py
+      - name: JS syntax
+        run: |
+          node --check api.js
+          node --check header-enhance.js
+          node --check animations.js
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm i -D @playwright/test http-server && npx playwright install --with-deps chromium
+      - run: npx playwright test

@@ -1,75 +1,309 @@
 <!DOCTYPE html>
 <html lang="en" data-lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Page not found · neumACt R&I</title>
-  <meta name="robots" content="noindex">
-  <link rel="icon" href="/logo.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/core.css">
-  <link rel="stylesheet" href="/polish.css">
-  <style>
-    :root{
-      --navy:#0C3868;--navy-2:#0C447C;--navy-footer:#07111F;
-      --teal:#007A7A;--teal-2:#00B3B3;--teal-lt:#E2F0F0;
-      --ff-display:'Fraunces',Georgia,serif;--ff-body:'DM Sans',system-ui,sans-serif;--ff-mono:'DM Mono',monospace;
-    }
-    *{margin:0;padding:0;box-sizing:border-box;}
-    body{
-      min-height:100vh;display:flex;align-items:center;justify-content:center;
-      background:linear-gradient(160deg,var(--navy) 0%,var(--navy-footer) 100%);
-      font-family:var(--ff-body);color:#fff;padding:2rem;text-align:center;
-    }
-    .e404-wrap{max-width:520px;}
-    .e404-code{
-      font-family:var(--ff-mono);font-size:.8rem;letter-spacing:.3em;text-transform:uppercase;
-      color:var(--teal-2);margin-bottom:1.5rem;
-    }
-    .e404-title{
-      font-family:var(--ff-display);font-weight:600;font-size:clamp(2rem,5vw,3rem);
-      line-height:1.1;letter-spacing:-.02em;margin-bottom:1rem;
-    }
-    .e404-desc{
-      font-size:1.0625rem;line-height:1.7;color:rgba(255,255,255,.72);margin-bottom:2.25rem;
-    }
-    .e404-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
-    .e404-btn{
-      display:inline-flex;align-items:center;gap:.5rem;padding:.7rem 1.4rem;border-radius:100px;
-      font-weight:600;font-size:.9375rem;text-decoration:none;transition:all .25s cubic-bezier(.16,1,.3,1);
-    }
-    .e404-btn-solid{background:var(--teal);color:#fff;}
-    .e404-btn-solid:hover{background:var(--teal-2);transform:translateY(-1px);}
-    .e404-btn-out{border:1px solid rgba(255,255,255,.3);color:#fff;}
-    .e404-btn-out:hover{background:rgba(255,255,255,.08);}
-    .e404-foot{
-      margin-top:3rem;font-family:var(--ff-mono);font-size:.66rem;letter-spacing:.1em;
-      text-transform:uppercase;color:rgba(255,255,255,.4);
-    }
-  </style>
-</head>
+  <script>try{var _l=localStorage.getItem('huac_lang');if(_l&&(_l==='en'||_l==='es'))document.documentElement.dataset.lang=_l;}catch(e){}</script>
+  <script>/* blank-page guard: opacity:0 .reveal content must never stay hidden if any script throws */
+window.addEventListener('error',function(){try{document.querySelectorAll('.reveal:not(.in)').forEach(function(el){el.classList.add('in');});}catch(_){}} ,true);
+window.addEventListener('unhandledrejection',function(){try{document.querySelectorAll('.reveal:not(.in)').forEach(function(el){el.classList.add('in');});}catch(_){}} );</script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0"/>
+  <title>Page not found | neumACt R&I</title>
+  <link rel="icon" type="image/svg+xml" href="logo.svg"/>
+  <meta name="description" content="Page not found — neumACt R&I."/>
+    <meta name="robots" content="noindex">
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="neumACt R&I"/>
+  <meta property="og:title" content="Legal Notice | neumACt R&I"/>
+  <meta property="og:description" content="Legal notice and ownership information for this website."/>
+  <meta property="og:image" content="https://neumact.org/assets/og-card.png"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="core.css">
+  <link rel="stylesheet" href="polish.css">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#0C3868">
+  </head>
 <body>
-  <div class="e404-wrap">
-    <div class="e404-code">Error 404</div>
-    <h1 class="e404-title">
-      <span lang="en">This page could not be found.</span>
-      <span lang="es">No se encontró esta página.</span>
-    </h1>
-    <p class="e404-desc">
-      <span lang="en">The page you're looking for may have moved or no longer exists. Let's get you back to the research.</span>
-      <span lang="es">La página que buscas puede haberse movido o ya no existe. Te llevamos de vuelta a la investigación.</span>
-    </p>
-    <div class="e404-actions">
-      <a href="/" class="e404-btn e404-btn-solid">
-        <span lang="en">Return home</span><span lang="es">Volver al inicio</span>
+<a href="#mainContent" class="skip-link">Skip to main content</a>
+<header class="hdr" id="hdr" data-page="404">
+  <!-- Tier 2: primary navigation -->
+  <div class="hdr-main">
+    <div class="hdr-inner">
+      <a href="/" class="hdr-logo" aria-label="neumACt R&amp;I">
+        <img src="../logo.svg" alt="neumACt R&I" class="hdr-logo-img" onerror="this.style.opacity='.3'">
+        <span class="hdr-logo-rule" aria-hidden="true"></span>
+        <span class="hdr-logo-desc"><span lang="en">Research &amp; Innovation</span><span lang="es">Investigación e Innovación</span></span>
       </a>
-      <a href="/clinical/" class="e404-btn e404-btn-out">
-        <span lang="en">Research lines</span><span lang="es">Líneas de investigación</span>
-      </a>
+      <nav class="hdr-nav" aria-label="Primary navigation">
+        <span class="hdr-nav-pill" aria-hidden="true"></span>
+        <a href="/" class="hdr-nav-link" data-nav="home"><span lang="en">Home</span><span lang="es">Inicio</span></a>
+        <div class="hdr-dd" data-nav="research">
+          <span class="hdr-dd-trigger">
+            <a href="/clinical/" class="hdr-nav-link" data-nav="research"><span lang="en">Research</span><span lang="es">Investigación</span></a>
+            <button type="button" class="hdr-dd-chevron" aria-label="Show research lines" aria-expanded="false" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button>
+          </span>
+          <div class="hdr-dd-panel"><p class="hdr-dd-panel-title"><span lang="en">Research Lines</span><span lang="es">Líneas de Investigación</span></p><div class="hdr-dd-panel-inner" id="hdrResearchLines"></div><a class="hdr-dd-all" id="hdrResearchLinesAll" href="/clinical#research-lines" hidden><span lang="en">View research lines</span><span lang="es">Ver líneas de investigación</span> →</a></div>
+        </div>
+        <a href="/innovation/" class="hdr-nav-link" data-nav="innovation"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
+        <a href="/news/" class="hdr-nav-link" data-nav="news"><span lang="en">Articles</span><span lang="es">Artículos</span></a>
+        <a href="/team/" class="hdr-nav-link" data-nav="team"><span lang="en">Team</span><span lang="es">Equipo</span></a>
+      </nav>
+      <div class="hdr-right">
+        <div class="lang-switch" role="radiogroup" aria-label="Language / Idioma">
+          <svg class="lang-switch-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 6 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-6-3.8-9s1.3-6.3 3.8-9z"/></svg>
+          <span class="lang-switch-knob" aria-hidden="true"></span>
+          <button class="lang-opt" data-lang="en" id="ltBtnEn" onclick="selectLang('en')" role="radio" aria-checked="true" tabindex="0">EN</button>
+          <button class="lang-opt" data-lang="es" id="ltBtnEs" onclick="selectLang('es')" role="radio" aria-checked="false" tabindex="-1">ES</button>
+        </div>
+        <a href="/#contact" class="hdr-contact-btn"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
+        <button class="mob-toggle" id="mobToggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobDrawer"><span></span><span></span><span></span></button>
+      </div>
     </div>
-    <div class="e404-foot">Servicio de Neumología · CHUAC · INIBIC</div>
   </div>
-  <script>
-    try{var _l=localStorage.getItem('lang');if(_l==='es')document.documentElement.dataset.lang='es';}catch(e){}
-  </script>
+</header><div class="mob-overlay" id="mobOverlay"></div><nav class="mob-drawer" id="mobDrawer" aria-label="Mobile navigation"><div class="mob-drawer-nav">
+      <a href="/"><span lang="en">Home</span><span lang="es">Inicio</span></a>
+      <a href="/clinical/"><span lang="en">Research</span><span lang="es">Investigación</span></a>
+      <a href="/innovation/"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
+      <a href="/news/"><span lang="en">Articles</span><span lang="es">Artículos</span></a>
+      <a href="/team/"><span lang="en">Team</span><span lang="es">Equipo</span></a>
+    <a href="/#contact"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
+    </div><div class="mob-lang" role="radiogroup" aria-label="Language / Idioma"><button class="lt-btn lt-btn--active" data-lang="en" onclick="selectLang('en')" role="radio" aria-checked="true">EN</button><button class="lt-btn" data-lang="es" onclick="selectLang('es')" role="radio" aria-checked="false">ES</button></div></nav>
+<div id="pb" role="progressbar" aria-hidden="true"></div>
+<!-- ═══ PRIVACY POLICY ═══════════════════════════════════ -->
+<!-- ═══ 404 ══════════════════════════════════════════════ -->
+<section class="section" id="mainContent" style="background:var(--white);padding-top:7rem;min-height:55vh;">
+  <div class="wrap" style="max-width:760px;text-align:center;">
+    <p class="label" style="margin-bottom:1rem;color:var(--teal,#007A7A);">404</p>
+    <h1 class="display-lg" style="margin-bottom:1.25rem;"><span lang="en">Page not found</span><span lang="es">Página no encontrada</span></h1>
+    <p style="font-size:var(--fs-body);line-height:1.75;color:var(--ink-2);max-width:34rem;margin:0 auto 2.5rem;">
+      <span lang="en">The page you were looking for doesn't exist or has moved. It may have been part of an older version of this site.</span>
+      <span lang="es">La página que buscaba no existe o se ha movido. Puede que perteneciera a una versión anterior de este sitio.</span>
+    </p>
+    <p>
+      <a href="/" class="btn-text" style="font-weight:600;"><span lang="en">← Back to home</span><span lang="es">← Volver al inicio</span></a>
+      &nbsp;&nbsp;·&nbsp;&nbsp;
+      <a href="/news/" class="btn-text"><span lang="en">Articles</span><span lang="es">Artículos</span></a>
+      &nbsp;&nbsp;·&nbsp;&nbsp;
+      <a href="/clinical/" class="btn-text"><span lang="en">Research</span><span lang="es">Investigación</span></a>
+    </p>
+  </div>
+</section>
+
+<!-- ═══ AFFILIATIONS & PARTNERSHIPS ══════════════════════ -->
+<section class="affil-section">
+  <div class="wrap">
+    <div class="affil-section-header">
+      <span class="affil-section-eyebrow">
+        <span lang="en">Affiliations &amp; Partnerships</span>
+        <span lang="es">Afiliaciones y Colaboraciones</span>
+      </span>
+      <p class="affil-section-sub">
+        <span lang="en">Institutional affiliations and active research partnerships underpinning the group's clinical and translational work.</span>
+        <span lang="es">Afiliaciones institucionales y colaboraciones de investigación activa que sustentan el trabajo clínico y translacional del grupo.</span>
+      </p>
+    </div>
+    <div class="affil-grid">
+      <!-- INIBIC -->
+      <a href="https://www.inibic.es" target="_blank" rel="noopener" class="affil-card" aria-label="INIBIC — Instituto de Investigación Biomédica de A Coruña">
+        <div class="affil-card-logo">
+          <img src="/assets/inibic.jpg" loading="lazy" alt="INIBIC" height="44" style="height:44px;width:auto;display:block;"/>
+        </div>
+        <div class="affil-card-body">
+          <div class="affil-card-name">INIBIC</div>
+          <div class="affil-card-desc"><span lang="en">Instituto de Investigación Biomédica de A Coruña — the group's primary institutional home and accrediting body.</span><span lang="es">Instituto de Investigación Biomédica de A Coruña — sede institucional principal y organismo acreditador del grupo.</span></div>
+        </div>
+      </a>
+
+      <!-- FINIBIC / Fundación Galega -->
+      <a href="https://www.finibic.es" target="_blank" rel="noopener" class="affil-card" aria-label="Fundación Galega de Investigación Biomédica INIBIC">
+        <div class="affil-card-logo">
+          <img src="/assets/finibic.jpg" loading="lazy" alt="Fundación Galega INIBIC" height="38" style="height:38px;width:auto;display:block;"/>
+        </div>
+        <div class="affil-card-body">
+          <div class="affil-card-name">Fundación Galega de Investigación Biomédica INIBIC</div>
+          <div class="affil-card-desc"><span lang="en">The foundation underpinning INIBIC's research infrastructure and strategic alliances across Galicia.</span><span lang="es">La fundación que sustenta la infraestructura de investigación y las alianzas estratégicas del INIBIC en Galicia.</span></div>
+        </div>
+      </a>
+
+      <!-- PLACEHOLDER 1 -->
+      <div class="affil-card affil-card--placeholder" aria-label="Partner slot — upload logo in neumDesk">
+        <div class="affil-card-logo affil-card-logo--ph">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="8" y="8" width="32" height="32" rx="4" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/><path d="M24 20v8M20 24h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="affil-card-body">
+          <div class="affil-card-name affil-card-name--ph"><span lang="en">Add partner</span><span lang="es">Añadir colaborador</span></div>
+          <div class="affil-card-desc affil-card-desc--ph"><span lang="en">Upload a logo and short description via neumDesk.</span><span lang="es">Suba el logotipo y una descripción breve desde neumDesk.</span></div>
+        </div>
+      </div>
+
+      <!-- PLACEHOLDER 2 -->
+      <div class="affil-card affil-card--placeholder" aria-label="Partner slot — upload logo in neumDesk">
+        <div class="affil-card-logo affil-card-logo--ph">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="8" y="8" width="32" height="32" rx="4" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/><path d="M24 20v8M20 24h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="affil-card-body">
+          <div class="affil-card-name affil-card-name--ph"><span lang="en">Add partner</span><span lang="es">Añadir colaborador</span></div>
+          <div class="affil-card-desc affil-card-desc--ph"><span lang="en">Upload a logo and short description via neumDesk.</span><span lang="es">Suba el logotipo y una descripción breve desde neumDesk.</span></div>
+        </div>
+      </div>
+
+      <!-- PLACEHOLDER 3 -->
+      <div class="affil-card affil-card--placeholder" aria-label="Partner slot — upload logo in neumDesk">
+        <div class="affil-card-logo affil-card-logo--ph">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="8" y="8" width="32" height="32" rx="4" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/><path d="M24 20v8M20 24h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="affil-card-body">
+          <div class="affil-card-name affil-card-name--ph"><span lang="en">Add partner</span><span lang="es">Añadir colaborador</span></div>
+          <div class="affil-card-desc affil-card-desc--ph"><span lang="en">Upload a logo and short description via neumDesk.</span><span lang="es">Suba el logotipo y una descripción breve desde neumDesk.</span></div>
+        </div>
+      </div>
+
+    </div><!-- /.affil-grid -->
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-col-brand">
+      <img src="../logo.svg" alt="neumACt R&I" class="footer-logo-img">
+      <p class="footer-tagline">
+        <span lang="en">Servicio de Neumología<br>Hospital Universitario A Coruña<br>Área Sanitaria de A Coruña y Cee</span>
+        <span lang="es">Servicio de Neumología<br>Hospital Universitario A Coruña<br>Área Sanitaria de A Coruña y Cee</span>
+      </p>
+    </div>
+    <div class="footer-col-nav">
+      <p class="footer-nav-label"><span lang="en">Site</span><span lang="es">Sitio</span></p>
+      <nav>
+          <a href="/"><span lang="en">Home</span><span lang="es">Inicio</span></a>
+          <a href="/clinical/"><span lang="en">Research</span><span lang="es">Investigación</span></a>
+          <a href="/innovation/"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
+          <a href="/news/"><span lang="en">Articles</span><span lang="es">Artículos</span></a>
+          <a href="/team/"><span lang="en">Team</span><span lang="es">Equipo</span></a>
+      </nav>
+    </div>
+    <div class="footer-col-contact">
+      <p class="footer-nav-label"><span lang="en">Contact</span><span lang="es">Contacto</span></p>
+      <address class="footer-address">
+        <strong>Servicio de Neumología · CHUAC</strong>
+        As Xubias, 84 · 15006 A Coruña<br>Galicia, España<br>
+        <a href="/#contact" style="color:rgba(0,179,179,.55);text-decoration:none;margin-top:.5rem;display:inline-block;font-size:.75rem;transition:color .15s;" onmouseover="this.style.color='rgba(0,179,179,.85)'" onmouseout="this.style.color='rgba(0,179,179,.55)'">
+          <span lang="en">Research enquiries →</span><span lang="es">Consultas de investigación →</span>
+        </a>
+      </address>
+    </div>
+  </div>
+  <div class="footer-bottom-bar">
+    <p class="footer-copy">© 2026 neumACt R&amp;I · INIBIC · SERGAS</p>
+    <div class="footer-certs">
+      <span>GCP · ICH E6</span>
+      <span>CE MDR 2017/745</span>
+      <span>AEMPS</span>
+    </div>
+  </div>
+</footer>
+<div class="footer-legal" style="background:var(--navy-footer);max-width:1440px;margin:0 auto;padding:.75rem clamp(1.25rem,4vw,3rem);display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.04);">
+  <a href="/privacidad/" style="font-size:var(--fs-label);font-family:var(--ff-mono,'DM Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);text-decoration:none;"><span lang="en">Privacy</span><span lang="es">Privacidad</span></a>
+  <a href="/accesibilidad/" style="font-size:var(--fs-label);font-family:var(--ff-mono,'DM Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);text-decoration:none;"><span lang="en">Accessibility</span><span lang="es">Accesibilidad</span></a>
+  <a href="/aviso-legal/" style="font-size:var(--fs-label);font-family:var(--ff-mono,'DM Mono',monospace);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);text-decoration:none;"><span lang="en">Legal</span><span lang="es">Aviso legal</span></a>
+</div>
+<script>
+if(!localStorage.getItem('cookieOk')){
+  var cb=document.getElementById('cookieBanner');
+  if(cb){cb.style.display='flex';}
+}
+</script>
+<div id="cookieBanner" role="dialog" aria-label="Cookie notice"
+  style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9000;
+         background:rgba(4,44,83,.97);border-top:1px solid rgba(255,255,255,.08);
+         padding:1rem clamp(1.25rem,4vw,3rem);flex-wrap:wrap;align-items:center;
+         justify-content:space-between;gap:1rem;backdrop-filter:blur(8px);">
+  <p style="font-size:.8rem;color:rgba(255,255,255,.55);line-height:1.5;margin:0;max-width:680px;">
+    <span lang="en">This site uses essential cookies only. No tracking, no advertising.</span>
+    <span lang="es">Este sitio solo usa cookies esenciales. Sin rastreo, sin publicidad.</span>
+  </p>
+  <button onclick="document.getElementById('cookieBanner').style.display='none';localStorage.setItem('cookieOk','1')"
+    style="flex-shrink:0;padding:.45rem 1.1rem;background:#007A7A;color:#fff;border:none;
+           border-radius:100px;font-size:.75rem;font-weight:500;cursor:pointer;">
+    <span lang="en">Understood</span><span lang="es">Entendido</span>
+  </button>
+</div>
+
+<script>
+(function(){
+  var mob=document.getElementById('mobToggle'),
+      drawer=document.getElementById('mobDrawer'),overlay=document.getElementById('mobOverlay');
+  // header-enhance.js owns the scrolled-state scroll listener (RAF-
+  // throttled, direction-aware hide/reveal) and the drawer focus
+  // trap (MutationObserver on #mobDrawer's "open" class) -- this
+  // used to also run its own independent scroll listener doing the
+  // same .scrolled toggle. Removed.
+  function openD(){if(drawer)drawer.classList.add('open');if(overlay)overlay.classList.add('open');if(mob)mob.setAttribute('aria-expanded','true');document.body.style.overflow='hidden';}
+  function closeD(){if(drawer)drawer.classList.remove('open');if(overlay)overlay.classList.remove('open');if(mob)mob.setAttribute('aria-expanded','false');document.body.style.overflow='';}
+  if(mob)mob.addEventListener('click',function(){drawer&&drawer.classList.contains('open')?closeD():openD();});
+  if(overlay)overlay.addEventListener('click',closeD);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeD();});
+  function syncLang(l){document.querySelectorAll('.lt-btn').forEach(function(b){var a=b.dataset.lang===l;b.classList.toggle('lt-btn--active',a);b.setAttribute('aria-checked',String(a));});document.documentElement.lang=l==='es'?'es':'en';}
+  syncLang(document.documentElement.dataset.lang||'en');
+  var _orig=window.selectLang;
+  window.selectLang=function(l){if(_orig)_orig(l);syncLang(l);closeD();};
+})();
+</script>
+<script src="header-enhance.js" defer></script>
+<script>
+/* ── Reveal safety net — deliberately its own <script> block. ──
+   The main reveal observer is created at the END of a long inline
+   script; a thrown exception anywhere earlier in that block halts it
+   before the observer exists, and every .reveal element (hard-coded
+   opacity:0 in CSS) then stays invisible forever — i.e. a blank
+   page. Exceptions do NOT propagate across script-block boundaries,
+   so this block always runs: it recreates the observer if the main
+   one died, falls back to instant-reveal if IntersectionObserver
+   itself is unavailable, and as a last resort force-reveals anything
+   still hidden in the viewport 2.5s after load. */
+(function(){
+  var recreated=false;
+  try{
+    if(!window._revealObserver){
+      window._revealObserver=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');window._revealObserver.unobserve(e.target);}});},{threshold:.08,rootMargin:'0px 0px -32px 0px'});
+      document.querySelectorAll('.reveal').forEach(function(el){window._revealObserver.observe(el);});
+      recreated=true;
+    }
+  }catch(err){
+    // IntersectionObserver unavailable or threw — reveal everything now,
+    // no observer to rely on for below-fold content later.
+    document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in');});
+    return;
+  }
+  // Last-resort sweep 2.5s after load: if the primary observer never
+  // ran (an exception earlier in its own script block killed it before
+  // it could observe anything), reveal what's on screen AND wire a
+  // cheap scroll fallback so below-the-fold .reveal elements don't stay
+  // permanently invisible — the original net only handled the current
+  // viewport, which left a blank strip on scroll when the observer died.
+  setTimeout(function(){
+    var orphans=document.querySelectorAll('.reveal:not(.in)');
+    if(!orphans.length)return;
+    function sweep(){
+      document.querySelectorAll('.reveal:not(.in)').forEach(function(el){
+        var r=el.getBoundingClientRect();
+        if(r.top<window.innerHeight&&r.bottom>0)el.classList.add('in');
+      });
+      if(!document.querySelector('.reveal:not(.in)')){
+        window.removeEventListener('scroll',sweep);
+      }
+    }
+    sweep();
+    // Only attach the scroll fallback if the observer clearly isn't
+    // doing its job (orphans still exist after it should have run).
+    if(document.querySelector('.reveal:not(.in)')){
+      window.addEventListener('scroll',sweep,{passive:true});
+    }
+  },2500);
+})();
+</script>
 </body>
 </html>

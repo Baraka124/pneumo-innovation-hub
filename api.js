@@ -105,6 +105,29 @@ function setError(el, msg = 'Could not load data. Please try again later.') {
       </svg>
       ${msg}
     </div>`;
+  showApiDownBanner();
+}
+
+/* One sitewide banner when live data is unavailable. Before this, a
+   full backend outage rendered as five independent "could not load"
+   boxes scattered down the page — technically accurate, but it reads
+   as five separate broken features rather than one upstream outage.
+   The per-widget messages stay (they explain each empty area locally);
+   this adds the single global explanation, shown once, dismissible. */
+function showApiDownBanner() {
+  if (document.getElementById('apiDownBanner')) return;
+  const b = document.createElement('div');
+  b.id = 'apiDownBanner';
+  b.setAttribute('role', 'status');
+  b.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:2500;' +
+    'background:#0C3868;color:#fff;font-family:var(--ff-body,sans-serif);' +
+    'font-size:.8125rem;padding:.7rem 3rem .7rem 1.25rem;text-align:center;' +
+    'box-shadow:0 -2px 12px rgba(7,17,31,.25);';
+  b.innerHTML =
+    '<span lang="en">Live data is temporarily unavailable — page content may be incomplete. Please try again shortly.</span>' +
+    '<span lang="es">Los datos en vivo no están disponibles temporalmente; el contenido puede estar incompleto. Inténtelo de nuevo en breve.</span>' +
+    '<button aria-label="Dismiss" onclick="this.parentNode.remove()" style="position:absolute;right:.75rem;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,.7);font-size:1.1rem;cursor:pointer;line-height:1;">×</button>';
+  document.body.appendChild(b);
 }
 
 // ─────────────────────────────────────────────
@@ -663,6 +686,33 @@ async function loadTeamLeads() {
   } catch(err) { console.error('Leads load failed:',err); grid.innerHTML='<p class="state-empty">Unable to load team profiles.</p>'; }
 }
 
+/* Person structured data for the whole team, injected once members
+   load (the roster is API-driven, so this can't live statically in
+   the HTML head). Each member becomes a schema.org Person affiliated
+   with the department; ORCID becomes sameAs where present — the
+   standard way research-group members get machine-readably linked to
+   their institution and identifier graph. */
+function injectTeamSchema(members) {
+  if (document.getElementById('teamPersonSchema') || !members.length) return;
+  const persons = members.map(m => {
+    const p = {
+      '@type': 'Person',
+      'name': m.full_name || m.display_name,
+      'affiliation': { '@type': 'MedicalOrganization',
+        'name': 'Servicio de Neumología — Hospital Universitario A Coruña' }
+    };
+    if (m.specialization) p.jobTitle = m.specialization;
+    if (m.orcid_id) p.sameAs = 'https://orcid.org/' + String(m.orcid_id).trim();
+    if (m.public_photo_url) p.image = m.public_photo_url;
+    return p;
+  });
+  const s = document.createElement('script');
+  s.type = 'application/ld+json';
+  s.id = 'teamPersonSchema';
+  s.textContent = JSON.stringify({ '@context': 'https://schema.org', '@graph': persons });
+  document.head.appendChild(s);
+}
+
 async function loadTeamGroup() {
   const grid = document.getElementById('teamGroup');
   if (!grid) return;
@@ -671,6 +721,7 @@ async function loadTeamGroup() {
     const group = (data||[]).filter(m => !m.coordinates_line);
     if (!group.length) { grid.style.display='none'; return; }
     window._teamGroupData = group; // for the click-to-expand profile modal
+    injectTeamSchema(data || []);
     const roleLabel = { attending_physician:'Attending Physician', medical_resident:'Resident', fellow:'Fellow', nurse_practitioner:'Nurse Practitioner', studies_coordinator:'Studies Coordinator', data_manager:'Data Manager', labtech:'Lab Technician', biomedical_engineer:'Biomedical Engineer', administrator:'Administrator' };
     grid.style.transition = 'none';
     grid.style.opacity = '0';

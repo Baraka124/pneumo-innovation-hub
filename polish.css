@@ -853,3 +853,24 @@ html[data-lang="es"] .team-member::after{ content:"Ver perfil →"; }
 .scholar-orcid:hover{ background:rgba(166,206,57,.1); border-color:#A6CE39; }
 .scholar-orcid span{ color:var(--navy,#0C3868); }
 .scholar-id{ font-family:var(--ff-mono,'DM Mono',monospace); font-size:.74rem; color:var(--ink-3,#6B6B6B); }
+
+/* ════════════════════════════════════════════════════════════════
+   REDUCED MOTION — sitewide, comprehensive
+   The two narrow rules above predate this session's additions
+   (spring-overshoot lang knob, header hide/reveal transform, dropdown
+   fade, language crossfade, GPU nav pill). Someone with a vestibular
+   disorder gets all of that unless motion is disabled wholesale.
+   Content stays fully functional: reveals show instantly, the header
+   simply stays put, state changes snap rather than animate.
+   ════════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+    scroll-behavior:auto !important;
+  }
+  .reveal{ opacity:1 !important; transform:none !important; }
+  .hdr.hdr-hidden{ transform:none !important; }   /* header never slides away */
+  .hdr-nav-pill{ display:none; }                   /* hover pill is pure motion-decoration */
+}

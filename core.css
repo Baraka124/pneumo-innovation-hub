@@ -1,3 +1,35 @@
+/* ══════════════════════════════════════════════════════════════
+   CANONICAL DESIGN TOKENS — single source of truth
+   Every page used to duplicate this palette in its own inline
+   <style> (the --ink-4 contrast fix needed SIX file edits because
+   of that), and privacidad/accesibilidad/aviso-legal defined no
+   variables at all — relying on scattered per-rule fallbacks.
+   This block gives every page the full token set from one place.
+   The remaining per-page inline :root blocks carry identical values
+   and are slated for removal; new token changes belong HERE.
+   ══════════════════════════════════════════════════════════════ */
+:root{
+  --ease-clinical:cubic-bezier(.16,1,.3,1);
+  --navy:#0C3868; --navy-2:#0C447C; --navy-3:#185FA5; --navy-footer:#07111F;
+  --teal:#007A7A; --teal-2:#00B3B3; --teal-lt:#E2F0F0; --teal-mid:rgba(0,122,122,.12);
+  --blue-50:#E6F1FB; --blue-100:#B5D4F4; --blue-200:#85B7EB; --blue-400:#378ADD; --blue-600:#185FA5; --blue-800:#0C447C; --blue-900:#042C53;
+  --white:#FFFFFF; --surface:#F7F6F3;
+  --border-l:rgba(0,0,0,.06); --border-d:rgba(255,255,255,.1);
+  --ink:#111111; --ink-2:#3A3A3A; --ink-3:#6B6B6B; --ink-4:#767676;
+  --accent:var(--teal);
+  --ff-display:'Fraunces',Georgia,serif;
+  --ff-body:'DM Sans',system-ui,sans-serif;
+  --ff-mono:'DM Mono','Courier New',monospace;
+  --hdr:68px; --max:1380px; --pad:clamp(1.25rem,4vw,3rem);
+  --r-xs:4px; --r-sm:6px; --r-md:8px; --r-lg:12px;
+  --fs-label:.8125rem; --fs-meta:.9375rem; --fs-body-sm:1rem;
+  --fs-body:1.0625rem; --fs-body-lg:1.1875rem;
+  --fs-h4:1.375rem; --fs-h3:1.75rem;
+  --fs-h2:clamp(2rem,3.2vw,2.5rem); --fs-h1:clamp(2.5rem,4.8vw,3.5rem);
+  --fs-hero-title:clamp(1.875rem,2.6vw,2.25rem);
+  --rule-l:var(--border-l); --rule-d:var(--border-d);
+}
+
 /* core.css — shared design-system rules extracted from page <style> blocks.
    Identical across all pages; pulled out to (a) de-duplicate production CSS
    and (b) keep each page's inline CSS small. Loaded before polish.css. */
@@ -84,12 +116,16 @@ body{padding-top:68px;}
 .mob-toggle span{display:block;width:16px;height:1.5px;background:#fff;transition:all .25s;}
 .mob-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1050;opacity:0;pointer-events:none;transition:opacity .25s;}
 .mob-overlay.open{opacity:1;pointer-events:auto;}
-.mob-drawer{position:fixed;top:0;right:-100%;bottom:0;width:min(300px,84vw);background:var(--navy-2);z-index:1100;transition:right .28s var(--ease-clinical);display:flex;flex-direction:column;padding-top:88px;overflow-y:auto;}
+.mob-drawer{position:fixed;top:0;right:-100%;bottom:0;width:min(320px,86vw);background:linear-gradient(180deg,var(--navy-2,#0C447C),var(--navy,#0C3868));z-index:1100;transition:right .32s var(--ease-clinical);display:flex;flex-direction:column;padding-top:84px;overflow-y:auto;box-shadow:-12px 0 40px rgba(7,17,31,.35);}
 .mob-drawer.open{right:0;}
-.mob-drawer-nav{padding:1.25rem 1rem;display:flex;flex-direction:column;gap:.2rem;}
-.mob-drawer-nav a{display:block;padding:.7rem .875rem;font-family:var(--ff-body,'DM Sans',sans-serif);font-size:var(--fs-body-sm);font-weight:500;color:rgba(255,255,255,.82);text-decoration:none;border-radius:var(--r-sm);transition:background .15s,color .15s;}
-.mob-drawer-nav a:hover,.mob-drawer-nav a.current{background:rgba(255,255,255,.12);color:#fff;}
-.mob-lang{display:flex;align-items:center;gap:.4rem;padding:1.25rem;border-top:1px solid rgba(255,255,255,.12);margin-top:auto;}
+.mob-drawer-nav{padding:1.5rem 1.25rem;display:flex;flex-direction:column;gap:.125rem;}
+.mob-drawer-nav a{position:relative;display:block;padding:.875rem 1rem .875rem 1.125rem;font-family:var(--ff-body,'DM Sans',sans-serif);font-size:1rem;font-weight:500;letter-spacing:.005em;color:rgba(255,255,255,.82);text-decoration:none;border-radius:10px;transition:background .18s,color .18s,padding-left .18s;}
+.mob-drawer-nav a:hover{background:rgba(255,255,255,.08);color:#fff;padding-left:1.375rem;}
+.mob-drawer-nav a.current{background:rgba(255,255,255,.12);color:#fff;}
+.mob-drawer-nav a.current::before{content:'';position:absolute;left:0;top:.875rem;bottom:.875rem;width:3px;border-radius:2px;background:var(--teal-2,#00B3B3);}
+.mob-lang{display:flex;align-items:center;gap:.5rem;padding:1.25rem;border-top:1px solid rgba(255,255,255,.12);margin-top:auto;}
+.mob-lang .lt-btn{flex:1;padding:.6rem 0;text-align:center;border:1px solid rgba(255,255,255,.18);}
+.mob-lang .lt-btn.lt-btn--active{border-color:#fff;}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;font-size:16px;}
 .reveal.in{opacity:1;transform:none;}
