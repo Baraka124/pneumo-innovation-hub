@@ -510,10 +510,17 @@ p{ line-height:var(--lh-normal); }
   color:var(--teal,#007A7A); position:relative;
 }
 .btn-text.on-dark{ color:var(--teal-2,#00B3B3); }
+/* The underline reveal is now an ECG trace (6 — respiratory design
+   language): same left-to-right scaleX motion as before, but the bar
+   is masked to a cardiac blip. currentColor via background keeps the
+   on-dark teal variant working unchanged. */
 .btn-text::after{
-  content:""; position:absolute; left:0; bottom:-2px; height:1.5px; width:100%;
-  background:currentColor; transform:scaleX(0); transform-origin:left;
-  transition:transform .35s var(--ease-clinical);
+  content:""; position:absolute; left:0; bottom:-6px; height:10px; width:100%;
+  background:currentColor;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='10' viewBox='0 0 64 10'%3E%3Cpath d='M0 7 H22 L26 7 L29 1.5 L32 9 L35 7 H64' fill='none' stroke='%23000' stroke-width='1.4'/%3E%3C/svg%3E") repeat-x left center / 64px 10px;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='10' viewBox='0 0 64 10'%3E%3Cpath d='M0 7 H22 L26 7 L29 1.5 L32 9 L35 7 H64' fill='none' stroke='%23000' stroke-width='1.4'/%3E%3C/svg%3E") repeat-x left center / 64px 10px;
+  transform:scaleX(0); transform-origin:left;
+  transition:transform .45s var(--ease-clinical);
 }
 .btn-text:hover::after{ transform:scaleX(1); }
 
@@ -873,4 +880,78 @@ html[data-lang="es"] .team-member::after{ content:"Ver perfil →"; }
   .reveal{ opacity:1 !important; transform:none !important; }
   .hdr.hdr-hidden{ transform:none !important; }   /* header never slides away */
   .hdr-nav-pill{ display:none; }                   /* hover pill is pure motion-decoration */
+}
+
+/* ════════════════════════════════════════════════════════════════
+   RESPIRATORY DESIGN LANGUAGE — Phase 1 signature moves
+   A pulmonology group's site should quietly evoke its discipline:
+   the hero breathes, section rules are expiratory curves, link
+   underlines trace like an ECG, and the footer is anchored to
+   A Coruña. All decorative layers are aria-invisible and fully
+   disabled under prefers-reduced-motion (global block above kills
+   animation durations; the breathing layer is additionally gated
+   here so it never even paints motion for those users).
+   ════════════════════════════════════════════════════════════════ */
+
+/* 1 ── The hero breathes: a faint teal radial layer inhales/exhales
+   on a slow tidal rhythm (~5.5s ≈ resting respiratory rate). Kept
+   at very low amplitude — felt, not seen. */
+.hero::after{
+  content:''; position:absolute; inset:-20%;
+  background:radial-gradient(ellipse 55% 45% at 68% 42%, rgba(0,179,179,.10), transparent 70%);
+  pointer-events:none; z-index:0;
+  animation:heroBreathe 5.5s ease-in-out infinite;
+}
+@keyframes heroBreathe{
+  0%,100%{ transform:scale(1);    opacity:.55; }
+  46%    { transform:scale(1.06); opacity:.95; }  /* inhale slightly quicker */
+  58%    { transform:scale(1.06); opacity:.95; }  /* brief pause at full */
+}
+@media (prefers-reduced-motion: reduce){
+  .hero::after{ animation:none; opacity:.7; }
+}
+
+/* 2 ── Spirometry section divider: the classic flow–volume loop's
+   expiratory limb (sharp peak, long graceful descent) as a hairline
+   rule. Use <div class="spiro-rule" aria-hidden="true"></div>
+   between major sections. */
+.spiro-rule{
+  height:32px; margin:0 auto; max-width:1380px;
+  padding:0 clamp(1.25rem,4vw,3rem);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 32' preserveAspectRatio='none'%3E%3Cpath d='M0 28 C 18 27 30 22 38 6 C 44 -2 52 2 60 8 C 100 24 220 27 320 28' fill='none' stroke='%23007A7A' stroke-opacity='.30' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-size:100% 100%;
+}
+.on-dark .spiro-rule, .hero .spiro-rule{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 32' preserveAspectRatio='none'%3E%3Cpath d='M0 28 C 18 27 30 22 38 6 C 44 -2 52 2 60 8 C 100 24 220 27 320 28' fill='none' stroke='%23FFFFFF' stroke-opacity='.22' stroke-width='1.5'/%3E%3C/svg%3E");
+}
+
+/* 6 ── ECG hover underline lives in the original .btn-text::after
+   rule above (search "ECG trace") — implemented as a currentColor
+   mask so the on-dark variant inherits correctly. Defining it here
+   as a second .btn-text block tripped this repo's own CI duplicate-
+   selector check the moment it was added, which is exactly the
+   split-definition disease that CI exists to block. */
+
+/* 7 ── A Coruña anchor: the Torre de Hércules (the world's oldest
+   working lighthouse, the city's mark) etched faintly into the
+   footer's right edge. Pure CSS layer — no markup, no reader noise. */
+.site-footer{ position:relative; }
+.site-footer::before{
+  content:''; position:absolute; right:clamp(1rem,5vw,4rem); bottom:0;
+  width:110px; height:200px; pointer-events:none; opacity:.09;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 110 200'%3E%3Cg fill='none' stroke='%23FFFFFF' stroke-width='2'%3E%3Cpath d='M44 200 L48 60 H62 L66 200'/%3E%3Cpath d='M46 90 H64 M45 120 H65 M45 150 H66 M44 180 H67'/%3E%3Crect x='50' y='44' width='10' height='16'/%3E%3Cpath d='M47 44 H63 M49 36 H61 L59 44 H51 Z'/%3E%3Cpath d='M55 30 V36 M40 26 L48 32 M70 26 L62 32'/%3E%3Cpath d='M20 200 H90'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-size:contain; background-position:bottom right;
+}
+@media(max-width:720px){ .site-footer::before{ display:none; } }
+
+/* 3 ── Cross-document View Transitions: the whole multi-page site
+   morphs between pages like an app — content crossfades while the
+   browser keeps paint continuity. Pure progressive enhancement
+   (Chrome/Edge today; other browsers simply full-load as before).
+   Kept fast and subtle; disabled for reduced motion. */
+@view-transition{ navigation:auto; }
+::view-transition-old(root){ animation-duration:.22s; }
+::view-transition-new(root){ animation-duration:.28s; }
+@media (prefers-reduced-motion: reduce){
+  @view-transition{ navigation:none; }
 }

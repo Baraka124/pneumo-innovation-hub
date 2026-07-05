@@ -926,17 +926,20 @@ async function loadOpportunities() {
 
 async function loadLiveStats() {
   if (PAGE !== 'index') return;
+  const tickerFacts = [];   /* 9 ── "department at work" hero ticker */
   try {
     const linesRes = await apiFetch('/api/research-lines/website');
     const lineCount = linesRes.data?.length || 0;
     if (lineCount > 0) {
       _setStat('statLines', lineCount);
+      tickerFacts.push({en:`${lineCount} active research lines`, es:`${lineCount} líneas de investigación activas`});
       // Sum active trials across all lines
       const totalActive = linesRes.data.reduce((sum, l) => sum + (l.active_trials || 0), 0);
       if (totalActive > 0) {
         _setStat('statTrials', totalActive + '+');
         _setStat('statTrials2', totalActive + '+');
         _setStat('statTrialsBig', totalActive + '+');
+        tickerFacts.push({en:`${totalActive}+ clinical trials enrolling`, es:`${totalActive}+ ensayos clínicos reclutando`});
       }
     }
 
@@ -954,11 +957,41 @@ async function loadLiveStats() {
       const pubsRes = await apiFetch('/api/news/website?type=publication&limit=30');
       const pubCount = pubsRes.data?.length || 0;
       if (pubCount > 0) _setStat('statPubs', pubCount >= 30 ? '30+' : pubCount);
+      const newest = (pubsRes.data || [])[0];
+      const when = newest && (newest.published_at || newest.created_at);
+      if (when) {
+        const days = Math.max(0, Math.round((Date.now() - new Date(when)) / 86400000));
+        tickerFacts.push(
+          days === 0 ? {en:'latest publication: today', es:'última publicación: hoy'} :
+          {en:`latest publication ${days} day${days===1?'':'s'} ago`,
+           es:`última publicación hace ${days} día${days===1?'':'s'}`});
+      }
     } catch { /* keep static fallback */ }
 
+    startHeroTicker(tickerFacts);
   } catch (err) {
     console.warn('Live stats not available:', err.message);
   }
+}
+
+/* 9 ── Quiet proof-of-life line in the hero, cycling real facts drawn
+   from the data loadLiveStats already fetches. Crossfades every 4s;
+   under reduced motion it just shows the first fact, static. */
+function startHeroTicker(facts) {
+  const el = document.getElementById('liveTicker');
+  if (!el || !facts.length) return;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let i = 0;
+  function render(f) {
+    el.innerHTML = `<span lang="en">${f.en}</span><span lang="es">${f.es}</span>`;
+  }
+  render(facts[0]);
+  el.style.opacity = '1';
+  if (reduced || facts.length < 2) return;
+  setInterval(() => {
+    el.style.opacity = '0';
+    setTimeout(() => { i = (i + 1) % facts.length; render(facts[i]); el.style.opacity = '1'; }, 350);
+  }, 4000);
 }
 
 /** Update any element with id matching statId */
