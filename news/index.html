@@ -476,6 +476,24 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
       .blog-hero-feature{height:180px;}
     }
 
+    /* ── PHASE 2 · 8: publications timeline ── */
+    .pub-timeline{
+      display:flex; align-items:flex-end; gap:clamp(.75rem,3vw,2.25rem);
+      padding:1.5rem .25rem 0; border-bottom:1.5px solid var(--rule-l);
+      overflow-x:auto;
+    }
+    .pt-col{ display:flex; flex-direction:column; align-items:center; gap:.3rem; padding-bottom:.75rem; position:relative; }
+    .pt-col::after{ content:''; position:absolute; bottom:-1.5px; left:50%; transform:translateX(-50%); width:1.5px; height:6px; background:var(--rule-l); }
+    .pt-dots{ display:flex; flex-direction:column-reverse; gap:5px; }
+    .pt-dot{
+      width:11px; height:11px; border-radius:50%; border:none; cursor:pointer;
+      background:var(--teal); opacity:.75; padding:0;
+      transition:transform .18s var(--ease-clinical), opacity .18s;
+    }
+    .pt-dot:hover,.pt-dot:focus-visible{ transform:scale(1.5); opacity:1; }
+    .pt-count{ font-family:var(--ff-mono); font-size:.68rem; color:var(--teal); font-weight:500; }
+    .pt-year{ font-family:var(--ff-mono); font-size:.72rem; letter-spacing:.06em; color:var(--ink-4); }
+
     /* ── FILTER BAR ── */
     .filter-strip{
       background:var(--white);border-bottom:1px solid var(--rule-l);
@@ -1190,6 +1208,13 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
     <div id="pubHighlightsList" style="border-top:1px solid var(--border-l);"></div>
   </div>
 
+  <!-- ═══ PUBLICATIONS TIMELINE (Phase 2 #8) ═══════════════ -->
+  <div class="container" id="pubTimelineWrap" style="display:none;padding-top:3rem;">
+    <p class="eyebrow" style="margin-bottom:.35rem;"><span lang="en">Output over time</span><span lang="es">Producción en el tiempo</span></p>
+    <p style="font-size:.8125rem;color:var(--ink-3);margin:0 0 1.25rem;"><span lang="en">Each dot is a peer-reviewed publication — click to open.</span><span lang="es">Cada punto es una publicación revisada por pares; haga clic para abrirla.</span></p>
+    <div id="pubTimeline" class="pub-timeline" role="list"></div>
+  </div>
+
   <!-- MAIN CONTENT -->
   <div class="container">
     <div class="blog-layout">
@@ -1818,6 +1843,7 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
       populateSidebar();
       populateHeroSpotlight();
       populatePubHighlights();
+      populatePubTimeline();
       renderFeed();
     };
 
@@ -1839,6 +1865,47 @@ window.addEventListener('unhandledrejection',function(){try{document.querySelect
         row.addEventListener('click', function(e){
           e.preventDefault();
           openPost(pubs[parseInt(row.dataset.idx, 10)]);
+        });
+      });
+      wrap.style.display = '';
+    }
+
+    /* ── PHASE 2 · 8: Publications as a timeline artifact ─────────
+       A horizontal year-axis: one column per year, one dot per
+       paper stacked upward — output over time made visible at a
+       glance instead of buried in a list. Dots carry the title as
+       a native tooltip and open the post on click/Enter. Built
+       from the same _all array the feed already holds. */
+    function populatePubTimeline(){
+      var wrap = document.getElementById('pubTimelineWrap');
+      var el = document.getElementById('pubTimeline');
+      if(!wrap || !el) return;
+      var pubs = _all.filter(function(p){ return p.post_type === 'publication'; });
+      if(pubs.length < 3) return;   /* below this it reads as noise */
+
+      var byYear = {};
+      pubs.forEach(function(p){
+        var d = p.published_at || p.created_at;
+        if(!d) return;
+        var y = String(new Date(d).getFullYear());
+        (byYear[y] = byYear[y] || []).push(p);
+      });
+      var years = Object.keys(byYear).sort();
+      if(years.length < 2) return;  /* one column isn't a timeline */
+
+      el.innerHTML = years.map(function(y){
+        var dots = byYear[y].map(function(p){
+          return '<button class="pt-dot" role="listitem" title="'+esc(p.title||'')+'" data-pid="'+esc(String(p.id))+'" aria-label="'+esc(p.title||'Publication')+', '+y+'"></button>';
+        }).join('');
+        return '<div class="pt-col"><div class="pt-dots">'+dots+'</div>'+
+               '<div class="pt-count">'+byYear[y].length+'</div>'+
+               '<div class="pt-year">'+y+'</div></div>';
+      }).join('');
+
+      el.querySelectorAll('.pt-dot').forEach(function(d){
+        d.addEventListener('click', function(){
+          var p = pubs.find(function(x){ return String(x.id) === d.dataset.pid; });
+          if(p) openPost(p);
         });
       });
       wrap.style.display = '';

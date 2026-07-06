@@ -955,3 +955,22 @@ html[data-lang="es"] .team-member::after{ content:"Ver perfil →"; }
 @media (prefers-reduced-motion: reduce){
   @view-transition{ navigation:none; }
 }
+
+/* ════════════════════════════════════════════════════════════════
+   PHASE 2 · 4 — RESEARCH-LINE FINGERPRINTS
+   Each line card carries a generative waveform derived
+   deterministically from its own data (line number seeds the PRNG,
+   active-trial count drives the energy) — unique, meaningful artwork
+   that updates itself as the science evolves, in place of stock
+   imagery. Rendered by buildLineFingerprint() in api.js as three
+   tapered sine strokes: a breath. Sits as a low-contrast watermark
+   in the card's top-right; currentColor keeps it on-palette.
+   ════════════════════════════════════════════════════════════════ */
+.line-card{ position:relative; }
+.line-fp{
+  position:absolute; top:.75rem; right:.75rem; width:42%; max-width:280px;
+  color:var(--teal,#007A7A); opacity:.5; pointer-events:none;
+  transition:opacity .3s var(--ease-clinical);
+}
+.line-fp svg{ display:block; width:100%; height:auto; }
+.line-card:hover .line-fp{ opacity:.85; }

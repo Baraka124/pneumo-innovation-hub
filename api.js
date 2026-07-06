@@ -186,6 +186,42 @@ const PAGE = (() => {
 // 1. RESEARCH LINES (index.html + clinical.html)
 // ─────────────────────────────────────────────
 
+/* 4 ── Research-line "fingerprint": generative, deterministic artwork
+   derived from the line's own data — line_number seeds the pattern,
+   active_trials drives amplitude/energy, the name's length shifts
+   phase. Layered breathing waveforms: every line gets a unique,
+   meaningful mark that changes as its science evolves. No stock
+   imagery, conceptually honest. */
+function _fpRand(seed) {           // mulberry32 — tiny seeded PRNG
+  return function () {
+    seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+    let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+function buildLineFingerprint(line, w = 280, h = 60) {
+  const seed = (line.line_number || 1) * 7919 + (line.name || '').length * 131;
+  const rnd = _fpRand(seed);
+  const energy = Math.min(1, .35 + (line.active_trials || 0) * .12);
+  let paths = '';
+  const waves = 3;
+  for (let k = 0; k < waves; k++) {
+    const amp = h * .18 * energy * (.6 + rnd() * .8);
+    const freq = 1.5 + rnd() * 2.5;
+    const phase = rnd() * Math.PI * 2;
+    const yBase = h * (.3 + k * .2);
+    let d = `M0 ${yBase.toFixed(1)}`;
+    for (let x = 0; x <= w; x += 8) {
+      const y = yBase + Math.sin((x / w) * Math.PI * 2 * freq + phase) * amp
+                      * Math.sin((x / w) * Math.PI);       // taper at edges: a breath
+      d += ` L${x} ${y.toFixed(1)}`;
+    }
+    paths += `<path d="${d}" fill="none" stroke="currentColor" stroke-width="1.2" opacity="${(.5 - k * .13).toFixed(2)}"/>`;
+  }
+  return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-hidden="true">${paths}</svg>`;
+}
+
 async function loadResearchLines() {
   const indexGrid    = document.getElementById('researchLinesGrid');
   const clinicalList = document.getElementById('researchLinesList');
@@ -237,6 +273,7 @@ async function loadResearchLines() {
         }
         return `
           <a href="/line/?id=${line.id}" class="line-card reveal">
+            <div class="line-fp" aria-hidden="true">${buildLineFingerprint(line)}</div>
             <div class="line-num">${num}</div>
             <div class="line-body">
               <div class="line-title">${escHtml(displayName)}</div>
@@ -711,6 +748,102 @@ function injectTeamSchema(members) {
   s.id = 'teamPersonSchema';
   s.textContent = JSON.stringify({ '@context': 'https://schema.org', '@graph': persons });
   document.head.appendChild(s);
+}
+
+/* PHASE 2 · 5 — The group as a constellation. Research groups ARE
+   networks; this shows it. Deterministic radial layout (no physics,
+   no jitter between visits): line hubs evenly spaced on an outer
+   ring, each hub's coordinator placed just inside it, remaining
+   members as a quiet inner orbit around the department core.
+   Hovering a hub brightens its edge + lead. Pure SVG from the same
+   two endpoints the page already calls. */
+async function loadTeamConstellation() {
+  const host = document.getElementById('teamConstellation');
+  const wrap = document.getElementById('constellationWrap');
+  if (!host || !wrap) return;
+  try {
+    const [linesRes, teamRes] = await Promise.all([
+      apiFetch('/api/research-lines/website'),
+      apiFetch('/api/team/website')
+    ]);
+    const lines = linesRes.data || [];
+    const team = teamRes.data || [];
+    if (lines.length < 2) return;
+
+    const W = 900, H = 560, cx = W/2, cy = H/2;
+    const Rhub = 215, Rcoord = 150, Rorbit = 78;
+    const others = team.filter(m => !m.coordinates_line);
+    let edges = '', hubs = '', coords = '', orbit = '';
+
+    lines.forEach((l, i) => {
+      const a = -Math.PI/2 + (i / lines.length) * Math.PI * 2;
+      const hx = cx + Math.cos(a)*Rhub, hy = cy + Math.sin(a)*Rhub;
+      const kx = cx + Math.cos(a)*Rcoord, ky = cy + Math.sin(a)*Rcoord;
+      const num = 'L' + String(l.line_number).padStart(2,'0');
+      const name = escHtml(l.short_name || l.name || '');
+      const coordName = l.coordinator?.full_name ? escHtml(l.coordinator.full_name) : '';
+      const g = 'cg' + i;
+      edges += `<line class="const-edge" data-g="${g}" x1="${cx}" y1="${cy}" x2="${kx.toFixed(1)}" y2="${ky.toFixed(1)}"/>`;
+      edges += `<line class="const-edge" data-g="${g}" x1="${kx.toFixed(1)}" y1="${ky.toFixed(1)}" x2="${hx.toFixed(1)}" y2="${hy.toFixed(1)}"/>`;
+      if (coordName) coords += `
+        <g class="const-coord" data-g="${g}">
+          <circle cx="${kx.toFixed(1)}" cy="${ky.toFixed(1)}" r="6"/>
+          <text x="${kx.toFixed(1)}" y="${(ky + (hy>cy?18:-12)).toFixed(1)}">${coordName}</text>
+        </g>`;
+      hubs += `
+        <a href="/line/?id=${l.id}" class="const-hub" data-g="${g}">
+          <circle cx="${hx.toFixed(1)}" cy="${hy.toFixed(1)}" r="17"/>
+          <text class="const-hub-num" x="${hx.toFixed(1)}" y="${(hy+4).toFixed(1)}">${num}</text>
+          <text class="const-hub-name" x="${hx.toFixed(1)}" y="${(hy + (hy>cy?36:-26)).toFixed(1)}">${name}</text>
+        </a>`;
+    });
+
+    others.forEach((m, i) => {
+      const a = (i / Math.max(others.length,1)) * Math.PI * 2 + 0.35;
+      const ox = cx + Math.cos(a)*Rorbit, oy = cy + Math.sin(a)*Rorbit;
+      orbit += `<circle class="const-member" cx="${ox.toFixed(1)}" cy="${oy.toFixed(1)}" r="3.2"><title>${escHtml(m.full_name || '')}</title></circle>`;
+    });
+
+    host.innerHTML = `
+    <svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block;">
+      <style>
+        .const-edge{stroke:rgba(255,255,255,.14);stroke-width:1;transition:stroke .25s;}
+        .const-hub circle{fill:rgba(0,179,179,.14);stroke:#00B3B3;stroke-width:1.4;transition:fill .25s;}
+        .const-hub:hover circle,.const-hub:focus circle{fill:rgba(0,179,179,.4);}
+        .const-hub-num{fill:#fff;font:600 11px 'DM Mono',monospace;text-anchor:middle;}
+        .const-hub-name{fill:rgba(255,255,255,.55);font:500 11px 'DM Sans',sans-serif;text-anchor:middle;}
+        .const-coord circle{fill:#fff;opacity:.75;transition:opacity .25s;}
+        .const-coord text{fill:rgba(255,255,255,.45);font:400 10px 'DM Sans',sans-serif;text-anchor:middle;transition:fill .25s;}
+        .const-member{fill:rgba(255,255,255,.30);}
+        circle.const-core{fill:rgba(0,179,179,.9);}
+        text.const-core-t{fill:rgba(255,255,255,.7);font:600 10px 'DM Mono',monospace;text-anchor:middle;letter-spacing:.1em;}
+        g[data-lit="1"] .const-edge, .const-edge[data-lit="1"]{stroke:rgba(0,179,179,.75);}
+      </style>
+      <g id="constEdges">${edges}</g>
+      ${orbit}
+      <circle class="const-core" cx="${cx}" cy="${cy}" r="8"/>
+      <text class="const-core-t" x="${cx}" y="${cy-16}">NEUMOLOGÍA</text>
+      ${coords}
+      ${hubs}
+    </svg>`;
+
+    // Hover a hub -> light its two edges + coordinator
+    host.querySelectorAll('.const-hub').forEach(hub => {
+      const g = hub.dataset.g;
+      const lit = host.querySelectorAll(`[data-g="${g}"]`);
+      hub.addEventListener('mouseenter', () => lit.forEach(el => {
+        if (el.classList.contains('const-edge')) el.setAttribute('data-lit','1');
+        if (el.classList.contains('const-coord')) el.querySelector('text').style.fill = '#00B3B3';
+      }));
+      hub.addEventListener('mouseleave', () => lit.forEach(el => {
+        el.removeAttribute('data-lit');
+        if (el.classList.contains('const-coord')) el.querySelector('text').style.fill = '';
+      }));
+    });
+    wrap.style.display = '';
+  } catch (err) {
+    console.warn('Constellation unavailable:', err.message);
+  }
 }
 
 async function loadTeamGroup() {
@@ -1517,6 +1650,7 @@ document.addEventListener('DOMContentLoaded', () => {
     case 'team':
       loadTeamLeads();
       loadTeamGroup();
+      loadTeamConstellation();
       loadPublicationStrip();
       loadOpportunities();
       break;
