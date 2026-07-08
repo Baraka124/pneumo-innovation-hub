@@ -1486,30 +1486,68 @@ async function loadHeaderResearchDropdown(isRetry = false) {
     }
     menu.style.transition = 'none';
     menu.style.opacity = '0';
-    // Coordinator avatar + active-trial count surfaced here rather than
-    // a flat number+name link — both come from the exact same API
-    // response the homepage's research-area grid already reads
-    // (loadResearchLines() above), just under-displayed here before.
-    // buildAvatar(..., 20) gives a small real-photo-or-monogram circle
-    // that matches the homepage's treatment at a size that fits a
-    // dense dropdown row. The "view all" link lives in its own fixed
-    // element outside this scrollable container (see #hdrResearchLinesAll)
-    // so it stays visible even if the line list is long enough to scroll.
+    /* 19 ── the line with the most active trials gets a quiet
+       "enrolling" chip — attention goes where the department wants
+       recruitment attention. Only when it's meaningfully ahead. */
+    let hotId = null, maxTrials = 0;
+    lines.forEach(l => { if ((l.active_trials||0) > maxTrials) { maxTrials = l.active_trials; hotId = l.id; } });
+    if (maxTrials < 2) hotId = null;
     menu.innerHTML = lines.map(l => {
       const coord = l.coordinator;
       const avatar = coord?.full_name ? buildAvatar(coord, 20) : '';
       const trialCount = l.active_trials > 0
         ? `<span class="hdr-dd-trials">${l.active_trials}</span>` : '';
+      const hot = l.id === hotId
+        ? '<span class="hdr-dd-hot"><span lang="en">enrolling</span><span lang="es">reclutando</span></span>' : '';
       return `
       <a class="hdr-dd-item" href="/line/?id=${l.id}">
         <span class="hdr-dd-num">L${String(l.line_number).padStart(2,'0')}</span>
         <span class="hdr-dd-body">
-          <span class="hdr-dd-name">${escHtml(l.short_name || l.name)}</span>
+          <span class="hdr-dd-name">${escHtml(l.short_name || l.name)}${hot}</span>
           ${coord?.full_name ? `<span class="hdr-dd-coord">${avatar}<span>${escHtml(coord.full_name)}</span></span>` : ''}
         </span>
         ${trialCount}
       </a>`;
     }).join('');
+
+    /* 5 ── live pulse on the "Research" trigger while anything is
+       actively enrolling — a 5px dot breathing at the hero's tidal
+       rhythm. Status, not ornament: absent when nothing enrolls. */
+    const totalActive = lines.reduce((s, l) => s + (l.active_trials || 0), 0);
+    const trigger = document.querySelector('.hdr-dd .hdr-nav-link');
+    if (totalActive > 0 && trigger && !trigger.querySelector('.hdr-live-dot')) {
+      const dot = document.createElement('span');
+      dot.className = 'hdr-live-dot';
+      dot.setAttribute('aria-hidden', 'true');
+      trigger.appendChild(dot);
+    }
+
+    /* 3 ── the drawer finally gets the header's best content: an
+       expandable "Research lines" group built from this same data.
+       Before this, the richest nav content was desktop-only — on
+       the device most visitors actually use, it didn't exist. */
+    const drawerNav = document.querySelector('#mobDrawer .mob-drawer-nav');
+    if (drawerNav && !document.getElementById('mobLines')) {
+      const researchLink = drawerNav.querySelector('a[href="/clinical/"]');
+      const wrap2 = document.createElement('div');
+      wrap2.innerHTML =
+        `<button class="mob-lines-toggle" id="mobLinesToggle" aria-expanded="false" aria-controls="mobLines">
+           <span><span lang="en">Research lines</span><span lang="es">Líneas de investigación</span></span>
+           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+         </button>
+         <div class="mob-lines" id="mobLines">` +
+        lines.map(l =>
+          `<a href="/line/?id=${l.id}"><span class="ml-num">L${String(l.line_number).padStart(2,'0')}</span><span>${escHtml(l.short_name || l.name)}</span></a>`
+        ).join('') + '</div>';
+      if (researchLink) researchLink.after(...wrap2.children);
+      else drawerNav.append(...wrap2.children);
+      const tgl = document.getElementById('mobLinesToggle');
+      const box = document.getElementById('mobLines');
+      if (tgl && box) tgl.addEventListener('click', () => {
+        const on = box.classList.toggle('open');
+        tgl.setAttribute('aria-expanded', String(on));
+      });
+    }
     if (allLink) {
       allLink.hidden = false;
       allLink.innerHTML = `<span lang="en">View all ${lines.length} lines</span><span lang="es">Ver las ${lines.length} líneas</span> →`;
@@ -1537,7 +1575,24 @@ function initHeaderDropdown() {
   if (!chevron) return;
 
   function close() { dd.classList.remove('open'); chevron.setAttribute('aria-expanded', 'false'); }
-  function open() { dd.classList.add('open'); chevron.setAttribute('aria-expanded', 'true'); }
+  function open() { dd.classList.add('open'); chevron.setAttribute('aria-expanded', 'true'); loadDropdownFact(dd); }
+
+  /* 2 ── hover-intent: raw :hover-open flickered on diagonal cursor
+     travel and stuck on hybrid touch devices. 120ms before opening
+     (brushing past doesn't trigger), 250ms grace before closing
+     (the safe-triangle effect — you can cut the corner toward the
+     panel). Gated to genuinely hover-capable pointers. */
+  if (window.matchMedia('(hover: hover)').matches) {
+    let tOpen = null, tClose = null;
+    dd.addEventListener('mouseenter', () => {
+      clearTimeout(tClose);
+      tOpen = setTimeout(open, 120);
+    });
+    dd.addEventListener('mouseleave', () => {
+      clearTimeout(tOpen);
+      tClose = setTimeout(close, 250);
+    });
+  }
 
   chevron.addEventListener('click', (e) => {
     e.preventDefault();
@@ -1593,7 +1648,42 @@ function initHeaderDropdown() {
     else if (e.key === 'ArrowUp') { e.preventDefault(); focusItem(list, i - 1); }
     else if (e.key === 'Home') { e.preventDefault(); focusItem(list, 0); }
     else if (e.key === 'End') { e.preventDefault(); focusItem(list, list.length - 1); }
+    /* 7 ── typeahead: press "a" and focus jumps to Asthma; press
+       again to cycle through further matches. Standard menu
+       behaviour keyboard users already expect. */
+    else if (e.key.length === 1 && /\S/.test(e.key) && !e.ctrlKey && !e.metaKey && !e.altKey) {
+      var ch = e.key.toLowerCase();
+      for (var step = 1; step <= list.length; step++) {
+        var cand = list[(i + step) % list.length];
+        var nameEl = cand.querySelector('.hdr-dd-name');
+        var txt = (nameEl ? nameEl.textContent : cand.textContent).trim().toLowerCase();
+        if (txt.startsWith(ch)) { e.preventDefault(); cand.focus(); break; }
+      }
+    }
   });
+}
+
+/* 6 ── one quiet fact at the panel's foot — "latest publication N
+   days ago" — fetched lazily on the dropdown's FIRST open (never a
+   cost on page load), then cached for the session. */
+let _ddFactLoaded = false;
+async function loadDropdownFact(dd) {
+  if (_ddFactLoaded) return;
+  _ddFactLoaded = true;
+  try {
+    const { data } = await apiFetch('/api/news/website?type=publication&limit=1');
+    const p = (data || [])[0];
+    const when = p && (p.published_at || p.created_at);
+    if (!when) return;
+    const days = Math.max(0, Math.round((Date.now() - new Date(when)) / 86400000));
+    const el = document.createElement('div');
+    el.className = 'hdr-dd-fact';
+    el.innerHTML = days === 0
+      ? '<span lang="en">Latest publication: today</span><span lang="es">Última publicación: hoy</span>'
+      : `<span lang="en">Latest publication ${days} day${days===1?'':'s'} ago</span><span lang="es">Última publicación hace ${days} día${days===1?'':'s'}</span>`;
+    const panel = dd.querySelector('.hdr-dd-panel');
+    if (panel) panel.appendChild(el);
+  } catch (e) { /* fact is decoration; fail silent */ }
 }
 
 // ─────────────────────────────────────────────
@@ -1983,6 +2073,20 @@ async function loadLineDetail() {
     if (loadErrorEl) loadErrorEl.style.display = '';
     return;
   }
+
+  /* 12 ── contextual crumb tier: "Research → L03 Severe asthma"
+     under the nav. Deep pages get a visible place in the hierarchy
+     instead of feeling orphaned. */
+  try {
+    const hdrMain = document.querySelector('.hdr .hdr-main');
+    if (hdrMain && !document.getElementById('hdrCrumb')) {
+      const crumb = document.createElement('div');
+      crumb.className = 'hdr-crumb'; crumb.id = 'hdrCrumb';
+      crumb.innerHTML = `<a href="/clinical/"><span lang="en">Research</span><span lang="es">Investigación</span></a>
+        &nbsp;→&nbsp; <b>L${String(line.line_number).padStart(2,'0')} ${escHtml(line.short_name || line.name || '')}</b>`;
+      hdrMain.appendChild(crumb);
+    }
+  } catch (e) { /* decorative */ }
 
   try {
     if (loadingEl) loadingEl.style.display = 'none';

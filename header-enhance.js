@@ -219,12 +219,295 @@
     });
   }
 
+  /* ── 1: focus-parity for the nav pill ─────────────────────────
+     The pill answered mouseenter only — keyboard users tabbing the
+     nav got zero feedback. Same moveTo/reset, keyboard included. */
+  function initPillFocusParity(){
+    var nav = document.querySelector('.hdr-nav');
+    var pill = nav && nav.querySelector('.hdr-nav-pill');
+    if (!nav || !pill) return;
+    nav.addEventListener('focusin', function(e){
+      var link = e.target.closest('.hdr-nav-link');
+      if (!link) return;
+      var navRect = nav.getBoundingClientRect(), r = link.getBoundingClientRect();
+      pill.style.transform = 'translateY(-50%) translateX(' + (r.left - navRect.left) + 'px) scaleX(' + r.width + ')';
+      pill.style.opacity = '1';
+    });
+    nav.addEventListener('focusout', function(e){
+      if (!nav.contains(e.relatedTarget)) {
+        var cur = nav.querySelector('.hdr-nav-link[data-current="true"]');
+        if (!cur) pill.style.opacity = '0';
+      }
+    });
+  }
+
+  /* ── 13: the current-page underline fills as you read ───────── */
+  function initNavReadProgress(){
+    var cur = document.querySelector('.hdr-nav-link[data-current="true"]');
+    if (!cur) return;
+    var ticking = false;
+    function update(){
+      var tot = document.documentElement.scrollHeight - window.innerHeight;
+      var p = tot > 0 ? Math.min(1, window.scrollY / tot) : 0;
+      document.documentElement.style.setProperty('--navprog', p.toFixed(3));
+      ticking = false;
+    }
+    window.addEventListener('scroll', function(){
+      if (!ticking){ requestAnimationFrame(update); ticking = true; }
+    }, {passive:true});
+    update();
+  }
+
+  /* ── 14: first-visit language suggestion ─────────────────────
+     Browser prefers Spanish, site is showing English, user has
+     never chosen — one dismissible chip, asked exactly once. */
+  function initLangToast(){
+    try{
+      if (localStorage.getItem('lang') || localStorage.getItem('huac_lang') ||
+          localStorage.getItem('langToastDone')) return;
+      var wantsEs = (navigator.language || '').toLowerCase().indexOf('es') === 0;
+      var showingEn = (document.documentElement.dataset.lang || 'en') === 'en';
+      if (!wantsEs || !showingEn) return;
+      var t = document.createElement('div');
+      t.className = 'lang-toast'; t.setAttribute('role','status');
+      t.innerHTML = '¿Prefieres español? ' +
+        '<button class="lt-yes">Sí</button><button class="lt-no" aria-label="No, gracias">×</button>';
+      document.body.appendChild(t);
+      function done(){ try{localStorage.setItem('langToastDone','1');}catch(e){} t.remove(); }
+      t.querySelector('.lt-yes').addEventListener('click', function(){ if (window.selectLang) window.selectLang('es'); done(); });
+      t.querySelector('.lt-no').addEventListener('click', done);
+      setTimeout(function(){ if (t.parentNode) done(); }, 12000);
+    }catch(e){}
+  }
+
+  /* ── 15: connection status dot ───────────────────────────────
+     Amber when the network drops or the API banner fires; hover
+     explains. Status belongs in the chrome, quietly. */
+  function initStatusDot(){
+    var right = document.querySelector('.hdr-right');
+    if (!right) return;
+    var dot = document.createElement('span');
+    dot.className = 'hdr-status-dot'; dot.id = 'hdrStatusDot';
+    dot.title = 'Connection issue — live data may be unavailable';
+    right.insertBefore(dot, right.firstChild);
+    function set(down){ dot.setAttribute('data-state', down ? 'down' : 'ok'); }
+    window.addEventListener('offline', function(){ set(true); });
+    window.addEventListener('online', function(){ set(false); });
+    new MutationObserver(function(){
+      if (document.getElementById('apiDownBanner')) set(true);
+    }).observe(document.body, {childList:true});
+  }
+
+  /* ── 16: swipe-to-close the drawer ───────────────────────────
+     Rightward swipe on the open drawer closes it via the page's own
+     toggle (so overlay + body scroll are restored by the same code
+     path that opened it). */
+  function initDrawerSwipe(){
+    var drawer = document.getElementById('mobDrawer');
+    var toggle = document.getElementById('mobToggle');
+    if (!drawer || !toggle) return;
+    var x0 = null;
+    drawer.addEventListener('touchstart', function(e){ x0 = e.touches[0].clientX; }, {passive:true});
+    drawer.addEventListener('touchend', function(e){
+      if (x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0; x0 = null;
+      if (dx > 64 && drawer.classList.contains('open')) toggle.click();
+    }, {passive:true});
+  }
+
+  /* ── 18: scroll-linked header theming ────────────────────────
+     Sections opting in via data-hdr="light" flip the header to a
+     frosted-light scheme while they sit under it. Sentinel-based:
+     cheap IntersectionObserver band at header height. */
+  function initHeaderTheming(){
+    var hdr = document.getElementById('hdr');
+    var zones = document.querySelectorAll('[data-hdr="light"]');
+    if (!hdr || !zones.length) return;
+    var overCount = 0;
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ overCount += en.isIntersecting ? 1 : -1; });
+      hdr.classList.toggle('over-light', overCount > 0);
+    }, { rootMargin: '-1px 0px -' + (window.innerHeight - 70) + 'px 0px' });
+    zones.forEach(function(z){ io.observe(z); });
+  }
+
+  /* ── 20: skip-link menu ───────────────────────────────────────
+     One skip link becomes three (content / navigation / footer),
+     revealed on focus like the original. Footer gets an id if it
+     lacks one. Screen-reader users get the same speed the sighted
+     nav just gained. */
+  function initSkipMenu(){
+    var first = document.querySelector('.skip-link');
+    if (!first || document.getElementById('skipNav')) return;
+    var footer = document.querySelector('.site-footer');
+    if (footer && !footer.id) footer.id = 'siteFooter';
+    var nav = document.createElement('a');
+    nav.className = 'skip-link'; nav.id = 'skipNav'; nav.href = '#hdr';
+    nav.textContent = 'Skip to navigation'; nav.style.top = '48px';
+    var foot = document.createElement('a');
+    foot.className = 'skip-link'; foot.href = '#' + (footer ? footer.id : 'siteFooter');
+    foot.textContent = 'Skip to footer'; foot.style.top = '96px';
+    first.after(nav, foot);
+  }
+
+  /* ── 8 + 9: keyboard shortcuts, help overlay, command palette ─ */
+  var GO = { h:'/', r:'/clinical/', i:'/innovation/', a:'/news/', t:'/team/', p:'/report/' };
+  function initKeyboardLayer(){
+    var pendingG = false, gTimer = null;
+
+    function typingContext(e){
+      var t = e.target;
+      return t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable);
+    }
+
+    document.addEventListener('keydown', function(e){
+      if (typingContext(e)) return;
+
+      /* palette: Cmd/Ctrl+K */
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k'){
+        e.preventDefault(); openPalette(); return;
+      }
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+
+      /* help overlay: ? */
+      if (e.key === '?'){ e.preventDefault(); openHelp(); return; }
+
+      /* vim-style go: g then destination */
+      if (pendingG){
+        pendingG = false; clearTimeout(gTimer);
+        var dest = GO[e.key.toLowerCase()];
+        if (dest){ e.preventDefault(); location.href = dest; }
+        return;
+      }
+      if (e.key.toLowerCase() === 'g'){
+        pendingG = true;
+        gTimer = setTimeout(function(){ pendingG = false; }, 900);
+      }
+    });
+
+    /* visible ⌘K affordance for pointer users (desktop only) */
+    var right = document.querySelector('.hdr-right');
+    if (right && !document.getElementById('cmdkHint')){
+      var hint = document.createElement('button');
+      hint.className = 'cmdk-hint'; hint.id = 'cmdkHint';
+      hint.type = 'button'; hint.setAttribute('aria-label','Open quick search');
+      hint.textContent = (navigator.platform || '').indexOf('Mac') > -1 ? '⌘K' : 'Ctrl K';
+      hint.addEventListener('click', openPalette);
+      var contact = right.querySelector('.hdr-contact-btn');
+      right.insertBefore(hint, contact || null);
+    }
+  }
+
+  function openHelp(){
+    if (document.querySelector('.kbd-help')) return;
+    var o = document.createElement('div');
+    o.className = 'kbd-help'; o.setAttribute('role','dialog'); o.setAttribute('aria-label','Keyboard shortcuts');
+    o.innerHTML = '<div class="kbd-help-card"><h3>Keyboard shortcuts</h3><dl>' +
+      '<dt><kbd>⌘K</kbd></dt><dd>Quick search</dd>' +
+      '<dt><kbd>g h</kbd></dt><dd>Home</dd>' +
+      '<dt><kbd>g r</kbd></dt><dd>Research</dd>' +
+      '<dt><kbd>g i</kbd></dt><dd>Innovation</dd>' +
+      '<dt><kbd>g a</kbd></dt><dd>Articles</dd>' +
+      '<dt><kbd>g t</kbd></dt><dd>Team</dd>' +
+      '<dt><kbd>g p</kbd></dt><dd>Annual report</dd>' +
+      '<dt><kbd>?</kbd></dt><dd>This overlay</dd></dl></div>';
+    document.body.appendChild(o);
+    function close(){ o.remove(); document.removeEventListener('keydown', onKey); }
+    function onKey(e){ if (e.key === 'Escape') close(); }
+    o.addEventListener('click', function(e){ if (e.target === o) close(); });
+    document.addEventListener('keydown', onKey);
+  }
+
+  /* Palette index: static pages immediately; research lines join
+     when their fetch resolves (reuses the dropdown's endpoint via
+     the browser cache — no new cost worth worrying about). */
+  var _palItems = [
+    {k:'page', t:'Home · Inicio', href:'/'},
+    {k:'page', t:'Research · Investigación', href:'/clinical/'},
+    {k:'page', t:'Innovation · Innovación', href:'/innovation/'},
+    {k:'page', t:'Articles · Artículos', href:'/news/'},
+    {k:'page', t:'Team · Equipo', href:'/team/'},
+    {k:'page', t:'Annual report · Memoria anual', href:'/report/'},
+    {k:'page', t:'Contact · Contacto', href:'/#contact'},
+    {k:'page', t:'Privacy · Privacidad', href:'/privacidad/'},
+    {k:'page', t:'Accessibility · Accesibilidad', href:'/accesibilidad/'}
+  ];
+  var _palLinesLoaded = false;
+
+  function openPalette(){
+    if (document.querySelector('.cmdk-overlay')) return;
+    if (!_palLinesLoaded && window.fetch){
+      _palLinesLoaded = true;
+      fetch('https://neumac-manage-back-end-production.up.railway.app/api/research-lines/website')
+        .then(function(r){ return r.json(); })
+        .then(function(res){
+          (res.data || []).forEach(function(l){
+            _palItems.push({ k:'L'+String(l.line_number).padStart(2,'0'),
+                             t:(l.short_name || l.name || ''), href:'/line/?id='+l.id });
+          });
+          renderList(document.querySelector('.cmdk input') ?
+            document.querySelector('.cmdk input').value : '');
+        }).catch(function(){});
+    }
+    var o = document.createElement('div');
+    o.className = 'cmdk-overlay'; o.setAttribute('role','dialog'); o.setAttribute('aria-label','Quick search');
+    o.innerHTML = '<div class="cmdk"><input type="text" placeholder="Search pages and research lines…" aria-label="Search"/><div class="cmdk-list" role="listbox"></div></div>';
+    document.body.appendChild(o);
+    var input = o.querySelector('input');
+    var sel = 0;
+
+    window.renderList = function(q){
+      var list = o.querySelector('.cmdk-list');
+      if (!list) return;
+      q = (q || '').trim().toLowerCase();
+      var hits = _palItems.filter(function(it){
+        return !q || it.t.toLowerCase().indexOf(q) > -1 || it.k.toLowerCase().indexOf(q) > -1;
+      }).slice(0, 9);
+      sel = 0;
+      list.innerHTML = hits.length
+        ? hits.map(function(it, i){
+            return '<a class="cmdk-item" role="option" data-sel="'+(i===0?1:0)+'" href="'+it.href+'"><span class="ck-k">'+it.k+'</span><span class="ck-t">'+it.t+'</span></a>';
+          }).join('')
+        : '<div class="cmdk-empty">No matches — try a page name or L-number.</div>';
+    };
+    renderList('');
+    input.focus();
+    input.addEventListener('input', function(){ renderList(input.value); });
+
+    function close(){ o.remove(); document.removeEventListener('keydown', onKey); window.renderList = null; }
+    function onKey(e){
+      var items = o.querySelectorAll('.cmdk-item');
+      if (e.key === 'Escape'){ close(); }
+      else if (e.key === 'ArrowDown' || e.key === 'ArrowUp'){
+        e.preventDefault();
+        if (!items.length) return;
+        items[sel] && items[sel].setAttribute('data-sel','0');
+        sel = e.key === 'ArrowDown' ? (sel+1)%items.length : (sel-1+items.length)%items.length;
+        items[sel].setAttribute('data-sel','1');
+        items[sel].scrollIntoView({block:'nearest'});
+      }
+      else if (e.key === 'Enter'){
+        if (items[sel]) location.href = items[sel].getAttribute('href');
+      }
+    }
+    o.addEventListener('click', function(e){ if (e.target === o) close(); });
+    document.addEventListener('keydown', onKey);
+  }
+
   function boot(){
     restoreLang();
     initNavPill();
     initScrollState();
     initDrawerFocusTrap();
     initLangRovingTabindex();
+    initPillFocusParity();
+    initNavReadProgress();
+    initLangToast();
+    initStatusDot();
+    initDrawerSwipe();
+    initHeaderTheming();
+    initSkipMenu();
+    initKeyboardLayer();
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);

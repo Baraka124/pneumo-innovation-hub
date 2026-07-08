@@ -98,7 +98,26 @@
 /* Header sits flush at top by default — the announcement bar only
    exists on the homepage (.latest-bar), which opts into its own
    offset via the rules right below this comment in index.html. */
-body{padding-top:68px;}
+/* Base typography — the big pages also declare this inline (identical
+   values), but the minimal pages (404, privacidad, accesibilidad,
+   aviso-legal, report) rely on THIS being here: without it they
+   rendered in the browser's default serif, flush-unstyled (caught
+   via a live 404 screenshot). */
+body{
+  padding-top:68px;
+  font-family:var(--ff-body,'DM Sans',system-ui,sans-serif);
+  background:var(--white,#fff);
+  color:var(--ink,#111);
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+h1,h2,h3,.display-xl,.display-lg,.display-md{
+  font-family:var(--ff-display,'Fraunces',Georgia,serif);
+  color:var(--navy,#0C3868);
+  letter-spacing:-.02em;
+  line-height:1.12;
+}
 .hdr{top:0;}
 .wrap,.container{max-width:1280px;}
 .hero-inner{gap:3rem;}
