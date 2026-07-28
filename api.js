@@ -2440,8 +2440,24 @@ window._lineTeamData = [];
 
   } catch (err) {
     console.error('Research line render failed:', err.message);
-    if (loadingEl) loadingEl.style.display = 'none';
-    if (heroEl) heroEl.style.display = 'none';
-    if (loadErrorEl) loadErrorEl.style.display = '';
+    // Null-guarded: previously this catch itself threw when
+    // #lineLoadError didn't exist in the markup (it was referenced
+    // here but never added to the HTML), which turned a recoverable
+    // render error into a fully blank page. Now every access is
+    // guarded, and if the dedicated error element is somehow missing
+    // we fall back to repurposing the loading element so the visitor
+    // always sees *something* rather than white nothing.
+    try { if (heroEl) heroEl.style.display = 'none'; } catch (_) {}
+    if (loadErrorEl) {
+      if (loadingEl) loadingEl.style.display = 'none';
+      loadErrorEl.style.display = '';
+    } else if (loadingEl) {
+      loadingEl.style.display = '';
+      loadingEl.innerHTML = '<p style="color:rgba(255,255,255,.6);">'
+        + '<span lang="en">This line couldn\'t be loaded right now. '
+        + '<a href="/clinical/" style="color:var(--teal-2,#00B3B3);">View all research lines</a>.</span>'
+        + '<span lang="es">No se pudo cargar esta línea. '
+        + '<a href="/clinical/" style="color:var(--teal-2,#00B3B3);">Ver todas las líneas</a>.</span></p>';
+    }
   }
 }  
