@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Feed · neumACt R&I</title>
+  <meta name="robots" content="noindex"/>
+  <link rel="stylesheet" href="../core.css">
+  <link rel="stylesheet" href="../polish.css">
+  <style>
+    body{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem;text-align:center;}
+    .feed-wrap{max-width:520px;}
+    .feed-wrap h1{font-size:1.75rem;margin-bottom:1rem;}
+    .feed-wrap p{color:var(--ink-3);line-height:1.65;margin-bottom:1.5rem;}
+    .feed-actions{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;}
+    .feed-btn{font-family:var(--ff-mono);font-size:.8rem;letter-spacing:.04em;text-transform:uppercase;
+      color:#fff;background:var(--teal);border:none;border-radius:100px;padding:.7rem 1.4rem;cursor:pointer;text-decoration:none;transition:transform .2s,box-shadow .2s;}
+    .feed-btn:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,122,122,.3);}
+    .feed-btn--ghost{background:none;color:var(--teal);border:1px solid var(--teal);}
+    pre#feedPreview{text-align:left;background:var(--surface);border:1px solid var(--rule-l);border-radius:12px;
+      padding:1rem;margin-top:2rem;max-height:280px;overflow:auto;font-size:.7rem;line-height:1.5;color:var(--ink-2);display:none;}
+  </style>
+</head>
+<body>
+  <div class="feed-wrap">
+    <h1>Article feed</h1>
+    <p>Follow neumACt R&amp;I's latest articles and publications in your reader. This feed is generated live from the department's current output.</p>
+    <div class="feed-actions">
+      <button class="feed-btn" id="dlFeed">Download feed.xml</button>
+      <button class="feed-btn feed-btn--ghost" id="showFeed">Preview</button>
+      <a class="feed-btn feed-btn--ghost" href="/news/">Back to Articles</a>
+    </div>
+    <pre id="feedPreview"></pre>
+  </div>
+
+<script>
+(function(){
+  var API='https://neumac-manage-back-end-production.up.railway.app';
+  var SITE='https://neumact.org';
+  function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  function iso(d){try{return new Date(d).toISOString();}catch(e){return new Date().toISOString();}}
+  var feedXml='';
+  function build(posts){
+    var updated = posts.length ? iso(posts[0].published_at||posts[0].created_at) : new Date().toISOString();
+    var entries = posts.slice(0,40).map(function(p){
+      var link = p.doi ? ('https://doi.org/'+String(p.doi).replace(/^https?:\/\/doi\.org\//,'')) : (SITE+'/news/');
+      var when = iso(p.published_at||p.created_at);
+      var summary = p.summary || p.authors_text || p.journal_name || '';
+      return '  <entry>\n'+
+        '    <title>'+esc(p.title||'Untitled')+'</title>\n'+
+        '    <link href="'+esc(link)+'"/>\n'+
+        '    <id>'+esc(SITE+'/news/#'+(p.id||when))+'</id>\n'+
+        '    <updated>'+when+'</updated>\n'+
+        (summary?'    <summary>'+esc(summary)+'</summary>\n':'')+
+        '  </entry>';
+    }).join('\n');
+    return '<?xml version="1.0" encoding="UTF-8"?>\n'+
+      '<feed xmlns="http://www.w3.org/2005/Atom">\n'+
+      '  <title>neumACt R&amp;I — Articles</title>\n'+
+      '  <subtitle>Research updates and publications from the Servicio de Neumología, CHUAC.</subtitle>\n'+
+      '  <link href="'+SITE+'/news/"/>\n'+
+      '  <link rel="self" href="'+SITE+'/feed/"/>\n'+
+      '  <id>'+SITE+'/</id>\n'+
+      '  <updated>'+updated+'</updated>\n'+
+      '  <author><name>neumACt R&amp;I · Servicio de Neumología · CHUAC</name></author>\n'+
+      entries+'\n</feed>\n';
+  }
+  fetch(API+'/api/news/website?limit=40')
+    .then(function(r){return r.json();})
+    .then(function(res){ feedXml=build(res.data||[]); })
+    .catch(function(){ feedXml=build([]); });
+  document.getElementById('dlFeed').addEventListener('click',function(){
+    if(!feedXml){alert('Feed still loading — try again in a moment.');return;}
+    var b=new Blob([feedXml],{type:'application/atom+xml'});
+    var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='neumact-feed.xml';
+    document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(a.href);
+  });
+  document.getElementById('showFeed').addEventListener('click',function(){
+    var pre=document.getElementById('feedPreview');
+    pre.textContent=feedXml||'Loading…';
+    pre.style.display=pre.style.display==='none'?'block':'none';
+  });
+})();
+</script>
+</body>
+</html>

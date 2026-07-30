@@ -2133,6 +2133,24 @@ async function loadLineDetail() {
     const titleEl = document.getElementById('lineTitle');
     if (titleEl) titleEl.textContent = line.name || line.short_name;
 
+    // Research-as-questions (#8): the elite research sites frame each
+    // line as the question it chases, not a noun label. This slot
+    // renders line.research_question (EN) / research_question_es (ES)
+    // as the hero's driving statement the moment that field is filled
+    // in neumDesk — until then it stays invisible, no empty box.
+    const questionEl = document.getElementById('lineQuestion');
+    if (questionEl) {
+      const qEn = line.research_question || '';
+      const qEs = line.research_question_es || line.research_question || '';
+      if (qEn) {
+        questionEl.innerHTML =
+          `<span lang="en">${escHtml(qEn)}</span><span lang="es">${escHtml(qEs)}</span>`;
+        questionEl.style.display = '';
+      } else {
+        questionEl.style.display = 'none';
+      }
+    }
+
     const pillsEl = document.getElementById('lineStatPills');
     if (pillsEl) {
       const pills = [];
