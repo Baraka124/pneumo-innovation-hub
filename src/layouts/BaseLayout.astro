@@ -1,0 +1,43 @@
+---
+// ──────────────────────────────────────────────────────────────
+// BaseLayout — the single page shell for the whole site.
+// Change the header, footer, or <head> here once and all pages
+// update. No more 11 divergent copies.
+// ──────────────────────────────────────────────────────────────
+import Head from '../components/Head.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+// Global styles, loaded once. Bundled + content-hashed by the build,
+// so a change to any of them busts its own cache automatically.
+// core.css loads first: it defines the canonical tokens (:root) and the
+// @layer order (base, components, pages) that the whole cascade depends on.
+import '../styles/core.css';
+import '../styles/polish.css';
+import '../styles/reveal.css';
+import '../styles/refine.css';
+
+const { title, description, path = Astro.url.pathname, current = 'home' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <Head title={title} description={description} path={path} />
+  </head>
+  <body>
+    <Header current={current} />
+    <div id="pb" role="progressbar" aria-hidden="true"></div>
+    <main id="mainContent">
+      <slot />
+    </main>
+    <Footer />
+    <script>
+      // Shared UX enhancement layer (nav pill, scrolled header, focus-trap,
+      // ⌘K command palette, help overlay, top progress bar) — every page.
+      import '../lib/header-enhance.js';
+      import '../lib/verify.js';
+      import '../lib/i18n.js';
+    </script>
+  </body>
+</html>

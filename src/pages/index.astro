@@ -1,0 +1,637 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/home.css';
+---
+
+<BaseLayout
+  current="home"
+  title="neumACt R&I — Respiratory Medicine Research & Innovation · CHUAC · INIBIC"
+  description="Precision respiratory medicine at CHUAC. Six research lines, 10+ active studies, 1,000 lung transplants (May 2026). Part of INIBIC and the SERGAS network."
+  path="/"
+>
+<section class="hero" aria-labelledby="heroTitle" id="mainContent">
+  <canvas id="heroBg" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="hero-inner">
+
+      <!-- Left: editorial copy -->
+      <div>
+        <div class="hero-kicker reveal">
+          <span class="label on-dark">
+            <span lang="en">Servicio de Neumología · A Coruña · CHUAC</span>
+            <span lang="es">Servicio de Neumología · A Coruña · CHUAC</span>
+          </span>
+        </div>
+
+        <h1 class="display-xl hero-h1" id="heroTitle">
+          <span lang="en">Clinical research<br>in respiratory<br>medicine.</span>
+          <span lang="es">Investigación clínica<br>en medicina<br>respiratoria.</span>
+        </h1>
+
+        
+        <p class="hero-desc">
+          <span lang="en">The Servicio de Neumología at CHUAC runs six research lines spanning the full spectrum of respiratory disease — from transplantation and pulmonary hypertension to interventional bronchoscopy, thoracic surgery, sleep medicine, and precision phenotyping. <strong>1,000 lung transplants performed</strong> — a regional reference milestone, May 2026. Regional reference centre for lung transplantation and pulmonary hypertension. INIBIC-accredited. 10+ active recruiting studies.</span>
+          <span lang="es">Seis líneas especializadas. <strong>1.000 trasplantes pulmonares</strong> realizados en el CHUAC — hito alcanzado en mayo de 2026. Más de 13 estudios activos en reclutamiento sobre EPOC, asma, EPI, cáncer de pulmón, hipertensión pulmonar, insuficiencia respiratoria, trastornos respiratorios del sueño y cirugía torácica.</span>
+        </p>
+
+        <div class="hero-actions" style="display:flex;gap:1.75rem;align-items:center;">
+          <a href="/clinical/" class="hero-text-link">
+            <span lang="en">Research portfolio</span><span lang="es">Cartera de investigación</span> →
+          </a>
+          <a href="/innovation/" class="hero-text-link">
+            <span lang="en">Innovation</span><span lang="es">Innovación</span> →
+          </a>
+        </div>
+
+        <div class="hero-sep reveal reveal-d3"></div>
+        <div class="hero-creds reveal reveal-d3">
+          <div class="hero-cred">INIBIC · accredited</div>
+          
+          <div class="hero-cred">AEMPS · GCP</div>
+          <div class="hero-cred">CE MDR</div>
+        </div>
+
+        <p id="liveTicker" aria-live="polite"
+           style="margin-top:1.75rem;font-family:var(--ff-mono,'DM Mono',monospace);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55);opacity:0;transition:opacity .35s var(--ease-clinical);min-height:1.2em;">
+        </p>
+      </div>
+
+      <!-- Right: live stat ledger -->
+      <div class="reveal reveal-d1">
+        <div class="hero-stats">
+          <div class="hstat">
+            <span class="hstat-label"><span lang="en">Research Lines</span><span lang="es">Líneas de Investigación</span></span>
+            <span class="hstat-num" id="statLines" data-counter="6">6</span>
+          </div>
+          <div class="hstat">
+            <span class="hstat-label"><span lang="en">Active Studies</span><span lang="es">Estudios Activos</span></span>
+            <span class="hstat-num" id="statTrials" data-counter="10+">10+</span>
+          </div>
+          <div class="hstat">
+            <span class="hstat-label"><span lang="en">Clinician-Investigators</span><span lang="es">Investigadores Clínicos</span></span>
+            <span class="hstat-num" id="statMembers" data-counter="23">23</span>
+          </div>
+          <div class="hstat">
+            <span class="hstat-label milestone-label"><span lang="en">Lung Transplants</span><span lang="es">Trasplantes Pulmonares</span></span>
+            <span class="hstat-num milestone-num">1,000</span>
+          </div>
+          <div class="hstat">
+            <span class="hstat-label"><span lang="en">Articles</span><span lang="es">Artículos</span></span>
+            <span class="hstat-num" id="statPubs" data-counter="27">27</span>
+          </div>
+          <div class="hero-stat-cta">
+            <a href="/clinical/" class="hstat-btn">
+              <span lang="en">View Trials</span><span lang="es">Ver Ensayos</span>
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+            </a>
+            <a href="/innovation/" class="hstat-btn">
+              <span lang="en">View Projects</span><span lang="es">Ver Proyectos</span>
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="spiro-rule" aria-hidden="true"></div>
+
+<!-- ═══════════════════ WHAT WE WORK ON ══════════ -->
+<section class="section" style="background:var(--white);">
+  <div class="wrap">
+    <div class="sec-intro reveal">
+      <div class="sec-kicker">
+        <span class="label"><span lang="en">Clinical Trials &amp; Innovation</span><span lang="es">Ensayos Clínicos e Innovación</span></span>
+      </div>
+      <h2 class="display-md sec-h2">
+        <span lang="en">Where research meets the patient</span>
+        <span lang="es">Donde la investigación llega al paciente</span>
+      </h2>
+      <p class="sec-body">
+        <span lang="en">A sample of what the group is working on across active trials and clinical innovation — not a full list of every programme underway.</span>
+        <span lang="es">Una muestra del trabajo del grupo en ensayos activos e innovación clínica — no un listado completo de todos los programas en marcha.</span>
+      </p>
+    </div>
+
+    <div class="lines-grid reveal" id="workAreasGrid">
+      <div class="line-card" style="cursor:default;">
+        <div class="line-num">01</div>
+        <div class="line-body">
+          <div class="line-title"><span lang="en">Lung transplantation &amp; pulmonary hypertension</span><span lang="es">Trasplante pulmonar e hipertensión pulmonar</span></div>
+          <div class="line-coord"><span lang="en">Long-term graft monitoring and trial protocols for advanced pulmonary vascular and interstitial disease.</span><span lang="es">Seguimiento a largo plazo del injerto y protocolos de ensayo para enfermedad vascular pulmonar e intersticial avanzada.</span></div>
+        </div>
+      </div>
+      <div class="line-card" style="cursor:default;">
+        <div class="line-num">02</div>
+        <div class="line-body">
+          <div class="line-title"><span lang="en">Severe asthma &amp; COPD</span><span lang="es">Asma grave y EPOC</span></div>
+          <div class="line-coord"><span lang="en">Biologic therapy protocols and treatable-trait approaches for patients who haven't responded to standard care.</span><span lang="es">Protocolos de terapia biológica y enfoques por rasgos tratables para pacientes sin respuesta al tratamiento estándar.</span></div>
+        </div>
+      </div>
+      <div class="line-card" style="cursor:default;">
+        <div class="line-num">03</div>
+        <div class="line-body">
+          <div class="line-title"><span lang="en">Robotic &amp; minimally invasive thoracic surgery</span><span lang="es">Cirugía torácica robótica y mínimamente invasiva</span></div>
+          <div class="line-coord"><span lang="en">RATS and VATS techniques in multicentre studies, alongside EBUS-guided diagnosis for lung cancer.</span><span lang="es">Técnicas RATS y VATS en estudios multicéntricos, junto con diagnóstico guiado por EBUS para cáncer de pulmón.</span></div>
+        </div>
+      </div>
+      <div class="line-card" style="cursor:default;">
+        <div class="line-num">04</div>
+        <div class="line-body">
+          <div class="line-title"><span lang="en">Sleep medicine &amp; respiratory failure</span><span lang="es">Medicina del sueño e insuficiencia respiratoria</span></div>
+          <div class="line-coord"><span lang="en">Non-invasive ventilation, home oxygen therapy, and sleep-disordered breathing in critically ill respiratory patients.</span><span lang="es">Ventilación no invasiva, oxigenoterapia domiciliaria y trastornos respiratorios del sueño en pacientes críticos.</span></div>
+        </div>
+      </div>
+      <div class="line-card" style="cursor:default;">
+        <div class="line-num">05</div>
+        <div class="line-body">
+          <div class="line-title"><span lang="en">Digital tools &amp; precision medicine</span><span lang="es">Herramientas digitales y medicina de precisión</span></div>
+          <div class="line-coord"><span lang="en">Device-tracking systems, clinical decision support, and management innovation built alongside day-to-day care.</span><span lang="es">Sistemas de seguimiento de dispositivos, apoyo a la decisión clínica e innovación en gestión junto a la atención diaria.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lines-show-more">
+      <button type="button" id="workAreasToggle" onclick="document.getElementById('workAreasGrid').classList.toggle('expanded');this.classList.toggle('is-expanded');">
+        <span class="wam-more"><span lang="en">Show more</span><span lang="es">Ver más</span></span>
+        <span class="wam-less"><span lang="en">Show less</span><span lang="es">Ver menos</span></span>
+      </button>
+    </div>
+
+    <div class="lines-footer reveal">
+      <a href="/clinical/" class="btn-text">
+        <span lang="en">See all research lines</span><span lang="es">Ver todas las líneas de investigación</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:12px;height:12px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="spiro-rule" aria-hidden="true"></div>
+
+<!-- ═══════════════════ FROM THE DEPARTMENT ══════ -->
+<section class="section from-dept" id="from-dept">
+  <div class="wrap">
+    <div class="from-dept-head reveal">
+      <div>
+        <div class="sec-kicker">
+          <span class="label"><span lang="en">From the Department</span><span lang="es">Del Departamento</span></span>
+        </div>
+        <h2 class="display-md" style="margin-top:.625rem;">
+          <span lang="en">Recent work</span>
+          <span lang="es">Actividad reciente</span>
+        </h2>
+      </div>
+      <a href="/news/" class="btn-text reveal">
+        <span lang="en">All publications</span><span lang="es">Todas las publicaciones</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:12px;height:12px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <!-- Story layout: injected by api.js loadFeaturedStories() -->
+    <div id="storySection" class="reveal">
+      <!-- Populated dynamically — see api.js loadFeaturedStories() -->
+      <!-- Skeleton while loading -->
+      <div class="story-layout" id="storySkeleton">
+        <div class="story-main">
+          <div style="height:220px;background:var(--surface);flex-shrink:0;"></div>
+          <div class="story-main-body">
+            <div class="skel" style="height:14px;width:80px;margin-bottom:12px;"></div>
+            <div class="skel" style="height:18px;width:90%;margin-bottom:8px;"></div>
+            <div class="skel" style="height:18px;width:70%;margin-bottom:auto;"></div>
+            <div style="border-top:1px solid var(--border-l);margin-top:auto;padding-top:12px;">
+              <div class="skel" style="height:12px;width:60%;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="story-sidebar">
+          <div class="story-side-item"><div class="skel" style="height:12px;width:80%;margin-bottom:6px;"></div><div class="skel" style="height:12px;width:55%;"></div></div>
+          <div class="story-side-item"><div class="skel" style="height:12px;width:85%;margin-bottom:6px;"></div><div class="skel" style="height:12px;width:60%;"></div></div>
+          <div class="story-side-item"><div class="skel" style="height:12px;width:75%;margin-bottom:6px;"></div><div class="skel" style="height:12px;width:50%;"></div></div>
+          <div class="story-side-item"><div class="skel" style="height:12px;width:80%;margin-bottom:6px;"></div><div class="skel" style="height:12px;width:65%;"></div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════ INNOVATION SPOTLIGHT ═════════════ -->
+<section class="section innovation-spotlight" id="innovation-spotlight" style="background:var(--surface);">
+  <div class="wrap">
+    <div class="from-dept-head reveal">
+      <div>
+        <div class="sec-kicker">
+          <span class="label"><span lang="en">Innovation</span><span lang="es">Innovación</span></span>
+        </div>
+        <h2 class="display-md" style="margin-top:.625rem;">
+          <span lang="en">In development</span>
+          <span lang="es">En desarrollo</span>
+        </h2>
+      </div>
+      <a href="/innovation/" class="btn-text reveal">
+        <span lang="en">All projects</span><span lang="es">Todos los proyectos</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:12px;height:12px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <!-- Spotlight card: injected by api.js loadInnovationSpotlight() -->
+    <div id="spotlightSection" class="reveal">
+      <div class="spotlight-card" id="spotlightSkeleton">
+        <div class="skel" style="height:14px;width:100px;margin-bottom:12px;"></div>
+        <div class="skel" style="height:20px;width:75%;margin-bottom:10px;"></div>
+        <div class="skel" style="height:14px;width:95%;margin-bottom:6px;"></div>
+        <div class="skel" style="height:14px;width:60%;"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="spiro-rule" aria-hidden="true"></div>
+
+<!-- ═══════════════════ TWO PATHWAYS ═════════════ -->
+<section class="section paths-section" id="engage">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="sec-kicker">
+        <span class="label on-dark"><span lang="en">Engagement</span><span lang="es">Colaboración</span></span>
+      </div>
+      <h2 class="display-md" style="color:#fff;margin-top:.75rem;max-width:480px;">
+        <span lang="en">Collaboration</span>
+        <span lang="es">Colaboración</span>
+      </h2>
+    </div>
+    <div class="paths-grid">
+      <div class="path-card">
+        <div class="path-accent"></div>
+        <div class="path-eyebrow"><span lang="en">Clinical Research</span><span lang="es">Investigación Clínica</span></div>
+        <h3 class="path-h3">
+          <span lang="en">Clinical trials</span>
+          <span lang="es">Ensayos clínicos</span>
+        </h3>
+        <p class="path-desc">
+          <span lang="en">Phase I–IV trials, investigator-initiated studies, and multicentre academic protocols. Pre-phenotyped cohorts. INIBIC GCP framework. Site initiation under 6 weeks.</span>
+          <span lang="es">Ensayos Fase I–IV, estudios iniciados por investigador y protocolos académicos multicéntricos. Cohortes pre-fenotipadas. Marco GCP del INIBIC. Activación del centro en menos de 6 semanas.</span>
+        </p>
+        <ul class="path-list">
+          <li><span lang="en">Pre-phenotyped patient cohorts across six disease areas</span><span lang="es">Cohortes pre-fenotipadas en seis áreas terapéuticas</span></li>
+          <li><span lang="en">Full regulatory, ethics and pharmacovigilance support</span><span lang="es">Soporte regulatorio, ético y de farmacovigilancia completo</span></li>
+          <li><span lang="en">SERGAS network for prospective scale-up</span><span lang="es">Red SERGAS para escalado prospectivo</span></li>
+        </ul>
+        <a href="/clinical/" class="btn-text on-dark">
+          <span lang="en">Research programme</span><span lang="es">Programa de investigación</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:12px;height:12px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+      <div class="path-card">
+        <div class="path-accent"></div>
+        <div class="path-eyebrow"><span lang="en">Innovation</span><span lang="es">Innovación</span></div>
+        <h3 class="path-h3">
+          <span lang="en">Technology validation</span>
+          <span lang="es">Validación tecnológica</span>
+        </h3>
+        <p class="path-desc">
+          <span lang="en">AI-assisted diagnostics, digital health platforms, medical devices and clinical simulation — validated in a real-world respiratory medicine environment within the SERGAS network.</span>
+          <span lang="es">Diagnóstico asistido por IA, plataformas de salud digital, dispositivos médicos y simulación clínica, validados en un entorno real de medicina respiratoria dentro de la red SERGAS.</span>
+        </p>
+        <ul class="path-list">
+          <li><span lang="en">AI/ML in respiratory diagnostics and precision phenotyping</span><span lang="es">IA/ML en diagnóstico respiratorio y fenotipado de precisión</span></li>
+          <li><span lang="en">Medical device co-development and CE MDR validation</span><span lang="es">Codesarrollo de dispositivos médicos y validación CE MDR</span></li>
+          <li><span lang="en">SaMD and digital health — SERGAS deployment pathway</span><span lang="es">SaMD y salud digital — vía de despliegue SERGAS</span></li>
+        </ul>
+        <a href="/innovation/" class="btn-text on-dark">
+          <span lang="en">Innovation framework</span><span lang="es">Marco de innovación</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:12px;height:12px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ INSTITUTION ══════════════ -->
+<section class="section" style="background:var(--white);">
+  <div class="wrap">
+    <div class="inst-inner">
+      <div class="reveal">
+        <div class="sec-kicker">
+          <span class="label"><span lang="en">Institutional</span><span lang="es">Institucional</span></span>
+        </div>
+        <h2 class="display-md sec-h2" style="margin-top:.75rem;">
+          <span lang="en">Institutional context</span>
+          <span lang="es">Contexto institucional</span>
+        </h2>
+        <p class="sec-body">
+          <span lang="en">The group operates within INIBIC — Instituto de Investigación Biomédica de A Coruña — as part of the Servicio de Neumología and Servicio de Cirugía Torácica at CHUAC. Regional reference centre for lung transplantation, pulmonary arterial hypertension, and diffuse interstitial lung disease. Affiliation with SERGAS enables scale-up across Galicia's public health network.</span>
+          <span lang="es">El grupo opera en el marco del INIBIC como parte del Servicio de Neumología y el Servicio de Cirugía Torácica del CHUAC. Centro de referencia autonómica para el trasplante pulmonar, la hipertensión pulmonar arterial y las enfermedades pulmonares intersticiales difusas. La afiliación al SERGAS permite el escalado en la red sanitaria pública de Galicia.</span>
+        </p>
+      </div>
+      <div class="reveal reveal-d1">
+        <div style="margin-bottom:1.25rem;">
+          <div class="inst-stat-big milestone-num">1,000</div>
+          <div class="inst-stat-label"><span lang="en">Lung transplants performed · National reference</span><span lang="es">Trasplantes pulmonares realizados · Referencia nacional</span></div>
+        </div>
+        
+        <!-- Department context — replaces logo in mid-page -->
+        <div class="inst-dept-context" style="margin-top:1.5rem;padding:1.5rem 0;border-top:1px solid rgba(0,0,0,.08);">
+          <p style="font-size:.8125rem;font-family:var(--ff-mono,'DM Mono',monospace);letter-spacing:.06em;text-transform:uppercase;color:#007A7A;margin:0 0 .4rem;">
+            <span lang="en">Department</span><span lang="es">Servicio</span>
+          </p>
+          <p style="font-size:1.0625rem;font-weight:600;color:var(--ink,#111111);line-height:1.4;margin:0;">
+            <span lang="en">Servicio de Neumología<br>Hospital Universitario A Coruña</span>
+            <span lang="es">Servicio de Neumología<br>Hospital Universitario A Coruña</span>
+          </p>
+          <p style="font-size:.8125rem;color:rgba(12,68,124,.5);margin:.4rem 0 0;line-height:1.5;">
+            <span lang="en">Regional reference centre · Lung transplantation · PAH · ILD · Thoracic surgery</span>
+            <span lang="es">Centro de referencia autonómica · Trasplante pulmonar · HAP · EPI · Cirugía torácica</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ PARTNERING ══════════════════ -->
+<div class="partnering-section">
+  <div class="wrap">
+    <div class="partnering-label"><span lang="en">Partnering with us</span><span lang="es">Colaborar con nosotros</span></div>
+    <div class="partnering-grid">
+      <div>
+        <p class="partnering-item-title"><span lang="en">GCP · ICH E6(R2)</span><span lang="es">GCP · ICH E6(R2)</span></p>
+        <p class="partnering-item-desc"><span lang="en">Every trial run under the same framework sponsors already audit against.</span><span lang="es">Todos los ensayos bajo el marco que ya auditan los promotores.</span></p>
+      </div>
+      <div>
+        <p class="partnering-item-title"><span lang="en">CE MDR · SaMD ready</span><span lang="es">CE MDR · SaMD listo</span></p>
+        <p class="partnering-item-desc"><span lang="en">Validation pathway in place for medical device and software trials.</span><span lang="es">Vía de validación para dispositivos médicos y software.</span></p>
+      </div>
+      <div>
+        <p class="partnering-item-title" id="seekingPartnerCount"><span lang="en">Open innovation projects</span><span lang="es">Proyectos de innovación abiertos</span></p>
+        <p class="partnering-item-desc"><span lang="en">Currently seeking a co-development partner.</span><span lang="es">Buscando actualmente un socio de codesarrollo.</span></p>
+        <a href="/innovation/" class="btn-text" style="margin-top:.5rem;"><span lang="en">See open projects</span><span lang="es">Ver proyectos abiertos</span> →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ CONTACT ════════════════════ -->
+<section class="section contact-section" id="contact">
+  <div class="wrap">
+    <div class="reveal" style="margin-bottom:2.5rem;">
+      <div class="sec-kicker">
+        <span class="label on-dark"><span lang="en">Contact</span><span lang="es">Contacto</span></span>
+      </div>
+      <h2 class="display-md" style="color:#fff;margin-top:.75rem;">
+        <span lang="en">Enquiries</span>
+        <span lang="es">Contacto</span>
+      </h2>
+      <p style="color:rgba(255,255,255,.48);font-size:1rem;max-width:500px;margin-top:.75rem;line-height:1.7;">
+        <span lang="en">Clinical study sponsorship, academic collaboration, innovation co-development, or regulatory pathway partnership.</span>
+        <span lang="es">Patrocinio de estudios clínicos, colaboración académica, codesarrollo de innovación o asociación en vías regulatorias.</span>
+      </p>
+    </div>
+
+    <div class="contact-inner">
+      <div class="cinfo-list reveal">
+        <div class="cinfo">
+          <div class="cinfo-icon"><svg viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg></div>
+          <div>
+            <div class="cinfo-label"><span lang="en">Email</span><span lang="es">Correo</span></div>
+            <div class="cinfo-value"><a href="mailto:neumact@chuac.es">neumact@chuac.es</a></div>
+          </div>
+        </div>
+        <div class="cinfo">
+          <div class="cinfo-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72 19 19 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 19 19 0 002.81.7A2 2 0 0122 14.92z"/></svg></div>
+          <div>
+            <div class="cinfo-label"><span lang="en">Phone</span><span lang="es">Teléfono</span></div>
+            <div class="cinfo-value"><a href="tel:+34881111800">+34 881 111 800</a></div>
+          </div>
+        </div>
+        <div class="cinfo">
+          <div class="cinfo-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div>
+            <div class="cinfo-label"><span lang="en">Location</span><span lang="es">Ubicación</span></div>
+            <div class="cinfo-value">As Xubias, 84 · 15006 A Coruña</div>
+          </div>
+        </div>
+        <div class="cinfo">
+          <div class="cinfo-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+          <div>
+            <div class="cinfo-label"><span lang="en">Regulatory</span><span lang="es">Regulatorio</span></div>
+            <div class="cinfo-value" style="font-size:.8125rem;">INIBIC · AEMPS · GCP compliant · CE MDR pathway</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-wrap reveal reveal-d1">
+        <h3 class="form-h3"><span lang="en">Send a message</span><span lang="es">Enviar un mensaje</span></h3>
+        <form id="contactForm">
+          <div class="form-grid">
+            <div>
+              <label class="form-label"><span lang="en">Name</span><span lang="es">Nombre</span></label>
+              <input type="text" class="form-input" name="contact_name" placeholder="Full name" required/>
+            </div>
+            <div>
+              <label class="form-label"><span lang="en">Organisation</span><span lang="es">Organización</span></label>
+              <input type="text" class="form-input" name="organisation" placeholder="Institution / Company" required/>
+            </div>
+            <div class="fg-span2">
+              <label class="form-label"><span lang="en">Email</span><span lang="es">Email</span></label>
+              <input type="email" class="form-input" name="email" placeholder="your@institution.edu" required/>
+            </div>
+            <div class="fg-span2">
+              <label class="form-label"><span lang="en">Area of interest</span><span lang="es">Área de interés</span></label>
+              <select class="form-select" name="area_of_interest">
+                <option value=""><span lang="en">Select…</span></option>
+                <option>Clinical study sponsorship or site qualification</option>
+                <option>Investigator-initiated research collaboration</option>
+                <option>AI / Digital Health co-development</option>
+                <option>Medical device validation (CE MDR / SaMD)</option>
+                <option>Academic collaboration or biobank access</option>
+                <option>Strategic innovation partnership</option>
+                <option>General information request</option>
+              </select>
+            </div>
+            <div class="fg-span2">
+              <label class="form-label"><span lang="en">Message</span><span lang="es">Mensaje</span></label>
+              <textarea class="form-textarea" name="message" rows="3" placeholder="Tell us about your project or enquiry…"></textarea>
+            </div>
+            <div class="fg-span2">
+              <button type="submit" class="form-submit"><span lang="en">Send message</span><span lang="es">Enviar mensaje</span></button>
+            </div>
+          </div>
+        </form>
+        <div class="form-success" id="formSuccess">
+          <span lang="en">Message received — we'll be in touch.</span>
+          <span lang="es">Mensaje recibido — nos pondremos en contacto.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ AFFILIATIONS & PARTNERSHIPS ══════════════════════ -->
+<section class="affil-section">
+  <div class="wrap">
+    <div class="affil-section-header">
+      <span class="affil-section-eyebrow">
+        <span lang="en">Affiliations &amp; Partnerships</span>
+        <span lang="es">Afiliaciones y Colaboraciones</span>
+      </span>
+      <p class="affil-section-sub">
+        <span lang="en">Institutional affiliations and active research partnerships underpinning the group's clinical and translational work.</span>
+        <span lang="es">Afiliaciones institucionales y colaboraciones de investigación activa que sustentan el trabajo clínico y translacional del grupo.</span>
+      </p>
+    </div>
+    <div class="affil-grid">
+      <!-- INIBIC -->
+      <a href="https://www.inibic.es" target="_blank" rel="noopener" class="affil-card" aria-label="INIBIC — Instituto de Investigación Biomédica de A Coruña">
+        <div class="affil-card-logo">
+          <img src="/assets/inibic.png" loading="lazy" alt="INIBIC" height="44" style="height:44px;width:auto;display:block;"/>
+        </div>
+        <div class="affil-card-body">
+          <div class="affil-card-name">INIBIC</div>
+          <div class="affil-card-desc"><span lang="en">Instituto de Investigación Biomédica de A Coruña — the group's primary institutional home and accrediting body.</span><span lang="es">Instituto de Investigación Biomédica de A Coruña — sede institucional principal y organismo acreditador del grupo.</span></div>
+        </div>
+      </a>
+
+      <!-- FINIBIC / Fundación Galega -->
+      <a href="https://www.finibic.es" target="_blank" rel="noopener" class="affil-card" aria-label="Fundación Galega de Investigación Biomédica INIBIC">
+        <div class="affil-card-logo">
+          <img src="/assets/finibic.png" loading="lazy" alt="Fundación Galega INIBIC" height="38" style="height:38px;width:auto;display:block;"/>
+        </div>
+        <div class="affil-card-body">
+          <div class="affil-card-name">Fundación Galega de Investigación Biomédica INIBIC</div>
+          <div class="affil-card-desc"><span lang="en">The foundation underpinning INIBIC's research infrastructure and strategic alliances across Galicia.</span><span lang="es">La fundación que sustenta la infraestructura de investigación y las alianzas estratégicas del INIBIC en Galicia.</span></div>
+        </div>
+      </a>
+
+      <!-- PLACEHOLDER 1 -->
+      <div class="affil-card affil-card--placeholder" aria-label="Partner slot — upload logo in neumDesk">
+        <div class="affil-card-logo affil-card-logo--ph">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="8" y="8" width="32" height="32" rx="4" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/><path d="M24 20v8M20 24h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="affil-card-body">
+          <div class="affil-card-name affil-card-name--ph"><span lang="en">Add partner</span><span lang="es">Añadir colaborador</span></div>
+          <div class="affil-card-desc affil-card-desc--ph"><span lang="en">Upload a logo and short description via neumDesk.</span><span lang="es">Suba el logotipo y una descripción breve desde neumDesk.</span></div>
+        </div>
+      </div>
+
+      <!-- PLACEHOLDER 2 -->
+      <div class="affil-card affil-card--placeholder" aria-label="Partner slot — upload logo in neumDesk">
+        <div class="affil-card-logo affil-card-logo--ph">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="8" y="8" width="32" height="32" rx="4" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/><path d="M24 20v8M20 24h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="affil-card-body">
+          <div class="affil-card-name affil-card-name--ph"><span lang="en">Add partner</span><span lang="es">Añadir colaborador</span></div>
+          <div class="affil-card-desc affil-card-desc--ph"><span lang="en">Upload a logo and short description via neumDesk.</span><span lang="es">Suba el logotipo y una descripción breve desde neumDesk.</span></div>
+        </div>
+      </div>
+
+      <!-- PLACEHOLDER 3 -->
+      <div class="affil-card affil-card--placeholder" aria-label="Partner slot — upload logo in neumDesk">
+        <div class="affil-card-logo affil-card-logo--ph">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="8" y="8" width="32" height="32" rx="4" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/><path d="M24 20v8M20 24h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="affil-card-body">
+          <div class="affil-card-name affil-card-name--ph"><span lang="en">Add partner</span><span lang="es">Añadir colaborador</span></div>
+          <div class="affil-card-desc affil-card-desc--ph"><span lang="en">Upload a logo and short description via neumDesk.</span><span lang="es">Suba el logotipo y una descripción breve desde neumDesk.</span></div>
+        </div>
+      </div>
+
+    </div><!-- /.affil-grid -->
+  </div>
+</section>
+<!-- ═══════════════════ FOOTER ════════════════════ -->
+
+<!-- ═══ NETWORKS & STANDARDS ═══════════════════════════════ -->
+<section class="networks-sec" style="padding:5rem 0;background:var(--navy-2);border-top:1px solid rgba(255,255,255,.06);">
+  <div class="wrap" style="max-width:1440px;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem);">
+
+    <div class="sec-eyebrow" style="margin-bottom:1.5rem;">
+      <span style="font-family:var(--ff-mono,'DM Mono',monospace);font-size:var(--fs-label);letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);">
+        <span lang="en">Networks &amp; Standards</span>
+        <span lang="es">Redes y Estándares</span>
+      </span>
+    </div>
+
+    <h2 class="display-md" style="font-size:clamp(1.5rem,3vw,2.25rem);font-weight:700;color:#fff;margin:0 0 1rem;max-width:48rem;line-height:1.15;">
+      <span lang="en">Operating within established research frameworks</span>
+      <span lang="es">Operando dentro de marcos de investigación consolidados</span>
+    </h2>
+    <p style="color:rgba(255,255,255,.5);font-size:.9375rem;max-width:44rem;margin:0 0 3.5rem;line-height:1.7;">
+      <span lang="en">All clinical research at the group is conducted under recognised international frameworks — regulatory, ethical, and quality standards shared with leading European pulmonology centres.</span>
+      <span lang="es">Toda la investigación clínica del grupo se realiza bajo marcos internacionales reconocidos: estándares regulatorios, éticos y de calidad compartidos con los principales centros europeos de neumología.</span>
+    </p>
+
+    <div class="netstd-row" role="list">
+
+      <button class="netstd-item" type="button" aria-expanded="false" data-target="netstd-1" role="listitem">
+        <span class="netstd-name"><span lang="en">ERS — European Respiratory Society</span><span lang="es">ERS — Sociedad Respiratoria Europea</span></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="netstd-chevron"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="netstd-detail" id="netstd-1">
+        <p><span lang="en">Member institution. Trial protocols aligned with ERS clinical research standards.</span><span lang="es">Institución miembro. Protocolos alineados con los estándares ERS.</span></p>
+      </div>
+
+      <button class="netstd-item" type="button" aria-expanded="false" data-target="netstd-2" role="listitem">
+        <span class="netstd-name"><span lang="en">SEPAR — Spanish Society of Pulmonology</span><span lang="es">SEPAR — Sociedad Española de Neumología</span></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="netstd-chevron"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="netstd-detail" id="netstd-2">
+        <p><span lang="en">National reference network. Investigator-initiated study coordination.</span><span lang="es">Red de referencia nacional. Coordinación de estudios iniciados por investigador.</span></p>
+      </div>
+
+      <button class="netstd-item" type="button" aria-expanded="false" data-target="netstd-3" role="listitem">
+        <span class="netstd-name"><span lang="en">ICH E6(R2) GCP — Good Clinical Practice</span><span lang="es">ICH E6(R2) GCP — Buenas Prácticas Clínicas</span></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="netstd-chevron"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="netstd-detail" id="netstd-3">
+        <p><span lang="en">All clinical trials conducted under ICH E6(R2) GCP. INIBIC quality framework. AEMPS-registered.</span><span lang="es">Todos los ensayos bajo ICH E6(R2) GCP. Marco de calidad INIBIC. Registro AEMPS.</span></p>
+      </div>
+
+      <button class="netstd-item" type="button" aria-expanded="false" data-target="netstd-4" role="listitem">
+        <span class="netstd-name"><span lang="en">CE MDR 2017/745 — Medical Device Regulation</span><span lang="es">CE MDR 2017/745 — Reglamento de Dispositivos Médicos</span></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="netstd-chevron"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="netstd-detail" id="netstd-4">
+        <p><span lang="en">CE MDR 2017/745 validation pathway. Clinical evidence generation for medical devices and SaMD.</span><span lang="es">Vía de validación CE MDR 2017/745. Generación de evidencia clínica para dispositivos médicos y SaMD.</span></p>
+      </div>
+
+      <button class="netstd-item" type="button" aria-expanded="false" data-target="netstd-5" role="listitem">
+        <span class="netstd-name"><span lang="en">INIBIC — Biomedical Research Institute</span><span lang="es">INIBIC — Instituto de Investigación Biomédica</span></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="netstd-chevron"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="netstd-detail" id="netstd-5">
+        <p><span lang="en">ISCIII-accredited biomedical research institute. Ethics committee, pharmacovigilance unit, data management.</span><span lang="es">Instituto acreditado por el ISCIII. Comité de ética, unidad de farmacovigilancia, gestión de datos.</span></p>
+      </div>
+
+      <button class="netstd-item" type="button" aria-expanded="false" data-target="netstd-6" role="listitem">
+        <span class="netstd-name"><span lang="en">SERGAS — Galician Public Health Network</span><span lang="es">SERGAS — Red Sanitaria Pública de Galicia</span></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="netstd-chevron"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="netstd-detail" id="netstd-6">
+        <p><span lang="en">SERGAS integration enables multicentre expansion across Galicia's public hospital network.</span><span lang="es">La integración SERGAS permite la expansión multicentro a través de la red hospitalaria pública gallega.</span></p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+<button id="scrollTop" aria-label="Scroll to top">
+  <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+
+
+
+
+
+</BaseLayout>
+
+<script>
+  import '../lib/home.js';
+</script>

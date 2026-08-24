@@ -1,0 +1,131 @@
+---
+// Primary header — authored ONCE, used by every page via BaseLayout.
+// `current` marks the active nav item (e.g. "home", "research", "team").
+const { current = 'home' } = Astro.props;
+const isCur = (k) => (current === k ? 'true' : undefined);
+---
+
+<div class="latest-bar" id="latestBar" aria-label="Latest update">
+  <div class="latest-bar-inner">
+    <span class="latest-dot" aria-hidden="true"></span>
+    <span class="latest-text">
+      <span lang="en">1,000th lung transplant performed at CHUAC · Regional milestone · May 2026</span>
+      <span lang="es">1.000 trasplante pulmonar en el CHUAC · Hito autonómico · Mayo de 2026</span>
+    </span>
+  </div>
+</div>
+
+<header class="hdr" id="hdr" data-page={current}>
+  <div class="hdr-main">
+    <div class="hdr-inner">
+      <a href="/" class="hdr-logo" aria-label="neumACt R&amp;I">
+        <img src="/logo.svg" alt="neumACt R&I" class="hdr-logo-img" onerror="this.style.opacity='.3'" />
+        <span class="hdr-logo-rule" aria-hidden="true"></span>
+        <span class="hdr-logo-desc"><span lang="en">Research &amp; Innovation</span><span lang="es">Investigación e Innovación</span></span>
+      </a>
+
+      <nav class="hdr-nav" aria-label="Primary navigation">
+        <span class="hdr-nav-pill" aria-hidden="true"></span>
+        <a href="/" class="hdr-nav-link" data-nav="home" data-current={isCur('home')} aria-current={current === 'home' ? 'page' : undefined}><span lang="en">Home</span><span lang="es">Inicio</span></a>
+        <div class="hdr-dd" data-nav="research">
+          <span class="hdr-dd-trigger">
+            <a href="/clinical/" class="hdr-nav-link" data-nav="research" data-current={isCur('research')}><span lang="en">Research</span><span lang="es">Investigación</span></a>
+            <button type="button" class="hdr-dd-chevron" aria-label="Show research lines" aria-expanded="false" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button>
+          </span>
+          <div class="hdr-dd-panel"><p class="hdr-dd-panel-title"><span lang="en">Research Lines</span><span lang="es">Líneas de Investigación</span></p><div class="hdr-dd-panel-inner" id="hdrResearchLines"></div><a class="hdr-dd-all" id="hdrResearchLinesAll" href="/clinical#research-lines" hidden><span lang="en">View research lines</span><span lang="es">Ver líneas de investigación</span> →</a></div>
+        </div>
+        <a href="/innovation/" class="hdr-nav-link" data-nav="innovation" data-current={isCur('innovation')}><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
+        <a href="/news/" class="hdr-nav-link" data-nav="news" data-current={isCur('news')}><span lang="en">Articles</span><span lang="es">Artículos</span></a>
+        <a href="/team/" class="hdr-nav-link" data-nav="team" data-current={isCur('team')}><span lang="en">Team</span><span lang="es">Equipo</span></a>
+      </nav>
+
+      <div class="hdr-right">
+        <div class="lang-toggle" role="radiogroup" aria-label="Language / Idioma">
+          <button class="lt-btn lt-btn--active" data-lang="en" role="radio" aria-checked="true">EN</button>
+          <button class="lt-btn" data-lang="es" role="radio" aria-checked="false">ES</button>
+        </div>
+        <a href="#contact" class="hdr-contact-btn"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
+        <button class="mob-toggle" id="mobToggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobDrawer"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="mob-overlay" id="mobOverlay"></div>
+<nav class="mob-drawer" id="mobDrawer" aria-label="Mobile navigation">
+  <div class="mob-drawer-nav">
+    <a href="/" class={current === 'home' ? 'current' : undefined} aria-current={current === 'home' ? 'page' : undefined}><span lang="en">Home</span><span lang="es">Inicio</span></a>
+    <a href="/clinical/"><span lang="en">Research</span><span lang="es">Investigación</span></a>
+    <a href="/innovation/"><span lang="en">Innovation</span><span lang="es">Innovación</span></a>
+    <a href="/news/"><span lang="en">Articles</span><span lang="es">Artículos</span></a>
+    <a href="/team/"><span lang="en">Team</span><span lang="es">Equipo</span></a>
+    <a href="#contact"><span lang="en">Contact</span><span lang="es">Contacto</span></a>
+  </div>
+  <div class="mob-lang" role="radiogroup" aria-label="Language / Idioma">
+    <button class="lt-btn lt-btn--active" data-lang="en" role="radio" aria-checked="true">EN</button>
+    <button class="lt-btn" data-lang="es" role="radio" aria-checked="false">ES</button>
+  </div>
+</nav>
+
+<script>
+  import { fetchList, escHtml } from '../lib/api.js';
+
+  // ── Language toggle (owned here; header-enhance uses window.selectLang) ──
+  function applyLang(l) {
+    if (l !== 'en' && l !== 'es') return;
+    document.documentElement.dataset.lang = l;
+    document.documentElement.lang = l;
+    try { localStorage.setItem('huac_lang', l); localStorage.setItem('lang', l); } catch (e) {}
+    document.querySelectorAll('.lt-btn').forEach((b) => {
+      const on = b.dataset.lang === l;
+      b.classList.toggle('lt-btn--active', on);
+      b.setAttribute('aria-checked', String(on));
+    });
+  }
+  // Exposed globally + adds a brief crossfade (formerly in header-enhance).
+  window.selectLang = function (l) {
+    const root = document.documentElement;
+    root.style.transition = 'opacity .18s ease';
+    root.style.opacity = '0.6';
+    setTimeout(() => { applyLang(l); root.style.opacity = '1'; }, 120);
+  };
+  document.querySelectorAll('.lt-btn').forEach((b) =>
+    b.addEventListener('click', () => window.selectLang(b.dataset.lang))
+  );
+  applyLang(document.documentElement.dataset.lang || 'en'); // instant on load, no fade
+
+  // ── Mobile drawer ──────────────────────────────────────────────
+  const toggle = document.getElementById('mobToggle');
+  const drawer = document.getElementById('mobDrawer');
+  const overlay = document.getElementById('mobOverlay');
+  function closeDrawer() {
+    drawer?.classList.remove('open');
+    overlay?.classList.remove('open');
+    toggle?.setAttribute('aria-expanded', 'false');
+  }
+  toggle?.addEventListener('click', () => {
+    const open = drawer?.classList.toggle('open');
+    overlay?.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', String(!!open));
+  });
+  overlay?.addEventListener('click', closeDrawer);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDrawer(); });
+
+  // ── Research-lines dropdown (live data) ────────────────────────
+  // Fills the mega-dropdown from the backend. If it fails, the panel
+  // is simply empty — it can never blank the page (chrome is static HTML).
+  (async () => {
+    const host = document.getElementById('hdrResearchLines');
+    if (!host) return;
+    try {
+      const lines = await fetchList('researchLines');
+      if (!Array.isArray(lines) || !lines.length) return;
+      host.innerHTML = lines.slice(0, 6).map((l) =>
+        `<a class="hdr-dd-item" href="/line/?id=${encodeURIComponent(l.id)}">${escHtml(l.name || l.title || '')}</a>`
+      ).join('');
+      document.getElementById('hdrResearchLinesAll')?.removeAttribute('hidden');
+    } catch (e) {
+      /* leave panel empty; page is unaffected */
+    }
+  })();
+</script>

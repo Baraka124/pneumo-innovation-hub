@@ -1,0 +1,528 @@
+@layer pages {
+
+
+/* View trial / View project links — stronger resting state */
+
+/* 1,000 lung transplant milestone — celebratory but restrained */
+.hero h1,.hero h2,.hero .display,.contact-bg h1,.contact-bg h2,.contact-bg .display,
+.team-bg h1,.team-bg h2,.team-bg .display,.partner-bg h2,.partner-bg .display,
+.paths-section h2,.focus-bg h2,.blog-hero h1,.blog-hero h2,.blog-hero .display
+{color:#fff!important;}
+.contact-bg p,.contact-bg .sec-head p,.team-bg p,.partner-bg p,.focus-bg p,.blog-hero p,.hero .hero-desc,
+.paths-section p,.paths-section .sec-body
+{color:rgba(255,255,255,.8)!important;}
+.hero-cred,.team-role,.team-bio,.cinfo-label,.hstat-label,.footer-col ul a,.footer-col address
+{color:rgba(255,255,255,.72)!important;}
+.lines-bg h2,.lines-bg .display,.trials-bg h2,.trials-bg .display,.pipeline-bg h2,.projects-bg h2,.cap-bg h2
+{color:var(--ink,#1A1A1A)!important;}
+.lines-bg p,.trials-bg p,.pipeline-bg p,.projects-bg p,.cap-bg p
+{color:var(--text-on-light-2,#404040)!important;}
+.hstat-num,.stat-num,.hstrip-num,.pstat-num,.blog-hero-stat-n,.hsr-n
+{color:#fff!important;-webkit-text-fill-color:#fff!important;background:none!important;-webkit-background-clip:unset!important;background-clip:unset!important;}
+.hsr-l{color:rgba(255,255,255,.5)!important;}
+.hero-stats{display:grid!important;grid-template-columns:1fr 1fr!important;border-radius:2px!important;}
+.hstat{padding:.75rem 1.125rem!important;border-bottom:1px solid rgba(255,255,255,.07)!important;border-right:1px solid rgba(255,255,255,.07)!important;flex-direction:column!important;align-items:flex-start!important;}
+.hstat:nth-child(even){border-right:none!important;}
+.hstat-num{font-size:1.625rem!important;line-height:1!important;}
+.hstat-label{font-size:var(--fs-label)!important;display:block!important;margin-bottom:.2rem!important;}
+.hero-stat-cta{grid-column:1/-1!important;border-top:1px solid rgba(255,255,255,.07)!important;}
+/* .affil-img: unused in markup, same destructive invert pattern removed. */
+.story-typographic-journal{font-family:var(--ff-display,'Fraunces',serif)!important;font-style:italic!important;font-size:.8125rem!important;font-weight:500!important;letter-spacing:0!important;text-transform:none!important;color:rgba(255,255,255,.92)!important;background:none!important;border:none!important;border-radius:0!important;padding:0 0 .5rem 0!important;margin-bottom:.65rem!important;display:inline-block!important;position:relative;z-index:1;}
+
+
+
+/* DARK BG — all headings white */
+
+/* DARK BG — body text readable */
+
+/* DARK BG — secondary minimum .65 */
+.contact-bg .label,.team-bg .label,.partner-bg .label
+{color:rgba(0,153,153,.9)!important;}
+.cinfo-value{color:rgba(255,255,255,.9)!important;}
+
+/* LIGHT BG — headings dark */
+
+/* STATS — pure white */
+.hstat-num sub{color:#009999!important;-webkit-text-fill-color:#009999!important;}
+
+/* STATS — compact 2-col */
+
+/* LOGO */
+.footer-logo-img{filter:brightness(0) invert(1)!important;opacity:.8!important;height:36px!important;width:auto!important;}
+
+/* AFFIL PLACEHOLDERS */
+.affil-section{background:rgba(255,255,255,.025);border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07);}
+.affil-logo-item{display:block;opacity:.55;transition:opacity .2s;}
+.affil-logo-item:hover{opacity:.85;}
+/* .affil-img: unused in markup, same destructive invert pattern removed. */
+.affil-img-main{height:40px;max-width:260px;}
+.affil-img-inibic{height:28px;max-width:180px;}
+.affil-ph{display:flex;align-items:center;justify-content:center;height:32px;min-width:80px;border:1px dashed rgba(255,255,255,.2);border-radius:2px;padding:0 .75rem;background:rgba(255,255,255,.03);}
+.affil-ph span{font-family:var(--ff-mono,'DM Mono',monospace);font-size:var(--fs-label);letter-spacing:.08em;color:rgba(255,255,255,.35);white-space:nowrap;}
+.affil-ph-main{height:40px;min-width:140px;}
+
+/* DISMISS */
+
+/* HOSPITAL DESKTOP (1024-1366px) */
+/* ═══ CANONICAL HEADER ═══════════════════════════════════════════ */
+/* ══ DESIGN SYSTEM — identical to index.html ══ */
+    body{font-family:var(--ff-body);background:var(--white);color:var(--ink);
+      line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased;
+      padding-top:68px;  padding-top:68px;
+  }
+    ::selection{background:var(--teal-lt);color:var(--ink);}
+    #pb{position:fixed;top:0;left:0;height:1.5px;width:0;background:var(--teal);z-index:3000;transition:width .08s linear;pointer-events:none;}
+
+    /* ══ PAGE LAYOUT ══ */
+    .wrap{width:100%;max-width:var(--max);margin:0 auto;padding:0 var(--pad);}
+    .section{padding:5rem 0;}
+    @media(max-width:768px){.section{padding:3.5rem 0;}}
+
+    /* ══ HERO — minimal, editorial ══ */
+    .hero{
+      background:var(--navy-2);
+      padding:5rem 0 4rem;
+      border-bottom:1px solid var(--border-d);
+      position:relative;overflow:hidden;
+    }
+    .hero canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;}
+    .hero-inner{position:relative;z-index:1;}
+    .hero-kicker{display:flex;align-items:center;gap:.625rem;margin-bottom:1.75rem;}
+    .hero-kicker-line{display:none;}
+    .label{font-family:var(--ff-mono);font-size:var(--fs-label);font-weight:600;letter-spacing:.1em;text-transform:uppercase;}
+    .label.on-dark{color:rgba(255,255,255,.85);}
+    .hero-h1{
+      font-family:var(--ff-display);font-size:clamp(2.5rem,5vw,4rem);font-weight:700;
+      color:#fff; text-shadow: 0 2px 40px rgba(0,0,0,.3);line-height:1.05;letter-spacing:-.03em;margin-bottom:1.25rem;
+    }
+    .hero-h1 em{font-style:italic;font-weight:300;color:rgba(255,255,255,.4);}
+    .hero-desc{font-size:1rem;line-height:1.7;color:rgba(255,255,255,.5);max-width:520px;margin-bottom:2.5rem;}
+    .hero-desc strong{color:rgba(255,255,255,.8);font-weight:500;}
+
+    /* Hero stat row */
+    .hero-stats-row{
+      display:flex;align-items:center;gap:0;
+      border-top:1px solid var(--border-d);padding-top:2rem;
+      flex-wrap:wrap;
+    }
+    .hsr-item{
+      padding-right:2.5rem;margin-right:2.5rem;
+      border-right:1px solid var(--border-d);
+    }
+    .hsr-item:last-child{border-right:none;}
+    .hsr-n{
+      font-family:var(--ff-display);font-size:2.5rem;font-weight:700;
+      color:#fff;line-height:1;letter-spacing:-.04em;margin-bottom:.25rem;
+    }
+    .hsr-l{font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);}
+    @media(max-width:640px){
+      .hsr-item{padding-right:1.5rem;margin-right:1.5rem;margin-bottom:1.25rem;}
+      .hero-stats-row{gap:0;}
+    }
+
+    /* ══ SECTION INTRO ══ */
+    .sec-kicker{display:flex;align-items:center;gap:.625rem;margin-bottom:1.25rem;}
+    .sec-kicker-line{width:20px;height:1px;background:var(--teal);}
+    .display-md{font-family:var(--ff-display);font-size:clamp(1.5rem,2.5vw,2.125rem);font-weight:700;line-height:1.1;letter-spacing:-.025em;}
+    .sec-body{font-size:1rem;color:var(--ink-3);max-width:540px;line-height:1.7;margin-top:.875rem;}
+
+    /* ══ RESEARCH LEADS ══════════════════════════
+       Each lead gets a full-width editorial row.
+       Photo/initials left, copy right.
+       Separated by horizontal rules — no boxes.
+    ═══════════════════════════════════════════ */
+    .leads-list{display:flex;flex-direction:column;gap:2.5rem;}
+    .lead-row{
+      display:grid;
+      grid-template-columns:220px 1fr;
+      gap:3rem;
+      padding:3rem 0;
+      border-top:1px solid var(--border-l);
+      align-items:start;
+    }
+    .lead-row:first-child{border-top:none;}
+    @media(max-width:768px){.lead-row{grid-template-columns:1fr;gap:1.5rem;}}
+
+    /* Left: visual identity
+       Circular mark, soft teal→blue gradient — reads as a deliberate
+       identity badge now, and accepts a real photo later with zero
+       layout change (the photo just fills the same circle). */
+    .lead-visual{display:flex;flex-direction:column;align-items:center;gap:.625rem;}
+    .lead-avatar{
+      width:96px;height:96px;
+      border-radius:50%;
+      background:linear-gradient(135deg,#005F5F 0%,#007A7A 55%,#3D8FD6 100%);
+      box-shadow:0 1px 2px rgba(0,40,40,.08),0 6px 20px rgba(0,95,95,.18);
+      display:flex;align-items:center;justify-content:center;
+      position:relative;overflow:hidden;flex-shrink:0;
+    }
+    .lead-avatar img{width:100%;height:100%;object-fit:cover;}
+    .lead-initials{
+      font-family:'DM Sans',sans-serif;font-size:1.625rem;font-weight:700;
+      color:rgba(255,255,255,.96);letter-spacing:.01em;
+    }
+    .lead-line-num{
+      font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.08em;
+      color:var(--ink-4);
+    }
+
+    /* Publication list — the genuine variable-depth element of this
+       card. Replaces the earlier stat-row, which included a trial
+       count that turned out to be line-level, not personal, data. */
+    .lead-pubs{margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--border-l);}
+    .lead-pubs-label{
+      font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;
+      color:var(--ink-3);margin-bottom:.625rem;
+    }
+    .lead-pub-row{display:flex;align-items:baseline;gap:.625rem;padding:.4rem 0;font-size:.875rem;}
+    .lp-year{font-family:var(--ff-mono);font-size:var(--fs-label);color:var(--ink-4);flex-shrink:0;width:2.5em;}
+    .lp-title-inline{color:var(--ink-2);flex:1;}
+    .lp-doi-inline{font-size:var(--fs-label);color:var(--teal);text-decoration:none;white-space:nowrap;flex-shrink:0;}
+    .lp-doi-inline:hover{color:#006666;}
+
+    /* Right: editorial copy */
+    .lead-copy{}
+    .lead-name{
+      font-family:var(--ff-display);font-size:clamp(1.375rem,2vw,1.75rem);
+      font-weight:700;color:var(--ink);letter-spacing:-.025em;
+      line-height:1.1;margin-bottom:.375rem;
+    }
+    .lead-spec{font-size:.875rem;color:var(--ink-3);margin-bottom:1.125rem;font-weight:400;}
+    .lead-line-name{
+      font-size:.9375rem;font-weight:500;color:var(--ink-2);
+      margin-bottom:1rem;line-height:1.3;
+    }
+    .lead-bio{font-size:.9375rem;color:var(--ink-2);line-height:1.75;max-width:600px;}
+    .lead-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.125rem;}
+    .lead-tag{
+      font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.08em;text-transform:uppercase;
+      padding:.25rem .6rem;border-radius:var(--r-xs);
+      background:rgba(0,122,122,.07);color:var(--teal);border:1px solid rgba(0,122,122,.16);
+    }
+    .lead-tag.pi{background:rgba(0,122,122,.07);color:var(--teal);border-color:rgba(0,122,122,.2);}
+
+    /* ── Chief/PI tier — the department's leadership gets a structurally
+       distinct treatment, not just a bigger version of the same card.
+       This is the person running both the clinical department and the
+       platform's flagship research line; the card should read that way
+       at a glance, before anyone reads a word of body copy. ── */
+    .lead-row.lead-chief{
+      grid-template-columns:240px 1fr;
+      padding:2.75rem 2.5rem;
+      margin:0 -2.5rem 0;
+      background:linear-gradient(180deg,rgba(0,122,122,.035) 0%,transparent 100%);
+      border:1px solid rgba(0,122,122,.14);
+      border-top:1px solid rgba(0,122,122,.14)!important;
+      border-radius:var(--r-lg,12px);
+    }
+    @media(max-width:768px){.lead-row.lead-chief{grid-template-columns:1fr;margin:0;padding:2rem 1.5rem;}}
+    .lead-chief .lead-avatar{
+      width:128px;height:128px;
+      box-shadow:0 2px 4px rgba(0,40,40,.1),0 10px 28px rgba(0,95,95,.22);
+    }
+    .lead-chief .lead-initials{font-size:2.125rem;}
+    /* A label row, not a pill — long titles like "Department Chief |
+       Principal Investigator, neumACt" need to read on one line without
+       a rounded badge shape forcing an awkward wrap. */
+    .lead-role-banner{
+      font-family:var(--ff-mono);font-size:var(--fs-label);font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+      color:var(--teal);margin-bottom:.625rem;line-height:1.5;
+    }
+    .lead-role-banner .rb-sep{color:rgba(0,122,122,.35);margin:0 .15rem;font-weight:400;}
+    .lead-chief .lead-name{font-size:clamp(1.625rem,2.4vw,2.0625rem);}
+    .lead-chief .lead-spec{font-size:.9375rem;color:var(--ink-2);font-weight:500;}
+    .lead-spec-sep{color:var(--ink-4);margin:0 .1rem;font-weight:400;}
+
+    /* ══ BROADER TEAM GRID ══════════════════════
+       All other public staff — compact grid.
+       Name, role, specialisation. No bios unless set.
+    ═══════════════════════════════════════════ */
+    .team-section{background:var(--surface);border-top:1px solid var(--border-l);}
+    .team-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));
+      gap:0;
+      border:1px solid var(--border-l);border-radius:var(--r-md);
+      overflow:hidden;margin-top:2.5rem;
+    }
+    .team-member{
+      padding:1.5rem;
+      border-radius:2px;
+      background:#fff;
+      box-shadow:0 1px 3px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.04);
+      transition:box-shadow .2s,transform .2s;
+      display:flex;align-items:flex-start;gap:1rem;
+    }
+    /* .team-member:hover is handled centrally in polish.css (#20) */
+    .team-member:focus-visible{outline:2px solid var(--teal,#007A7A);outline-offset:2px;box-shadow:0 2px 8px rgba(0,0,0,.1),0 8px 32px rgba(0,0,0,.08);}
+    .tm-avatar{
+      width:52px;height:52px;border-radius:50%;flex-shrink:0;
+      background:linear-gradient(135deg,#005F5F 0%,#007A7A 50%,#4A9EE8 100%);
+      display:flex;align-items:center;justify-content:center;
+      font-family:'DM Sans',sans-serif;font-size:.8125rem;font-weight:700;
+      letter-spacing:.02em;color:rgba(255,255,255,.92);
+      box-shadow:0 2px 12px rgba(0,122,122,.25);
+    }
+    .tm-name{font-size:.9rem;font-weight:500;color:var(--ink);line-height:1.3;margin-bottom:.2rem;}
+    .tm-role{font-size:.75rem;color:var(--ink-3);}
+    .tm-spec{font-size:var(--fs-label);color:var(--ink-4);margin-top:.2rem;font-family:var(--ff-mono);letter-spacing:.03em;}
+
+    /* ls-dot / ls-link — used by the "seeking partner" note, which sets
+       its own dot color inline since there's only one variant now. */
+    .ls-dot{
+      width:6px;height:6px;border-radius:50%;flex-shrink:0;
+    }
+    .ls-link{
+      font-size:.75rem;color:var(--teal);text-decoration:none;
+      border-bottom:1px solid rgba(0,122,122,.25);padding-bottom:1px;
+      margin-left:.25rem;transition:color .15s;
+    }
+    .ls-link:hover{color:#006666;}
+
+    /* ══ PUBLICATIONS STRIP ═════════════════════
+       Horizontal scroll — journal index style.
+       NOT a duplicate of news.html — no body text,
+       just journal reference format.
+    ═══════════════════════════════════════════ */
+    .pub-strip-section{
+      border-top:1px solid var(--border-l);
+      padding:4rem 0;background:var(--navy);
+    }
+    .pub-strip-scroll{
+      overflow-x:auto;
+      margin-top:2rem;
+      padding-bottom:.75rem;
+      scrollbar-width:thin;
+      scrollbar-color:rgba(255,255,255,.15) transparent;
+    }
+    .pub-strip-scroll::-webkit-scrollbar{height:4px;}
+    .pub-strip-scroll::-webkit-scrollbar-track{background:rgba(255,255,255,.04);border-radius:2px;}
+    .pub-strip-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.25);border-radius:2px;}
+    .pub-strip-scroll::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.4);}
+    .pub-strip-inner{
+      display:flex;align-items:stretch;gap:0;
+      width:max-content;
+      border:1px solid var(--border-d);border-radius:var(--r-sm);overflow:hidden;
+    }
+    .pub-card{
+      width:280px;flex-shrink:0;
+      padding:1.25rem 1.375rem;
+      border-right:1px solid var(--border-d);
+      display:flex;flex-direction:column;gap:.5rem;
+      transition:background .12s;cursor:default;
+    }
+    .pub-card:last-child{border-right:none;}
+    .pub-card:hover{background:rgba(255,255,255,.04);}
+    .pub-card a{text-decoration:none;}
+    .pub-card-top{display:flex;justify-content:space-between;align-items:baseline;gap:.625rem;}
+    .pub-journal{
+      font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;
+      text-transform:uppercase;color:var(--teal);font-weight:600;
+      overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;
+    }
+    .pub-year{
+      font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.08em;
+      color:rgba(255,255,255,.35);flex-shrink:0;
+    }
+    .pub-title{
+      font-size:.8125rem;color:rgba(255,255,255,.75);line-height:1.45;
+      display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+      flex:1;
+    }
+    .pub-authors{
+      font-size:var(--fs-label);color:rgba(255,255,255,.3);line-height:1.4;
+      display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;
+    }
+    .pub-doi-link{
+      font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;
+      color:rgba(0,179,179,.6);text-decoration:none;margin-top:auto;padding-top:.375rem;
+      border-top:1px solid rgba(255,255,255,.06);transition:color .15s;
+    }
+    .pub-doi-link:hover{color:rgba(0,200,200,.9);}
+    .pub-strip-nav{
+      display:flex;align-items:center;justify-content:space-between;gap:.625rem;margin-top:1rem;
+    }
+    .psn-btn svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;}
+    .psn-btn{
+      display:flex;align-items:center;justify-content:center;
+      width:34px;height:34px;border-radius:50%;
+      border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.03);
+      color:rgba(255,255,255,.6);cursor:pointer;
+      transition:background .15s,border-color .15s,color .15s;
+    }
+    .psn-btn:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.32);color:#fff;}
+    .psn-nav-group{display:flex;align-items:center;gap:.625rem;}
+    .psn-count{font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.1em;color:rgba(255,255,255,.3);}
+
+    /* ══ OPEN OPPORTUNITIES ════════════════════ */
+    .opps-section{background:var(--surface);border-top:1px solid var(--border-l);}
+    .opps-grid{
+      display:grid;grid-template-columns:1fr 1fr;gap:0;
+      border:1px solid var(--border-l);border-radius:var(--r-md);
+      overflow:hidden;margin-top:2.5rem;
+    }
+    @media(max-width:640px){.opps-grid{grid-template-columns:1fr;}}
+    .opp-card{
+      padding:1.75rem 2rem;border-right:1px solid var(--border-l);
+      border-bottom:1px solid var(--border-l);
+      display:flex;flex-direction:column;gap:.875rem;
+      background:var(--white);
+    }
+    .opp-card:nth-child(2n){border-right:none;}
+    .opp-card:last-child,.opp-card:nth-last-child(2):nth-child(odd){border-bottom:none;}
+    @media(max-width:640px){.opp-card{border-right:none;}}
+    .opp-type{
+      font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.14em;text-transform:uppercase;
+      padding:.2rem .55rem;border-radius:var(--r-xs);width:fit-content;
+    }
+    .opp-type--trial{background:rgba(22,163,74,.08);color:#15803d;border:1px solid rgba(22,163,74,.2);}
+    .opp-type--inno{background:rgba(217,119,6,.08);color:#b45309;border:1px solid rgba(217,119,6,.2);}
+    .opp-title{font-size:.9375rem;font-weight:500;color:var(--ink);line-height:1.4;}
+    .opp-meta{font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.08em;color:var(--ink-4);}
+    .opp-link{
+      display:inline-flex;align-items:center;gap:.3rem;
+      font-size:.75rem;font-weight:500;color:var(--teal);
+      text-decoration:none;border-bottom:1px solid rgba(0,122,122,.25);
+      padding-bottom:1px;margin-top:auto;width:fit-content;
+      transition:color .15s;
+    }
+    .opp-link:hover{color:#006666;}
+    @keyframes shimmer{to{background-position:200% center;}}
+    .skel{border-radius:2px;
+      background:linear-gradient(90deg,rgba(0,0,0,.05) 25%,rgba(0,0,0,.02) 50%,rgba(0,0,0,.05) 75%);
+      background-size:200%;animation:shimmer 1.4s ease-in-out infinite;}
+    .lead-skeleton{padding:3rem 0;border-top:1px solid var(--border-l);}
+    .lead-skeleton:first-child{border-top:none;}
+
+    /* ══ EMPTY / ERROR STATES ══ */
+    .state-empty{
+      padding:4rem 2rem;text-align:center;
+      font-size:.9375rem;color:var(--ink-3);
+    }
+
+    /* ══ CONTACT STRIP ══ */
+    .contact-strip{
+      background:var(--navy);border-top:1px solid var(--border-d);
+      padding:3.5rem 0;
+    }
+    .contact-strip-inner{
+      display:flex;align-items:center;justify-content:space-between;
+      gap:2rem;flex-wrap:wrap;
+    }
+    .cs-copy{}
+    .cs-label{font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:.625rem;}
+    .cs-heading{font-family:var(--ff-display);font-size:clamp(1.25rem,2vw,1.625rem);font-weight:700;color:#fff;letter-spacing:-.02em;line-height:1.2;}
+    .cs-sub{font-size:.875rem;color:rgba(255,255,255,.45);margin-top:.5rem;line-height:1.6;max-width:400px;}
+    .btn-cta-solid{display:inline-flex;align-items:center;gap:.5rem;background:#fff;color:var(--navy-2);font-weight:600;padding:.7rem 1.5rem;border-radius:var(--r-md);font-size:.875rem;text-decoration:none;border:none;cursor:pointer;transition:background .18s;}
+    .btn-cta-solid:hover{background:rgba(255,255,255,.88);}
+    .hero-text-link{font-size:.9375rem;font-weight:500;color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.35);padding-bottom:2px;transition:border-color .15s,color .15s;}
+    .hero-text-link:hover{border-color:#fff;color:var(--teal-2);}
+    .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.625rem 1.25rem;font-size:var(--fs-meta);font-weight:500;letter-spacing:.01em;border-radius:var(--r-md);cursor:pointer;text-decoration:none;white-space:nowrap;transition:background .15s,color .15s,border-color .15s;border:1px solid transparent;}
+    .btn-primary{background:#fff;color:var(--navy-2);border-color:#fff;}
+    .btn-primary:hover{background:rgba(255,255,255,.88);}
+    .btn-ghost{background:transparent;color:rgba(255,255,255,.75);border-color:rgba(255,255,255,.3);}
+    .btn-ghost:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.5);color:#fff;}
+    .btn-text{display:inline-flex;align-items:center;gap:.35rem;font-size:var(--fs-meta);font-weight:500;color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(0,122,122,.25);padding-bottom:1px;transition:color .15s,border-color .15s;}
+    .btn-text:hover{color:#006666;border-bottom-color:rgba(0,102,102,.5);}
+
+    /* ══ FOOTER ══ */
+    .footer canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.35;}
+    /* ══ SCROLL TO TOP ══ */
+    #scrollTop{position:fixed;bottom:1.5rem;right:1.5rem;width:40px;height:40px;background:var(--navy);border:1px solid var(--border-d);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(255,255,255,.55);opacity:0;pointer-events:none;transition:opacity .2s,background .15s;z-index:500;}
+    #scrollTop.visible{opacity:1;pointer-events:auto;} #scrollTop:hover{background:var(--navy-2);color:#fff;}
+    #scrollTop svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;}
+
+    /* ══ REVEAL ══ */
+    .reveal{opacity:0;transform:translateY(18px);transition:opacity .55s,transform .55s;}
+    .reveal-d1{transition-delay:.08s;} .reveal-d2{transition-delay:.16s;} .reveal-d3{transition-delay:.24s;}
+
+    /* ══ RESPONSIVE ══ */
+    @media(max-width:640px){
+      .hsr-item{border-right:none;padding:0;margin:0 0 1.25rem;}
+      .lead-row{gap:1.25rem;}
+      .lead-avatar{width:80px;height:80px;}
+      .lead-initials{font-size:1.5rem;}
+      }
+  
+    /* ══ LANGUAGE VISIBILITY — CRITICAL ══════════════════
+       Shows only the active language. Default: EN.
+       Toggled by selectLang() which sets data-lang on <html>.
+    ══════════════════════════════════════════════════════ */
+
+    /* Tag/pill stays informational, never an action */
+    .line-tag, .lead-line-pill, .lead-line-num,
+    .story-type-pill, .opp-type, .tca-line, .tca-affil,
+    .lead-tag {
+      cursor: default; pointer-events: none;
+    }
+
+
+.lead-photo::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(0,122,122,.04) 0px,
+    rgba(0,122,122,.04) 1px,
+    transparent 1px,
+    transparent 8px
+  );
+}
+.lead-initials {
+  position: relative;
+  z-index: 1;
+  user-select: none;
+}
+.tm-avatar { cursor: default; user-select: none; }
+
+/* Logo — white background pill so composite logo reads on dark header */
+
+/* Header scroll shrink is handled centrally in core.css/polish.css */
+.hdr-nav a { font-size: .875rem !important; }
+
+/* Research line cards — more breathing room */
+
+/* Unified sharp button style */
+
+/* Remove remaining 8px radius from inline buttons */
+
+
+/* ── Tablet (768–860px) ───────────────────────────────────── */
+/* ═══ CANONICAL FOOTER ════════════════════════════════════ */
+.site-footer{background:var(--navy-footer);border-top:1px solid rgba(255,255,255,.06);padding:2.75rem 0 0;position:relative;overflow:hidden;}
+.footer-bottom-bar{max-width:1440px;margin:2rem auto 0;padding:1.25rem clamp(1.25rem,4vw,3rem);border-top:1px solid rgba(255,255,255,.05);display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+/* Publication nav — spread prev/next, minimal style */
+
+/* ── Subtle visual depth — Crick-style section backgrounds ── */
+/* Section alternation — warm surface for contrast */
+/* Research line cards — warmer hover */
+/* Stat numbers — subtle teal tint */
+
+/* Path cards / collaboration cards — warmer bg */
+
+
+@media print {
+  .hdr,.mob-drawer,.mob-overlay,.mob-toggle,.site-footer .footer-col-nav,
+  .btn,.latest-bar,#scrollTop,canvas{display:none!important;}
+  body{background:#fff!important;color:#000!important;font-size:11pt;padding-top:0!important;}
+  a[href]::after{content:" ("attr(href)")";font-size:8pt;color:#555;}
+  a[href^="#"]::after,a[href^="javascript"]::after{content:"";}
+}
+
+
+/* Loading skeleton shimmer — referenced by setLoading() in api.js on
+   every page, but the CSS itself never actually existed anywhere in
+   this file. Every loading-state shimmer site-wide was rendering as
+   an invisible, unstyled box until now. */
+
+
+    /* ── Signature motion + accessibility additions ──────────── */
+    a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,
+    textarea:focus-visible,[tabindex]:focus-visible,summary:focus-visible,
+    .toggle-arrow:focus-visible,.line-card:focus-visible{
+      outline:2px solid var(--teal-2);outline-offset:2px;border-radius:var(--r-xs);
+    }
+    [data-counter]{font-variant-numeric:tabular-nums;font-feature-settings:'tnum';}
+
+}

@@ -1,0 +1,65 @@
+---
+// Site <head> — authored ONCE. Pages pass title / description / path.
+const {
+  title = 'neumACt R&I — Respiratory Medicine Research & Innovation · CHUAC · INIBIC',
+  description = 'Precision respiratory medicine at CHUAC. Research and Innovation in Respiratory Medicine, part of INIBIC and the SERGAS network.',
+  path = '/',
+} = Astro.props;
+
+const canonical = new URL(path, Astro.site).href;
+const FONTS =
+  'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap';
+---
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0" />
+<title>{title}</title>
+<link rel="icon" type="image/svg+xml" href="/logo.svg" />
+<meta name="description" content={description} />
+
+<link rel="canonical" href={canonical} />
+<link rel="alternate" hreflang="es" href={canonical} />
+<link rel="alternate" hreflang="en" href={canonical} />
+<link rel="alternate" hreflang="x-default" href={canonical} />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="neumACt R&I" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content="https://neumact.org/assets/og-card.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<!-- Warm the API connection: the site fetches live data from the Railway
+     backend on load, so preconnecting removes DNS+TLS latency from that. -->
+<link rel="preconnect" href="https://neumac-manage-back-end-production.up.railway.app" crossorigin />
+<link rel="dns-prefetch" href="https://api.openalex.org" />
+<link rel="preload" as="style" href={FONTS} />
+<link rel="stylesheet" href={FONTS} />
+
+<script is:inline>
+  // Restore saved language before paint (no flash). Safe if storage is blocked.
+  try {
+    var _l = localStorage.getItem('huac_lang');
+    if (_l === 'en' || _l === 'es') document.documentElement.dataset.lang = _l;
+  } catch (e) {}
+</script>
+
+<script type="application/ld+json" is:inline set:html={JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'MedicalOrganization',
+  name: 'Servicio de Neumología — Hospital Universitario A Coruña (CHUAC)',
+  url: 'https://neumact.org/',
+  parentOrganization: { '@type': 'Organization', name: 'INIBIC · SERGAS' },
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'As Xubias, 84',
+    postalCode: '15006',
+    addressLocality: 'A Coruña',
+    addressRegion: 'Galicia',
+    addressCountry: 'ES',
+  },
+})} />

@@ -1,0 +1,34 @@
+---
+import '../styles/core.css';
+import '../styles/polish.css';
+import '../styles/feed.css';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Feed · neumACt R&I</title>
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+  </head>
+  <body>
+
+  <div class="feed-wrap">
+    <h1>Article feed</h1>
+    <p>Follow neumACt R&amp;I's latest articles and publications in your reader. This feed is generated live from the department's current output.</p>
+    <div class="feed-actions">
+      <button class="feed-btn" id="dlFeed">Download feed.xml</button>
+      <button class="feed-btn feed-btn--ghost" id="showFeed">Preview</button>
+      <a class="feed-btn feed-btn--ghost" href="/news/">Back to Articles</a>
+    </div>
+    <pre id="feedPreview"></pre>
+  </div>
+
+
+  </body>
+</html>
+
+<script>
+  import '../lib/feed.js';
+</script>

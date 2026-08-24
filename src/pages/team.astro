@@ -1,0 +1,306 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/team.css';
+---
+
+<BaseLayout
+  current="team"
+  title="Team — neumACt R&I · CHUAC · INIBIC"
+  description="Clinician-investigators of the Servicio de Neumología, CHUAC — leadership, research team, publications, and the research-line network."
+  path="/team"
+>
+<section class="hero" aria-labelledby="teamHeroTitle" id="mainContent">
+  <canvas id="heroBg" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="hero-inner">
+      <div class="hero-kicker reveal">
+        <span class="label on-dark"><span lang="en">neumACt Research Group · INIBIC</span><span lang="es">Grupo de Investigación neumACt · INIBIC</span></span>
+      </div>
+      <h1 class="hero-h1" id="teamHeroTitle">
+        <span lang="en">The people<br>behind the work.</span>
+        <span lang="es">Las personas<br><em>detrás de la ciencia.</em></span>
+      </h1>
+      <p class="hero-desc">
+        <span lang="en"><strong>23 clinician-investigators</strong> across six specialist research lines. Each line led by a physician-scientist who carries both the clinical load and the research portfolio — running trials, treating patients, building evidence.</span>
+        <span lang="es"><strong>23 investigadores clínicos</strong> en seis líneas especializadas. Cada línea dirigida por un médico-científico que compagina la carga asistencial con la cartera investigadora: ensayos, pacientes, evidencia.</span>
+      </p>
+
+      <div class="hero-stats-row reveal reveal-d3">
+        <div class="hsr-item">
+          <div class="hsr-n" id="statMembers" data-counter="23">23</div>
+          <div class="hsr-l"><span lang="en">Clinician-investigators</span><span lang="es">Investigadores clínicos</span></div>
+        </div>
+        <div class="hsr-item">
+          <div class="hsr-n" id="statLines" data-counter="6">6</div>
+          <div class="hsr-l"><span lang="en">Research lines</span><span lang="es">Líneas de investigación</span></div>
+        </div>
+        <div class="hsr-item">
+          <div class="hsr-n" id="statTrials" data-counter="10+">10+</div>
+          <div class="hsr-l"><span lang="en">Active studies</span><span lang="es">Estudios activos</span></div>
+        </div>
+        <div class="hsr-item">
+          <div class="hsr-n milestone-num">1,000</div>
+          <div class="hsr-l milestone-label"><span lang="en">Lung transplants</span><span lang="es">Trasplantes pulmonares</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ RESEARCH LEADS ══════════════════════════════════ -->
+<section class="section" style="background:var(--white);" id="leads">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="sec-kicker">
+        <span class="label"><span lang="en">Research Coordinators</span><span lang="es">Coordinadores de Investigación</span></span>
+      </div>
+      <h2 class="display-md">
+        <span lang="en">Research leads</span>
+        <span lang="es">Responsables de investigación</span>
+      </h2>
+      <p class="sec-body">
+        <span lang="en">Each research line is directed by a specialist physician-investigator — your primary scientific contact for collaboration within their domain.</span>
+        <span lang="es">Cada línea está dirigida por un médico-investigador especialista, su contacto científico principal para la colaboración en su área.</span>
+      </p>
+    </div>
+
+    <!-- Populated by api.js loadTeamLeads() -->
+    <div class="leads-list" id="leadsGrid">
+      <!-- Skeletons while loading -->
+      <div class="lead-skeleton reveal">
+        <div style="display:grid;grid-template-columns:220px 1fr;gap:3rem;align-items:start;">
+          <div style="display:flex;flex-direction:column;gap:.75rem;">
+            <div class="skel" style="width:120px;height:120px;border-radius:3px;"></div>
+            <div class="skel" style="height:20px;width:90px;"></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:.625rem;padding-top:.25rem;">
+            <div class="skel" style="height:28px;width:65%;"></div>
+            <div class="skel" style="height:14px;width:35%;"></div>
+            <div class="skel" style="height:14px;width:80%;margin-top:.5rem;"></div>
+            <div class="skel" style="height:14px;width:75%;"></div>
+            <div class="skel" style="height:14px;width:60%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ BROADER TEAM ════════════════════════════════════ -->
+<section class="section team-section" id="group">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="sec-kicker">
+        <span class="label"><span lang="en">The Group</span><span lang="es">El Grupo</span></span>
+      </div>
+      <h2 class="display-md">
+        <span lang="en">Full research group</span>
+        <span lang="es">Grupo de investigación completo</span>
+      </h2>
+      <p class="sec-body">
+        <span lang="en">Attending physicians, residents, fellows, engineers, and coordinators working across the six research lines.</span>
+        <span lang="es">Médicos adjuntos, residentes, fellows, ingenieros y coordinadores que trabajan en las seis líneas de investigación.</span>
+      </p>
+    </div>
+
+    <!-- Populated by api.js loadTeamGroup() -->
+    <div class="team-grid" id="teamGroup">
+      <!-- Skeletons -->
+      <div class="team-member" style="opacity:.4;"><div class="tm-avatar">—</div><div><div style="height:13px;width:120px;border-radius:2px;background:rgba(0,0,0,.07);margin-bottom:6px;"></div><div style="height:11px;width:80px;border-radius:2px;background:rgba(0,0,0,.05);"></div></div></div>
+      <div class="team-member" style="opacity:.4;"><div class="tm-avatar">—</div><div><div style="height:13px;width:100px;border-radius:2px;background:rgba(0,0,0,.07);margin-bottom:6px;"></div><div style="height:11px;width:70px;border-radius:2px;background:rgba(0,0,0,.05);"></div></div></div>
+      <div class="team-member" style="opacity:.4;"><div class="tm-avatar">—</div><div><div style="height:13px;width:110px;border-radius:2px;background:rgba(0,0,0,.07);margin-bottom:6px;"></div><div style="height:11px;width:75px;border-radius:2px;background:rgba(0,0,0,.05);"></div></div></div>
+      <div class="team-member" style="opacity:.4;"><div class="tm-avatar">—</div><div><div style="height:13px;width:130px;border-radius:2px;background:rgba(0,0,0,.07);margin-bottom:6px;"></div><div style="height:11px;width:65px;border-radius:2px;background:rgba(0,0,0,.05);"></div></div></div>
+    </div>
+
+    <!-- Profile detail modal — opened by clicking a team-member card -->
+    <div id="profileModalOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;align-items:center;justify-content:center;padding:1.5rem;" onclick="if(event.target===this) closeProfileModal()">
+      <div style="background:var(--white);border-radius:var(--r-lg,12px);max-width:480px;width:100%;max-height:85vh;overflow-y:auto;padding:2rem;position:relative;">
+        <button onclick="closeProfileModal()" aria-label="Close" style="position:absolute;top:1rem;right:1rem;width:32px;height:32px;border-radius:50%;border:none;background:var(--surface);cursor:pointer;display:flex;align-items:center;justify-content:center;">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+        <div id="profileModalContent"></div>
+      </div>
+    </div>
+
+    <div style="margin-top:1.5rem;" class="reveal">
+      <p style="font-size:.8125rem;color:var(--ink-4);line-height:1.6;">
+        <span lang="en">Only staff members who have enabled public visibility appear here. Team profiles are managed through the neumDesk platform.</span>
+        <span lang="es">Solo aparecen los miembros del equipo que han habilitado la visibilidad pública. Los perfiles se gestionan a través de la plataforma neumDesk.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PUBLICATIONS STRIP ═════════════════════════════ -->
+<section class="pub-strip-section" id="publications">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="sec-kicker">
+        <span class="sec-kicker-line"></span>
+        <span class="label on-dark"><span lang="en">Scientific Output</span><span lang="es">Producción Científica</span></span>
+      </div>
+      <h2 class="display-md" style="color:#fff;margin-top:.75rem;">
+        <span lang="en">Published work</span>
+        <span lang="es">Publicaciones</span>
+      </h2>
+      <p style="color:rgba(255,255,255,.4);font-size:.9rem;max-width:520px;margin-top:.625rem;line-height:1.65;">
+        <span lang="en">A journal index of the group's peer-reviewed output. Full text and abstracts available at each DOI.</span>
+        <span lang="es">Índice de la producción revisada por pares del grupo. Texto completo y resúmenes disponibles en cada DOI.</span>
+      </p>
+    </div>
+    <div class="pub-strip-scroll reveal reveal-d1" id="pubScroll">
+      <div class="pub-strip-inner" id="pubStripInner">
+        <!-- Populated by loadPublicationStrip() -->
+        <div class="pub-card" style="opacity:.3;">
+          <div class="skel" style="height:10px;width:80px;background:rgba(255,255,255,.1);"></div>
+          <div class="skel" style="height:14px;width:95%;background:rgba(255,255,255,.08);"></div>
+          <div class="skel" style="height:14px;width:80%;background:rgba(255,255,255,.06);"></div>
+          <div class="skel" style="height:14px;width:60%;background:rgba(255,255,255,.04);"></div>
+        </div>
+      </div>
+    </div>
+    <div class="pub-strip-nav"><div class="psn-nav-group">
+      <button class="psn-btn" id="pubPrev" aria-label="Scroll left">
+        <svg viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+      </button>
+      <button class="psn-btn" id="pubNext" aria-label="Scroll right">
+        <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+      </button>
+      <span class="psn-count" id="pubCount"></span>
+    </div>
+      <a href="/news/" class="btn-text on-dark">
+        <span lang="en">Full publications page</span><span lang="es">Página de publicaciones</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:11px;height:11px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ OPEN OPPORTUNITIES ══════════════════════════════ -->
+<section class="section opps-section" id="opportunities" style="display:none;">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="sec-kicker">
+        <span class="label"><span lang="en">Open Now</span><span lang="es">Abierto ahora</span></span>
+      </div>
+      <h2 class="display-md" style="margin-top:.75rem;">
+        <span lang="en">Current opportunities</span>
+        <span lang="es">Oportunidades actuales</span>
+      </h2>
+      <p class="sec-body">
+        <span lang="en">Recruiting clinical studies and innovation projects actively seeking partners.</span>
+        <span lang="es">Estudios clínicos en reclutamiento y proyectos de innovación en búsqueda de socios.</span>
+      </p>
+    </div>
+    <div class="opps-grid" id="oppsGrid">
+      <!-- Populated by loadOpportunities() -->
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT STRIP ════════════════════════════════════ -->
+<div class="contact-strip">
+  <div class="wrap">
+    <div class="contact-strip-inner">
+      <div class="cs-copy">
+        <div class="cs-label"><span lang="en">Collaboration</span><span lang="es">Colaboración</span></div>
+        <h2 class="cs-heading">
+          <span lang="en">Enquiries</span>
+          <span lang="es">Contacto</span>
+        </h2>
+        <p class="cs-sub">
+          <span lang="en">Clinical study sponsorship, academic collaboration, technology validation, or innovation co-development. Each lead handles their own domain — contact us to find the right person.</span>
+          <span lang="es">Patrocinio de estudios clínicos, colaboración académica, validación de tecnología o codesarrollo de innovación. Cada responsable gestiona su ámbito. Contáctenos para encontrar al interlocutor adecuado.</span>
+        </p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:.875rem;flex-shrink:0;align-items:flex-start;">
+        <a href="/#contact" class="btn-cta-solid">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:13px;height:13px;"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
+          <span lang="en">Get in touch</span><span lang="es">Contactar</span>
+        </a>
+        <a href="/clinical/" class="hero-text-link">
+          <span lang="en">Research programme</span><span lang="es">Programa de investigación</span> →
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═══════════════════════════════════════════ -->
+
+<!-- ═══ PHASE 2 · 5: THE GROUP AS A CONSTELLATION ═════════ -->
+<section class="section" id="constellationWrap" style="display:none;background:var(--navy-footer,#07111F);padding:5rem 0;" aria-labelledby="constTitle">
+  <div class="wrap">
+    <p class="label" style="color:var(--teal-2,#00B3B3);margin-bottom:.75rem;"><span lang="en">The network</span><span lang="es">La red</span></p>
+    <h2 class="display-md" id="constTitle" style="color:#fff;margin-bottom:.75rem;"><span lang="en">One department, six orbits</span><span lang="es">Un servicio, seis órbitas</span></h2>
+    <p style="color:rgba(255,255,255,.6);font-size:.9375rem;max-width:44rem;margin:0 0 2.5rem;line-height:1.7;">
+      <span lang="en">Research lines and the people who lead them — hover a line to light up its lead. Every node is live data.</span>
+      <span lang="es">Las líneas de investigación y quienes las lideran — pase el cursor sobre una línea para iluminar a su responsable. Cada nodo son datos en vivo.</span>
+    </p>
+    <div id="teamConstellation" role="img" aria-label="Network diagram of research lines and their coordinators"></div>
+  </div>
+</section>
+
+<!-- ═══ AFFILIATIONS & PARTNERSHIPS ══════════════════════ -->
+<section class="affil-section">
+  <div class="wrap">
+    <div class="affil-section-header">
+      <span class="affil-section-eyebrow">
+        <span lang="en">Affiliations &amp; Partnerships</span>
+        <span lang="es">Afiliaciones y Colaboraciones</span>
+      </span>
+      <p class="affil-section-sub">
+        <span lang="en">Institutional affiliations and active research partnerships underpinning the group's clinical and translational work.</span>
+        <span lang="es">Afiliaciones institucionales y colaboraciones de investigación activa que sustentan el trabajo clínico y translacional del grupo.</span>
+      </p>
+    </div>
+    <div class="affil-grid">
+      <!-- INIBIC -->
+      <a href="https://www.inibic.es" target="_blank" rel="noopener" class="affil-card" aria-label="INIBIC — Instituto de Investigación Biomédica de A Coruña">
+        <div class="affil-card-logo">
+          <img src="/assets/inibic.png" loading="lazy" alt="INIBIC" height="44" style="height:44px;width:auto;display:block;"/>
+        </div>
+        <div class="affil-card-body">
+          <div class="affil-card-name">INIBIC</div>
+          <div class="affil-card-desc"><span lang="en">Instituto de Investigación Biomédica de A Coruña — the group's primary institutional home and accrediting body.</span><span lang="es">Instituto de Investigación Biomédica de A Coruña — sede institucional principal y organismo acreditador del grupo.</span></div>
+        </div>
+      </a>
+
+      <!-- FINIBIC / Fundación Galega -->
+      <a href="https://www.finibic.es" target="_blank" rel="noopener" class="affil-card" aria-label="Fundación Galega de Investigación Biomédica INIBIC">
+        <div class="affil-card-logo">
+          <img src="/assets/finibic.png" loading="lazy" alt="Fundación Galega INIBIC" height="38" style="height:38px;width:auto;display:block;"/>
+        </div>
+        <div class="affil-card-body">
+          <div class="affil-card-name">Fundación Galega de Investigación Biomédica INIBIC</div>
+          <div class="affil-card-desc"><span lang="en">The foundation underpinning INIBIC's research infrastructure and strategic alliances across Galicia.</span><span lang="es">La fundación que sustenta la infraestructura de investigación y las alianzas estratégicas del INIBIC en Galicia.</span></div>
+        </div>
+      </a>
+
+      
+
+      
+
+      
+
+    </div><!-- /.affil-grid -->
+  </div>
+</section>
+
+
+<button id="scrollTop" aria-label="Scroll to top">
+  <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+
+
+
+
+
+
+
+</BaseLayout>
+
+<script>
+  import '../lib/team.js';
+</script>

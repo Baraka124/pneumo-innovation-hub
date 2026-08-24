@@ -1,0 +1,46 @@
+@layer components {
+/* ──────────────────────────────────────────────────────────────
+   REVEAL — visible by default, animation is additive.
+
+   The old site hid every .reveal element with opacity:0 and only
+   showed it once a JavaScript IntersectionObserver added `.in`.
+   If any earlier script threw, the observer never ran and the whole
+   page stayed invisible — a silent blank with no console error.
+
+   Here the resting state is VISIBLE. The entrance animation only
+   applies in browsers that support scroll-driven CSS animations,
+   and even then it runs with pure CSS — there is no observer to die,
+   no init script to throw in. If anything else on the page fails,
+   content is still shown. The blank-page class is gone by design.
+   ────────────────────────────────────────────────────────────── */
+
+.reveal { opacity: 1; transform: none; }
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      animation: revealIn linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 22%;
+    }
+    /* stagger helpers, kept from the old markup (.reveal-d2/.reveal-d3) */
+    .reveal-d2 { animation-range: entry 4% cover 26%; }
+    .reveal-d3 { animation-range: entry 8% cover 30%; }
+  }
+}
+
+@keyframes revealIn {
+  to { opacity: 1; transform: none; }
+}
+
+/* Top scroll-progress bar (driven by header-enhance initTopProgress). */
+#pb {
+  position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 3000;
+  background: var(--teal, #007A7A);
+  transform: scaleX(0); transform-origin: 0 50%;
+  transition: transform .08s linear; pointer-events: none;
+}
+
+}

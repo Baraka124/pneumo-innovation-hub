@@ -1,0 +1,15 @@
+@layer pages {
+
+    body{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem;text-align:center;}
+    .feed-wrap{max-width:520px;}
+    .feed-wrap h1{font-size:1.75rem;margin-bottom:1rem;}
+    .feed-wrap p{color:var(--ink-3);line-height:1.65;margin-bottom:1.5rem;}
+    .feed-actions{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;}
+    .feed-btn{font-family:var(--ff-mono);font-size:.8rem;letter-spacing:.04em;text-transform:uppercase;
+      color:#fff;background:var(--teal);border:none;border-radius:100px;padding:.7rem 1.4rem;cursor:pointer;text-decoration:none;transition:transform .2s,box-shadow .2s;}
+    .feed-btn:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,122,122,.3);}
+    .feed-btn--ghost{background:none;color:var(--teal);border:1px solid var(--teal);}
+    pre#feedPreview{text-align:left;background:var(--surface);border:1px solid var(--rule-l);border-radius:12px;
+      padding:1rem;margin-top:2rem;max-height:280px;overflow:auto;font-size:.7rem;line-height:1.5;color:var(--ink-2);display:none;}
+  
+}

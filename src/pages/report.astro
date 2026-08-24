@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/report.css';
+---
+
+<BaseLayout current="home" title="Annual Report — neumACt R&I" description="neumACt R&I annual report — figures and publications." path="/report">
+<!-- ═══ PRIVACY POLICY ═══════════════════════════════════ -->
+<!-- ═══ PHASE 2 · 10: ANNUAL REPORT ═══════════════════════ -->
+<section class="section" id="mainContent" data-hdr="light" style="background:var(--white);padding-top:7rem;">
+  <div class="wrap" style="max-width:880px;">
+    <p class="label" style="margin-bottom:1rem;color:var(--teal,#007A7A);">
+      <span lang="en">Annual Report</span><span lang="es">Memoria Anual</span></p>
+    <h1 class="display-lg" style="margin-bottom:.5rem;">neumACt R&amp;I <span id="rptYear" style="color:var(--teal,#007A7A);">—</span></h1>
+    <p style="font-size:var(--fs-body);color:var(--ink-3);margin:0 0 3.5rem;line-height:1.7;">
+      <span lang="en">Research output of the Servicio de Neumología, CHUAC — generated from live departmental data.</span>
+      <span lang="es">Producción investigadora del Servicio de Neumología, CHUAC — generada a partir de datos departamentales en vivo.</span>
+    </p>
+
+    <div class="rpt-grid">
+      <div class="rpt-stat"><div class="rpt-n" id="rptLines">—</div><div class="rpt-l"><span lang="en">Research lines</span><span lang="es">Líneas de investigación</span></div></div>
+      <div class="rpt-stat"><div class="rpt-n" id="rptTrials">—</div><div class="rpt-l"><span lang="en">Trials enrolling</span><span lang="es">Ensayos reclutando</span></div></div>
+      <div class="rpt-stat"><div class="rpt-n" id="rptMembers">—</div><div class="rpt-l"><span lang="en">Investigators</span><span lang="es">Investigadores</span></div></div>
+      <div class="rpt-stat"><div class="rpt-n" id="rptPubs">—</div><div class="rpt-l"><span lang="en">Publications this year</span><span lang="es">Publicaciones este año</span></div></div>
+    </div>
+
+    <h2 class="display-md" style="margin:4rem 0 1.5rem;font-size:var(--fs-h3);">
+      <span lang="en">Publications</span><span lang="es">Publicaciones</span></h2>
+    <ol class="rpt-pubs" id="rptPubList">
+      <li style="color:var(--ink-4);list-style:none;"><span lang="en">Loading…</span><span lang="es">Cargando…</span></li>
+    </ol>
+
+    <p class="rpt-print-note" style="margin-top:3.5rem;">
+      <button onclick="window.print()" class="btn-text" style="border:none;background:none;cursor:pointer;font-size:.9375rem;">
+        <span lang="en">Print / save as PDF →</span><span lang="es">Imprimir / guardar como PDF →</span></button>
+    </p>
+  </div>
+</section>
+
+
+
+
+
+<!-- ═══ AFFILIATIONS & PARTNERSHIPS ══════════════════════ -->
+<section class="affil-section">
+  <div class="wrap">
+    <div class="affil-section-header">
+      <span class="affil-section-eyebrow">
+        <span lang="en">Affiliations &amp; Partnerships</span>
+        <span lang="es">Afiliaciones y Colaboraciones</span>
+      </span>
+      <p class="affil-section-sub">
+        <span lang="en">Institutional affiliations and active research partnerships underpinning the group's clinical and translational work.</span>
+        <span lang="es">Afiliaciones institucionales y colaboraciones de investigación activa que sustentan el trabajo clínico y translacional del grupo.</span>
+      </p>
+    </div>
+    <div class="affil-grid">
+      <!-- INIBIC -->
+      <a href="https://www.inibic.es" target="_blank" rel="noopener" class="affil-card" aria-label="INIBIC — Instituto de Investigación Biomédica de A Coruña">
+        <div class="affil-card-logo">
+          <img src="/assets/inibic.png" loading="lazy" alt="INIBIC" height="44" style="height:44px;width:auto;display:block;"/>
+        </div>
+        <div class="affil-card-body">
+          <div class="affil-card-name">INIBIC</div>
+          <div class="affil-card-desc"><span lang="en">Instituto de Investigación Biomédica de A Coruña — the group's primary institutional home and accrediting body.</span><span lang="es">Instituto de Investigación Biomédica de A Coruña — sede institucional principal y organismo acreditador del grupo.</span></div>
+        </div>
+      </a>
+
+      <!-- FINIBIC / Fundación Galega -->
+      <a href="https://www.finibic.es" target="_blank" rel="noopener" class="affil-card" aria-label="Fundación Galega de Investigación Biomédica INIBIC">
+        <div class="affil-card-logo">
+          <img src="/assets/finibic.png" loading="lazy" alt="Fundación Galega INIBIC" height="38" style="height:38px;width:auto;display:block;"/>
+        </div>
+        <div class="affil-card-body">
+          <div class="affil-card-name">Fundación Galega de Investigación Biomédica INIBIC</div>
+          <div class="affil-card-desc"><span lang="en">The foundation underpinning INIBIC's research infrastructure and strategic alliances across Galicia.</span><span lang="es">La fundación que sustenta la infraestructura de investigación y las alianzas estratégicas del INIBIC en Galicia.</span></div>
+        </div>
+      </a>
+
+      
+
+      
+
+      
+
+    </div><!-- /.affil-grid -->
+  </div>
+</section>
+</BaseLayout>
+
+<script>
+  import '../lib/report.js';
+</script>

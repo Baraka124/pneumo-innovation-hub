@@ -1,0 +1,1123 @@
+@layer components {
+/* ════════════════════════════════════════════════════════════════
+   neumACt R&I — Premium Polish Layer  (polish.css)
+   Loaded last, after each page's own <style>, so it refines without
+   rewriting. Every rule here is a deliberate, low-risk upgrade aimed
+   at the details that separate "competent" from "elite": optical
+   spacing, type rhythm, depth, focus craft, and motion discipline.
+   Scoped tightly; no layout-breaking overrides.
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── 1. Smooth, consistent rendering everywhere ─────────────────── */
+*{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; text-rendering:optimizeLegibility; }
+
+/* ── 2. Tighter optical tracking on large display type ──────────── */
+.display-xl,.display.xl,.hero-h1,.hero-title,.blog-hero-h1{
+  letter-spacing:-.018em; line-height:1.04;
+  text-wrap:balance;            /* avoids orphans on the headline */
+}
+
+/* ── 3. Body copy: better measure + rhythm ──────────────────────── */
+.hero-desc,.pg-desc,.lead-bio,.section-intro p{
+  line-height:1.68; max-width:62ch; text-wrap:pretty;
+}
+
+/* ── 4. Hero CTA pair: real separation, no more jammed links ─────── */
+.hero-actions,.hero-cta,.hero-ctas{
+  display:flex; flex-wrap:wrap; align-items:center; gap:1.5rem; margin-top:2.25rem;
+}
+.hero-actions a, .hero-cta a{ position:relative; }
+
+/* Animated underline on text-style hero links — quiet, precise */
+.hero-actions a::after, .hero-cta a::after{
+  content:""; position:absolute; left:0; bottom:-3px; height:1px; width:100%;
+  background:currentColor; transform:scaleX(0); transform-origin:left;
+  transition:transform .4s var(--ease-clinical); opacity:.5;
+}
+.hero-actions a:hover::after, .hero-cta a:hover::after{ transform:scaleX(1); }
+
+/* ── 5. Refined card elevation + lift on hover ──────────────────── */
+.project-card,.lead-card,.line-card,.post-item,.team-member,.cap-card,.story-card{
+  transition:transform .2s var(--ease-clinical), box-shadow .2s var(--ease-clinical), border-color .2s var(--ease-clinical);
+}
+.project-card:hover,.lead-card:hover,.cap-card:hover,.story-card:hover{
+  transform:translateY(-2px); box-shadow:var(--shadow-md); will-change:transform;
+}
+
+/* ── 6. Universal keyboard focus — visible, branded, consistent ─── */
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,
+textarea:focus-visible,[tabindex]:focus-visible,summary:focus-visible{
+  outline:none; box-shadow:var(--ring); border-radius:6px;
+}
+
+/* ── 7. Numerals align in stats/counters (no width jitter) ──────── */
+[data-counter],.stat-num,.kpi-num,.lead-line-name,.facts-num,.hero-stat-num{
+  font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1,"cv01" 1;
+}
+
+/* ── 8. Links in body content: refined hover, not default blue ──── */
+.lead-bio a,.section-body a,.post-excerpt a{
+  color:var(--teal,#007A7A); text-decoration:none;
+  background-image:linear-gradient(currentColor,currentColor);
+  background-size:0% 1px; background-repeat:no-repeat; background-position:0 100%;
+  transition:background-size .35s var(--ease-clinical);
+}
+.lead-bio a:hover,.section-body a:hover,.post-excerpt a:hover{ background-size:100% 1px; }
+
+/* ── 9. Buttons: subtle depth + press feedback ──────────────────── */
+.btn-cta-solid,.btn-primary,.cta-btn{
+  box-shadow:var(--shadow-sm); transition:transform .2s var(--ease-clinical), box-shadow .3s var(--ease-clinical), background .2s;
+}
+.btn-cta-solid:hover,.btn-primary:hover,.cta-btn:hover{ box-shadow:var(--shadow-md); transform:translateY(-1px); }
+.btn-cta-solid:active,.btn-primary:active,.cta-btn:active{ transform:translateY(0); box-shadow:var(--shadow-xs); }
+
+/* ── 10. Header: hairline + blur for a crisper, layered top edge ── */
+.hdr{ backdrop-filter:saturate(140%) blur(8px); -webkit-backdrop-filter:saturate(140%) blur(8px); }
+.hdr.scrolled{ box-shadow:0 1px 0 rgba(255,255,255,.06), 0 6px 24px rgba(7,17,31,.28); }
+
+/* ── 11. Nav links: refined active indicator ────────────────────── */
+.hdr-nav a{ position:relative; }
+.hdr-nav a.current::after{
+  content:""; position:absolute; left:.9rem; right:.9rem; bottom:6px; height:1.5px;
+  background:var(--teal-2,#00B3B3); border-radius:2px;
+}
+
+/* ── 12. Language toggle: pill-grouped, cleaner ─────────────────── */
+/* .lang-toggle (the wrapper this border-radius/transition override
+   was originally written for) has zero usage in current markup —
+   superseded by .lang-switch, the live radiogroup design. .lt-btn
+   itself is still live (mobile drawer language buttons), so its
+   rule stays; the dead .lang-toggle parent rule above it is removed. */
+.lt-btn{ border-radius:100px!important; transition:color .2s, background .2s; }
+
+/* ── 13. Section eyebrows: tighter, more editorial ──────────────── */
+.eyebrow,.section-eyebrow,.sec-eyebrow,.kicker{
+  letter-spacing:.16em; text-transform:uppercase; font-size:.7rem; font-weight:600;
+}
+
+/* ── 14. Dividers as hairlines, not heavy lines ─────────────────── */
+hr,.divider,.section-divider{
+  border:none; height:1px; background:linear-gradient(90deg,transparent,rgba(12,56,104,.14) 18%,rgba(12,56,104,.14) 82%,transparent);
+}
+
+/* ── 15. Images: gentle reveal + never-squashed aspect ──────────── */
+.lead-photo img,.team-photo img,.project-img img,.post-thumb img{
+  transition:transform .6s var(--ease-clinical), filter .6s var(--ease-clinical);
+}
+.lead-card:hover .lead-photo img,.story-card:hover .post-thumb img{ transform:scale(1.03); }
+
+/* ── 16. Selection color on-brand ───────────────────────────────── */
+::selection{ background:rgba(0,179,179,.22); color:inherit; }
+
+/* ── 17. Custom scrollbar (desktop) — quiet, branded ────────────── */
+@media(pointer:fine){
+  *{ scrollbar-width:thin; scrollbar-color:rgba(0,122,122,.35) transparent; }
+  *::-webkit-scrollbar{ width:10px; height:10px; }
+  *::-webkit-scrollbar-thumb{ background:rgba(0,122,122,.32); border-radius:10px; border:2px solid transparent; background-clip:padding-box; }
+  *::-webkit-scrollbar-thumb:hover{ background:rgba(0,122,122,.5); background-clip:padding-box; }
+}
+
+/* ── 18. Skeleton shimmer: smoother sweep ───────────────────────── */
+.api-skeleton,.skeleton{ background-size:200% 100%!important; }
+
+/* ── 19. Footer links: refined hover state ──────────────────────── */
+.site-footer a{ transition:color .2s var(--ease-clinical), opacity .2s; }
+.footer-col-nav nav a:hover{ color:var(--teal-2,#00B3B3); }
+
+/* ── 20. Respect reduced-motion + perf: disable transforms/anim ─── */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{ animation-duration:.001ms!important; animation-iteration-count:1!important; transition-duration:.001ms!important; scroll-behavior:auto!important; }
+}
+
+/* ── Bonus: smoother global scroll anchoring ────────────────────── */
+html{ scroll-behavior:smooth; }
+@media(prefers-reduced-motion:reduce){ html{ scroll-behavior:auto; } }
+
+/* ════════════════════════════════════════════════════════════════
+   PREMIUM LANGUAGE SWITCH
+   The old two-tier header this section was originally written for
+   no longer exists in the markup (removed when the utility strip
+   was dropped) — its .hdr{} rule was deleted here since it was
+   silently overriding core.css's top/height/z-index (this file
+   loads after core.css, so any property it redeclared always won).
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── Premium language switch ───────────────────────────────────────
+   A true two-state segmented control (role="radiogroup"/"radio"),
+   not a flat button pair — arrow-key roving tabindex is wired in
+   header-enhance.js. Globe glyph sits to the left of the pill as a
+   resting-state affordance ("this control is about language"), the
+   knob slides with a touch of overshoot rather than a flat ease so
+   the motion reads as considered rather than mechanical. ─────────── */
+.lang-switch{
+  position:relative; display:inline-flex; align-items:center; gap:.4rem;
+  padding:2px .1rem 2px 2px;
+}
+.lang-switch-globe{
+  width:13px; height:13px; flex-shrink:0;
+  /* .38 measured 2.76:1 against --navy-2 (#0C447C) — under WCAG
+     1.4.11's 3:1 minimum for meaningful UI graphics (this glyph is
+     the resting-state affordance for "this control is about
+     language", not purely decorative). .42 clears it at 3.05:1. */
+  color:rgba(255,255,255,.42);
+  transition:color .2s var(--ease-clinical);
+}
+.lang-switch:focus-within .lang-switch-globe,
+.lang-switch:hover .lang-switch-globe{ color:rgba(255,255,255,.6); }
+.lang-switch::before{
+  content:''; position:absolute; left:18px; right:0; top:0; bottom:0;
+  background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.10);
+  border-radius:100px; z-index:0;
+}
+.lang-switch-knob{
+  position:absolute; top:2px; bottom:2px; left:20px; width:calc(50% - 11px);
+  background:#fff; border-radius:100px; z-index:0;
+  transition:transform .42s cubic-bezier(.34,1.56,.64,1);
+  box-shadow:0 1px 3px rgba(0,0,0,.2), 0 1px 1px rgba(0,0,0,.1);
+}
+html[data-lang="es"] .lang-switch-knob{ transform:translateX(calc(100% + 2px)); }
+.lang-opt{
+  position:relative; z-index:1; appearance:none; border:none; background:none;
+  cursor:pointer; padding:.18rem .62rem; min-width:34px;
+  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.66rem; font-weight:600;
+  letter-spacing:.08em; line-height:1; border-radius:100px;
+  color:rgba(255,255,255,.6); transition:color .28s var(--ease-clinical);
+}
+.lang-opt[aria-checked="true"]{ color:var(--navy,#0C3868); }
+/* Keyboard focus on a segmented control needs to read as "this
+   specific option is focused", not just "something in here has
+   focus" — ring sits tight to the individual button, on top of the
+   sliding knob, and is visible whichever side currently holds it. */
+.lang-opt:focus-visible{
+  outline:none;
+  box-shadow:0 0 0 2px var(--navy-2,#0C447C), 0 0 0 4px rgba(0,179,179,.55);
+}
+
+/* ── Tier 2: main nav bar ───────────────────────────────────────── */
+.hdr-main{
+  background:rgba(12,68,124,.82);
+  backdrop-filter:saturate(160%) blur(14px);
+  -webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  transition:height .35s var(--ease-clinical), background .35s, box-shadow .35s;
+}
+.hdr-inner{
+  max-width:1440px; margin:0 auto; height:68px;
+  padding:0 clamp(1.25rem,4vw,3rem);
+  display:flex; align-items:center; gap:2rem;
+  transition:height .35s var(--ease-clinical);
+}
+
+/* Logo lockup with hairline rule + descriptor */
+.hdr-logo{ display:flex; align-items:center; gap:.85rem; text-decoration:none; flex-shrink:0; }
+.hdr-logo-img{
+  display:block; height:30px; width:auto; max-width:240px; object-fit:contain;
+  filter:brightness(0) invert(1); opacity:.96;
+  transition:height .35s var(--ease-clinical);
+  view-transition-name:site-logo;   /* 10 — the logo persists across page morphs */
+}
+.hdr-logo-rule{ width:1px; height:26px; background:rgba(255,255,255,.18); flex-shrink:0; transition:opacity .3s var(--ease-clinical), width .3s var(--ease-clinical), margin .3s var(--ease-clinical); }
+.hdr-logo-desc{
+  font-family:var(--ff-mono,'DM Mono',monospace);
+  font-size:.6rem; line-height:1.25; letter-spacing:.05em; text-transform:uppercase;
+  color:rgba(255,255,255,.6); max-width:130px;
+  transition:opacity .25s var(--ease-clinical), max-width .3s var(--ease-clinical);
+  overflow:hidden; white-space:nowrap;
+}
+/* Scrolled state collapses the descriptor and divider away entirely
+   rather than just scaling the whole lockup down — the goal is a
+   denser, more functional header once someone is mid-page, not a
+   uniformly-shrunk copy of the resting state. The wordmark itself
+   stays legible at a slightly reduced size (set further down,
+   .hdr.scrolled .hdr-logo-img). */
+.hdr.scrolled .hdr-logo-rule{ width:0; opacity:0; margin:0; }
+.hdr.scrolled .hdr-logo-desc{ max-width:0; opacity:0; }
+
+/* Nav with sliding active pill */
+.hdr-nav{ position:relative; display:flex; align-items:center; gap:2px; flex:1; min-width:0; }
+.hdr-nav-pill{
+  position:absolute; top:50%; left:0;
+  height:34px; width:1px; border-radius:8px; background:rgba(255,255,255,.12);
+  z-index:0; opacity:0; pointer-events:none;
+  transform-origin:left center;
+  transform:translateY(-50%) scaleX(1);
+  /* transform + opacity only — both GPU-composited, so the pill
+     glides between nav items at a solid 60fps without triggering
+     layout on every frame (the previous left/width animation
+     re-laid-out the header on each tick — visible jank on lower-end
+     devices and a needless main-thread cost). width stays a fixed
+     1px base that scaleX stretches to the target. */
+  transition:transform .34s var(--ease-clinical), opacity .25s;
+  will-change:transform;
+}
+.hdr-nav-link{
+  position:relative; z-index:1; display:inline-block; padding:.55rem .9rem;
+  font-family:var(--ff-body,'DM Sans',sans-serif); font-size:.875rem; font-weight:500;
+  letter-spacing:.01em; color:rgba(255,255,255,.78); text-decoration:none; white-space:nowrap;
+  border-radius:8px; transition:color .2s, padding .3s var(--ease-clinical);
+}
+.hdr-nav-link:hover{ color:#fff; }
+.hdr-nav-link[data-current="true"]{ color:#fff; }
+.hdr-nav-link[data-current="true"]::after{
+  content:""; position:absolute; left:.9rem; right:.9rem; bottom:4px; height:1.5px;
+  background:var(--teal-2,#00B3B3); border-radius:2px;
+}
+
+/* Right cluster: contact button */
+.hdr-right{ display:flex; align-items:center; gap:1rem; flex-shrink:0; }
+.hdr-contact-btn{
+  display:inline-block; padding:.5rem 1.15rem;
+  font-family:var(--ff-body,'DM Sans',sans-serif); font-size:.84rem; font-weight:600;
+  letter-spacing:.01em; color:#fff; text-decoration:none;
+  border:1px solid rgba(255,255,255,.28); border-radius:100px;
+  transition:background .25s var(--ease-clinical), border-color .25s, transform .2s, box-shadow .3s, padding .3s var(--ease-clinical);
+}
+.hdr-contact-btn:hover{
+  background:var(--teal-2,#00B3B3); border-color:var(--teal-2,#00B3B3);
+  transform:translateY(-1px); box-shadow:0 6px 18px rgba(0,179,179,.3);
+}
+
+/* Scrolled state — condense tier 2. Beyond the height/logo shrink
+   already here, the nav links and contact pill also tighten their
+   own padding (not just the overall header height), and the logo's
+   divider+descriptor collapse away above — the combined effect is a
+   header that reads as "compact, working mode" rather than "the
+   same header, just smaller". */
+.hdr.scrolled .hdr-main{ box-shadow:0 4px 24px rgba(7,17,31,.32); background:rgba(12,56,104,.94); }
+.hdr.scrolled .hdr-inner{ height:58px; }
+.hdr.scrolled .hdr-logo-img{ height:26px; }
+.hdr.scrolled .hdr-nav-link{ padding:.5rem .7rem; }
+.hdr.scrolled .hdr-contact-btn{ padding:.4rem .95rem; }
+
+/* Body offset so fixed two-tier header doesn't overlap content.
+   Default content starts below 34 + 68 = 102px. */
+body{ padding-top:0; }
+.hdr ~ main, main{ scroll-margin-top:110px; }
+
+/* ── Research mega-dropdown panel ───────────────────────────────── */
+.hdr-dd{ position:relative; display:flex; align-items:center; z-index:1; }
+.hdr-dd-trigger{ display:inline-flex; align-items:center; }
+.hdr-dd-chevron{
+  appearance:none; background:none; border:none; cursor:pointer; padding:.3rem;
+  color:rgba(255,255,255,.6); display:flex; transition:transform .3s var(--ease-clinical), color .2s;
+}
+.hdr-dd-chevron svg{ width:14px; height:14px; }
+.hdr-dd:hover .hdr-dd-chevron{ color:#fff; }
+.hdr-dd:hover .hdr-dd-chevron, .hdr-dd-chevron[aria-expanded="true"]{ transform:rotate(180deg); }
+.hdr-dd-panel{
+  position:absolute; top:calc(100% + 16px); left:-1rem; width:380px;
+  background:#fff; border-radius:16px;
+  box-shadow:0 24px 48px -12px rgba(7,17,31,.28), 0 2px 8px rgba(7,17,31,.08);
+  padding:1.5rem 1.25rem 1.25rem; opacity:0; visibility:hidden;
+  transform:translateY(-8px); transition:opacity .28s var(--ease-clinical), transform .28s var(--ease-clinical), visibility .28s;
+}
+.hdr-dd-panel::before{
+  content:''; position:absolute; top:-7px; left:2.25rem; width:14px; height:14px;
+  background:#fff; transform:rotate(45deg); border-radius:3px 0 0 0;
+  box-shadow:-2px -2px 4px -2px rgba(7,17,31,.06);
+}
+/* Panel opens via the .open class only. Raw :hover-open caused
+   flicker on diagonal cursor travel and sticky panels on hybrid
+   touch devices — replaced by JS hover-intent in initHeaderDropdown
+   (120ms open delay, 250ms close grace, gated to (hover:hover)). */
+.hdr-dd.open .hdr-dd-panel{ opacity:1; visibility:visible; transform:translateY(0); }
+.hdr-dd-panel-title{
+  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.68rem; font-weight:600;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--ink-4,#767676);
+  margin:0 0 .75rem; padding-bottom:1rem;
+  /* 17 — the flat border became the expiratory curve */
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 18' preserveAspectRatio='none'%3E%3Cpath d='M0 15 C 18 14.5 30 11 38 3 C 44 -1 52 1 60 4 C 100 12 220 14 320 15' fill='none' stroke='%23007A7A' stroke-opacity='.28' stroke-width='1.2'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:bottom; background-size:100% 14px;
+}
+.hdr-dd-panel-inner{
+  display:flex; flex-direction:column; gap:.05rem;
+  max-height:min(60vh,420px); overflow-y:auto; margin:0 -.25rem; padding:.25rem .25rem 0;
+}
+/* .hdr-dd-item / .hdr-dd-num / .hdr-dd-name are defined once, in full,
+   further down this file (search "Research mega-dropdown: richer
+   items") — that version includes the coordinator subline and
+   trial-count badge. Defining them here too, then overriding most of
+   the same properties later, is exactly the kind of split-definition
+   that's made past header bugs (.hdr.scrolled, .team-member hover)
+   hard to reason about; consolidated to one definition. */
+.hdr-dd-all{
+  flex-shrink:0; margin-top:.65rem; padding:.85rem .5rem .15rem; border-top:1px solid rgba(12,56,104,.08);
+  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.72rem; font-weight:600; letter-spacing:.06em;
+  color:var(--teal,#007A7A); text-decoration:none; text-transform:uppercase; transition:color .2s,gap .2s;
+  display:flex; align-items:center; justify-content:space-between; gap:.5rem;
+}
+.hdr-dd-all[hidden]{ display:none; }
+.hdr-dd-all:hover{ color:var(--navy-2,#0C447C); gap:.75rem; }
+
+/* ── Mobile: show hamburger, hide desktop nav ───────────────────── */
+@media(max-width:880px){
+  .hdr-logo-rule, .hdr-logo-desc{ display:none; }
+  .hdr-nav{ display:none; }
+  .hdr-contact-btn{ display:none; }
+  .mob-toggle{ display:flex!important; }
+  .hdr-inner{ height:60px; }
+}
+@media(min-width:881px){
+  .mob-toggle{ display:none; }
+}
+
+/* Back-to-top button */
+.to-top{
+  position:fixed; bottom:1.5rem; right:1.5rem; z-index:900;
+  width:44px; height:44px; border-radius:50%; border:none; cursor:pointer;
+  background:var(--navy-2,#0C447C); color:#fff; display:flex; align-items:center; justify-content:center;
+  opacity:0; transform:translateY(12px) scale(.9); pointer-events:none;
+  box-shadow:var(--shadow-md); transition:opacity .3s var(--ease-clinical), transform .3s var(--ease-clinical), background .2s;
+}
+.to-top.show{ opacity:1; transform:none; pointer-events:auto; }
+.to-top:hover{ background:var(--teal,#007A7A); }
+.to-top svg{ width:18px; height:18px; }
+
+/* ── Body offset for the two-tier fixed header ──────────────────── */
+/* Old layout reserved 88px; new header is 34 (utility) + 68 (main) = 102px.
+   Override the page's own padding-top so content clears it exactly. */
+body{ padding-top:102px!important; }
+@media(max-width:880px){ body{ padding-top:60px!important; } }
+/* hero min-height referenced the old --hdr var; keep it visually full */
+.hero{ min-height:calc(100vh - 102px); }
+@media(max-width:880px){ .hero{ min-height:calc(100vh - 60px); } }
+
+/* ════════════════════════════════════════════════════════════════
+   PARTNERS / AFFILIATIONS
+   Canonical .affil-section / .affil-card system now lives in
+   core.css (shared sitewide). The old .affil-strip uniform-logo-wall
+   design and its dead selectors were removed here.
+   ════════════════════════════════════════════════════════════════ */
+
+/* ════════════════════════════════════════════════════════════════
+   TYPOGRAPHY SYSTEM + CONTRAST FLOOR + CONSISTENCY PASS
+   Audit-driven: fixes 115+ measured WCAG contrast failures, weak type
+   rhythm, and inconsistent surface/button patterns. Loaded last.
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── 1. REFINED TYPE SCALE (modular, ~1.25 ratio) ───────────────── */
+/* ── 2. DISPLAY TYPE: tighter, heavier, optically corrected ─────── */
+.display-xl,.display.xl,.hero-h1,.hero-title,.blog-hero-h1{
+  font-family:var(--ff-display,'Fraunces',serif)!important;
+  font-weight:600!important; letter-spacing:-.02em!important;
+  line-height:var(--lh-tight)!important; text-wrap:balance;
+}
+.display-lg,.display.lg{ font-weight:600!important; letter-spacing:-.018em; line-height:var(--lh-tight); }
+.display-md,.display-sm{ font-weight:600!important; letter-spacing:-.012em; line-height:var(--lh-snug); }
+h1,h2,h3{ letter-spacing:-.012em; }
+h3,h4{ line-height:var(--lh-snug); }
+
+/* ── 3. BODY RHYTHM: readable measure + leading ─────────────────── */
+p{ line-height:var(--lh-normal); }
+.hero-desc,.pg-desc,.lead-bio,.section-intro p,.netstd-detail p{
+  line-height:var(--lh-relaxed)!important; max-width:64ch; text-wrap:pretty;
+}
+
+/* ── 4. CONTRAST FLOOR — fix 115+ measured WCAG failures ────────── */
+/* Body-weight faint text lifted to >=4.5:1 on navy.
+   Map each failing tier up to a passing one. !important to beat inline. */
+[style*="rgba(255,255,255,.55)"],[style*="rgba(255,255,255,0.55)"],
+[style*="rgba(255,255,255,.52)"],[style*="rgba(255,255,255,.5)"],
+[style*="rgba(255,255,255,0.5)"]{ color:rgba(255,255,255,.72)!important; }
+
+[style*="rgba(255,255,255,.45)"],[style*="rgba(255,255,255,.4)"],
+[style*="rgba(255,255,255,0.4)"]{ color:rgba(255,255,255,.7)!important; }
+
+/* Decorative/eyebrow labels: lift to legible minimum without shouting */
+[style*="rgba(255,255,255,.38)"],[style*="rgba(255,255,255,.35)"],
+[style*="rgba(255,255,255,.3)"],[style*="rgba(255,255,255,.28)"],
+[style*="rgba(255,255,255,.25)"]{ color:rgba(255,255,255,.58)!important; }
+
+/* Class-based faint text (not inline) — same floor.
+   .footer-tagline was the one genuine failure here: at its defined
+   opacity (.28, in core.css) it measures ~2.46:1 against
+   --navy-footer (#07111F) — well under the 4.5:1 minimum this whole
+   section exists to fix. .footer-copy (.45 opacity) already clears
+   4.51:1 and didn't need touching. .netstd-name / .sec-eyebrow span
+   were grouped into the old empty placeholder this replaced but
+   don't share the same color declaration, so they're left to their
+   own existing rules rather than guessed at here.
+   Two more turned up doing the same systematic check across every
+   footer text class: .footer-nav-label ("Site" / "Contact" column
+   headers, opacity .22) measured 1.96:1, and .footer-address
+   (opacity .32) measured 2.85:1 — both genuine failures, neither
+   caught before since neither is an inline style. */
+.footer-tagline{ color:rgba(255,255,255,.6)!important; }
+.footer-nav-label{ color:rgba(255,255,255,.55)!important; }
+.footer-address{ color:rgba(255,255,255,.62)!important; }
+
+/* ── 5. UNIFIED BUTTON SYSTEM — pills where appropriate ─────────── */
+/* Primary action: solid teal pill. Secondary: outlined pill. Text: link. */
+.btn-cta-solid,.btn-primary,.cta-btn,a.btn-cta-solid{
+  display:inline-flex; align-items:center; gap:.5rem;
+  padding:.7rem 1.4rem; border-radius:100px;
+  font-family:var(--ff-body,'DM Sans',sans-serif); font-weight:600; font-size:.9375rem;
+  letter-spacing:.005em; text-decoration:none; border:none; cursor:pointer;
+  background:var(--teal,#007A7A); color:#fff;
+  box-shadow:0 1px 2px rgba(0,122,122,.2), 0 4px 14px rgba(0,122,122,.18);
+  transition:transform .2s var(--ease-clinical), box-shadow .3s var(--ease-clinical), background .2s;
+}
+.btn-cta-solid:hover,.btn-primary:hover,.cta-btn:hover{
+  background:var(--teal-2,#00B3B3); transform:translateY(-1px);
+  box-shadow:0 2px 4px rgba(0,179,179,.25), 0 8px 24px rgba(0,179,179,.28);
+}
+.btn-cta-solid:active,.btn-primary:active,.cta-btn:active{ transform:translateY(0); }
+
+/* Outlined / secondary pill */
+.btn-outline,.btn-sec,.btn-secondary{
+  display:inline-flex; align-items:center; gap:.5rem;
+  padding:.66rem 1.3rem; border-radius:100px;
+  font-family:var(--ff-body,'DM Sans',sans-serif); font-weight:600; font-size:.9375rem;
+  text-decoration:none; cursor:pointer;
+  background:transparent; color:var(--teal,#007A7A);
+  border:1.5px solid var(--teal,#007A7A);
+  transition:background .2s var(--ease-clinical), color .2s, transform .2s, border-color .2s;
+}
+.btn-outline:hover,.btn-sec:hover,.btn-secondary:hover{
+  background:var(--teal,#007A7A); color:#fff; transform:translateY(-1px);
+}
+/* On dark sections, outline goes white */
+.hero .btn-outline,[class*="-bg"] .btn-outline,.netstd-row + * .btn-outline{
+  color:#fff; border-color:rgba(255,255,255,.4);
+}
+.hero .btn-outline:hover{ background:#fff; color:var(--navy-2,#0C447C); border-color:#fff; }
+
+/* Text link with arrow — refined underline reveal (already partly set) */
+.btn-text{
+  display:inline-flex; align-items:center; gap:.4rem;
+  font-weight:600; font-size:.9375rem; text-decoration:none;
+  color:var(--teal,#007A7A); position:relative;
+}
+.btn-text.on-dark{ color:var(--teal-2,#00B3B3); }
+/* The underline reveal is now an ECG trace (6 — respiratory design
+   language): same left-to-right scaleX motion as before, but the bar
+   is masked to a cardiac blip. currentColor via background keeps the
+   on-dark teal variant working unchanged. */
+.btn-text::after{
+  content:""; position:absolute; left:0; bottom:-6px; height:10px; width:100%;
+  background:currentColor;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='10' viewBox='0 0 64 10'%3E%3Cpath d='M0 7 H22 L26 7 L29 1.5 L32 9 L35 7 H64' fill='none' stroke='%23000' stroke-width='1.4'/%3E%3C/svg%3E") repeat-x left center / 64px 10px;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='10' viewBox='0 0 64 10'%3E%3Cpath d='M0 7 H22 L26 7 L29 1.5 L32 9 L35 7 H64' fill='none' stroke='%23000' stroke-width='1.4'/%3E%3C/svg%3E") repeat-x left center / 64px 10px;
+  transform:scaleX(0); transform-origin:left;
+  transition:transform .45s var(--ease-clinical);
+}
+.btn-text:hover::after{ transform:scaleX(1); }
+
+/* ── 6. CONSISTENT CARD SURFACE LANGUAGE ────────────────────────── */
+.project-card,.lead-card,.story-card,.cap-card,.line-card,.post-item{
+  border-radius:14px;
+  border:1px solid var(--border-l, rgba(12,56,104,.08));
+  background:var(--white,#fff);
+}
+
+/* ── 7. CONSISTENT SECTION EYEBROWS ─────────────────────────────── */
+.sec-eyebrow span,.section-eyebrow,.eyebrow,.kicker{
+  font-family:var(--ff-mono,'DM Mono',monospace)!important;
+  font-size:.72rem!important; letter-spacing:.18em!important;
+  text-transform:uppercase!important; font-weight:500!important;
+}
+
+/* ── 8. LINKS IN PROSE: consistent, never raw-blue ──────────────── */
+p a:not([class]),li a:not([class]){
+  color:var(--teal,#007A7A); text-decoration:underline;
+  text-decoration-thickness:1px; text-underline-offset:2px;
+  transition:color .2s;
+}
+p a:not([class]):hover,li a:not([class]):hover{ color:var(--navy-2,#0C447C); }
+
+/* ── 9. OPTICAL: prevent giant headings from feeling hollow ─────── */
+.hero-desc strong,.lead strong{ color:rgba(255,255,255,.92); font-weight:600; }
+
+/* ── 10. Hero text-links: guaranteed separation (flex-gap fallback) ─ */
+.hero-actions,.hero-cta,.hero-ctas{
+  display:flex!important; flex-wrap:wrap; align-items:center;
+  gap:2rem!important; margin-top:2.25rem;
+}
+.hero-text-link{
+  display:inline-flex; align-items:center; gap:.4rem;
+  font-family:var(--ff-body,'DM Sans',sans-serif); font-weight:600; font-size:1rem;
+  color:#fff; text-decoration:none; position:relative; white-space:nowrap;
+}
+/* belt-and-braces: even if flex-gap fails, force horizontal separation */
+.hero-text-link + .hero-text-link{ margin-left:.5rem; }
+.hero-text-link::after{
+  content:""; position:absolute; left:0; bottom:-3px; height:1.5px; width:100%;
+  background:var(--teal-2,#00B3B3); transform:scaleX(0); transform-origin:left;
+  transition:transform .4s var(--ease-clinical);
+}
+.hero-text-link:hover::after{ transform:scaleX(1); }
+.hero-text-link:hover{ color:var(--teal-2,#00B3B3); }
+
+/* ════════════════════════════════════════════════════════════════
+   ZONE UPGRADES — HEADER · NEWS · TEAM
+   Builds on existing markup/JS. Every rule targets a real element
+   confirmed present in the pages. Consistent, accessible, no markup
+   changes required for the CSS-expressible improvements.
+   ════════════════════════════════════════════════════════════════ */
+
+/* ─────────────────────────────────────────────────────────────────
+   HEADER ZONE
+   ───────────────────────────────────────────────────────────────── */
+
+/* #4 Scroll-progress bar under the header */
+.scroll-progress{
+  position:fixed; top:0; left:0; height:2px; width:0%;
+  background:linear-gradient(90deg, var(--teal,#007A7A), var(--teal-2,#00B3B3));
+  z-index:1100; transition:width .1s linear; pointer-events:none;
+}
+
+/* #3 Scroll-direction hide/reveal (class toggled by JS) + the
+   homepage announcement-bar top-offset (set in index.html's inline
+   <style>, html:not(.bar-dismissed) .hdr{top:30px}) — both transition
+   properties belong on the SAME declaration here, since this is the
+   .hdr rule that actually wins the cascade (polish.css loads after
+   core.css, and `transition` as a shorthand fully replaces rather
+   than merges with any earlier declaration of the same property).
+   core.css used to also declare its own .hdr transition; that value
+   was being silently discarded by this one loading after it, which
+   meant the bar-dismiss top-offset change was snapping instantly
+   instead of animating. Removed there, consolidated here. */
+.hdr{ transition:transform .4s var(--ease-clinical), top .3s var(--ease-clinical); }
+.hdr.hdr-hidden{ transform:translateY(-100%); }
+
+/* #7 Contact pill gains fill once scrolled past hero */
+.hdr.scrolled .hdr-contact-btn{
+  background:var(--teal,#007A7A); border-color:var(--teal,#007A7A);
+}
+.hdr.scrolled .hdr-contact-btn:hover{
+  background:var(--teal-2,#00B3B3); border-color:var(--teal-2,#00B3B3);
+}
+
+.hdr-dd-item{
+  display:flex; align-items:center; gap:.85rem;
+  text-decoration:none; padding:.55rem .5rem; border-radius:10px; transition:background .2s var(--ease-clinical);
+}
+.hdr-dd-item:hover{ background:var(--teal-lt,#E2F0F0); }
+.hdr-dd-item:hover .hdr-dd-num{ color:var(--navy-2,#0C447C); }
+.hdr-dd-num{
+  font-family:var(--ff-display,'Fraunces',serif); font-size:.95rem; font-weight:600;
+  color:var(--teal,#007A7A); line-height:1.4; flex-shrink:0;
+  min-width:1.6rem; transition:color .2s;
+}
+.hdr-dd-body{ display:flex; flex-direction:column; gap:.18rem; min-width:0; flex:1; }
+.hdr-dd-name{ font-size:.85rem; font-weight:500; color:var(--navy,#0C3868); line-height:1.3; }
+/* Coordinator subline — same buildAvatar() treatment (real photo or
+   typographic monogram) used on the homepage research-area grid, at
+   a size that fits a dense dropdown row. Surfacing who leads each
+   line here, not just its name, is the real content this panel was
+   missing — the data was already being fetched for the homepage
+   grid, just under-displayed in the nav. */
+.hdr-dd-coord{
+  display:flex; align-items:center; gap:.4rem;
+  font-size:.7rem; color:var(--ink-4,#767676); line-height:1.3;
+  font-family:var(--ff-body,'DM Sans',sans-serif); letter-spacing:0;
+}
+.hdr-dd-coord > span:first-child{ flex-shrink:0; width:18px; height:18px; }
+.hdr-dd-trials{
+  flex-shrink:0; align-self:flex-start; margin-top:.15rem;
+  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.62rem; font-weight:600;
+  letter-spacing:.04em; color:var(--teal,#007A7A); background:var(--teal-lt,#E2F0F0);
+  padding:.15rem .4rem; border-radius:100px; white-space:nowrap;
+}
+.hdr-dd-item:hover .hdr-dd-trials{ background:#fff; }
+
+/* #6 Keyboard-operable dropdown: open on focus-within too */
+.hdr-dd:focus-within .hdr-dd-panel{ opacity:1; visibility:visible; transform:translateY(0); }
+.hdr-dd:focus-within .hdr-dd-chevron{ transform:rotate(180deg); }
+
+/* ─────────────────────────────────────────────────────────────────
+   NEWS / PUBLICATIONS ZONE
+   ───────────────────────────────────────────────────────────────── */
+
+/* #10 Feed items as editorial cards */
+.blog-feed .feed-item,.post-item{
+  display:block; padding:1.5rem 0; border-bottom:1px solid var(--border-l,rgba(12,56,104,.08));
+  transition:transform .3s var(--ease-clinical);
+}
+.blog-feed .feed-item:hover{ transform:translateX(4px); }
+.feed-item-eyebrow,.post-meta{
+  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.72rem;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--teal,#007A7A);
+  display:flex; align-items:center; gap:.6rem; margin-bottom:.6rem;
+}
+.feed-item-type-badge{
+  display:inline-block; padding:.15rem .55rem; border-radius:100px;
+  background:var(--teal-lt,#E2F0F0); color:var(--teal,#007A7A);
+  font-size:.66rem; font-weight:600; letter-spacing:.06em;
+}
+.feed-item-title,.post-title{
+  font-family:var(--ff-display,'Fraunces',serif); font-weight:600;
+  font-size:1.25rem; line-height:1.3; color:var(--navy,#0C3868);
+  margin:0 0 .4rem; letter-spacing:-.01em; transition:color .2s;
+}
+.blog-feed .feed-item:hover .feed-item-title{ color:var(--teal,#007A7A); }
+.feed-item-excerpt{ font-size:.9375rem; line-height:1.6; color:var(--ink-2,#4A4A4A); max-width:62ch; }
+.feed-item-foot{ display:flex; align-items:center; gap:1rem; margin-top:.75rem; font-size:.8rem; color:var(--ink-4,#767676); }
+
+/* #8 Filter chips — active state + smooth feed transition */
+.flt{
+  padding:.45rem 1rem; border-radius:100px; border:1px solid var(--border-l,rgba(12,56,104,.12));
+  background:transparent; color:var(--ink-3,#6B6B6B); font-size:.84rem; font-weight:500;
+  cursor:pointer; transition:all .2s var(--ease-clinical); font-family:var(--ff-body,'DM Sans',sans-serif);
+}
+.flt:hover{ border-color:var(--teal,#007A7A); color:var(--teal,#007A7A); }
+.flt.flt-active,.flt[aria-pressed="true"]{
+  background:var(--teal,#007A7A); border-color:var(--teal,#007A7A); color:#fff;
+}
+.blog-feed{ transition:opacity .25s var(--ease-clinical); }
+.blog-feed.filtering{ opacity:.4; }
+
+/* #12 Sidebar research-line chips */
+.sb-line-chip{
+  display:flex; align-items:center; justify-content:space-between; gap:.5rem;
+  padding:.55rem .75rem; border-radius:9px; text-decoration:none;
+  color:var(--ink-2,#4A4A4A); font-size:.84rem; transition:background .2s var(--ease-clinical);
+  cursor:pointer; border:none; background:none; width:100%; text-align:left;
+}
+.sb-line-chip:hover{ background:var(--teal-lt,#E2F0F0); color:var(--teal,#007A7A); }
+.sb-line-chip-count{ font-family:var(--ff-mono,'DM Mono',monospace); font-size:.7rem; color:var(--ink-4,#767676); }
+
+/* #11 Featured-story dots */
+.story-dots{ display:flex; gap:.5rem; margin-top:1rem; }
+.story-dot{
+  width:8px; height:8px; border-radius:50%; border:none; cursor:pointer;
+  background:rgba(255,255,255,.35); transition:all .3s var(--ease-clinical); padding:0;
+}
+.story-dot.active{ background:#fff; width:22px; border-radius:100px; }
+
+/* #14 Empty state */
+.state-empty,.feed-empty{
+  text-align:center; padding:3.5rem 1.5rem; color:var(--ink-3,#6B6B6B);
+}
+.feed-empty-title{ font-family:var(--ff-display,'Fraunces',serif); font-size:1.25rem; color:var(--navy,#0C3868); margin-bottom:.5rem; }
+.feed-empty-reset{
+  margin-top:1rem; padding:.5rem 1.1rem; border-radius:100px;
+  border:1.5px solid var(--teal,#007A7A); background:none; color:var(--teal,#007A7A);
+  font-weight:600; font-size:.84rem; cursor:pointer; transition:all .2s var(--ease-clinical);
+}
+.feed-empty-reset:hover{ background:var(--teal,#007A7A); color:#fff; }
+
+/* ─────────────────────────────────────────────────────────────────
+   TEAM ZONE
+   ───────────────────────────────────────────────────────────────── */
+
+/* #19 Unify card system — team-grid cells become real spaced cards */
+.team-grid{
+  display:grid!important;
+  grid-template-columns:repeat(auto-fill, minmax(min(100%,280px), 1fr))!important;
+  gap:1rem!important; border:none!important; overflow:visible!important;
+}
+.team-member{
+  border-radius:14px!important;
+  border:1px solid var(--border-l,rgba(12,56,104,.08))!important;
+  box-shadow:var(--shadow-xs)!important;
+  position:relative; overflow:hidden;
+}
+.team-member:hover{
+  box-shadow:var(--shadow-md)!important; transform:translateY(-2px)!important;
+  border-color:var(--teal-lt,#E2F0F0)!important;
+}
+
+/* #20 Hover reveal: "View profile" affordance */
+.team-member::after{
+  content:"View profile →"; position:absolute; bottom:.75rem; right:1rem;
+  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.66rem; letter-spacing:.04em;
+  color:var(--teal,#007A7A); opacity:0; transform:translateX(-4px);
+  transition:opacity .3s var(--ease-clinical), transform .3s var(--ease-clinical);
+}
+.team-member:hover::after{ opacity:1; transform:none; }
+html[data-lang="es"] .team-member::after{ content:"Ver perfil →"; }
+
+/* #16 Avatar: refined gradient + photo handling */
+.tm-avatar{
+  box-shadow:0 2px 12px rgba(0,122,122,.22), inset 0 0 0 1px rgba(255,255,255,.15)!important;
+}
+
+/* #18 Lead cards: credentials stat strip */
+.lead-creds{
+  display:flex; gap:1.5rem; margin-top:.85rem; padding-top:.85rem;
+  border-top:1px solid var(--border-l,rgba(12,56,104,.08));
+}
+.lead-cred{ display:flex; flex-direction:column; gap:.1rem; }
+.lead-cred-n{
+  font-family:var(--ff-display,'Fraunces',serif); font-weight:600; font-size:1.125rem;
+  color:var(--navy,#0C3868); font-variant-numeric:tabular-nums; line-height:1;
+}
+.lead-cred-l{
+  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.62rem; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--ink-4,#767676);
+}
+
+/* #17 Team section group headers */
+.team-group-header{
+  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--ink-4,#767676); margin:2.5rem 0 1rem;
+  display:flex; align-items:center; gap:.85rem;
+}
+.team-group-header::after{ content:""; flex:1; height:1px; background:var(--border-l,rgba(12,56,104,.1)); }
+
+/* #15 Profile modal polish */
+#profileModalOverlay{
+  position:fixed; inset:0; background:rgba(7,17,31,.55); backdrop-filter:blur(4px);
+  z-index:2000; align-items:center; justify-content:center; padding:1.5rem;
+}
+#profileModalContent,.profile-modal-card{
+  background:#fff; border-radius:18px; box-shadow:var(--shadow-lg);
+  max-width:520px; width:100%; padding:2rem; position:relative;
+  animation:profileModalIn .35s var(--ease-clinical);
+}
+@keyframes profileModalIn{ from{ opacity:0; transform:translateY(12px) scale(.98); } to{ opacity:1; transform:none; } }
+.profile-modal-close{
+  position:absolute; top:1rem; right:1rem; width:32px; height:32px; border-radius:50%;
+  border:none; background:var(--surface,#F4F1EA); color:var(--ink-3,#6B6B6B); cursor:pointer;
+  display:flex; align-items:center; justify-content:center; transition:background .2s, color .2s;
+}
+.profile-modal-close:hover{ background:var(--teal-lt,#E2F0F0); color:var(--teal,#007A7A); }
+
+/* #9 News feed search input */
+.feed-search{
+  display:inline-flex; align-items:center; gap:.5rem;
+  padding:.4rem .85rem; border-radius:100px;
+  border:1px solid var(--border-l,rgba(12,56,104,.12));
+  background:var(--white,#fff); transition:border-color .2s var(--ease-clinical);
+  margin-left:auto;
+}
+.feed-search:focus-within{ border-color:var(--teal,#007A7A); }
+.feed-search svg{ width:15px; height:15px; color:var(--ink-4,#767676); flex-shrink:0; }
+.feed-search input{
+  border:none; outline:none; background:none; font-size:.84rem; width:160px;
+  font-family:var(--ff-body,'DM Sans',sans-serif); color:var(--ink,#1A1A1A);
+}
+.feed-search input::placeholder{ color:var(--ink-4,#767676); }
+@media(max-width:640px){ .feed-search{ margin-left:0; width:100%; } .feed-search input{ width:100%; } }
+
+/* ════════════════════════════════════════════════════════════════
+   CREDIBILITY: TRIAL REGISTRY BADGES + SCHOLARLY IDENTIFIERS
+   The signals a reviewer / pharma BD lead verifies first.
+   ════════════════════════════════════════════════════════════════ */
+
+/* Trial registry verification badges (NCT / EudraCT) */
+.registry-label{
+  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.66rem; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--teal,#007A7A); margin-bottom:.6rem;
+  display:flex; align-items:center; gap:.4rem;
+}
+.registry-label::before{ content:""; width:5px; height:5px; border-radius:50%; background:var(--teal-2,#00B3B3); }
+.registry-badges{ display:flex; flex-wrap:wrap; gap:.6rem; }
+.registry-badge{
+  display:inline-flex; align-items:center; gap:.55rem;
+  padding:.5rem .85rem; border-radius:10px; text-decoration:none;
+  background:var(--teal-lt,#E2F0F0); border:1px solid rgba(0,122,122,.18);
+  transition:background .2s var(--ease-clinical), transform .2s var(--ease-clinical), box-shadow .2s;
+}
+.registry-badge:hover{ background:#d4ecec; transform:translateY(-1px); box-shadow:var(--shadow-sm); }
+.registry-badge svg{ width:16px; height:16px; color:var(--teal,#007A7A); flex-shrink:0; }
+.registry-badge-id{
+  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.82rem; font-weight:600;
+  color:var(--navy,#0C3868); letter-spacing:.02em;
+}
+.registry-badge-src{
+  font-size:.62rem; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--teal,#007A7A); padding-left:.5rem; border-left:1px solid rgba(0,122,122,.25);
+}
+
+/* Scholarly identifier links (ORCID / Scholar / ResearchGate) */
+.scholar-links{
+  display:flex; flex-wrap:wrap; gap:.6rem; margin-top:1.25rem;
+  padding-top:1.25rem; border-top:1px solid var(--border-l,rgba(12,56,104,.08));
+}
+.scholar-link{
+  display:inline-flex; align-items:center; gap:.45rem;
+  padding:.4rem .8rem; border-radius:100px; text-decoration:none;
+  font-size:.8rem; font-weight:600; color:var(--teal,#007A7A);
+  border:1px solid var(--border-l,rgba(12,56,104,.12));
+  transition:all .2s var(--ease-clinical);
+}
+.scholar-link:hover{ border-color:var(--teal,#007A7A); background:var(--teal-lt,#E2F0F0); }
+.scholar-link svg{ width:15px; height:15px; flex-shrink:0; }
+.scholar-orcid{ color:#A6CE39; border-color:rgba(166,206,57,.4); }
+.scholar-orcid:hover{ background:rgba(166,206,57,.1); border-color:#A6CE39; }
+.scholar-orcid span{ color:var(--navy,#0C3868); }
+.scholar-id{ font-family:var(--ff-mono,'DM Mono',monospace); font-size:.74rem; color:var(--ink-3,#6B6B6B); }
+
+/* ════════════════════════════════════════════════════════════════
+   REDUCED MOTION — sitewide, comprehensive
+   The two narrow rules above predate this session's additions
+   (spring-overshoot lang knob, header hide/reveal transform, dropdown
+   fade, language crossfade, GPU nav pill). Someone with a vestibular
+   disorder gets all of that unless motion is disabled wholesale.
+   Content stays fully functional: reveals show instantly, the header
+   simply stays put, state changes snap rather than animate.
+   ════════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+    scroll-behavior:auto !important;
+  }
+  .reveal{ opacity:1 !important; transform:none !important; }
+  .hdr.hdr-hidden{ transform:none !important; }   /* header never slides away */
+  .hdr-nav-pill{ display:none; }                   /* hover pill is pure motion-decoration */
+}
+
+/* ════════════════════════════════════════════════════════════════
+   RESPIRATORY DESIGN LANGUAGE — Phase 1 signature moves
+   A pulmonology group's site should quietly evoke its discipline:
+   the hero breathes, section rules are expiratory curves, link
+   underlines trace like an ECG, and the footer is anchored to
+   A Coruña. All decorative layers are aria-invisible and fully
+   disabled under prefers-reduced-motion (global block above kills
+   animation durations; the breathing layer is additionally gated
+   here so it never even paints motion for those users).
+   ════════════════════════════════════════════════════════════════ */
+
+/* 1 ── The hero breathes: a faint teal radial layer inhales/exhales
+   on a slow tidal rhythm (~5.5s ≈ resting respiratory rate). Kept
+   at very low amplitude — felt, not seen. */
+.hero::after{
+  content:''; position:absolute; inset:-20%;
+  background:radial-gradient(ellipse 55% 45% at 68% 42%, rgba(0,179,179,.10), transparent 70%);
+  pointer-events:none; z-index:0;
+  animation:heroBreathe 5.5s ease-in-out infinite;
+}
+@keyframes heroBreathe{
+  0%,100%{ transform:scale(1);    opacity:.55; }
+  46%    { transform:scale(1.06); opacity:.95; }  /* inhale slightly quicker */
+  58%    { transform:scale(1.06); opacity:.95; }  /* brief pause at full */
+}
+@media (prefers-reduced-motion: reduce){
+  .hero::after{ animation:none; opacity:.7; }
+}
+
+/* 2 ── Spirometry section divider: the classic flow–volume loop's
+   expiratory limb (sharp peak, long graceful descent) as a hairline
+   rule. Use <div class="spiro-rule" aria-hidden="true"></div>
+   between major sections. */
+.spiro-rule{
+  height:32px; margin:0 auto; max-width:1380px;
+  padding:0 clamp(1.25rem,4vw,3rem);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 32' preserveAspectRatio='none'%3E%3Cpath d='M0 28 C 18 27 30 22 38 6 C 44 -2 52 2 60 8 C 100 24 220 27 320 28' fill='none' stroke='%23007A7A' stroke-opacity='.30' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-size:100% 100%;
+}
+.on-dark .spiro-rule, .hero .spiro-rule{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 32' preserveAspectRatio='none'%3E%3Cpath d='M0 28 C 18 27 30 22 38 6 C 44 -2 52 2 60 8 C 100 24 220 27 320 28' fill='none' stroke='%23FFFFFF' stroke-opacity='.22' stroke-width='1.5'/%3E%3C/svg%3E");
+}
+
+/* 6 ── ECG hover underline lives in the original .btn-text::after
+   rule above (search "ECG trace") — implemented as a currentColor
+   mask so the on-dark variant inherits correctly. Defining it here
+   as a second .btn-text block tripped this repo's own CI duplicate-
+   selector check the moment it was added, which is exactly the
+   split-definition disease that CI exists to block. */
+
+/* 7 ── A Coruña anchor: the Torre de Hércules (the world's oldest
+   working lighthouse, the city's mark) etched faintly into the
+   footer's right edge. Pure CSS layer — no markup, no reader noise. */
+.site-footer{ position:relative; }
+.site-footer::before{
+  content:''; position:absolute; right:clamp(1rem,5vw,4rem); bottom:0;
+  width:110px; height:200px; pointer-events:none; opacity:.09;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 110 200'%3E%3Cg fill='none' stroke='%23FFFFFF' stroke-width='2'%3E%3Cpath d='M44 200 L48 60 H62 L66 200'/%3E%3Cpath d='M46 90 H64 M45 120 H65 M45 150 H66 M44 180 H67'/%3E%3Crect x='50' y='44' width='10' height='16'/%3E%3Cpath d='M47 44 H63 M49 36 H61 L59 44 H51 Z'/%3E%3Cpath d='M55 30 V36 M40 26 L48 32 M70 26 L62 32'/%3E%3Cpath d='M20 200 H90'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-size:contain; background-position:bottom right;
+}
+@media(max-width:720px){ .site-footer::before{ display:none; } }
+
+/* 3 ── Cross-document View Transitions: the whole multi-page site
+   morphs between pages like an app — content crossfades while the
+   browser keeps paint continuity. Pure progressive enhancement
+   (Chrome/Edge today; other browsers simply full-load as before).
+   Kept fast and subtle; disabled for reduced motion. */
+@view-transition{ navigation:auto; }
+::view-transition-old(root){ animation-duration:.22s; }
+::view-transition-new(root){ animation-duration:.28s; }
+@media (prefers-reduced-motion: reduce){
+  @view-transition{ navigation:none; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   PHASE 2 · 4 — RESEARCH-LINE FINGERPRINTS
+   Each line card carries a generative waveform derived
+   deterministically from its own data (line number seeds the PRNG,
+   active-trial count drives the energy) — unique, meaningful artwork
+   that updates itself as the science evolves, in place of stock
+   imagery. Rendered by buildLineFingerprint() in api.js as three
+   tapered sine strokes: a breath. Sits as a low-contrast watermark
+   in the card's top-right; currentColor keeps it on-palette.
+   ════════════════════════════════════════════════════════════════ */
+.line-card{ position:relative; }
+.line-fp{
+  position:absolute; top:.75rem; right:.75rem; width:42%; max-width:280px;
+  color:var(--teal,#007A7A); opacity:.5; pointer-events:none;
+  transition:opacity .3s var(--ease-clinical);
+}
+.line-fp svg{ display:block; width:100%; height:auto; }
+.line-card:hover .line-fp{ opacity:.85; }
+
+/* ════════════════════════════════════════════════════════════════
+   HEADER ×20 — supporting styles for the twenty upgrades
+   (JS lives in header-enhance.js + api.js; every hook below matches
+   a class those files create. Numbers reference the agreed list.)
+   ════════════════════════════════════════════════════════════════ */
+
+/* 4 ── notched-device safe areas */
+.hdr{ padding-left:env(safe-area-inset-left); padding-right:env(safe-area-inset-right); }
+.mob-drawer{ padding-right:env(safe-area-inset-right); padding-top:calc(84px + env(safe-area-inset-top)); }
+
+/* 5 ── live pulse on Research: breathes only while trials enroll */
+.hdr-live-dot{
+  display:inline-block; width:5px; height:5px; border-radius:50%;
+  background:var(--teal-2,#00B3B3); margin-left:.45rem; vertical-align:2px;
+  animation:heroBreathe 5.5s ease-in-out infinite;
+}
+
+/* 19 ── "enrolling" chip on the busiest line */
+.hdr-dd-hot{
+  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.56rem; font-weight:600;
+  letter-spacing:.08em; text-transform:uppercase; color:#fff;
+  background:var(--teal,#007A7A); border-radius:100px; padding:.14rem .45rem;
+  margin-left:.45rem; vertical-align:1px; white-space:nowrap;
+}
+
+/* 6 ── quiet fact line pinned under the panel's view-all link */
+.hdr-dd-fact{
+  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.62rem;
+  letter-spacing:.06em; color:var(--ink-4,#767676); padding:.6rem .5rem 0;
+}
+
+/* 11 ── dropdown items cascade in (18ms apart) */
+@keyframes ddItemIn{ from{opacity:0;transform:translateY(4px);} to{opacity:1;transform:none;} }
+.hdr-dd.open .hdr-dd-item{ animation:ddItemIn .28s var(--ease-clinical) backwards; }
+.hdr-dd.open .hdr-dd-item:nth-child(2){animation-delay:.018s}
+.hdr-dd.open .hdr-dd-item:nth-child(3){animation-delay:.036s}
+.hdr-dd.open .hdr-dd-item:nth-child(4){animation-delay:.054s}
+.hdr-dd.open .hdr-dd-item:nth-child(5){animation-delay:.072s}
+.hdr-dd.open .hdr-dd-item:nth-child(6){animation-delay:.09s}
+.hdr-dd.open .hdr-dd-item:nth-child(n+7){animation-delay:.108s}
+
+
+/* 13 ── the current page's underline fills as you read (JS sets
+   --navprog 0→1). Base is a soft track; the bright fill grows. */
+.hdr-nav-link[data-current="true"]::after{
+  background:linear-gradient(90deg,
+    var(--teal-2,#00B3B3) calc(var(--navprog,0)*100%),
+    rgba(0,179,179,.32) calc(var(--navprog,0)*100%));
+}
+
+/* 3 ── research lines inside the mobile drawer */
+.mob-lines-toggle{
+  display:flex; align-items:center; justify-content:space-between; width:100%;
+  padding:.875rem 1rem .875rem 1.125rem; background:none; border:none; cursor:pointer;
+  font-family:var(--ff-body,'DM Sans',sans-serif); font-size:1rem; font-weight:500;
+  color:rgba(255,255,255,.82); border-radius:10px; text-align:left;
+  transition:background .18s,color .18s;
+}
+.mob-lines-toggle:hover{ background:rgba(255,255,255,.08); color:#fff; }
+.mob-lines-toggle svg{ width:16px; height:16px; transition:transform .25s var(--ease-clinical); flex-shrink:0; }
+.mob-lines-toggle[aria-expanded="true"] svg{ transform:rotate(180deg); }
+.mob-lines{ max-height:0; overflow:hidden; transition:max-height .35s var(--ease-clinical); }
+.mob-lines.open{ max-height:480px; }
+.mob-lines a{
+  display:flex; align-items:center; gap:.6rem;
+  padding:.55rem 1rem .55rem 1.75rem !important; font-size:.875rem !important;
+}
+.mob-lines .ml-num{
+  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.68rem;
+  color:var(--teal-2,#00B3B3); flex-shrink:0;
+}
+
+/* 14 ── first-visit language suggestion */
+.lang-toast{
+  position:fixed; right:1rem; bottom:1rem; z-index:2600;
+  background:var(--navy-2,#0C447C); color:#fff; border-radius:12px;
+  box-shadow:0 12px 32px rgba(7,17,31,.35);
+  padding:.85rem 1rem; display:flex; align-items:center; gap:.75rem;
+  font-family:var(--ff-body,'DM Sans',sans-serif); font-size:.875rem;
+  max-width:min(92vw,360px);
+}
+.lang-toast button{
+  border-radius:100px; cursor:pointer; font-size:.8rem; font-weight:600;
+  padding:.35rem .8rem; font-family:inherit;
+}
+.lang-toast .lt-yes{ background:#fff; color:var(--navy-2,#0C447C); border:none; }
+.lang-toast .lt-no{ background:none; color:rgba(255,255,255,.75); border:1px solid rgba(255,255,255,.3); }
+
+/* 15 ── connection status dot (amber when offline / API down) */
+.hdr-status-dot{ display:none; width:7px; height:7px; border-radius:50%; background:#E5A63B; flex-shrink:0; }
+.hdr-status-dot[data-state="down"]{ display:inline-block; }
+
+/* 18 ── scroll-linked theming: over sections marked data-hdr="light"
+   the header frosts light and its ink inverts */
+.hdr.over-light .hdr-main{ background:rgba(247,246,243,.9); border-bottom-color:rgba(12,56,104,.1); }
+.hdr.over-light .hdr-nav-link{ color:rgba(12,56,104,.75); }
+.hdr.over-light .hdr-nav-link:hover,
+.hdr.over-light .hdr-nav-link[data-current="true"]{ color:var(--navy,#0C3868); }
+.hdr.over-light .hdr-nav-pill{ background:rgba(12,56,104,.08); }
+.hdr.over-light .hdr-logo-img{ filter:none; opacity:1; }
+.hdr.over-light .hdr-logo-rule{ background:rgba(12,56,104,.2); }
+.hdr.over-light .hdr-logo-desc{ color:rgba(12,56,104,.55); }
+.hdr.over-light .hdr-contact-btn{ color:var(--navy,#0C3868); border-color:rgba(12,56,104,.3); }
+.hdr.over-light .lang-switch-globe{ color:rgba(12,56,104,.45); }
+.hdr.over-light .lang-switch::before{ background:rgba(12,56,104,.06); border-color:rgba(12,56,104,.12); }
+.hdr.over-light .lang-opt{ color:rgba(12,56,104,.6); }
+.hdr.over-light .lang-opt[aria-checked="true"]{ color:#fff; }
+.hdr.over-light .lang-switch-knob{ background:var(--navy-2,#0C447C); }
+
+/* 12 ── contextual crumb tier on /line/ pages */
+.hdr-crumb{
+  background:rgba(7,17,31,.92); color:rgba(255,255,255,.65);
+  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.68rem;
+  letter-spacing:.06em; padding:.4rem clamp(1.25rem,4vw,3rem);
+  display:flex; align-items:center; gap:.5rem;
+}
+.hdr-crumb a{ color:var(--teal-2,#00B3B3); text-decoration:none; }
+.hdr-crumb .hc-sep{ opacity:.4; }
+
+/* 8+9 ── command palette + shortcuts help */
+.cmdk-overlay{
+  position:fixed; inset:0; z-index:3000; background:rgba(7,17,31,.55);
+  backdrop-filter:blur(3px); -webkit-backdrop-filter:blur(3px);
+  display:flex; align-items:flex-start; justify-content:center; padding-top:14vh;
+}
+.cmdk{
+  width:min(92vw,560px); background:#fff; border-radius:16px; overflow:hidden;
+  box-shadow:0 32px 80px rgba(7,17,31,.4);
+}
+.cmdk input{
+  width:100%; border:none; outline:none; padding:1.1rem 1.25rem;
+  font:500 1rem var(--ff-body,'DM Sans',sans-serif); color:var(--ink,#111);
+  border-bottom:1px solid var(--border-l,rgba(0,0,0,.06));
+}
+.cmdk-list{ max-height:min(50vh,380px); overflow-y:auto; padding:.4rem; }
+.cmdk-item{
+  display:flex; align-items:center; gap:.75rem; width:100%; text-align:left;
+  padding:.7rem .85rem; border:none; background:none; cursor:pointer;
+  border-radius:10px; font:500 .9rem var(--ff-body,'DM Sans',sans-serif); color:var(--ink-2,#3A3A3A);
+}
+.cmdk-item[aria-selected="true"], .cmdk-item:hover{ background:var(--teal-lt,#E2F0F0); color:var(--navy,#0C3868); }
+.cmdk-item .ck-k{
+  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.62rem; color:var(--teal,#007A7A);
+  border:1px solid rgba(0,122,122,.25); border-radius:5px; padding:.1rem .35rem; flex-shrink:0;
+}
+.cmdk-empty{ padding:1.25rem; text-align:center; color:var(--ink-4,#767676); font-size:.875rem; }
+.cmdk-hint{
+  display:none; font-family:var(--ff-mono,'DM Mono',monospace); font-size:.62rem;
+  color:rgba(255,255,255,.5); border:1px solid rgba(255,255,255,.2);
+  border-radius:6px; padding:.2rem .45rem; cursor:pointer; background:none;
+}
+@media(min-width:1100px){ .cmdk-hint{ display:inline-block; } }
+.hdr.over-light .cmdk-hint{ color:rgba(12,56,104,.5); border-color:rgba(12,56,104,.2); }
+.kbd-help{ position:fixed; inset:0; z-index:3000; background:rgba(7,17,31,.55); display:flex; align-items:center; justify-content:center; }
+.kbd-help-card{
+  background:#fff; border-radius:16px; padding:1.75rem 2rem; width:min(92vw,420px);
+  box-shadow:0 32px 80px rgba(7,17,31,.4); font-size:.875rem; color:var(--ink-2,#3A3A3A);
+}
+.kbd-help-card h3{ margin:0 0 1rem; font-size:1.05rem; }
+.kbd-help-card kbd{
+  font-family:var(--ff-mono,'DM Mono',monospace); font-size:.72rem; background:var(--surface,#F7F6F3);
+  border:1px solid var(--border-l,rgba(0,0,0,.1)); border-radius:5px; padding:.12rem .4rem;
+}
+.kbd-help-card dl{ display:grid; grid-template-columns:auto 1fr; gap:.55rem 1rem; margin:0; align-items:center; }
+
+
+}

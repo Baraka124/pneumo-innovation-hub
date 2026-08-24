@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout current="home" title="Accessibility — neumACt R&I" description="Accessibility statement for neumACt R&I." path="/accesibilidad">
+<!-- ═══ ACCESSIBILITY STATEMENT ══════════════════════════ -->
+<section class="section" id="mainContent" style="background:var(--white);padding-top:7rem;">
+  <div class="wrap" style="max-width:760px;">
+    <p class="label" style="margin-bottom:1rem;"><span lang="en">Last updated</span><span lang="es">Última actualización</span>: June 2026</p>
+    <h1 class="display-lg" style="margin-bottom:2rem;"><span lang="en">Accessibility</span><span lang="es">Accesibilidad</span></h1>
+
+    <div style="font-size:var(--fs-body);line-height:1.75;color:var(--ink-2);">
+
+      <p style="margin-bottom:1.5rem;">
+        <span lang="en">We want this site to be usable by as many people as possible, including visitors using a keyboard, a screen reader, or browsing at a larger text size. This page describes what's in place today and how to tell us if something doesn't work.</span>
+        <span lang="es">Queremos que este sitio sea utilizable por el mayor número de personas posible, incluidas las que navegan con teclado, lector de pantalla o con un tamaño de texto más grande. Esta página describe lo que existe hoy y cómo informarnos si algo no funciona.</span>
+      </p>
+
+      <h2 class="display-md" style="margin:2.5rem 0 1rem;font-size:var(--fs-h4);"><span lang="en">What's built in</span><span lang="es">Qué está implementado</span></h2>
+      <ul style="margin:0 0 1rem 1.25rem;display:flex;flex-direction:column;gap:.625rem;">
+        <li><span lang="en"><strong>Skip-to-content link.</strong> Every page has a link, visible when navigating by keyboard, that jumps straight past the header and navigation to the main content.</span><span lang="es"><strong>Enlace para saltar al contenido.</strong> Cada página tiene un enlace, visible al navegar con teclado, que va directamente al contenido principal sin pasar por la cabecera y la navegación.</span></li>
+        <li><span lang="en"><strong>Keyboard-operable interactive elements.</strong> Clickable cards — such as team member profiles — can be reached with Tab and activated with Enter or Space, not just a mouse click.</span><span lang="es"><strong>Elementos interactivos operables con teclado.</strong> Las tarjetas en las que se puede hacer clic — como los perfiles del equipo — se pueden alcanzar con Tab y activar con Enter o Espacio, no solo con el ratón.</span></li>
+        <li><span lang="en"><strong>Visible focus states.</strong> Tabbing through the site shows a clear outline around the currently focused element.</span><span lang="es"><strong>Estados de foco visibles.</strong> Al navegar con Tab se muestra un contorno claro alrededor del elemento enfocado.</span></li>
+        <li><span lang="en"><strong>Text alternatives for images.</strong> Photographs and meaningful images carry descriptive alt text; purely decorative elements are hidden from screen readers.</span><span lang="es"><strong>Alternativas textuales para imágenes.</strong> Las fotografías e imágenes con significado llevan texto alternativo descriptivo; los elementos puramente decorativos están ocultos para los lectores de pantalla.</span></li>
+        <li><span lang="en"><strong>Respects reduced-motion preferences.</strong> If your operating system is set to reduce motion, this site's animations are minimised accordingly.</span><span lang="es"><strong>Respeta las preferencias de movimiento reducido.</strong> Si su sistema operativo está configurado para reducir el movimiento, las animaciones de este sitio se minimizan en consecuencia.</span></li>
+        <li><span lang="en"><strong>Bilingual by design.</strong> Every page is fully available in English and Spanish, with the page's declared language updating correctly when you switch.</span><span lang="es"><strong>Bilingüe por diseño.</strong> Cada página está disponible íntegramente en inglés y español, y el idioma declarado de la página se actualiza correctamente al cambiar.</span></li>
+      </ul>
+
+      <h2 class="display-md" style="margin:2.5rem 0 1rem;font-size:var(--fs-h4);"><span lang="en">Known limitations</span><span lang="es">Limitaciones conocidas</span></h2>
+      <p style="margin-bottom:1rem;">
+        <span lang="en">We're aware that some areas of the site — particularly long data tables on the Research page — work best on larger screens and may require horizontal scrolling on a phone. We're working through these incrementally rather than claiming the site is fully compliant with any particular standard.</span>
+        <span lang="es">Somos conscientes de que algunas áreas del sitio — en particular las tablas de datos extensas en la página de Investigación — funcionan mejor en pantallas grandes y pueden requerir desplazamiento horizontal en un teléfono. Estamos abordando esto de forma progresiva, sin afirmar que el sitio cumple plenamente con ningún estándar concreto.</span>
+      </p>
+
+      <h2 class="display-md" style="margin:2.5rem 0 1rem;font-size:var(--fs-h4);"><span lang="en">Report a problem</span><span lang="es">Informar de un problema</span></h2>
+      <p style="margin-bottom:1rem;">
+        <span lang="en">If you encounter an accessibility barrier anywhere on this site, please let us know through the </span><span lang="es">Si encuentra una barrera de accesibilidad en cualquier parte de este sitio, indíquenoslo a través del </span><a href="/#contact" class="btn-text"><span lang="en">contact form</span><span lang="es">formulario de contacto</span></a><span lang="en">, describing the page and what happened. We'll look into it.</span><span lang="es">, describiendo la página y lo ocurrido. Lo revisaremos.</span>
+      </p>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ AFFILIATIONS & PARTNERSHIPS ══════════════════════ -->
+<section class="affil-section">
+  <div class="wrap">
+    <div class="affil-section-header">
+      <span class="affil-section-eyebrow">
+        <span lang="en">Affiliations &amp; Partnerships</span>
+        <span lang="es">Afiliaciones y Colaboraciones</span>
+      </span>
+      <p class="affil-section-sub">
+        <span lang="en">Institutional affiliations and active research partnerships underpinning the group's clinical and translational work.</span>
+        <span lang="es">Afiliaciones institucionales y colaboraciones de investigación activa que sustentan el trabajo clínico y translacional del grupo.</span>
+      </p>
+    </div>
+    <div class="affil-grid">
+      <!-- INIBIC -->
+      <a href="https://www.inibic.es" target="_blank" rel="noopener" class="affil-card" aria-label="INIBIC — Instituto de Investigación Biomédica de A Coruña">
+        <div class="affil-card-logo">
+          <img src="/assets/inibic.png" loading="lazy" alt="INIBIC" height="44" style="height:44px;width:auto;display:block;"/>
+        </div>
+        <div class="affil-card-body">
+          <div class="affil-card-name">INIBIC</div>
+          <div class="affil-card-desc"><span lang="en">Instituto de Investigación Biomédica de A Coruña — the group's primary institutional home and accrediting body.</span><span lang="es">Instituto de Investigación Biomédica de A Coruña — sede institucional principal y organismo acreditador del grupo.</span></div>
+        </div>
+      </a>
+
+      <!-- FINIBIC / Fundación Galega -->
+      <a href="https://www.finibic.es" target="_blank" rel="noopener" class="affil-card" aria-label="Fundación Galega de Investigación Biomédica INIBIC">
+        <div class="affil-card-logo">
+          <img src="/assets/finibic.png" loading="lazy" alt="Fundación Galega INIBIC" height="38" style="height:38px;width:auto;display:block;"/>
+        </div>
+        <div class="affil-card-body">
+          <div class="affil-card-name">Fundación Galega de Investigación Biomédica INIBIC</div>
+          <div class="affil-card-desc"><span lang="en">The foundation underpinning INIBIC's research infrastructure and strategic alliances across Galicia.</span><span lang="es">La fundación que sustenta la infraestructura de investigación y las alianzas estratégicas del INIBIC en Galicia.</span></div>
+        </div>
+      </a>
+
+      
+
+      
+
+      
+
+    </div><!-- /.affil-grid -->
+  </div>
+</section>
+</BaseLayout>

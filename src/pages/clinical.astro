@@ -1,0 +1,454 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/clinical.css';
+import SpiroDivider from '../components/SpiroDivider.astro';
+---
+
+<BaseLayout
+  current="research"
+  title="Clinical Research — neumACt R&I · CHUAC · INIBIC"
+  description="Six research lines and 10+ active recruiting clinical studies at the Servicio de Neumología, CHUAC. Registry-verified trials, INIBIC-accredited."
+  path="/clinical"
+>
+<section class="hero" id="top">
+    <div class="container" style="padding-bottom:0;">
+      <div class="hero-inner">
+        <div style="padding-bottom:3rem;">
+          <h1 class="display xl hero-title">
+            <span lang="en">Respiratory medicine,<br>systematically investigated.</span>
+            <span lang="es">Medicina respiratoria,<br>investigada con rigor.</span>
+          </h1>
+          <p class="hero-desc">
+            <span lang="en">The Servicio de Neumología at CHUAC covers the full spectrum of pulmonary and thoracic medicine — from lung transplantation and pulmonary arterial hypertension to interventional pneumology, thoracic surgery, sleep medicine, and precision phenotyping. Active clinical trials in all areas, within the Fundación Galega de Investigación Biomédica (INIBIC) framework.</span>
+            <span lang="es">El Servicio de Neumología del CHUAC cubre el espectro completo de la medicina pulmonar y torácica — desde el trasplante pulmonar y la hipertensión arterial pulmonar hasta la neumología intervencionista, la cirugía torácica, la medicina del sueño y la fenotipificación de precisión. Ensayos clínicos activos en todas las áreas, dentro del marco de la Fundación Galega de Investigación Biomédica (INIBIC).</span>
+          </p>
+          <div class="hero-actions" style="display:flex;gap:1.75rem;align-items:center;">
+            <a href="#research-lines" class="hero-text-link">
+              <span lang="en">Research Lines</span><span lang="es">Ver Líneas</span> →
+            </a>
+            <a href="#clinical-studies" class="hero-text-link">
+              <span lang="en">Active Studies</span><span lang="es">Estudios Activos</span> →
+            </a>
+          </div>
+        </div>
+        <!-- Right stats panel -->
+        <div class="hero-stats reveal reveal-d2" style="margin-bottom:3rem;">
+          <div class="hstat"><div class="hstat-num" data-counter="6">6</div><div class="hstat-label"><span lang="en">Specialized Research Lines</span><span lang="es">Líneas de Investigación</span></div></div>
+          <div class="hstat"><div class="hstat-num" data-counter="10+">10+</div><div class="hstat-label"><span lang="en">Active &amp; Recruiting Studies</span><span lang="es">Ensayos Activos y Reclutando</span></div></div>
+          <div class="hstat"><div class="hstat-num" data-counter="6">6</div><div class="hstat-label"><span lang="en">Specialist Coordinators</span><span lang="es">Coordinadores Especialistas</span></div></div>
+          <div class="hstat"><div class="hstat-num">GCP</div><div class="hstat-label"><span lang="en">INIBIC · Good Clinical Practice</span><span lang="es">INIBIC · Cumplimiento GCP</span></div></div>
+        </div>
+      </div>
+    </div>
+    <!-- Stat strip — integrated into hero, full width -->
+    <div class="hero-strip" style="background:var(--navy-2);border-top:1px solid var(--rule-d);">
+      <div class="container">
+        <div class="hero-strip-inner">
+          <div class="hstrip-item">
+            <div class="hstrip-num">&lt;6w</div>
+            <div class="hstrip-label"><span lang="en">Avg. Site Initiation</span><span lang="es">Inicio de Sitio Medio</span></div>
+          </div>
+          <div class="hstrip-item">
+            <div class="hstrip-num">INIBIC</div>
+            <div class="hstrip-label"><span lang="en">GCP Infrastructure</span><span lang="es">Infraestructura GCP</span></div>
+          </div>
+          <div class="hstrip-item">
+            <div class="hstrip-num">SERGAS</div>
+            <div class="hstrip-label"><span lang="en">Network Scale-Up</span><span lang="es">Escalado en Red</span></div>
+          </div>
+          <div class="hstrip-item">
+            <div class="hstrip-num">CE MDR</div>
+            <div class="hstrip-label"><span lang="en">Regulatory Support</span><span lang="es">Soporte Regulatorio</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+<SpiroDivider tone="light" />
+
+
+  <!-- RESEARCH LINES — api.js target: id="researchLinesList" -->
+  <section class="section lines-bg" id="research-lines">
+    <div class="container">
+      <div class="sec-head reveal">
+        <p class="eyebrow"><span lang="en">Servicio de Neumología · CHUAC</span><span lang="es">Servicio de Neumología · CHUAC</span></p>
+        <h2 class="display lg"><span lang="en">Clinical research areas</span><span lang="es">Áreas de investigación clínica</span></h2>
+        <p><span lang="en">Each area covers an active clinical programme. Expand to read about scope, ongoing trials, and the physician-investigator who leads it.</span><span lang="es">Cada área cuenta con un programa clínico activo. Expanda para conocer el alcance, ensayos en curso e investigador responsable.</span></p>
+      </div>
+
+      <!-- api.js injects into this container (id="researchLinesList") -->
+      <div id="researchLinesList">
+      <!-- Real fallback: a calm loading skeleton, not full prose that
+           could go stale or look authoritative if the API call fails.
+           loadResearchLines() replaces this; setError() handles real
+           failures with an actual error state, not a fake-looking card. -->
+      <div class="line-card">
+        <div class="line-head">
+          <div class="api-skeleton" style="width:32px;height:32px;border-radius:6px;flex-shrink:0;"></div>
+          <div class="line-meta" style="flex:1;">
+            <div class="api-skeleton" style="width:140px;height:11px;margin-bottom:8px;"></div>
+            <div class="api-skeleton" style="width:70%;height:18px;"></div>
+          </div>
+        </div>
+        <div class="line-tags-preview">
+          <div class="api-skeleton" style="width:90px;height:22px;display:inline-block;border-radius:100px;"></div>
+          <div class="api-skeleton" style="width:70px;height:22px;display:inline-block;border-radius:100px;"></div>
+          <div class="api-skeleton" style="width:100px;height:22px;display:inline-block;border-radius:100px;"></div>
+        </div>
+      </div>
+
+      <div class="line-card">
+        <div class="line-head">
+          <div class="api-skeleton" style="width:32px;height:32px;border-radius:6px;flex-shrink:0;"></div>
+          <div class="line-meta" style="flex:1;">
+            <div class="api-skeleton" style="width:140px;height:11px;margin-bottom:8px;"></div>
+            <div class="api-skeleton" style="width:70%;height:18px;"></div>
+          </div>
+        </div>
+        <div class="line-tags-preview">
+          <div class="api-skeleton" style="width:90px;height:22px;display:inline-block;border-radius:100px;"></div>
+          <div class="api-skeleton" style="width:70px;height:22px;display:inline-block;border-radius:100px;"></div>
+          <div class="api-skeleton" style="width:100px;height:22px;display:inline-block;border-radius:100px;"></div>
+        </div>
+      </div>
+
+      <div class="line-card">
+        <div class="line-head">
+          <div class="api-skeleton" style="width:32px;height:32px;border-radius:6px;flex-shrink:0;"></div>
+          <div class="line-meta" style="flex:1;">
+            <div class="api-skeleton" style="width:140px;height:11px;margin-bottom:8px;"></div>
+            <div class="api-skeleton" style="width:70%;height:18px;"></div>
+          </div>
+        </div>
+        <div class="line-tags-preview">
+          <div class="api-skeleton" style="width:90px;height:22px;display:inline-block;border-radius:100px;"></div>
+          <div class="api-skeleton" style="width:70px;height:22px;display:inline-block;border-radius:100px;"></div>
+          <div class="api-skeleton" style="width:100px;height:22px;display:inline-block;border-radius:100px;"></div>
+        </div>
+      </div>
+
+      <div class="line-card">
+        <div class="line-head">
+          <div class="api-skeleton" style="width:32px;height:32px;border-radius:6px;flex-shrink:0;"></div>
+          <div class="line-meta" style="flex:1;">
+            <div class="api-skeleton" style="width:140px;height:11px;margin-bottom:8px;"></div>
+            <div class="api-skeleton" style="width:70%;height:18px;"></div>
+          </div>
+        </div>
+        <div class="line-tags-preview">
+          <div class="api-skeleton" style="width:90px;height:22px;display:inline-block;border-radius:100px;"></div>
+          <div class="api-skeleton" style="width:70px;height:22px;display:inline-block;border-radius:100px;"></div>
+          <div class="api-skeleton" style="width:100px;height:22px;display:inline-block;border-radius:100px;"></div>
+        </div>
+      </div>
+
+      <div class="line-card">
+        <div class="line-head">
+          <div class="api-skeleton" style="width:32px;height:32px;border-radius:6px;flex-shrink:0;"></div>
+          <div class="line-meta" style="flex:1;">
+            <div class="api-skeleton" style="width:140px;height:11px;margin-bottom:8px;"></div>
+            <div class="api-skeleton" style="width:70%;height:18px;"></div>
+          </div>
+        </div>
+        <div class="line-tags-preview">
+          <div class="api-skeleton" style="width:90px;height:22px;display:inline-block;border-radius:100px;"></div>
+          <div class="api-skeleton" style="width:70px;height:22px;display:inline-block;border-radius:100px;"></div>
+          <div class="api-skeleton" style="width:100px;height:22px;display:inline-block;border-radius:100px;"></div>
+        </div>
+      </div>
+
+      <div class="line-card">
+        <div class="line-head">
+          <div class="api-skeleton" style="width:32px;height:32px;border-radius:6px;flex-shrink:0;"></div>
+          <div class="line-meta" style="flex:1;">
+            <div class="api-skeleton" style="width:140px;height:11px;margin-bottom:8px;"></div>
+            <div class="api-skeleton" style="width:70%;height:18px;"></div>
+          </div>
+        </div>
+        <div class="line-tags-preview">
+          <div class="api-skeleton" style="width:90px;height:22px;display:inline-block;border-radius:100px;"></div>
+          <div class="api-skeleton" style="width:70px;height:22px;display:inline-block;border-radius:100px;"></div>
+          <div class="api-skeleton" style="width:100px;height:22px;display:inline-block;border-radius:100px;"></div>
+        </div>
+      </div>
+
+      </div><!-- /#researchLinesList -->
+    </div>
+  </section>
+
+
+  <!-- STAT BREAK — typographic moment -->
+  <div style="background:var(--navy);padding:3.5rem 0;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);">
+    <div style="padding:0 clamp(1.5rem,4vw,5rem);display:flex;align-items:baseline;gap:1.5rem;flex-wrap:wrap;">
+      <span style="font-family:var(--ff-display);font-size:clamp(3.5rem,8vw,6rem);font-weight:300;color:#fff;line-height:1;letter-spacing:-.03em;" id="statTrialsBig">10+</span>
+      <div>
+        <div style="font-family:var(--ff-body);font-size:1rem;color:rgba(255,255,255,.75);font-weight:400;line-height:1.5;">
+          <span lang="en">active and recruiting clinical studies<br>across six research lines · INIBIC-backed · GCP-compliant</span>
+          <span lang="es">estudios clínicos activos y en reclutamiento<br>en seis especialidades · respaldados por el INIBIC</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLINICAL STUDIES — fully wired to api.js -->
+  <section class="section trials-bg" id="clinical-studies">
+    <div class="container">
+      <div class="sec-head reveal">
+        <p class="label"><span lang="en">Active Studies</span><span lang="es">Portfolio Activo</span></p>
+        <h2 class="display lg"><span lang="en">Active studies</span><span lang="es">Estudios activos</span></h2>
+        <p><span lang="en">Live data from our research database. Filter by research line, phase, or status to find relevant studies. Contact us to request the full site qualification dossier.</span><span lang="es">Datos en tiempo real de nuestra base de datos de investigación. Filtre por línea, fase o estado para encontrar estudios relevantes.</span></p>
+      </div>
+
+      <!-- FILTERS — IDs match api.js exactly, option values match DB enums exactly -->
+      <div class="filter-bar reveal">
+        <div class="filter-grp">
+          <label><span lang="en">Research Line</span><span lang="es">Línea</span></label>
+          <select id="filterLine">
+            <option value="all" data-en="All Lines" data-es="Todas las líneas">All Lines</option>
+            <option value="1">01 — Trasplante e Hipertensión</option>
+            <option value="2">02 — Vía Aérea</option>
+            <option value="3">03 — Neumología Intervencionista</option>
+            <option value="4">04 — Insuficiencia Respiratoria</option>
+            <option value="5">05 — Cirugía Torácica</option>
+            <option value="6">06 — Medicina Personalizada</option>
+          </select>
+        </div>
+        <div class="filter-grp">
+          <label><span lang="en">Phase</span><span lang="es">Fase</span></label>
+          <!-- Values match DB CHECK constraint exactly -->
+          <select id="filterPhase">
+            <option value="all" data-en="All Phases" data-es="Todas las fases">All Phases</option>
+            <option value="Phase I" data-en="Phase I" data-es="Fase I">Phase I</option>
+            <option value="Phase II" data-en="Phase II" data-es="Fase II">Phase II</option>
+            <option value="Phase III" data-en="Phase III" data-es="Fase III">Phase III</option>
+            <option value="Phase IV" data-en="Phase IV" data-es="Fase IV">Phase IV</option>
+          </select>
+        </div>
+        <div class="filter-grp">
+          <label><span lang="en">Status</span><span lang="es">Estado</span></label>
+          <!-- Values match DB CHECK constraint exactly -->
+          <select id="filterStatus">
+            <option value="all" data-en="All Status" data-es="Todos los estados">All Status</option>
+            <option value="Reclutando" data-en="Recruiting" data-es="Reclutando">Recruiting</option>
+            <option value="Activo" data-en="Active (not recruiting)" data-es="Activo (sin reclutar)">Active (not recruiting)</option>
+            <option value="Completado" data-en="Completed" data-es="Completado">Completed</option>
+            <option value="En preparación" data-en="In Preparation" data-es="En preparación">In Preparation</option>
+          </select>
+        </div>
+        <div class="filter-grp">
+          <label><span lang="en">Search</span><span lang="es">Buscar</span></label>
+          <div class="search-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <input type="text" id="filterSearch" placeholder="Protocol ID or keyword…" />
+          </div>
+        </div>
+      </div>
+
+      <div class="trials-count-bar reveal">
+        <span><strong id="studiesCount">—</strong> <span lang="en">studies</span><span lang="es">estudios</span></span>
+        <a href="#contact" class="btn-primary" style="font-size:.75rem;padding:.4rem .875rem;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;"><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+          <span lang="en">Download dossier</span><span lang="es">Descargar dossier</span>
+        </a>
+      </div>
+
+      <div class="trials-wrap reveal">
+        <div class="trials-scroll">
+          <table class="trials">
+            <thead>
+              <tr>
+                <th><span lang="en">Protocol</span><span lang="es">Protocolo</span></th>
+                <th><span lang="en">Study Title</span><span lang="es">Título del Estudio</span></th>
+                <th><span lang="en">Line</span><span lang="es">Línea</span></th>
+                <th><span lang="en">Phase</span><span lang="es">Fase</span></th>
+                <th><span lang="en">Status</span><span lang="es">Estado</span></th>
+                <th><span lang="en">Sponsor</span><span lang="es">Promotor</span></th>
+              </tr>
+            </thead>
+            <!-- api.js renders rows here -->
+            <tbody id="studiesBody">
+              <tr><td colspan="6" style="text-align:center;padding:2.5rem;color:var(--text-muted);font-family:var(--ff-mono);font-size:.8125rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:24px;height:24px;margin:0 auto .75rem;display:block;opacity:.3;"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4.03 3-9 3S3 13.66 3 12"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/></svg>
+                <span lang="en">Loading studies from database…</span><span lang="es">Cargando estudios de la base de datos…</span>
+              </td></tr>
+            </tbody>
+          </table>
+          <div class="trials-footer">
+            <div>
+              <div class="trials-footer-info"><span lang="en">Showing <strong id="studiesShown" style="color:var(--teal-2);">—</strong> studies from live database</span><span lang="es">Mostrando <strong id="studiesShownEs" style="color:var(--teal-2);">—</strong> ensayos de la base de datos en vivo</span></div>
+              <div class="trials-footer-db">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4.03 3-9 3S3 13.66 3 12"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/></svg>
+                <span lang="en">Full portfolio managed in neumACt research system</span><span lang="es">Portfolio completo gestionado en el sistema de investigación neumAC I+I</span>
+              </div>
+            </div>
+            <a href="#contact" class="btn-ghost" style="font-size:.75rem;padding:.4rem .875rem;"><span lang="en">Download dossier</span><span lang="es">Descargar dossier Completo</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section removed: duplicated the same coordinator names/specializations
+       already shown properly on team.html and on each coordinator's own
+       line.html hero. No unique value here, only repetition. -->
+
+  <!-- TRIAL DETAIL MODAL -->
+  <div id="trialModal" style="display:none;position:fixed;inset:0;z-index:2000;align-items:center;justify-content:center;padding:1rem;">
+    <div id="trialModalOverlay" style="position:absolute;inset:0;background:rgba(5,12,26,.82);backdrop-filter:blur(6px);" onclick="closeTrialModal()"></div>
+    <div id="trialModalBox" style="position:relative;z-index:1;background:var(--white);border-radius:var(--r-lg);max-width:640px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,.35);">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;padding:1.75rem 2rem 1.25rem;border-bottom:1px solid var(--rule-l);">
+        <div>
+          <div id="tmProtocol" style="font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.375rem;"></div>
+          <h3 id="tmTitle" style="font-family:var(--ff-display);font-size:1.125rem;font-weight:700;color:var(--text-on-light);line-height:1.3;max-width:480px;"></h3>
+        </div>
+        <button onclick="closeTrialModal()" style="background:var(--light-grey);border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-left:1rem;margin-top:.2rem;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="width:14px;height:14px;"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div style="padding:1.5rem 2rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem;" id="tmMeta"></div>
+      <div id="tmRegistry" style="display:none;padding:0 2rem 1rem;"></div>
+      <div id="tmDesc" style="padding:0 2rem 1rem;font-size:.9375rem;line-height:1.75;color:var(--text-on-light-2);display:none;"></div>
+      <div style="padding:1.25rem 2rem;border-top:1px solid var(--rule-l);display:flex;gap:.75rem;flex-wrap:wrap;">
+        <a href="#contact" onclick="closeTrialModal()" class="btn-primary" style="font-size:.8125rem;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width:13px;height:13px;"><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+          <span lang="en">Download dossier</span><span lang="es">Descargar dossier</span>
+        </a>
+        <button onclick="closeTrialModal()" style="background:none;border:1.5px solid var(--rule-l);border-radius:var(--r-md);padding:.5rem 1rem;font-size:.8125rem;font-weight:500;cursor:pointer;color:var(--ink-2);">
+          <span lang="en">Close</span><span lang="es">Cerrar</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <section class="section contact-bg" id="contact">
+    <div class="container">
+      <div class="sec-head reveal">
+        <p class="label"><span lang="en">Servicio de Neumología · CHUAC · A Coruña</span><span lang="es">Servicio de Neumología · CHUAC · A Coruña</span></p>
+        <h2 class="display lg"><span lang="en">Enquiries</span><span lang="es">Contacto</span></h2>
+        <p style="max-width:560px;"><span lang="en">For clinical trial collaboration, academic partnerships, or enquiries about active studies — contact us directly.</span><span lang="es">Para colaboración en ensayos clínicos, asociaciones académicas o consultas sobre estudios activos, contáctenos directamente.</span></p>
+      </div>
+      <div class="contact-layout">
+        <div class="contact-info-list reveal">
+          <p style="font-size:.9rem;line-height:1.75;color:var(--text-on-dark-2);max-width:380px;">
+            <span lang="en">For urgent enquiries about active studies or partnership opportunities, contact us directly.</span>
+            <span lang="es">Para consultas urgentes sobre ensayos activos u oportunidades de colaboración, contáctenos directamente.</span>
+          </p>
+          <div style="margin-top:1.5rem;display:flex;flex-direction:column;gap:.625rem;">
+            <a href="mailto:neumocare@sergas.es" style="color:var(--teal-2);font-size:.9rem;text-decoration:none;">neumocare@sergas.es</a>
+            <a href="tel:+34881111800" style="color:var(--text-on-dark-2);font-size:.875rem;text-decoration:none;">+34 881 111 800</a>
+            <span style="font-size:.8rem;color:var(--text-on-dark-3);">As Xubias, 84 · 15006 A Coruña</span>
+          </div>
+        </div>
+        <div class="reveal reveal-d1">
+          <div class="form-trigger" id="clinTrigger" onclick="openContactForm('clinTrigger','clinBody')" role="button" tabindex="0" aria-expanded="false">
+            <div class="form-trigger-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            </div>
+            <div class="form-trigger-text">
+              <div class="form-trigger-label"><span lang="en">Clinical trial sponsorship · Site qualification · Collaboration</span><span lang="es">Patrocinio · Cualificación · Colaboración</span></div>
+              <div class="form-trigger-title"><span lang="en">Interested in our research programme?</span><span lang="es">¿Le interesa nuestro programa de investigación?</span></div>
+            </div>
+            <div class="form-trigger-btn">
+              <span lang="en">Send an inquiry</span><span lang="es">Enviar consulta</span>
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+            </div>
+          </div>
+          <div class="form-body" id="clinBody">
+            <div class="form-card dark" style="margin-top:.75rem;">
+          <h3 class="display sm" style="margin-bottom:1.375rem;"><span lang="en">Send a message</span><span lang="es">Enviar un mensaje</span></h3>
+          <form id="researchForm">
+            <div class="form-grid">
+              <div class="form-group"><label><span lang="en">Organisation</span><span lang="es">Organización</span></label><input type="text" name="organisation" placeholder="Pharma Corp, University…" required /></div>
+              <div class="form-group"><label><span lang="en">Your Name</span><span lang="es">Su Nombre</span></label><input type="text" name="contact_name" placeholder="Full name" required /></div>
+              <div class="form-group span-2"><label><span lang="en">Email Address</span><span lang="es">Correo Electrónico</span></label><input type="email" name="email" placeholder="your@email.com" required /></div>
+              <div class="form-group span-2">
+                <label><span lang="en">Research Line of Interest</span><span lang="es">Línea de Investigación</span></label>
+                <select name="area_of_interest">
+                  <option value="" data-en="Select a line…" data-es="Seleccione una línea…">Select a line…</option>
+                  <option value="01">01 — Transplantation, Hypertension &amp; Diffuse</option>
+                  <option value="02">02 — Airway Diseases</option>
+                  <option value="03">03 — Interventional &amp; Lung Cancer</option>
+                  <option value="04">04 — Respiratory Failure, Critical Care &amp; Sleep</option>
+                  <option value="05">05 — Personalized Medicine</option>
+                  <option value="06">06 — Innovation in Thoracic Surgery</option>
+                  <option value="all" data-en="Multiple / General Inquiry" data-es="Múltiple / Consulta general">Multiple / General Inquiry</option>
+                </select>
+              </div>
+              <div class="form-group span-2">
+                <label><span lang="en">Nature of Inquiry</span><span lang="es">Tipo de Consulta</span></label>
+                <select name="secondary_topic">
+                  <option value="" data-en="Select…" data-es="Seleccione…">Select…</option>
+                  <option data-en="Sponsored clinical study — site qualification" data-es="Estudio clínico patrocinado — cualificación del centro">Sponsored clinical study — site qualification</option>
+                  <option data-en="Investigator-initiated study partnership" data-es="Colaboración en estudio de iniciativa investigadora">Investigator-initiated study partnership</option>
+                  <option data-en="Feasibility / site assessment" data-es="Viabilidad / evaluación del centro">Feasibility / site assessment</option>
+                  <option data-en="Academic collaboration" data-es="Colaboración académica">Academic collaboration</option>
+                  <option>Capabilities dossier request</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="form-group span-2"><label><span lang="en">Message</span><span lang="es">Mensaje</span></label><textarea name="message" rows="4" placeholder="Please describe your inquiry or project in brief…"></textarea></div>
+              <div class="form-group span-2" style="margin-bottom:0;">
+                <button type="submit" class="form-submit"><span lang="en">Submit Inquiry</span><span lang="es">Enviar Consulta</span>
+                </button>
+              </div>
+            </div>
+          </form>
+          <div class="form-success" id="formSuccess"><span lang="en">Received! Our research team will be in touch.</span><span lang="es">¡Recibido! Nuestro equipo se pondrá en contacto.</span></div>
+        </div>
+      </div>
+    </div>
+      </div>
+    </div>
+  </section>
+<!-- ═══ AFFILIATIONS & PARTNERSHIPS ══════════════════════ -->
+<section class="affil-section">
+  <div class="wrap">
+    <div class="affil-section-header">
+      <span class="affil-section-eyebrow">
+        <span lang="en">Affiliations &amp; Partnerships</span>
+        <span lang="es">Afiliaciones y Colaboraciones</span>
+      </span>
+      <p class="affil-section-sub">
+        <span lang="en">Institutional affiliations and active research partnerships underpinning the group's clinical and translational work.</span>
+        <span lang="es">Afiliaciones institucionales y colaboraciones de investigación activa que sustentan el trabajo clínico y translacional del grupo.</span>
+      </p>
+    </div>
+    <div class="affil-grid">
+      <!-- INIBIC -->
+      <a href="https://www.inibic.es" target="_blank" rel="noopener" class="affil-card" aria-label="INIBIC — Instituto de Investigación Biomédica de A Coruña">
+        <div class="affil-card-logo">
+          <img src="/assets/inibic.png" loading="lazy" alt="INIBIC" height="44" style="height:44px;width:auto;display:block;"/>
+        </div>
+        <div class="affil-card-body">
+          <div class="affil-card-name">INIBIC</div>
+          <div class="affil-card-desc"><span lang="en">Instituto de Investigación Biomédica de A Coruña — the group's primary institutional home and accrediting body.</span><span lang="es">Instituto de Investigación Biomédica de A Coruña — sede institucional principal y organismo acreditador del grupo.</span></div>
+        </div>
+      </a>
+
+      <!-- FINIBIC / Fundación Galega -->
+      <a href="https://www.finibic.es" target="_blank" rel="noopener" class="affil-card" aria-label="Fundación Galega de Investigación Biomédica INIBIC">
+        <div class="affil-card-logo">
+          <img src="/assets/finibic.png" loading="lazy" alt="Fundación Galega INIBIC" height="38" style="height:38px;width:auto;display:block;"/>
+        </div>
+        <div class="affil-card-body">
+          <div class="affil-card-name">Fundación Galega de Investigación Biomédica INIBIC</div>
+          <div class="affil-card-desc"><span lang="en">The foundation underpinning INIBIC's research infrastructure and strategic alliances across Galicia.</span><span lang="es">La fundación que sustenta la infraestructura de investigación y las alianzas estratégicas del INIBIC en Galicia.</span></div>
+        </div>
+      </a>
+
+      
+
+      
+
+      
+
+    </div><!-- /.affil-grid -->
+  </div>
+</section>
+
+</BaseLayout>
+
+<script>
+  import '../lib/clinical.js';
+</script>

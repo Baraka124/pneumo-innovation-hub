@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  current=""
+  title="Page not found — neumACt R&I"
+  description="The page you were looking for could not be found."
+  path="/404"
+>
+  <section class="wrap" style="padding:7rem 0;min-height:56vh;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;">
+    <p class="label" style="color:var(--teal);">
+      <span lang="en">Error 404</span><span lang="es">Error 404</span>
+    </p>
+    <h1 class="display-xl" style="margin:1rem 0 0;max-width:16ch;">
+      <span lang="en">This page couldn't be found.</span>
+      <span lang="es">No se encontró esta página.</span>
+    </h1>
+    <p class="hero-desc" style="max-width:56ch;margin-top:1.5rem;">
+      <span lang="en">The address may be mistyped, or the page may have moved. Here are some places to pick up from:</span>
+      <span lang="es">Puede que la dirección esté mal escrita o que la página se haya movido. Aquí tienes algunos puntos de partida:</span>
+    </p>
+    <nav aria-label="Recovery links" style="display:flex;flex-wrap:wrap;gap:1rem 2rem;margin-top:2.25rem;">
+      <a href="/" class="link-404"><span lang="en">Home</span><span lang="es">Inicio</span> →</a>
+      <a href="/clinical/" class="link-404"><span lang="en">Research &amp; trials</span><span lang="es">Investigación y ensayos</span> →</a>
+      <a href="/innovation/" class="link-404"><span lang="en">Innovation</span><span lang="es">Innovación</span> →</a>
+      <a href="/news/" class="link-404"><span lang="en">Articles</span><span lang="es">Artículos</span> →</a>
+      <a href="/team/" class="link-404"><span lang="en">Team</span><span lang="es">Equipo</span> →</a>
+    </nav>
+    <style>
+      .link-404 { color: var(--navy, #0C3868); text-decoration: none; font-weight: 500;
+        border-bottom: 1.5px solid var(--teal, #007A7A); padding-bottom: 2px; transition: color .15s, border-color .15s; }
+      .link-404:hover { color: var(--teal-2, #005f5f); border-color: var(--navy, #0C3868); }
+    </style>
+    <p style="margin-top:2.5rem;font-family:var(--ff-mono);font-size:var(--fs-label);letter-spacing:.06em;color:var(--text-muted);">
+      <span lang="en">Tip: press <kbd style="font-family:inherit;">⌘K</kbd> to search the site.</span>
+      <span lang="es">Consejo: pulsa <kbd style="font-family:inherit;">⌘K</kbd> para buscar en el sitio.</span>
+    </p>
+  </section>
+</BaseLayout>

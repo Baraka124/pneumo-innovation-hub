@@ -1,0 +1,202 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/news.css';
+---
+
+<BaseLayout
+  current="news"
+  title="Articles & Publications — neumACt R&I · CHUAC"
+  description="News, publications, and updates from the Servicio de Neumología, CHUAC — clinical research, milestones, and peer-reviewed output."
+  path="/news"
+>
+<div id="pb" role="progressbar" aria-hidden="true"></div>
+<section class="blog-hero" id="mainContent">
+    <!-- Bronchial tree background canvas -->
+    <canvas id="newsBg" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+    <!-- Top: big type + stats shelf -->
+    <div class="blog-hero-top">
+      <div class="container">
+        <div class="gz-nameplate">
+          <span class="gz-name">neumACt Articles</span>
+          <span class="gz-rule" aria-hidden="true"></span>
+          <span class="gz-sub"><span lang="en">Research &amp; Innovation · Servicio de Neumología · CHUAC</span><span lang="es">Investigación e Innovación · Servicio de Neumología · CHUAC</span></span>
+        </div>
+        <h1 class="blog-hero-h1">
+          <span lang="en">Clinical research,<br><em>in their own words.</em></span>
+          <span lang="es">Investigación clínica,<br><em>en sus propias palabras.</em></span>
+        </h1>
+        <p class="reveal-d2" style="font-size:1.0625rem;color:rgba(255,255,255,.68);max-width:480px;line-height:1.7;margin-top:1.25rem;">
+          <span lang="en">Articles, updates, and findings written directly by the clinicians and researchers who did the work.</span>
+          <span lang="es">Artículos, novedades y hallazgos escritos directamente por los clínicos e investigadores que realizaron el trabajo.</span>
+        </p>
+        <!-- Stat shelf -->
+        <div class="blog-hero-shelf reveal reveal-d2">
+          <div class="blog-hero-shelf-stat">
+            <div class="blog-hero-stat-n" id="sbArticles">—</div>
+            <div class="blog-hero-stat-l"><span lang="en">Articles</span><span lang="es">Artículos</span></div>
+          </div>
+          <div class="blog-hero-shelf-stat">
+            <div class="blog-hero-stat-n" id="sbUpdates">—</div>
+            <div class="blog-hero-stat-l"><span lang="en">Updates</span><span lang="es">Actualizaciones</span></div>
+          </div>
+          <div class="blog-hero-shelf-stat">
+            <div class="blog-hero-stat-n" id="sbPubs">—</div>
+            <div class="blog-hero-stat-l"><span lang="en">Publications</span><span lang="es">Publicaciones</span></div>
+          </div>
+          <div class="blog-hero-shelf-stat">
+            <div class="blog-hero-stat-n" id="sbPhotos">—</div>
+            <div class="blog-hero-stat-l"><span lang="en">Photo Essays</span><span lang="es">Reportajes</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Feature strip: latest post full-bleed image -->
+    <div class="blog-hero-feature reveal" id="heroLatest">
+      <div id="heroLatestImg"><div class="blog-hero-feature-ph loading"></div></div>
+      <div class="blog-hero-feature-over">
+        <div class="blog-hero-feature-inner">
+          <div class="blog-hero-feature-badge" id="heroLatestBadge">
+            <span lang="en">Spotlight</span><span lang="es">Destacado</span>
+          </div>
+          <div class="blog-hero-feature-title" id="heroLatestTitle">
+            <span lang="en">Loading spotlight…</span><span lang="es">Cargando…</span>
+          </div>
+          <div class="blog-hero-feature-meta" id="heroLatestMeta"></div>
+          <div class="story-dots" id="heroLatestDots" role="tablist" aria-label="More featured stories"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILTERS -->
+  <div class="filter-strip" id="filterStrip">
+    <div class="container">
+      <div class="filter-inner">
+        <span class="filter-label"><span lang="en">Filter</span><span lang="es">Filtrar</span></span>
+        <button class="flt on" data-type="">
+          <span lang="en">All</span><span lang="es">Todo</span>
+        </button>
+        <button class="flt flt-article" data-type="article">
+          <span lang="en">Articles</span><span lang="es">Artículos</span>
+        </button>
+        <button class="flt flt-update" data-type="update">
+          <span lang="en">Updates</span><span lang="es">Actualizaciones</span>
+        </button>
+        <button class="flt flt-pub" data-type="publication">
+          <span lang="en">Publications</span><span lang="es">Publicaciones</span>
+        </button>
+        <button class="flt flt-photo" data-type="photo_story">
+          <span lang="en">Photo Essays</span><span lang="es">Reportajes</span>
+        </button>
+        <div class="feed-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="text" id="feedSearch" autocomplete="off"
+                 placeholder="Search publications" aria-label="Search publications">
+        </div>
+        <span class="filter-count" id="filterCount"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARTICLE READER (injected, hidden by default) -->
+  <div id="articleReader"></div>
+
+  <!-- PUBLICATION HIGHLIGHTS — curated, distinct from the full chronological
+       feed below. Pulls from the same is_featured publications already
+       used for the hero spotlight pool, just shown as a static list here. -->
+  <div class="container" id="pubHighlightsWrap" style="display:none;padding-top:2.5rem;">
+    <p class="eyebrow" style="margin-bottom:1.25rem;"><span lang="en">Highlighted publications</span><span lang="es">Publicaciones destacadas</span></p>
+    <div id="pubHighlightsList" style="border-top:1px solid var(--border-l);"></div>
+  </div>
+
+  <!-- ═══ PUBLICATIONS TIMELINE (Phase 2 #8) ═══════════════ -->
+  <div class="container" id="pubTimelineWrap" style="display:none;padding-top:3rem;">
+    <p class="eyebrow" style="margin-bottom:.35rem;"><span lang="en">Output over time</span><span lang="es">Producción en el tiempo</span></p>
+    <p style="font-size:.8125rem;color:var(--ink-3);margin:0 0 1.25rem;"><span lang="en">Each dot is a peer-reviewed publication — click to open.</span><span lang="es">Cada punto es una publicación revisada por pares; haga clic para abrirla.</span></p>
+    <div id="pubTimeline" class="pub-timeline" role="list"></div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="container">
+    <div class="blog-layout">
+
+      <!-- Feed -->
+      <main class="blog-feed" id="blogFeed">
+        <!-- Skeleton while loading -->
+        <div class="feed-skeleton" id="feedSkeleton">
+          <div class="skel-row"><div class="skel-block" style="height:.7rem;width:30%;margin-bottom:.875rem;"></div><div class="skel-block" style="height:1.5rem;width:75%;margin-bottom:.625rem;"></div><div class="skel-block" style="height:.9rem;width:90%;margin-bottom:.375rem;"></div><div class="skel-block" style="height:.9rem;width:60%;"></div></div>
+          <div class="skel-row"><div class="skel-block" style="height:.7rem;width:25%;margin-bottom:.875rem;"></div><div class="skel-block" style="height:1.5rem;width:80%;margin-bottom:.625rem;"></div><div class="skel-block" style="height:.9rem;width:85%;"></div></div>
+          <div class="skel-row"><div class="skel-block" style="height:.7rem;width:20%;margin-bottom:.875rem;"></div><div class="skel-block" style="height:1.5rem;width:70%;margin-bottom:.625rem;"></div><div class="skel-block" style="height:.9rem;width:55%;"></div></div>
+        </div>
+      </main>
+
+      <!-- Sidebar -->
+      <aside class="blog-sidebar">
+        <div class="sb-section">
+          <div class="sb-label"><span lang="en">In this feed</span><span lang="es">En este feed</span></div>
+          <div class="sb-stat"><span><span lang="en">Articles</span><span lang="es">Artículos</span></span><span class="sb-stat-n" id="sb2Articles">—</span></div>
+          <div class="sb-stat"><span><span lang="en">Updates</span><span lang="es">Actualizaciones</span></span><span class="sb-stat-n" id="sb2Updates">—</span></div>
+          <div class="sb-stat"><span><span lang="en">Publications</span><span lang="es">Publicaciones</span></span><span class="sb-stat-n" id="sb2Pubs">—</span></div>
+          <div class="sb-stat"><span><span lang="en">Photo Essays</span><span lang="es">Reportajes</span></span><span class="sb-stat-n" id="sb2Photos">—</span></div>
+        </div>
+        <div class="sb-rule"></div>
+        <div class="sb-section">
+          <div class="sb-label"><span lang="en">By research line</span><span lang="es">Por línea de investigación</span></div>
+          <div id="sbLines"></div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+<!-- ═══ AFFILIATIONS & PARTNERSHIPS ══════════════════════ -->
+<section class="affil-section">
+  <div class="wrap">
+    <div class="affil-section-header">
+      <span class="affil-section-eyebrow">
+        <span lang="en">Affiliations &amp; Partnerships</span>
+        <span lang="es">Afiliaciones y Colaboraciones</span>
+      </span>
+      <p class="affil-section-sub">
+        <span lang="en">Institutional affiliations and active research partnerships underpinning the group's clinical and translational work.</span>
+        <span lang="es">Afiliaciones institucionales y colaboraciones de investigación activa que sustentan el trabajo clínico y translacional del grupo.</span>
+      </p>
+    </div>
+    <div class="affil-grid">
+      <!-- INIBIC -->
+      <a href="https://www.inibic.es" target="_blank" rel="noopener" class="affil-card" aria-label="INIBIC — Instituto de Investigación Biomédica de A Coruña">
+        <div class="affil-card-logo">
+          <img src="/assets/inibic.png" loading="lazy" alt="INIBIC" height="44" style="height:44px;width:auto;display:block;"/>
+        </div>
+        <div class="affil-card-body">
+          <div class="affil-card-name">INIBIC</div>
+          <div class="affil-card-desc"><span lang="en">Instituto de Investigación Biomédica de A Coruña — the group's primary institutional home and accrediting body.</span><span lang="es">Instituto de Investigación Biomédica de A Coruña — sede institucional principal y organismo acreditador del grupo.</span></div>
+        </div>
+      </a>
+
+      <!-- FINIBIC / Fundación Galega -->
+      <a href="https://www.finibic.es" target="_blank" rel="noopener" class="affil-card" aria-label="Fundación Galega de Investigación Biomédica INIBIC">
+        <div class="affil-card-logo">
+          <img src="/assets/finibic.png" loading="lazy" alt="Fundación Galega INIBIC" height="38" style="height:38px;width:auto;display:block;"/>
+        </div>
+        <div class="affil-card-body">
+          <div class="affil-card-name">Fundación Galega de Investigación Biomédica INIBIC</div>
+          <div class="affil-card-desc"><span lang="en">The foundation underpinning INIBIC's research infrastructure and strategic alliances across Galicia.</span><span lang="es">La fundación que sustenta la infraestructura de investigación y las alianzas estratégicas del INIBIC en Galicia.</span></div>
+        </div>
+      </a>
+
+      
+
+      
+
+      
+
+    </div><!-- /.affil-grid -->
+  </div>
+</section>
+
+</BaseLayout>
+
+<script>
+  import '../lib/news.js';
+</script>
