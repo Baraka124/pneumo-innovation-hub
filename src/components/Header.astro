@@ -5,15 +5,6 @@ const { current = 'home' } = Astro.props;
 const isCur = (k) => (current === k ? 'true' : undefined);
 ---
 
-<div class="latest-bar" id="latestBar" aria-label="Latest update">
-  <div class="latest-bar-inner">
-    <span class="latest-dot" aria-hidden="true"></span>
-    <span class="latest-text">
-      <span lang="en">1,000th lung transplant performed at CHUAC · Regional milestone · May 2026</span>
-      <span lang="es">1.000 trasplante pulmonar en el CHUAC · Hito autonómico · Mayo de 2026</span>
-    </span>
-  </div>
-</div>
 
 <header class="hdr" id="hdr" data-page={current}>
   <div class="hdr-main">

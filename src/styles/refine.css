@@ -220,7 +220,7 @@
 
 
   /* ── Announcement bar: refined, centred, premium ─────────────── */
-  .latest-bar { background: var(--navy-footer, #07111F); }
+  .latest-bar { background: var(--navy-footer, #07111F); height: 38px; }
   .latest-bar-inner {
     justify-content: center; gap: .6rem;
     padding-top: .5rem; padding-bottom: .5rem;

@@ -56,7 +56,7 @@ section[style*="background:var(--white)"] .milestone-label,
     ══════════════════════════════════════════════ */
     body{font-family:var(--ff-body);background:var(--white);color:var(--ink);
       line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased;
-      padding-top:68px;
+      padding-top:58px;
   }
     ::selection{background:var(--teal-lt);color:var(--ink);}
 
@@ -672,12 +672,10 @@ section[style*="background:var(--white)"] .milestone-label,
    to top:0/padding-top:68px since most pages have no bar at all).
    html.bar-dismissed below restores those defaults once dismissed
    so there's no permanent gap above the header afterward. */
-html:not(.bar-dismissed) .hdr { top: 30px; }
-html:not(.bar-dismissed) body { padding-top: calc(68px + 30px); }
+html:not(.bar-dismissed) body { padding-top: 58px; }
 @media(max-width:860px) {
   .latest-text { font-size: .7rem; }
-  html:not(.bar-dismissed) .hdr { top: 28px; }
-  html:not(.bar-dismissed) body { padding-top: calc(68px + 28px); }
+    html:not(.bar-dismissed) body { padding-top: 58px; }
 }
 
 

@@ -68,7 +68,7 @@
 /* ══ DESIGN SYSTEM — identical to index.html ══ */
     body{font-family:var(--ff-body);background:var(--white);color:var(--ink);
       line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased;
-      padding-top:68px;  padding-top:68px;
+      padding-top:58px;
   }
     ::selection{background:var(--teal-lt);color:var(--ink);}
     #pb{position:fixed;top:0;left:0;height:1.5px;width:0;background:var(--teal);z-index:3000;transition:width .08s linear;pointer-events:none;}

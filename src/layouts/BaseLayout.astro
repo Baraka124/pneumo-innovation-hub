@@ -23,6 +23,12 @@ const { title, description, path = Astro.url.pathname, current = 'home' } = Astr
 <!doctype html>
 <html lang="en">
   <head>
+    {/* Establish @layer order BEFORE any stylesheet loads. Per-page CSS
+        can otherwise load before the shared bundle that declares the
+        order, which would invert layer priority and make page overrides
+        silently lose to base styles. This inline declaration is first,
+        so the order is always base < components < pages < refine. */}
+    <style is:inline>@layer base, components, pages, refine;</style>
     <Head title={title} description={description} path={path} />
   </head>
   <body>

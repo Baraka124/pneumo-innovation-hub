@@ -202,16 +202,16 @@ html[data-lang="es"] .lang-switch-knob{ transform:translateX(calc(100% + 2px)); 
   transition:height .35s var(--ease-clinical), background .35s, box-shadow .35s;
 }
 .hdr-inner{
-  max-width:1440px; margin:0 auto; height:68px;
+  max-width:var(--max,1500px); margin:0 auto; height:58px;
   padding:0 clamp(1.25rem,4vw,3rem);
-  display:flex; align-items:center; gap:2rem;
+  display:flex; align-items:center; gap:1.75rem;
   transition:height .35s var(--ease-clinical);
 }
 
 /* Logo lockup with hairline rule + descriptor */
 .hdr-logo{ display:flex; align-items:center; gap:.85rem; text-decoration:none; flex-shrink:0; }
 .hdr-logo-img{
-  display:block; height:30px; width:auto; max-width:240px; object-fit:contain;
+  display:block; height:27px; width:auto; max-width:240px; object-fit:contain;
   filter:brightness(0) invert(1); opacity:.96;
   transition:height .35s var(--ease-clinical);
   view-transition-name:site-logo;   /* 10 — the logo persists across page morphs */
@@ -266,15 +266,15 @@ html[data-lang="es"] .lang-switch-knob{ transform:translateX(calc(100% + 2px)); 
 /* Right cluster: contact button */
 .hdr-right{ display:flex; align-items:center; gap:1rem; flex-shrink:0; }
 .hdr-contact-btn{
-  display:inline-block; padding:.5rem 1.15rem;
+  display:inline-block; padding:.5rem 1.25rem;
   font-family:var(--ff-body,'DM Sans',sans-serif); font-size:.84rem; font-weight:600;
   letter-spacing:.01em; color:#fff; text-decoration:none;
-  border:1px solid rgba(255,255,255,.28); border-radius:100px;
+  background:var(--teal-2,#005f5f); border:1px solid var(--teal-2,#005f5f); border-radius:100px;
   transition:background .25s var(--ease-clinical), border-color .25s, transform .2s, box-shadow .3s, padding .3s var(--ease-clinical);
 }
 .hdr-contact-btn:hover{
-  background:var(--teal-2,#00B3B3); border-color:var(--teal-2,#00B3B3);
-  transform:translateY(-1px); box-shadow:0 6px 18px rgba(0,179,179,.3);
+  background:var(--teal,#007A7A); border-color:var(--teal,#007A7A);
+  transform:translateY(-1px); box-shadow:0 6px 18px rgba(0,122,122,.35);
 }
 
 /* Scrolled state — condense tier 2. Beyond the height/logo shrink
@@ -284,13 +284,13 @@ html[data-lang="es"] .lang-switch-knob{ transform:translateX(calc(100% + 2px)); 
    header that reads as "compact, working mode" rather than "the
    same header, just smaller". */
 .hdr.scrolled .hdr-main{ box-shadow:0 4px 24px rgba(7,17,31,.32); background:rgba(12,56,104,.94); }
-.hdr.scrolled .hdr-inner{ height:58px; }
-.hdr.scrolled .hdr-logo-img{ height:26px; }
+.hdr.scrolled .hdr-inner{ height:50px; }
+.hdr.scrolled .hdr-logo-img{ height:24px; }
 .hdr.scrolled .hdr-nav-link{ padding:.5rem .7rem; }
 .hdr.scrolled .hdr-contact-btn{ padding:.4rem .95rem; }
 
 /* Body offset so fixed two-tier header doesn't overlap content.
-   Default content starts below 34 + 68 = 102px. */
+   Content starts below the 58px header. */
 body{ padding-top:0; }
 .hdr ~ main, main{ scroll-margin-top:110px; }
 
@@ -355,7 +355,7 @@ body{ padding-top:0; }
   .hdr-nav{ display:none; }
   .hdr-contact-btn{ display:none; }
   .mob-toggle{ display:flex!important; }
-  .hdr-inner{ height:60px; }
+  .hdr-inner{ height:56px; }
 }
 @media(min-width:881px){
   .mob-toggle{ display:none; }
@@ -374,12 +374,12 @@ body{ padding-top:0; }
 .to-top svg{ width:18px; height:18px; }
 
 /* ── Body offset for the two-tier fixed header ──────────────────── */
-/* Old layout reserved 88px; new header is 34 (utility) + 68 (main) = 102px.
+/* Header is 58px (no utility bar). Content clears it exactly.
    Override the page's own padding-top so content clears it exactly. */
-body{ padding-top:102px!important; }
-@media(max-width:880px){ body{ padding-top:60px!important; } }
+body{ padding-top:58px!important; }
+@media(max-width:880px){ body{ padding-top:58px!important; } }
 /* hero min-height referenced the old --hdr var; keep it visually full */
-.hero{ min-height:calc(100vh - 102px); }
+.hero{ min-height:calc(100vh - 58px); }
 @media(max-width:880px){ .hero{ min-height:calc(100vh - 60px); } }
 
 /* ════════════════════════════════════════════════════════════════

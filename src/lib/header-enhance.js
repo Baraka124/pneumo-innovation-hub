@@ -104,31 +104,11 @@
     var hdr = document.getElementById('hdr');
     if (!hdr) return;
     var ticking = false;
-    var lastY = 0;
-    // Track the scroll position where the current direction "started",
-    // not just the immediately-previous frame. Comparing only to the
-    // prior frame meant gradual/inertial scrolling in small sub-6px
-    // steps per frame could perpetually fail the threshold and never
-    // re-reveal the header on scroll-up, even though the cumulative
-    // movement was clearly upward.
-    var directionStartY = 0;
-    var goingDown = false;
     function update(){
-      var y = window.scrollY;
-      hdr.classList.toggle('scrolled', y > 40);
-      var movingDown = y > lastY;
-      if (movingDown !== goingDown) {
-        goingDown = movingDown;
-        directionStartY = lastY;
-      }
-      if (y < 240) {
-        hdr.classList.remove('hdr-hidden');
-      } else if (goingDown && y - directionStartY > 6) {
-        hdr.classList.add('hdr-hidden');
-      } else if (!goingDown && directionStartY - y > 6) {
-        hdr.classList.remove('hdr-hidden');
-      }
-      lastY = y;
+      // Toggle the scrolled state (shadow / compact styling) but NEVER
+      // hide the header — it stays sticky and visible at all times.
+      hdr.classList.toggle('scrolled', window.scrollY > 40);
+      hdr.classList.remove('hdr-hidden');
       ticking = false;
     }
     window.addEventListener('scroll', function(){
